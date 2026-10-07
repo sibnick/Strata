@@ -31,6 +31,7 @@
 #include "strata/kernels/ngram.hpp"
 #include "strata/kernels/pdl.hpp"
 #include "strata/kernels/ple.hpp"
+#include "strata/core/ple_cache.hpp"
 #include "strata/kernels/qsa.hpp"
 #include "strata/kernels/qsa_decode_attn.hpp"
 #include "strata/kernels/qsa_select.hpp"
@@ -369,7 +370,8 @@ Verifier::~Verifier() {
     for (cudaEvent_t e : df_join_)
         if (e) cudaEventDestroy(e);
     if (arena_) cudaFree(arena_);
-    void* hosts[] = {h_tok_, h_step_, h_pos_, h_commit_, h_ple_, h_out_, h_x_, h_ids_, h_w_, h_seq_, h_flag_, h_ymiss_,
+    void* hosts[] = {h_tok_, h_step_, h_pos_, h_commit_, h_ple_, (void*) h_ple_srcs_, (void*) h_ple_dsts_,
+                     h_out_, h_x_, h_ids_, h_w_, h_seq_, h_flag_, h_ymiss_,
                      h_flagA_, h_plan_, h_flagB_, h_plan_err_};
     for (void* h : hosts)
         if (h) cudaFreeHost(h);
@@ -445,6 +447,8 @@ bool Verifier::init(const WeightTable& wt, const ModelGeometry& g, SessionState&
               mapped(T * (NH + NKV + IQ) * 4, (void**) &h_pos_, (void**) &m_pos_) &&
               mapped((2 + T) * 4 + 16, (void**) &h_commit_, (void**) &m_commit_) &&
               mapped(T * N * 4, (void**) &h_ple_, (void**) &m_ple_) &&
+              mapped((size_t) T * sizeof(void*) + 64, (void**) &h_ple_srcs_, (void**) &m_ple_srcs_) &&
+              mapped((size_t) T * sizeof(void*) + 64, (void**) &h_ple_dsts_, (void**) &m_ple_dsts_) &&
               mapped(T * 4 + 16, (void**) &h_out_, (void**) &m_out_) &&
               mapped(T * N * 4, (void**) &h_x_, (void**) &m_x_) &&
               mapped(T * K * 4, (void**) &h_ids_, (void**) &m_ids_) &&
@@ -789,7 +793,7 @@ bool Verifier::record_window(int T, cudaStream_t cs, std::string& err) {
         if (l == 1 && ple_on) {
             if (grp == 0) {
                 if (ar_on()) wait_flag_ge(m_flag_, 1, cs);
-                copy_from_mapped(ple_, m_ple_, (int64_t) T * N, cs);
+                copy_ple_tokens(ple_, (const float* const*) m_ple_srcs_, (float* const*) m_ple_dsts_, (int64_t) T, N, cs);
             }
             float* normalized = (float*) ((uint8_t*) ss.ple.scratch + ple_block_scratch_bytes());
             static const bool ple_batch_env = [] {
@@ -1878,16 +1882,62 @@ bool Verifier::run(int T, const int32_t* tokens, int64_t pos0, PoolMultiFn pool,
     if (!staged_) stage_inputs(T, tokens, pos0);
     staged_ = false;
     const bool do_ple = ss.ple.ready() && ple_stage();
-    uint32_t ple_rows[kVerifyMaxT * PLE_N_HEADS];
+    const int64_t N = g.n_embd;
+    int n_misses = 0;
+    int miss_idx[kVerifyMaxT];
+    uint32_t miss_rows[kVerifyMaxT * PLE_N_HEADS];
+    NgramKey miss_keys[kVerifyMaxT];
     if (do_ple) {
         int32_t prev[2] = {ss.ple_prev[0], ss.ple_prev[1]};
         for (int t = 0; t < T; ++t) {
-            ngram_rows(&tokens[t], prev, 1, ss.ple.consts, ple_rows + t * PLE_N_HEADS);
+            const NgramKey key{tokens[t], prev[0], prev[1]};
+            int32_t slot = -1;
+            if (ss.ple.vram_cache && ss.ple.vram_cache->is_enabled()) {
+                slot = ss.ple.vram_cache->lookup(key);
+            }
+            if (slot >= 0) {
+                h_ple_srcs_[t] = ss.ple.vram_cache->slot_dev_ptr((uint32_t) slot);
+                h_ple_dsts_[t] = nullptr;
+            } else {
+                miss_idx[n_misses] = t;
+                miss_keys[n_misses] = key;
+                ngram_rows(&tokens[t], prev, 1, ss.ple.consts, miss_rows + n_misses * PLE_N_HEADS);
+                ss.ple.table->prefetch_rows(miss_rows + n_misses * PLE_N_HEADS);
+                n_misses++;
+            }
             prev[0] = prev[1];
             prev[1] = tokens[t];
-            ss.ple.table->prefetch_rows(ple_rows + t * PLE_N_HEADS);
         }
     }
+    auto gather_ple_batch = [&]() -> bool {
+        if (n_misses > 0) {
+            if (n_misses == T) {
+                if (!ss.ple.table->gather_batch(miss_rows, (size_t) T, h_ple_, err)) return false;
+                for (int i = 0; i < T; ++i) {
+                    h_ple_srcs_[i] = m_ple_ + (size_t) i * N;
+                    if (ss.ple.vram_cache && ss.ple.vram_cache->is_enabled()) {
+                        uint32_t ins_slot = ss.ple.vram_cache->insert(miss_keys[i]);
+                        h_ple_dsts_[i] = ss.ple.vram_cache->slot_dev_ptr(ins_slot);
+                    } else {
+                        h_ple_dsts_[i] = nullptr;
+                    }
+                }
+            } else {
+                for (int i = 0; i < n_misses; ++i) {
+                    const int t = miss_idx[i];
+                    if (!ss.ple.table->gather_batch(miss_rows + i * PLE_N_HEADS, 1, h_ple_ + (size_t) t * N, err)) return false;
+                    h_ple_srcs_[t] = m_ple_ + (size_t) t * N;
+                    if (ss.ple.vram_cache && ss.ple.vram_cache->is_enabled()) {
+                        uint32_t ins_slot = ss.ple.vram_cache->insert(miss_keys[i]);
+                        h_ple_dsts_[t] = ss.ple.vram_cache->slot_dev_ptr(ins_slot);
+                    } else {
+                        h_ple_dsts_[t] = nullptr;
+                    }
+                }
+            }
+        }
+        return true;
+    };
     if (trace_h_ != nullptr) std::memset(trace_h_, 0, trace_n_ * 8);   // #649: this window's breadcrumbs only
     std::atomic_thread_fence(std::memory_order_seq_cst);
     trace_ev("WINDOW", -1, -1, pos0 * 16 + T);
@@ -1908,7 +1958,7 @@ bool Verifier::run(int T, const int32_t* tokens, int64_t pos0, PoolMultiFn pool,
     if (ar_on() && !test_stall) {
         if (do_ple) {
             const Clock::time_point tp = Clock::now();
-            if (!ss.ple.table->gather_batch(ple_rows, (size_t) T, h_ple_, err)) return false;
+            if (!gather_ple_batch()) return false;
             std::atomic_thread_fence(std::memory_order_seq_cst);
             _mm_sfence();
             *flag = 1;
@@ -1988,7 +2038,7 @@ bool Verifier::run(int T, const int32_t* tokens, int64_t pos0, PoolMultiFn pool,
         // MtpDrafter::draft and Layer 0's attention + router + expert execution!
         if (k == 0 && do_ple) {
             const Clock::time_point tp = Clock::now();
-            if (!ss.ple.table->gather_batch(ple_rows, (size_t) T, h_ple_, err)) return false;
+            if (!gather_ple_batch()) return false;
             std::atomic_thread_fence(std::memory_order_seq_cst);
             _mm_sfence();
             ms_host += ms_since(tp);
@@ -2533,6 +2583,7 @@ bool Verifier::stage_batch(const int* rows, int S, int hbase, const int32_t* tok
         for (int64_t h = 0; h < g.idx_q_heads; ++h) pi[t * g.idx_q_heads + h] = (int32_t) pos[t];
     }
     if (ss_->ple.ready() && ple_stage()) {
+        const int64_t N = g.n_embd;
         uint32_t ple_rows[kVerifyMaxT * PLE_N_HEADS];   // (not `rows`: that is the slots of the window's rows)
         for (int t = 0; t < S; ++t) {
             const SessionState& sx = *slots_[(size_t) rows[t]];
@@ -2542,6 +2593,8 @@ bool Verifier::stage_batch(const int* rows, int S, int hbase, const int32_t* tok
                 prev[1] = tokens[t - 1];
             }
             ngram_rows(&tokens[t], prev, 1, ss_->ple.consts, ple_rows + t * PLE_N_HEADS);
+            h_ple_srcs_[t] = m_ple_ + (size_t) t * N;
+            h_ple_dsts_[t] = nullptr;
         }
         if (!ss_->ple.table->gather_batch(ple_rows, (size_t) S, h_ple_, err)) return false;
     }

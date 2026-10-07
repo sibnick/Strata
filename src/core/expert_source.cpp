@@ -1000,6 +1000,44 @@ void FileExpertSource::close() {
     reads_ = 0;
 }
 
+void FileExpertSource::advise_sequential() {
+#if !defined(_WIN32)
+    if (base_ != nullptr && mapped_bytes_ > 0) {
+        (void) madvise((void*) base_, (size_t) mapped_bytes_, MADV_SEQUENTIAL);
+    }
+    if (fd_ >= 0) {
+        (void) posix_fadvise(fd_, 0, 0, POSIX_FADV_SEQUENTIAL);
+    }
+    for (const Map& m : maps_) {
+        if (m.base != nullptr && m.bytes > 0) {
+            (void) madvise((void*) m.base, (size_t) m.bytes, MADV_SEQUENTIAL);
+        }
+        if (m.fd >= 0) {
+            (void) posix_fadvise(m.fd, 0, 0, POSIX_FADV_SEQUENTIAL);
+        }
+    }
+#endif
+}
+
+void FileExpertSource::evict_page_cache() {
+#if !defined(_WIN32)
+    if (base_ != nullptr && mapped_bytes_ > 0) {
+        (void) madvise((void*) base_, (size_t) mapped_bytes_, MADV_DONTNEED);
+    }
+    if (fd_ >= 0) {
+        (void) posix_fadvise(fd_, 0, 0, POSIX_FADV_DONTNEED);
+    }
+    for (const Map& m : maps_) {
+        if (m.base != nullptr && m.bytes > 0) {
+            (void) madvise((void*) m.base, (size_t) m.bytes, MADV_DONTNEED);
+        }
+        if (m.fd >= 0) {
+            (void) posix_fadvise(m.fd, 0, 0, POSIX_FADV_DONTNEED);
+        }
+    }
+#endif
+}
+
 
 bool ExpertSource::copy_blob(int64_t layer, int64_t expert, uint8_t* dst) {
     const uint8_t* b = blob(layer, expert);
@@ -2885,18 +2923,6 @@ void expert_pool_dispatch(void* user, const float* x_f, const int32_t* ids, cons
             d.fail_expert = e;
             return;
         }
-        const uint8_t* b = d.src->blob(d.layers, e);
-        if (b == nullptr) {
-            // The one failure the loop cannot see.  Leaving `out` at its previous contents would feed the NEXT
-            // layer a stale expert vector, which `moe_combine` would weight and add - the token would still be
-            // finite and would still be wrong, 48 layers deep.
-            d.failed = true;
-            d.fail = "the expert source could not produce a blob";
-            d.fail_layer = d.layers;
-            d.fail_expert = e;
-            ++d.missing;
-            return;
-        }
         // A hit's row was zeroed by `Launch` and belongs to the GPU; the pool must not touch it.
         if (use_hits && (graph_hits ? d.host_res[(size_t) d.layers * (size_t) d.n_expert + (size_t) e] >= 0
                                     : d.is_hit[(size_t) i] != 0)) {
@@ -2913,6 +2939,19 @@ void expert_pool_dispatch(void* user, const float* x_f, const int32_t* ids, cons
         if (remote_owns) {
             std::memset(out + (size_t) i * (size_t) n_embd, 0, (size_t) n_embd * sizeof(float));
             continue;
+        }
+
+        const uint8_t* b = d.src->blob(d.layers, e);
+        if (b == nullptr) {
+            // The one failure the loop cannot see.  Leaving `out` at its previous contents would feed the NEXT
+            // layer a stale expert vector, which `moe_combine` would weight and add - the token would still be
+            // finite and would still be wrong, 48 layers deep.
+            d.failed = true;
+            d.fail = "the expert source could not produce a blob";
+            d.fail_layer = d.layers;
+            d.fail_expert = e;
+            ++d.missing;
+            return;
         }
 
         // `njobs` indexes the JOB ARRAY and `i` indexes the OUTPUT - they are the same only when nothing is a

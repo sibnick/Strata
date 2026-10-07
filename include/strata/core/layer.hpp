@@ -50,6 +50,8 @@
 
 namespace strata::core {
 
+class PleVramCache;
+
 /// Select pinned CUDA BF16/F32 projections for SSM gates, routing and the sparse indexer.
 /// Configure before session capture; captured graphs retain the selected implementation.
 /// Does not change GR, PLE or the shared expert's scalar gate.
@@ -569,6 +571,9 @@ struct PleRun {
     /// Internal workspace plus a disjoint normalized export for the next history row.
     /// Allocate ple_run_scratch_bytes(), not merely the lower-level ple_block_scratch_bytes().
     float* scratch = nullptr;
+    /// Optional VRAM-resident n-gram cache. When hit, avoids disk I/O and PCIe transfer.
+    PleVramCache* vram_cache = nullptr;
+    mutable int32_t cached_slot = -1;
     strata::kernels::PleConsts consts;
     bool ready() const {
         return table != nullptr && table->is_open() && hist != nullptr && emb_dev != nullptr &&

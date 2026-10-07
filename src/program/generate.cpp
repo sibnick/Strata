@@ -30,6 +30,7 @@
 #include "strata/core/on_device.hpp"
 #include "strata/core/peer_experts.hpp"
 #include "strata/core/layer.hpp"
+#include "strata/core/ple_cache.hpp"
 #include "strata/core/layout.hpp"
 #include "strata/core/session.hpp"
 #include "strata/core/weights.hpp"
@@ -375,6 +376,7 @@ struct Options {
     int ple_inflight = 256;   // the prompt path reads a chunk's rows at once: 64 left the SSD half idle (32K: 303 -> 189 ms)
     double ple_delay_us = 0;           ///< fault injection: every row read completes no earlier than this
     bool ple_sync_submit = false;      ///< A/B arm: submit reads on the token thread, no I/O worker
+    double ple_vram_cache_gib = 0.0;   ///< VRAM cache for n-gram embeddings in GiB (e.g. 2-4 GiB; 0 disables)
     std::string kv = "fp16";           ///< plan v0.3 P7: KV storage, fp16 (default) or int8 (half the VRAM)
     int64_t kv_resident = 0;           ///< KV streaming: resident cells per QSA layer (0: all in VRAM)
     bool kv_grow = false;              ///< the elastic K/V (--kv-grow, STRATA_KV_GROW=1; kvg_ensure)
@@ -419,6 +421,7 @@ struct Options {
     bool no_host_worker = false;
     bool coupled_draft = strata::core::coupled_draft_env(); ///< Coupled draft sampling for MTP drafter under sampling
     bool mmap_experts = false;    ///< R2.1: opt OUT of the resident arena, back to MapViewOfFile
+    bool all_in_vram = false;     ///< keep all experts in VRAM only, no copy in RAM
     std::string shared_expert_arena; ///< Linux: optional file backing for the resident arena shared by processes
     bool resident_cpu_experts = false; ///< mmap-backed static-cache misses copied into ordinary RAM
     /// `--resident-experts` (the low-RAM PC's resident mode, chosen by setup): `--resident-cpu-experts` with the copy
@@ -662,6 +665,7 @@ void usage() {
                  "  --ple-inflight N     outstanding SSD reads (default 256)\n"
                  "  --ple-delay-us U     fault injection: each row read completes no earlier than U us\n"
                  "  --ple-sync-submit    A/B arm: submit table reads on the token thread (default: an I/O thread)\n"
+                 "  --ple-vram-cache-gib G  VRAM cache for n-gram embeddings in GiB (e.g. 2.0-4.0; default 0 = off)\n"
                  "  --kv fp16|int8       KV storage (plan v0.3 P7): int8 codes + fp16 scale per 64 values, half the\n"
                  "                       VRAM; default fp16 until gate G-C accepts int8\n"
                  "  --kv q4_0            4-bit K/V after a Hadamard rotation (PR #21): half of int8's memory,\n"
@@ -867,7 +871,10 @@ void usage() {
                  "                       does not fit.  Same answers as --mmap-experts for the same placement.\n"
                  "  --adapt-async 1      --serve with the resident RAM mode (opt-in): the adaptive tier's swaps\n"
                  "                       advance between verify windows instead of a window waiting for a whole\n"
-                 "                       round.  Not bit-exact run to run.  0 (default) = the blocking tier.\n");
+                 "                       round.  Not bit-exact run to run.  0 (default) = the blocking tier.\n"
+                 "  --all-in-vram        keep all experts in VRAM only (no copy in RAM). Reads from disk\n"
+                 "                       into VRAM slots at startup, leaving experts only on disk and in VRAM.\n"
+                 "                       (alias: --vram-only-experts)\n");
 }
 
 // --lookup-chain: the context's last tokens for the draft sources (at most 64), the MTP's pending drafts last
@@ -1220,6 +1227,13 @@ bool adapt_nowait() {
 int adapt_lag() {
     static const int v = [] { const char* e = std::getenv("STRATA_ADAPT_LAG"); return e ? std::max(1, std::atoi(e)) : 1; }();
     return v;
+}
+
+[[maybe_unused]] int argmax(const std::vector<float>& v) {
+    int best = 0;
+    for (size_t i = 1; i < v.size(); ++i)
+        if (v[i] > v[best]) best = (int) i;
+    return best;
 }
 
 /// --adapt-async: one background job at a time (the asynchronous adaptive tier's copies and memcpys).  `post` hands
@@ -1627,6 +1641,9 @@ int main(int argc, char** argv) {
         else if (a == "--ple-inflight") o.ple_inflight = std::atoi(next("--ple-inflight"));
         else if (a == "--ple-delay-us") o.ple_delay_us = std::atof(next("--ple-delay-us"));
         else if (a == "--ple-sync-submit") o.ple_sync_submit = true;
+        else if (a == "--ple-vram-cache-gib" || a == "--ple-cache-vram-gib") o.ple_vram_cache_gib = std::atof(next(a.c_str()));
+        else if (a.rfind("--ple-vram-cache-gib=", 0) == 0 || a.rfind("--ple-vram-cache-gib ", 0) == 0) o.ple_vram_cache_gib = std::atof(a.c_str() + 21);
+        else if (a.rfind("--ple-cache-vram-gib=", 0) == 0 || a.rfind("--ple-cache-vram-gib ", 0) == 0) o.ple_vram_cache_gib = std::atof(a.c_str() + 21);
         else if (a == "--kv") o.kv = next("--kv");
         else if (a == "--kv-resident") o.kv_resident = std::atoll(next("--kv-resident"));
         else if (a == "--kv-grow") o.kv_grow = true;
@@ -1845,6 +1862,11 @@ int main(int argc, char** argv) {
         else if (a == "--expert-profile-save-every")
             o.expert_profile_save_min = std::atof(next("--expert-profile-save-every"));
         else if (a == "--gpu-stages") o.gpu_stages = true;
+        else if (a == "--all-in-vram" || a == "--vram-only-experts") {
+            o.all_in_vram = true;
+            o.mmap_experts = true;
+            o.resident_cpu_experts = false;
+        }
         else if (a == "--mmap-experts") o.mmap_experts = true;
         else if (a == "--shared-expert-arena") o.shared_expert_arena = next("--shared-expert-arena");
         else if (a == "--resident-cpu-experts") o.resident_cpu_experts = o.resident_cpu_explicit = true;
@@ -1969,6 +1991,16 @@ int main(int argc, char** argv) {
     }
     bool multi_gpu = !split_devs.empty() && !split_same;   // cleared by --split-skip-if-fits before any stage loads
     bool split_own_auto = false;   // #340: the split keeps own prompt buffers by its rule (not --no-prefill-borrow)
+    if (o.all_in_vram && o.resident_cpu_experts) {
+        std::fprintf(stderr, "strata generate: --all-in-vram keeps experts only in VRAM and cannot be combined with --resident-cpu-experts\n");
+        return 2;
+    }
+    if (o.all_in_vram &&
+        (!o.layer_split.empty() || o.expert_cache_remote[0] > 0 || o.expert_cache_remote[1] > 0 ||
+         o.expert_cache_remote[2] > 0)) {
+        std::fprintf(stderr, "strata generate: --all-in-vram does not support layer splits or remote expert caches\n");
+        return 2;
+    }
     if (o.mmap_experts && !o.shared_expert_arena.empty()) {
         std::fprintf(stderr, "strata generate: --shared-expert-arena backs the resident arena and cannot be used with --mmap-experts\n");
         return 2;
@@ -2775,6 +2807,7 @@ int main(int argc, char** argv) {
     // is a mapping of the ORIGINAL second GGUF shard, the six weights are already loaded in the arena, and the
     // three buffers are the only allocation.
     strata::kernels::PleTable ple_table;
+    strata::core::PleVramCache ple_vram_cache;
     std::vector<float> ple_emb_host((size_t) strata::kernels::NG_N_EMBD);
     float* ple_emb_dev = nullptr;
     float* ple_scratch = nullptr;
@@ -2887,6 +2920,16 @@ int main(int argc, char** argv) {
         }
         ss.ple.emb_dev = ple_emb_dev;
         ss.ple.scratch = ple_scratch;
+        if (o.ple_vram_cache_gib > 0.0) {
+            std::string c_err;
+            if (!ple_vram_cache.open(o.ple_vram_cache_gib, c_err)) {
+                std::fprintf(stderr, "strata generate: failed to initialize PLE VRAM cache: %s\n", c_err.c_str());
+                return 1;
+            }
+            ss.ple.vram_cache = &ple_vram_cache;
+            std::fprintf(stderr, "strata generate: PLE VRAM cache enabled: %.2f GiB (%llu slots)\n",
+                         ple_vram_cache.gib(), (unsigned long long) ple_vram_cache.capacity_slots());
+        }
     } else {
         std::fprintf(stderr,
                      "strata generate: PLE OFF by explicit --no-ple diagnostic request.\n"
@@ -3109,6 +3152,30 @@ int main(int argc, char** argv) {
         }
         std::fprintf(stderr, "strata generate: profile %s: %zu ranked pairs, built for %lld slots\n",
                      o.expert_profile.c_str(), profile.size(), (long long) pslots);
+    }
+    const int64_t total_model_experts = g.n_layers * g.n_expert;
+    if (o.all_in_vram) {
+        if (profile.empty()) {
+            profile.reserve((size_t) total_model_experts);
+            for (int32_t l = 0; l < (int32_t) g.n_layers; ++l)
+                for (int32_t e = 0; e < (int32_t) g.n_expert; ++e)
+                    profile.emplace_back(l, e);
+        } else if ((int64_t) profile.size() < total_model_experts) {
+            std::vector<bool> seen((size_t) total_model_experts, false);
+            for (const auto& pr : profile) {
+                if (pr.first >= 0 && pr.first < g.n_layers && pr.second >= 0 && pr.second < g.n_expert)
+                    seen[(size_t) pr.first * (size_t) g.n_expert + (size_t) pr.second] = true;
+            }
+            for (int32_t l = 0; l < (int32_t) g.n_layers; ++l) {
+                for (int32_t e = 0; e < (int32_t) g.n_expert; ++e) {
+                    if (!seen[(size_t) l * (size_t) g.n_expert + (size_t) e])
+                        profile.emplace_back(l, e);
+                }
+            }
+        }
+        if (o.expert_cache <= 0) o.expert_cache = (int) total_model_experts;
+        std::fprintf(stderr, "strata generate: all-in-VRAM mode: targeting all %lld experts in VRAM\n",
+                     (long long) total_model_experts);
     }
     // #477: the whole ranking as loaded, the prior of --expert-profile-save's order (a layer split keeps only
     // CUDA0's pairs in `profile` below).  Empty without --expert-profile-save.
@@ -4385,6 +4452,11 @@ int main(int argc, char** argv) {
                          profile.size(), o.expert_profile.c_str(), profile.size());
         o.expert_cache = (int) sized_slots.size();
     }
+    if (o.all_in_vram && o.expert_cache < total_model_experts) {
+        std::fprintf(stderr, "strata generate: --all-in-vram requires all %lld experts in VRAM, but VRAM only has room for %d slots\n",
+                     (long long) total_model_experts, o.expert_cache);
+        return 1;
+    }
     // #533: --vram-elastic: the cache in physical segments (the VRAM command resizes it between requests).  One GPU,
     // no helper caches, serve mode: anything else keeps the one cudaMalloc, said once.
     if (o.vram_elastic) {
@@ -4508,6 +4580,12 @@ int main(int argc, char** argv) {
                                  "page file lets it use more of the free VRAM\n",
                          o.expert_cache, (double) xcache.bytes() / 1073741824.0, failed);
     }
+    if (o.all_in_vram && xcache.slots() < total_model_experts) {
+        std::fprintf(stderr,
+                     "strata generate: --all-in-vram requires all %lld experts in VRAM, but only %lld slots could be allocated\n",
+                     (long long) total_model_experts, (long long) xcache.slots());
+        return 1;
+    }
     if (o.expert_cache > 0) {
         std::fprintf(stderr, "strata generate: expert cache %lld slots, %.2f GiB of VRAM; policy is\n",
                      (long long) xcache.slots(), xcache.gib());
@@ -4540,6 +4618,9 @@ int main(int argc, char** argv) {
     // the policy rather than a hint.
     int64_t prefilled = 0;
     if (!profile.empty() && srcp != nullptr) {
+        if (o.all_in_vram) {
+            src.advise_sequential();
+        }
         // #369 (dag08): per layer, a full layer skips only its own pairs - each layer takes its hottest experts until
         // its range is full (one full layer used to end the whole fill, leaving most layers empty)
         const bool per_layer = xcache.per_layer_admission();
@@ -4580,6 +4661,9 @@ int main(int argc, char** argv) {
             }
             fill_bytes += strata::kernels::cpu::expert_layout().blob_bytes(profile[(size_t) i].first);
             ++prefilled;
+            if (o.all_in_vram && (prefilled % 256 == 0)) {
+                src.evict_page_cache();
+            }
         }
         const double fill_s = std::chrono::duration<double>(std::chrono::steady_clock::now() - fill_t0).count();
         // **AND ONE SLOT IS READ BACK AND COMPARED.**  A residency table that is right about indices and wrong
@@ -4596,6 +4680,16 @@ int main(int argc, char** argv) {
                              "slot 0 verified\n",
                      (long long) prefilled, (long long) (per_layer ? xcache.slots() : want), fill_s,
                      fill_s > 0 ? (double) fill_bytes / 1e6 / fill_s : 0.0);
+    }
+    if (o.all_in_vram) {
+        if (prefilled < total_model_experts) {
+            std::fprintf(stderr, "strata generate: --all-in-vram: pre-filled only %lld of %lld experts\n",
+                         (long long) prefilled, (long long) total_model_experts);
+            return 1;
+        }
+        src.evict_page_cache();
+        std::fprintf(stderr, "strata generate: all-in-VRAM mode: all %lld experts resident in VRAM, host page cache evicted\n",
+                     (long long) prefilled);
     }
 
     for (auto& stp : stages) {
@@ -5454,8 +5548,8 @@ int main(int argc, char** argv) {
     int32_t* d_res = nullptr;
     int32_t* d_hit_count = nullptr;
     strata::core::TokenHits thits;
-    const bool graph_hits = hit_fn != nullptr && !profile.empty() && !o.no_pool;
-    if (graph_hits && !o.no_capture && !o.no_token_graph && layer_dump == nullptr && half_dump == nullptr) {
+    const bool graph_hits = (hit_fn != nullptr && !profile.empty() && !o.no_pool) || o.all_in_vram;
+    if (graph_hits && (!o.no_capture || o.all_in_vram) && !o.no_token_graph && layer_dump == nullptr && half_dump == nullptr) {
         host_res.assign((size_t) (g.n_layers * g.n_expert), strata::core::kNotResident);
         int64_t resident = 0;
         for (int64_t l = 0; l < g.n_layers; ++l)
@@ -10856,6 +10950,12 @@ int main(int argc, char** argv) {
                     fb_prev = fb;
                 }
             }
+            if (ple_vram_cache.is_enabled()) {
+                const std::string rep = ple_vram_cache.report();
+                if (!rep.empty()) {
+                    std::fprintf(stderr, "strata serve: %s\n", rep.c_str());
+                }
+            }
             // STRATA_SPLIT_TIMING: where each verify stage's host time went, cumulative per window since the start
             // (waiting for its GPU to ring a layer, the CPU pool and plan per layer, staging the window)
             if (static const bool st_timing = std::getenv("STRATA_SPLIT_TIMING") != nullptr; st_timing)
@@ -11846,6 +11946,7 @@ int main(int argc, char** argv) {
                         (ms_ple + ms_embed + ms_layers + ms_head + ms_readback + ms_sample) / pt, decode_ms);
         }
         if (const std::string io = ple_table.io_report(); !io.empty()) std::printf("  %s\n", io.c_str());
+        if (const std::string cache_rep = ple_vram_cache.report(); !cache_rep.empty()) std::printf("  %s\n", cache_rep.c_str());
         // **THE DENOMINATOR IS THE POSITIONS THE POOL ACTUALLY RAN ON, NOT THE DECODED TOKENS (A6).**
         // `drive_pool` is called once per layer per position and PREFILL runs the loop too, so accumulating
         // `cpu_ms` over prefill and then dividing by `decoded` inflates this figure.  `drive.calls / n_layers`

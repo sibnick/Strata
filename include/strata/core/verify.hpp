@@ -413,6 +413,8 @@ private:
     int32_t* h_pos_ = nullptr;   int32_t* m_pos_ = nullptr;     // T * n_head
     int32_t* h_commit_ = nullptr; int32_t* m_commit_ = nullptr; // [n_keep, n_keep-1, pos_0 .. pos_{T-1}]
     float* h_ple_ = nullptr;     float* m_ple_ = nullptr;       // T * n_embd
+    const float** h_ple_srcs_ = nullptr; const float** m_ple_srcs_ = nullptr; // T pointers
+    float** h_ple_dsts_ = nullptr;       float** m_ple_dsts_ = nullptr;       // T pointers
     int32_t* h_out_ = nullptr;   int32_t* m_out_ = nullptr;     // T argmax ids
     float* h_x_ = nullptr;       float* m_x_ = nullptr;         // doorbell payload: T * n_embd
     int32_t* h_ids_ = nullptr;   int32_t* m_ids_ = nullptr;     // T * k

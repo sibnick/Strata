@@ -3247,7 +3247,7 @@ def low_ram_wanted(model, ram, choice="auto") -> bool:
     not with the word."""
     if MODELS[model].get("budget"):
         return False
-    return choice in ("on", "resident", "mmap") or (choice == "auto" and low_ram_needed(model, ram))
+    return choice in ("on", "resident", "mmap", "vram") or (choice == "auto" and low_ram_needed(model, ram))
 
 
 def kv_streaming_ram_gb(ctx, kv) -> float:
@@ -4588,11 +4588,12 @@ def main() -> int:
                          "and code only (~110 MiB less VRAM, English answers 1-2%% faster), cyrillic = English, code "
                          "and the Cyrillic script (Ukrainian, Russian... answers decode ~30%% faster), fr = English, "
                          "code and French (French answers: 18%% more drafts accepted)")
-    ap.add_argument("--low-ram", choices=["auto", "on", "off", "resident", "mmap"], default="auto",
+    ap.add_argument("--low-ram", choices=["auto", "on", "off", "resident", "mmap", "vram"], default="auto",
                     help="read the model's experts from one file in its folder instead of copying them all into RAM "
                          "(for a PC with a big GPU and little RAM); auto: when the experts would not fit the RAM. In "
                          "this mode the experts the GPU does not hold are copied into RAM once when they fit (resident), "
-                         "else read through the OS file cache (mmap); resident / mmap force one of the two")
+                         "else read through the OS file cache (mmap); resident / mmap force one of the two. "
+                         "vram: all experts live in VRAM only (no host RAM copy); needs enough VRAM to hold them all")
     ap.add_argument("--resident-budget-gib", type=float, metavar="N",
                     help="UD-Q4_K_XL, UD-IQ4_XS: the GiB of its experts kept in RAM (default: the RAM less 24 GB, 40 on 64 GB; "
                          "more is kept as you choose, with a note)")
@@ -4607,8 +4608,10 @@ def main() -> int:
                          "experts fit on the GPU); auto: when the RAM has room for it")
     ap.add_argument("--backend", choices=["cuda", "hip", "sycl"],
                     help="cuda = NVIDIA (default), hip = AMD RX 7900 / 7800 / 7700 XT, RX 9060 XT / 9070 / AI PRO R9700 on "
-                         "Linux or Windows (chosen by itself when the PC has no NVIDIA card Strata can use), "
-                         "sycl = Intel Arc, EXPERIMENTAL: Linux, built from source (docs/INTEL_ARC.md)")
+                          "Linux or Windows (chosen by itself when the PC has no NVIDIA card Strata can use), "
+                          "sycl = Intel Arc, EXPERIMENTAL: Linux, built from source (docs/INTEL_ARC.md)")
+    ap.add_argument("--ple-vram-cache-gib", type=float, default=0.0,
+                    help="size of VRAM cache for n-gram embeddings in GiB (e.g. 2-4 GiB; default 0 = off)")
     ap.add_argument("--skip-build", action="store_true", help=argparse.SUPPRESS)
     a = ap.parse_args()
     if a.source:
@@ -5060,34 +5063,44 @@ def main() -> int:
         vram = low_ram_vram(gpu) - (VISION[vision]["reserve_mib"] / 1024 if vision != "none" else 0)
         share = low_ram_gpu_share(model, vram, ctx, kv)
         rest = arena - low_ram_gpu_gb(model, vram, ctx, kv)
-        resident = a.low_ram == "resident" or (a.low_ram != "mmap" and low_ram_resident(model, ram, vram, ctx, kv))
-        if multi:      # every chosen card's share (the image encoder on the main one); #364 #384: the mapped variant
-            held = min(arena, low_ram_gpu_gb(model, vram, ctx, kv) +
-                       sum(low_ram_gpu_gb(model, low_ram_vram(x), ctx, kv) for x in chosen[1:]))
-            share, rest = held / arena, arena - held
-            # #642: the resident variant on a split, by the same rule as on one card - what no card holds fits the RAM
-            resident = resident_split() and (a.low_ram == "resident" or
-                                             (a.low_ram != "mmap" and ram >= rest + LOW_RAM_HEADROOM_GB))
-            if resident:
-                ok(f"low-RAM mode on {len(chosen)} GPUs: they hold ~{100 * share:.0f}% of {model}'s experts "
-                   f"({arena:.0f} GB) and the other ~{rest:.0f} GB stay in RAM ({ram:.0f} GB), read once from a copy "
-                   "in the model folder")
-            else:
-                ok(f"low-RAM mode on {len(chosen)} GPUs: {model}'s experts ({arena:.0f} GB) are read from the model "
-                   f"folder through the OS file cache instead of a copy in RAM ({ram:.0f} GB); the GPUs hold "
-                   f"~{100 * share:.0f}% of them")
-                if share < 0.6:
-                    warn("most of the experts are read from the SSD while it answers: expect it to be much slower "
-                         "than with enough RAM (a faster SSD and a smaller size help)")
-        elif resident:
-            ok(f"low-RAM mode: the GPU holds ~{100 * share:.0f}% of {model}'s experts ({arena:.0f} GB) and the other "
-               f"~{rest:.0f} GB stay in RAM ({ram:.0f} GB), read once from a copy in the model folder")
+        if a.low_ram == "vram":
+            need_vram = arena + 5  # experts + dense weights, buffers, KV cache overhead
+            if gpu["vram_gb"] < need_vram:
+                fail(f"--low-ram vram needs about {need_vram:.0f} GB of VRAM to hold all of {model}'s "
+                     f"experts ({arena:.0f} GB) plus dense weights and buffers; this GPU has "
+                     f"{gpu['vram_gb']:.0f} GB")
+            ok(f"VRAM-only mode: all {arena:.0f} GB of {model}'s experts will live in VRAM "
+               f"(GPU has {gpu['vram_gb']:.0f} GB); no host RAM copy")
+            resident = False
         else:
-            ok(f"low-RAM mode: {model}'s experts ({arena:.0f} GB) are read from the model folder through the OS file "
-               f"cache instead of a copy in RAM ({ram:.0f} GB); the GPU holds ~{100 * share:.0f}% of them")
-            if share < 0.6:
-                warn("most of the experts are read from the SSD while it answers: expect it to be much slower than "
-                     "with enough RAM (a faster SSD and a smaller size help)")
+            resident = a.low_ram == "resident" or (a.low_ram != "mmap" and low_ram_resident(model, ram, vram, ctx, kv))
+            if multi:      # every chosen card's share (the image encoder on the main one); #364 #384: the mapped variant
+                held = min(arena, low_ram_gpu_gb(model, vram, ctx, kv) +
+                           sum(low_ram_gpu_gb(model, low_ram_vram(x), ctx, kv) for x in chosen[1:]))
+                share, rest = held / arena, arena - held
+                # #642: the resident variant on a split, by the same rule as on one card - what no card holds fits the RAM
+                resident = resident_split() and (a.low_ram == "resident" or
+                                                 (a.low_ram != "mmap" and ram >= rest + LOW_RAM_HEADROOM_GB))
+                if resident:
+                    ok(f"low-RAM mode on {len(chosen)} GPUs: they hold ~{100 * share:.0f}% of {model}'s experts "
+                       f"({arena:.0f} GB) and the other ~{rest:.0f} GB stay in RAM ({ram:.0f} GB), read once from a copy "
+                       "in the model folder")
+                else:
+                    ok(f"low-RAM mode on {len(chosen)} GPUs: {model}'s experts ({arena:.0f} GB) are read from the model "
+                       f"folder through the OS file cache instead of a copy in RAM ({ram:.0f} GB); the GPUs hold "
+                       f"~{100 * share:.0f}% of them")
+                    if share < 0.6:
+                        warn("most of the experts are read from the SSD while it answers: expect it to be much slower "
+                             "than with enough RAM (a faster SSD and a smaller size help)")
+            elif resident:
+                ok(f"low-RAM mode: the GPU holds ~{100 * share:.0f}% of {model}'s experts ({arena:.0f} GB) and the other "
+                   f"~{rest:.0f} GB stay in RAM ({ram:.0f} GB), read once from a copy in the model folder")
+            else:
+                ok(f"low-RAM mode: {model}'s experts ({arena:.0f} GB) are read from the model folder through the OS file "
+                   f"cache instead of a copy in RAM ({ram:.0f} GB); the GPU holds ~{100 * share:.0f}% of them")
+                if share < 0.6:
+                    warn("most of the experts are read from the SSD while it answers: expect it to be much slower than "
+                         "with enough RAM (a faster SSD and a smaller size help)")
     # EXPERIMENTAL: the experimental-speed-projection control vector (data/experimental-speed-projection), off unless
     # chosen here; with it loaded, the web app and the API switch it off per request
     esp = None
@@ -5293,6 +5306,8 @@ def main() -> int:
             "--expert-profile", str(ROOT / "data" / fam.get("profile", "expert-profile.bin")), "--expert-cache", "auto",
             "--prefill", "auto", "--spec", "4", "--spec-min-p", "0.5", "--mtp", str(rt),
             "--max-context", str(ctx)]
+    if getattr(a, "ple_vram_cache_gib", 0.0) > 0.0:
+        args += ["--ple-vram-cache-gib", str(a.ple_vram_cache_gib)]
     if scaling is not None:     # the resolved config: explicit flags as given, or the automatic yarn+factor
         args += ["--rope-scaling", scaling, "--rope-scale", f"{rope_scale:g}"]
     if ctx > 8192:
@@ -5301,8 +5316,11 @@ def main() -> int:
         resident = False                               # an engine from before --resident-experts would refuse it
         ok(f"low-RAM mode: engine {meta.get('version')} has no resident variant yet; the experts are read through "
            "the OS file cache (run setup again after the next engine update)")
-    if low_ram:   # the experts from the pack's experts.bin: the ones the GPU does not hold copied into RAM, or mapped
-        args += ["--resident-experts" if resident else "--mmap-experts"]
+    if low_ram:   # the experts from the pack's experts.bin: vram-only, copied into RAM, or mapped
+        if a.low_ram == "vram":
+            args += ["--all-in-vram"]
+        else:
+            args += ["--resident-experts" if resident else "--mmap-experts"]
     disk = None if is_wsl() else rotational_disk(ple)  # #605 (WSL's virtual disk says rotational)
     if disk:
         tensor = next((t for t in GGUFFile(ple).tensors if t.name == "per_layer_token_embd.weight"), None)

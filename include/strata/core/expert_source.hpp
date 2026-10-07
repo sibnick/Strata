@@ -499,6 +499,10 @@ public:
         uint64_t headroom_bytes = 8ull << 30, uint64_t budget_bytes = 0,
         const std::vector<std::pair<int32_t, int32_t>>* rank = nullptr);
     void close();
+    /// Advise OS to expect sequential access pattern.
+    void advise_sequential();
+    /// Drop pages faulted into the OS page cache (e.g. during/after loading all experts into VRAM).
+    void evict_page_cache();
 
     bool mapped() const { return base_ != nullptr; }
     int64_t blobs() const { return blobs_; }

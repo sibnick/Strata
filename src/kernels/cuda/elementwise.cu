@@ -293,6 +293,35 @@ void copy_from_mapped(float* dst, const float* src, int64_t n, void* stream) {
     check_launch("copy_from_mapped");
 }
 
+__global__ void copy_ple_tokens_kernel(float4* __restrict__ dst, const float* const* __restrict__ src_ptrs,
+                                       float* const* __restrict__ dst_cache_ptrs, int64_t width4) {
+    const int t = blockIdx.x;
+    __shared__ const volatile float4* s_src;
+    __shared__ float4* s_dst_cache;
+    if (threadIdx.x == 0) {
+        s_src = (const volatile float4*) src_ptrs[t];
+        s_dst_cache = dst_cache_ptrs ? (float4*) dst_cache_ptrs[t] : nullptr;
+    }
+    __syncthreads();
+    const volatile float4* src = s_src;
+    float4* c = s_dst_cache;
+    float4* d = dst + (int64_t) t * width4;
+    for (int64_t i = threadIdx.x; i < width4; i += blockDim.x) {
+        const float4 v = const_cast<const float4*>(src)[i];
+        d[i] = v;
+        if (c != nullptr) c[i] = v;
+    }
+}
+
+void copy_ple_tokens(float* dst, const float* const* src_ptrs, float* const* dst_cache_ptrs, int64_t tokens,
+                     int64_t width, void* stream) {
+    if (tokens <= 0 || width <= 0) return;
+    const int64_t w4 = width / 4;
+    copy_ple_tokens_kernel<<<(unsigned) tokens, 256, 0, (cudaStream_t) stream>>>(
+        (float4*) dst, (const float* const*) src_ptrs, (float* const*) dst_cache_ptrs, w4);
+    check_launch("copy_ple_tokens");
+}
+
 __global__ void doorbell_publish_kernel(const float* __restrict__ x, const int32_t* __restrict__ ids,
                                         const float* __restrict__ w, int n, int k, float* x_out, int32_t* ids_out,
                                         float* w_out, uint32_t* seq) {

@@ -102,6 +102,8 @@ void doorbell_wait(const uint32_t* d_flag, const uint32_t* d_seq, void* stream);
 /// device memory with a kernel, so the handoff stays on the compute queue (a memcpy node is a copy-engine
 /// operation, which WDDM submits separately and which measured 67 flushes per token).
 void copy_from_mapped(float* dst, const float* src, int64_t n, void* stream);
+void copy_ple_tokens(float* dst, const float* const* src_ptrs, float* const* dst_cache_ptrs, int64_t tokens,
+                     int64_t width, void* stream);
 /// `rows` rows of `width` floats from mapped memory, except the rows listed in hit_rows[0, *count) (device),
 /// which are written +0.0 instead (a verify window's GPU-computed entries: the pool leaves zeros there).
 /// multi-GPU: dst[rows[r] * width ..] = src[r * width ..] for r < n (float4; dst may be mapped host memory).

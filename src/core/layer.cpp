@@ -1,6 +1,7 @@
 
 // src/core/layer.cpp - the GDN layer, composed.  See the header for the operation order and its traps.
 #include "strata/core/layer.hpp"
+#include "strata/core/ple_cache.hpp"
 #include "strata/core/native_head.hpp"
 #include "strata/kernels/bf16_bits.hpp"
 #include "strata/kernels/bf16_gemv.hpp"
@@ -1445,6 +1446,15 @@ st_begin(layer, 3, stream);
 }
 bool ple_issue_token(const PleRun& p, std::string& err) {
     if (!p.ready()) { err = "ple_issue_token: the PLE run is not ready"; return false; }
+    p.cached_slot = -1;
+    if (p.vram_cache && p.vram_cache->is_enabled()) {
+        const NgramKey key{*p.token, p.prev[0], p.prev[1]};
+        const int32_t slot = p.vram_cache->lookup(key);
+        if (slot >= 0) {
+            p.cached_slot = slot;
+            return true;
+        }
+    }
     uint32_t rows[strata::kernels::PLE_N_HEADS];
     strata::kernels::ngram_rows(p.token, p.prev, 1, p.consts, rows);
     if (!p.table->issue(rows)) { err = "ple_issue_token: the previous token's rows were never collected"; return false; }
@@ -1453,11 +1463,26 @@ bool ple_issue_token(const PleRun& p, std::string& err) {
 
 bool ple_finish_token(const PleRun& p, void* stream, std::string& err) {
     if (!p.ready()) { err = "ple_finish_token: the PLE run is not ready"; return false; }
+    const size_t bytes = (size_t) strata::kernels::NG_N_EMBD * sizeof(float);
+    if (p.cached_slot >= 0) {
+        if (cudaMemcpyAsync(p.emb_dev, p.vram_cache->slot_dev_ptr((uint32_t) p.cached_slot), bytes,
+                            cudaMemcpyDeviceToDevice, (cudaStream_t) stream) != cudaSuccess) {
+            err = "ple_finish_token: cache hit D2D copy failed";
+            return false;
+        }
+        return true;
+    }
     if (!p.table->collect(p.emb_host, err)) { err = "ple_finish_token: " + err; return false; }
-    if (cudaMemcpyAsync(p.emb_dev, p.emb_host, (size_t) strata::kernels::NG_N_EMBD * sizeof(float),
+    if (cudaMemcpyAsync(p.emb_dev, p.emb_host, bytes,
                         cudaMemcpyHostToDevice, (cudaStream_t) stream) != cudaSuccess) {
         err = "ple_finish_token: the row upload failed";
         return false;
+    }
+    if (p.vram_cache && p.vram_cache->is_enabled()) {
+        const NgramKey key{*p.token, p.prev[0], p.prev[1]};
+        const uint32_t ins_slot = p.vram_cache->insert(key);
+        cudaMemcpyAsync(p.vram_cache->slot_dev_ptr(ins_slot), p.emb_dev, bytes,
+                        cudaMemcpyDeviceToDevice, (cudaStream_t) stream);
     }
     return true;
 }
