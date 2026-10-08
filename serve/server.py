@@ -1851,6 +1851,14 @@ class Vision:
             args += ["--max-tokens", str(cfg["max_tokens"])]
         if cfg.get("min_tokens"):                       # #767: mtmd's image_min_tokens (a hand-edited key)
             args += ["--min-tokens", str(cfg["min_tokens"])]
+        # remote/multi-tier vision: these keys are read only by a proxy shim named in "exe" (tools/vision/strata_vision_proxy.py);
+        # without them in the config nothing changes, and a plain strata-vision is passed the same arguments as before
+        if cfg.get("remote_url"):
+            args += ["--remote-url", str(cfg["remote_url"])]
+        if cfg.get("intel_exe"):
+            args += ["--intel-exe", absolute(cfg["intel_exe"])]
+        if cfg.get("fallback_exe"):
+            args += ["--fallback-exe", absolute(cfg["fallback_exe"])]
         self.dir = self.work_dir()
         self.spawn = (args, log, env)                   # to start it again after an unload
         self.proc = None
@@ -5690,7 +5698,8 @@ def main() -> int:
                   "vision encoder unloaded; it starts with the model ...", flush=True)
             # relative paths are the config's cwd's, as for the engine below
             vcfg = {k: (os.path.abspath(os.path.join(cfg.get("cwd") or ".", v))
-                        if k in ("exe", "mmproj", "model") and isinstance(v, str) and not os.path.isabs(v) else v)
+                        if k in ("exe", "mmproj", "model", "intel_exe", "fallback_exe")
+                        and isinstance(v, str) and not os.path.isabs(v) else v)
                     for k, v in cfg["vision"].items()}
             vision = Vision(vcfg, log=open(cfg["log"], "a", encoding="utf-8") if cfg.get("log") else None,
                             env=vision_env(cfg, env), lazy=lazy)
