@@ -67,6 +67,14 @@ public:
         return d_data_ + (size_t) slot * strata::kernels::NG_N_EMBD;
     }
 
+    /// Temporarily pin a slot so it is never evicted while in flight in the current window.
+    void pin(uint32_t slot) noexcept {
+        if (slot < ways_.size()) ways_[slot].pinned = 1;
+    }
+    void unpin(uint32_t slot) noexcept {
+        if (slot < ways_.size()) ways_[slot].pinned = 0;
+    }
+
     uint64_t requests() const noexcept { return requests_; }
     uint64_t hits() const noexcept { return hits_; }
     uint64_t misses() const noexcept { return misses_; }
@@ -80,6 +88,8 @@ private:
     struct CacheWay {
         NgramKey key;
         uint32_t slot_idx = 0xFFFFFFFFu;
+        uint8_t referenced = 0;
+        uint8_t pinned = 0;
     };
 
     float* d_data_ = nullptr;

@@ -299,8 +299,8 @@ __global__ void copy_ple_tokens_kernel(float4* __restrict__ dst, const float* co
     __shared__ const volatile float4* s_src;
     __shared__ float4* s_dst_cache;
     if (threadIdx.x == 0) {
-        s_src = (const volatile float4*) src_ptrs[t];
-        s_dst_cache = dst_cache_ptrs ? (float4*) dst_cache_ptrs[t] : nullptr;
+        s_src = (const volatile float4*) ((const float* const volatile*) src_ptrs)[t];
+        s_dst_cache = dst_cache_ptrs ? (float4*) ((float* const volatile*) dst_cache_ptrs)[t] : nullptr;
     }
     __syncthreads();
     const volatile float4* src = s_src;

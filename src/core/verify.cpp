@@ -1930,6 +1930,20 @@ bool Verifier::run(int T, const int32_t* tokens, int64_t pos0, PoolMultiFn pool,
     int miss_idx[kVerifyMaxT];
     uint32_t miss_rows[kVerifyMaxT * PLE_N_HEADS];
     NgramKey miss_keys[kVerifyMaxT];
+    uint32_t pinned_slots[kVerifyMaxT];
+    struct PinGuard {
+        PleVramCache* cache;
+        const uint32_t* slots;
+        int count = 0;
+        ~PinGuard() {
+            if (cache && count > 0) {
+                for (int i = 0; i < count; ++i) cache->unpin(slots[i]);
+            }
+        }
+    } pin_guard{ss.ple.vram_cache, pinned_slots, 0};
+    for (int t = 0; t < T; ++t) {
+        h_ple_dsts_[t] = nullptr;
+    }
     if (do_ple) {
         int32_t prev[2] = {ss.ple_prev[0], ss.ple_prev[1]};
         for (int t = 0; t < T; ++t) {
@@ -1941,6 +1955,8 @@ bool Verifier::run(int T, const int32_t* tokens, int64_t pos0, PoolMultiFn pool,
             if (slot >= 0) {
                 h_ple_srcs_[t] = ss.ple.vram_cache->slot_dev_ptr((uint32_t) slot);
                 h_ple_dsts_[t] = nullptr;
+                ss.ple.vram_cache->pin((uint32_t) slot);
+                pinned_slots[pin_guard.count++] = (uint32_t) slot;
             } else {
                 miss_idx[n_misses] = t;
                 miss_keys[n_misses] = key;

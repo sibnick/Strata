@@ -87,6 +87,7 @@ int32_t PleVramCache::lookup(const NgramKey& key) noexcept {
     for (uint32_t w = 0; w < WAYS; ++w) {
         if (ways_[base + w].key == key) {
             ++hits_;
+            ways_[base + w].referenced = 1;
             return (int32_t) ways_[base + w].slot_idx;
         }
     }
@@ -104,22 +105,43 @@ uint32_t PleVramCache::insert(const NgramKey& key) noexcept {
     // Check if key is already present or if an empty slot is available
     for (uint32_t w = 0; w < WAYS; ++w) {
         if (ways_[base + w].key == key) {
+            ways_[base + w].referenced = 1;
             return ways_[base + w].slot_idx;
         }
     }
     for (uint32_t w = 0; w < WAYS; ++w) {
         if (ways_[base + w].key.empty()) {
             ways_[base + w].key = key;
+            ways_[base + w].referenced = 1;
             return ways_[base + w].slot_idx;
         }
     }
 
-    // Round-robin clock eviction in the set
-    const uint32_t victim_w = next_way_[(size_t) set];
-    next_way_[(size_t) set] = (uint8_t) ((victim_w + 1) % WAYS);
+    // Second-chance clock eviction avoiding pinned ways
+    for (uint32_t pass = 0; pass < 2 * WAYS; ++pass) {
+        const uint32_t victim_w = next_way_[(size_t) set];
+        next_way_[(size_t) set] = (uint8_t) ((victim_w + 1) % WAYS);
+        CacheWay& way = ways_[base + victim_w];
+        if (way.pinned) continue;
+        if (way.referenced) {
+            way.referenced = 0;
+            continue;
+        }
+        way.key = key;
+        way.referenced = 1;
+        return way.slot_idx;
+    }
 
-    ways_[base + victim_w].key = key;
-    return ways_[base + victim_w].slot_idx;
+    // Fallback: pick any unpinned way if all were referenced
+    for (uint32_t w = 0; w < WAYS; ++w) {
+        if (!ways_[base + w].pinned) {
+            ways_[base + w].key = key;
+            ways_[base + w].referenced = 1;
+            return ways_[base + w].slot_idx;
+        }
+    }
+
+    return ways_[base].slot_idx;
 }
 
 std::string PleVramCache::report() const {
