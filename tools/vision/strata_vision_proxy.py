@@ -110,10 +110,16 @@ class Worker:
                             ("--min-tokens", cfg.min_tokens)):
             if value is not None:
                 cmd += [flag, str(value)]
-        env = None
+        env = dict(os.environ)
         if not gpu:               # as in strata_vision.cpp: a CUDA build must not open a context on the CPU
-            env = dict(os.environ)
             env["CUDA_VISIBLE_DEVICES"] = "-1"
+        elif exe == cfg.intel_exe:
+            for icd in ("/usr/share/vulkan/icd.d/intel_icd.json", "/usr/share/vulkan/icd.d/intel_hasvk_icd.json"):
+                if os.path.exists(icd):
+                    env["VK_DRIVER_FILES"] = icd
+                    env["VK_ICD_FILENAMES"] = icd
+                    break
+            env.setdefault("GGML_VK_VISIBLE_DEVICES", "0")
         try:                      # cwd is ours: serve/server.py runs the proxy and any worker in the same scratch dir,
             self.proc = subprocess.Popen(cmd, stdin=subprocess.PIPE, stdout=subprocess.PIPE, text=True,
                                          encoding="utf-8", bufsize=1, cwd=os.getcwd(), env=env)  # and its ENC lines are relative
