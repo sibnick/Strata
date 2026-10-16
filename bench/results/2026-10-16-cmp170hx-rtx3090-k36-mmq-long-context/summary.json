@@ -1,0 +1,273 @@
+{
+  "active_request_at_stop": null,
+  "engine_return_code": 0,
+  "error": null,
+  "last_checkpoint": "PP 261681 261682 336361 778.0",
+  "limits": [
+    "Sequential K37 MMQ comparison, not randomized/interleaved; RTX reserve/monitor differs deliberately.",
+    "Clock/cache/thermal/host/desktop differences not controlled.",
+    "Profiler disabled; physical memory sampled, not guaranteed peaks or OOM prevention.",
+    "One near-limit request only; no repeat/MTP-off/placement/expert-service comparison."
+  ],
+  "max_sample_gap_seconds": 1.100019561999943,
+  "overall_resources": {
+    "max_process_swap_bytes": 0,
+    "max_rss_bytes": 5119123456,
+    "max_system_swap_bytes": 1310720,
+    "min_gpu_free_bytes": {
+      "0": 331022336,
+      "1": 2644836352
+    },
+    "min_host_available_bytes": 12269457408
+  },
+  "ownership_lines": [
+    "strata generate: --gpu-owned-experts: CUDA0 owns layers [0,36), 18432 experts, 57619251200 resident bytes",
+    "strata generate: --gpu-owned-experts: CUDA1 owns layers [36,48), 6144 experts, 19398656000 resident bytes",
+    "strata generate: --gpu-owned-experts: all 24576 experts are resident in their owning GPU caches; prompt cache loans and the CPU complement are disabled; startup file-tier reads accounted for 77024563200 bytes; no file fallback is expected after startup"
+  ],
+  "requests": [
+    {
+      "cap": 32,
+      "counter_lines": [
+        "strata serve: prompt 1977 tokens = 0 reused + 1977 read in 2608 ms (757.9 tok/s), 22 generated in 226 ms (97.4 tok/s), drafts accepted 10 of 11, 0 checkpoints",
+        "strata serve: expert tiers: GPU 0 hits this request; since the start RAM 0 blobs, files 0 blobs 77024.6 MB read (the GGUF in place)",
+        "strata serve: file tier I/O this request: the OS read 144293.0 MB from storage (0 major faults) for 77024.6 MB of expert reads"
+      ],
+      "decode_ms": 225.9,
+      "decode_tokens_per_second_engine_convention": 97.38822487826472,
+      "input_tokens": 1977,
+      "mtp_accepted": 10,
+      "mtp_offered": 11,
+      "name": "warmup",
+      "output_tokens": 22,
+      "pcie": {
+        "available": true,
+        "per_gpu": {
+          "0": {
+            "rx_mib_s": {
+              "max": 105.0,
+              "mean": 35.0,
+              "min": 0.0,
+              "sample_count": 3
+            },
+            "tx_mib_s": {
+              "max": 19.0,
+              "mean": 6.333333333333333,
+              "min": 0.0,
+              "sample_count": 3
+            }
+          },
+          "1": {
+            "rx_mib_s": {
+              "max": 75.0,
+              "mean": 71.0,
+              "min": 64.0,
+              "sample_count": 3
+            },
+            "tx_mib_s": {
+              "max": 14.0,
+              "mean": 12.666666666666666,
+              "min": 11.0,
+              "sample_count": 3
+            }
+          }
+        },
+        "reason": null,
+        "scope": "whole-device throughput; other graphics processes may contribute",
+        "units": "MB/s as printed by nvidia-smi dmon"
+      },
+      "prefill_ms": 2608.5,
+      "prefill_tokens_per_second": 757.906843013226,
+      "resources": {
+        "max_process_swap_bytes": 0,
+        "max_rss_bytes": 5085503488,
+        "max_system_swap_bytes": 1310720,
+        "min_gpu_free_bytes": {
+          "0": 360382464,
+          "1": 2670002176
+        },
+        "min_host_available_bytes": 13425082368
+      },
+      "ttft_seconds_observed": 2.634676240999397,
+      "wall_seconds_to_done": 2.8382742800004053
+    },
+    {
+      "cap": 192,
+      "counter_lines": [
+        "strata serve: prompt 32788 tokens = 0 reused + 32788 read in 39590 ms (828.2 tok/s), 37 generated in 391 ms (94.6 tok/s), drafts accepted 18 of 23, 0 checkpoints",
+        "strata serve: expert tiers: GPU 0 hits this request; since the start RAM 0 blobs, files 0 blobs 77024.6 MB read (the GGUF in place)",
+        "strata serve: file tier I/O this request: the OS read 1307.1 MB from storage (0 major faults) for 0.0 MB of expert reads"
+      ],
+      "decode_ms": 391.2,
+      "decode_tokens_per_second_engine_convention": 94.58077709611452,
+      "historical_non_mmq": {
+        "generated_ids_identical": true,
+        "mtp_accepted": 20,
+        "mtp_offered": 28,
+        "prefill_ms": 94747.1,
+        "prefill_speedup": 2.3932078807779744,
+        "prefill_tokens_per_second": 346.0580851551129,
+        "ttft_seconds": 94.773,
+        "ttft_speedup": 2.392587104758764,
+        "wall_seconds_to_done": 95.15
+      },
+      "input_tokens": 32788,
+      "mtp_accepted": 18,
+      "mtp_offered": 23,
+      "name": "32k",
+      "output_tokens": 37,
+      "pcie": {
+        "available": true,
+        "per_gpu": {
+          "0": {
+            "rx_mib_s": {
+              "max": 591.0,
+              "mean": 50.52777777777778,
+              "min": 0.0,
+              "sample_count": 36
+            },
+            "tx_mib_s": {
+              "max": 85.0,
+              "mean": 10.86111111111111,
+              "min": 0.0,
+              "sample_count": 36
+            }
+          },
+          "1": {
+            "rx_mib_s": {
+              "max": 234.0,
+              "mean": 87.91666666666667,
+              "min": 42.0,
+              "sample_count": 36
+            },
+            "tx_mib_s": {
+              "max": 555.0,
+              "mean": 57.19444444444444,
+              "min": 11.0,
+              "sample_count": 36
+            }
+          }
+        },
+        "reason": null,
+        "scope": "whole-device throughput; other graphics processes may contribute",
+        "units": "MB/s as printed by nvidia-smi dmon"
+      },
+      "prefill_ms": 39590.0,
+      "prefill_tokens_per_second": 828.1889366001516,
+      "resources": {
+        "max_process_swap_bytes": 0,
+        "max_rss_bytes": 5108465664,
+        "max_system_swap_bytes": 1310720,
+        "min_gpu_free_bytes": {
+          "0": 335216640,
+          "1": 2644836352
+        },
+        "min_host_available_bytes": 13261848576
+      },
+      "sequential_k37_mmq": {
+        "decode_ms": 401.4,
+        "generated_ids_identical": true,
+        "k37_prefill_over_k36": 1.0140591058348067,
+        "k37_wall_over_k36": 1.0141863063992091,
+        "mtp_accepted": 18,
+        "mtp_offered": 23,
+        "prefill_ms": 40146.6,
+        "prefill_tokens_per_second": 816.7067696890895,
+        "ttft_seconds_observed": 40.16933677999987,
+        "wall_seconds_to_done": 40.55589610300012
+      },
+      "ttft_seconds_observed": 39.61109704699993,
+      "wall_seconds_to_done": 39.98860549299934
+    },
+    {
+      "cap": 192,
+      "counter_lines": [
+        "strata serve: prompt 261682 tokens = 0 reused + 261682 read in 336361 ms (778.0 tok/s), 37 generated in 424 ms (87.2 tok/s), drafts accepted 18 of 24, 0 checkpoints",
+        "strata serve: expert tiers: GPU 0 hits this request; since the start RAM 0 blobs, files 0 blobs 77024.6 MB read (the GGUF in place)",
+        "strata serve: file tier I/O this request: the OS read 10336.2 MB from storage (0 major faults) for 0.0 MB of expert reads"
+      ],
+      "decode_ms": 424.4,
+      "decode_tokens_per_second_engine_convention": 87.181903864279,
+      "historical_non_mmq": {
+        "generated_ids_identical": true,
+        "mtp_accepted": 20,
+        "mtp_offered": 22,
+        "prefill_ms": 821160.0,
+        "prefill_speedup": 2.4413070726434234,
+        "prefill_tokens_per_second": 318.6735837108481,
+        "ttft_seconds": 821.207,
+        "ttft_speedup": 2.4410841371826324,
+        "wall_seconds_to_done": 821.58
+      },
+      "input_tokens": 261682,
+      "mtp_accepted": 18,
+      "mtp_offered": 24,
+      "name": "near-max",
+      "output_tokens": 37,
+      "pcie": {
+        "available": true,
+        "per_gpu": {
+          "0": {
+            "rx_mib_s": {
+              "max": 645.0,
+              "mean": 54.724919093851135,
+              "min": 0.0,
+              "sample_count": 309
+            },
+            "tx_mib_s": {
+              "max": 87.0,
+              "mean": 10.919093851132686,
+              "min": 0.0,
+              "sample_count": 309
+            }
+          },
+          "1": {
+            "rx_mib_s": {
+              "max": 238.0,
+              "mean": 84.55663430420712,
+              "min": 28.0,
+              "sample_count": 309
+            },
+            "tx_mib_s": {
+              "max": 557.0,
+              "mean": 54.0,
+              "min": 9.0,
+              "sample_count": 309
+            }
+          }
+        },
+        "reason": null,
+        "scope": "whole-device throughput; other graphics processes may contribute",
+        "units": "MB/s as printed by nvidia-smi dmon"
+      },
+      "prefill_ms": 336360.8,
+      "prefill_tokens_per_second": 777.9800737779194,
+      "resources": {
+        "max_process_swap_bytes": 0,
+        "max_rss_bytes": 5119123456,
+        "max_system_swap_bytes": 1310720,
+        "min_gpu_free_bytes": {
+          "0": 331022336,
+          "1": 2644836352
+        },
+        "min_host_available_bytes": 12269457408
+      },
+      "sequential_k37_mmq": {
+        "decode_ms": 421.7,
+        "generated_ids_identical": true,
+        "k37_prefill_over_k36": 1.0145085277475854,
+        "k37_wall_over_k36": 1.0146814691705952,
+        "mtp_accepted": 18,
+        "mtp_offered": 24,
+        "prefill_ms": 341240.9,
+        "prefill_tokens_per_second": 766.854149077675,
+        "ttft_seconds_observed": 341.2882885750005,
+        "wall_seconds_to_done": 341.7631425889995
+      },
+      "ttft_seconds_observed": 336.41077236599995,
+      "wall_seconds_to_done": 336.81815719800034
+    }
+  ],
+  "startup_seconds": 167.71338960499997,
+  "status": "passed"
+}
