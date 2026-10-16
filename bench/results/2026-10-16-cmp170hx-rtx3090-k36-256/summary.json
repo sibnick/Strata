@@ -1,0 +1,38 @@
+{
+  "completed_requests": 0,
+  "engine_admission_failure": {
+    "assigned_experts": 6144,
+    "deficit_bytes": 553906124,
+    "free_before_experts_bytes": 20813905920,
+    "raw_line": "strata generate: --gpu-owned-experts: CUDA1 needs 19398656000 bytes for 6144 assigned experts, but 20813905920 bytes are free (18844749876 after the stage reserve, exact owned-prefill scratch and draft binding); refusing partial ownership",
+    "required_expert_bytes": 19398656000,
+    "reserved_bytes": 1969156044,
+    "usable_after_reserves_bytes": 18844749876
+  },
+  "engine_return_code": 1,
+  "error": "PermissionError: [Errno 13] Permission denied: '/proc/244643/io'",
+  "last_checkpoint": null,
+  "limits": [
+    "K37 comparison is a prior serial run, not randomized or same-guard paired measurement.",
+    "Short inputs only; no near-max quality/memory guarantee or optimal-split claim.",
+    "RTX monitor256MiB, CMP640MiB; allocation reserves1024MiB and host5GiB reaction unchanged.",
+    "Polling cannot guarantee against transient pressure or OOM."
+  ],
+  "max_process_rss_bytes": 2618785792,
+  "max_process_swap_bytes": 0,
+  "max_sample_gap_seconds": 1.0998091399997065,
+  "max_system_swap_bytes": 1310720,
+  "min_gpu_free_bytes": {
+    "0": 20813905920,
+    "1": 3460628480
+  },
+  "min_host_available_bytes": 16797921280,
+  "ownership_lines": [
+    "strata generate: --gpu-owned-experts: CUDA0 owns layers [0,36), 18432 experts, 57619251200 resident bytes"
+  ],
+  "primary_failure": "engine full-residency admission rejected K36 before READY",
+  "requests": {},
+  "secondary_monitor_failure": "PermissionError: [Errno 13] Permission denied: '/proc/244643/io'",
+  "startup_seconds": null,
+  "status": "failed"
+}
