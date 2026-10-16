@@ -1,0 +1,41 @@
+{
+  "bench/results/2026-10-16-cmp170hx-rtx3090-mmq-640/mmq/results.json": {
+    "sha256": "f831df02c06b1e5559979c989906ab1d3663435cb9b5bfebee6a6ea4cfc669c9"
+  },
+  "bench/results/2026-10-16-cmp170hx-rtx3090-mmq-640/prompts/large.ids": {
+    "bytes": 8859,
+    "sha256": "953be64023898d51c4e513b40fefb66721ed2c643a7c18713c15edc81d4c014f"
+  },
+  "bench/results/2026-10-16-cmp170hx-rtx3090-mmq-640/prompts/large.json": {
+    "bytes": 569,
+    "sha256": "62e47daae4800429cc0afe375773618f40405d97ecf025c264d56d8b5937f059"
+  },
+  "bench/results/2026-10-16-cmp170hx-rtx3090-mmq-640/prompts/large.txt": {
+    "bytes": 9087,
+    "sha256": "8ce357f78ed31b52c8f8cb7862408b2d411004f0d3a4bf34f2d05968faad17d0"
+  },
+  "bench/results/2026-10-16-cmp170hx-rtx3090-mmq-640/prompts/medium.ids": {
+    "bytes": 4490,
+    "sha256": "0608e2f93bc83248e39dd644070c1121c3671024cb31497a7bcbf05f0ff77ff6"
+  },
+  "bench/results/2026-10-16-cmp170hx-rtx3090-mmq-640/prompts/medium.json": {
+    "bytes": 564,
+    "sha256": "5df1c6fc13d787d1395d1b7abef8d2c1ee0ee6bf14a2ebe559238dc840f8bc05"
+  },
+  "bench/results/2026-10-16-cmp170hx-rtx3090-mmq-640/prompts/medium.txt": {
+    "bytes": 4596,
+    "sha256": "d13f1540b305428e1fd2115d918f7611079c5c9c8e8d17c41ff989a8d0081ebe"
+  },
+  "bench/results/2026-10-16-cmp170hx-rtx3090-mmq-640/prompts/small.ids": {
+    "bytes": 2296,
+    "sha256": "92e4898c7878ebc799b5e931e0a697cdf9043d7b2dcd6423c1ebc48646202421"
+  },
+  "bench/results/2026-10-16-cmp170hx-rtx3090-mmq-640/prompts/small.json": {
+    "bytes": 562,
+    "sha256": "98824f283f4fe8ca4408bafa31117454e3e85089dc02ec57eede3e81a4f35c72"
+  },
+  "bench/results/2026-10-16-cmp170hx-rtx3090-mmq-640/prompts/small.txt": {
+    "bytes": 2325,
+    "sha256": "c1e21509cd5fb692b3c081db421cd91b80d2c6af5aa179f54dda5df3b70b2688"
+  }
+}

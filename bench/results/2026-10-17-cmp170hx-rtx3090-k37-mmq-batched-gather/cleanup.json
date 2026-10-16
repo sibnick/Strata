@@ -1,0 +1,36 @@
+{
+  "all_arms_exit_zero": true,
+  "background_helpers": "No persistent helper processes; telemetry queried synchronously by each runner.",
+  "compute_processes": "",
+  "gpu_memory_bytes": [
+    {
+      "free_bytes": 25266225152,
+      "physical_index": 0,
+      "total_bytes": 25769803776,
+      "used_bytes": 503578624
+    },
+    {
+      "free_bytes": 68048519168,
+      "physical_index": 1,
+      "total_bytes": 68719476736,
+      "used_bytes": 670957568
+    }
+  ],
+  "host_memory": {
+    "MemAvailable": 16785342464,
+    "SwapFree": 17041190912,
+    "SwapTotal": 17179865088
+  },
+  "owned_engine_pids": [
+    684156,
+    691459,
+    698669,
+    707166,
+    713740,
+    720256,
+    726227
+  ],
+  "owned_pids_still_present": [],
+  "telemetry": "0, GPU-01f295eb-2ee0-838a-ba5b-db97f075a5f7, NVIDIA GeForce RTX 3090, 300.00, 23.42, 210, 210, 28, 0x0000000000000001\n1, GPU-79d96de3-4783-ba96-d95c-fe5e0364528e, NVIDIA CMP 170HX, 250.00, 32.07, 210, 210, 29, 0x0000000000000001",
+  "utc": "2026-10-16T23:47:31.048+00:00"
+}

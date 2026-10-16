@@ -1,0 +1,59 @@
+{
+  "backend_limits": "HIP hipcc and SYCL icpx not installed. No HIP/SYCL build/runtime validation; batching gated off on HIP and SYCL is separate.",
+  "baseline_CMakeLists_sha256": "470fe1bbdc168c12a2def23f51b7962bbcc8dabf8b0f03fb6d6757f7c2ec66ab",
+  "baseline_configure": [
+    "cmake",
+    "-S",
+    ".",
+    "-B",
+    "build/cuda-batched",
+    "-DSTRATA_ENABLE_CUDA=ON",
+    "-DCMAKE_CUDA_COMPILER=/usr/local/cuda-13.4/bin/nvcc",
+    "-DCMAKE_CUDA_ARCHITECTURES=80;86",
+    "-DCMAKE_BUILD_TYPE=Release",
+    "-DSTRATA_BUILD_TESTS=ON",
+    "-DFETCHCONTENT_SOURCE_DIR_STRATA_LLAMACPP=/home/nikolay/projects/copilot-worktrees/170hx-3090/sibnick-animated-robot/build/llama-pristine",
+    "-DFETCHCONTENT_FULLY_DISCONNECTED=ON"
+  ],
+  "baseline_source_commit": "3480a3be887494ad79c7400bcd747b44dc97f3ee",
+  "build": [
+    "cmake",
+    "--build",
+    "build/cuda-batched",
+    "--target",
+    "strata",
+    "prefill_mmq_kquant_test",
+    "-j",
+    "3"
+  ],
+  "candidate_hashes": {
+    "CMakeLists.txt": "28a206ac64b9b7ef06146c03cf9c6351dd199678ae9525e7c5aa0eb0b16d4bc6",
+    "build/cuda-batched/CMakeCache.txt": "ed24afeaea0eba2df5cddb447d4c598eecaf5a5e3d9aa58d8de4d0bc296437f4",
+    "build/cuda-batched/libstrata_kq.so": "3ba4cc2c791be319e5c010965b95c75443fb52194b52ea28c43c1fd8397335a0",
+    "build/cuda-batched/strata": "aba34837fe52effa15450a85a82d6cde9af6a55c7866361ecd1f49099a5f6af9",
+    "src/prefill/prefill.cpp": "d85eca64d947b85bda090e6a894d7267834847d3507d6f664f677631ec36c729"
+  },
+  "changed_runtime_files": [
+    "CMakeLists.txt",
+    "src/prefill/prefill.cpp"
+  ],
+  "dependency_commit": "3cf03257f219afbe7334045ff7c6a06ac68c627d",
+  "dependency_diff": "",
+  "final_test_source_sha256": "142c5d9253d05dd9783c0170f3fb4c697f77c60ea767781528b296d6061a9a52",
+  "hashes": {
+    "build/clean-unpatched/CMakeCache.txt": "ed24afeaea0eba2df5cddb447d4c598eecaf5a5e3d9aa58d8de4d0bc296437f4",
+    "build/clean-unpatched/libstrata_kq.so": "4592ec55f87d08d11850944ffead01ed4a07d4868eb69706b70312b52a62c8d4",
+    "build/clean-unpatched/strata": "5586cf8ccc4596af905d959b07594d445ce3c9523e19f8f344a00961d880351c",
+    "build/llama-pristine/ggml/src/ggml-cuda/mmq.cuh": "50db23f5055af6e28c142fcb4c7fb16c51f7137184ebf8c0ca113ed88906851b",
+    "include/strata/prefill/moe_mmq.hpp": "896c916fb6d66960b140eb958c57f561370095c7680cf729596f3b050b47c52f",
+    "src/prefill/moe_mmq.cu": "f1e0d3494bc1cc44a01b5af65d70de98eff178f05e09d83a138b632268213907"
+  },
+  "notes": [
+    "Clean baseline built before runtime edits; copied to build/clean-unpatched.",
+    "CMake reconfigure rebuilt ggml.c (version stamp) and relinked KQ DSO, but compiled KQ SASS is identical across preserved, clean and candidate libraries (kq-sass-identity.json).",
+    "First multi-target candidate build reached strata but old make target list did not include newly added test; rerun test build succeeded.",
+    "ctest shim had missing Python cmake module; used /usr/bin/ctest. Initial CUDA checks inherited CUDA_VISIBLE_DEVICES empty; corrected with env -u CUDA_VISIBLE_DEVICES. Both corrected focused checks pass."
+  ],
+  "nvcc": "nvcc: NVIDIA (R) Cuda compiler driver\nCopyright (c) 2005-2026 NVIDIA Corporation\nBuilt on Tue_Sep_01_08:45:21_PDT_2026\nCuda compilation tools, release 13.4, V13.4.92\nBuild cuda_13.4.r13.4/compiler.38855100_0\n",
+  "runtime_diff_from_historical_build": ""
+}

@@ -1,0 +1,33 @@
+-- Strata: CUDA enabled, arch 80;86
+-- strata: pack/full/experts.bin absent - the expert arena load test is NOT registered
+-- ccache found, compilation results will be cached. Disable with GGML_CCACHE=OFF.
+-- CMAKE_SYSTEM_PROCESSOR: x86_64
+-- GGML_SYSTEM_ARCH: x86
+-- Including CPU backend
+-- x86 detected
+-- Adding CPU backend variant ggml-cpu: -march=native 
+-- ggml version: 0.24.0
+-- ggml commit:  3cf03257f
+-- Configuring done (0.3s)
+-- Generating done (0.1s)
+-- Build files have been written to: /home/nikolay/projects/copilot-worktrees/170hx-3090/sibnick-animated-robot/build/cuda-batched
+[  2%] Built target strata_spec
+[  5%] Building C object ggml/src/CMakeFiles/ggml-base.dir/ggml.c.o
+[ 10%] Built target strata_core
+[ 43%] Built target strata_kernels
+[ 43%] Linking CXX static library libggml-base.a
+[ 48%] Built target ggml-base
+[ 48%] Built target strata_mmq_w4a4
+[ 48%] Linking CXX shared library libstrata_kq.so
+[ 59%] Built target ggml-cpu
+[ 67%] Built target strata_kernels_cpu
+[ 78%] Built target strata_engine
+[ 83%] Built target strata_kq
+[ 94%] Built target strata_mmq
+[ 94%] Building CXX object CMakeFiles/strata_prefill.dir/src/prefill/prefill.cpp.o
+[ 94%] Linking CXX static library libstrata_prefill.a
+[ 97%] Built target strata_prefill
+[100%] Built target strata_qwen35
+[100%] Linking CXX executable strata
+[100%] Built target strata
+gmake: *** No rule to make target 'prefill_gather_test'.  Stop.

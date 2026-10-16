@@ -1,0 +1,19 @@
+Internal ctest changing into directory: /home/nikolay/projects/copilot-worktrees/170hx-3090/sibnick-animated-robot/build/cuda-batched
+Test project /home/nikolay/projects/copilot-worktrees/170hx-3090/sibnick-animated-robot/build/cuda-batched
+    Start  99: prefill_gather_test
+1/2 Test  #99: prefill_gather_test ..............***Failed    0.07 sec
+FAIL: no CUDA-capable device is detected
+
+    Start 102: prefill_mmq_kquant_test
+2/2 Test #102: prefill_mmq_kquant_test ..........***Failed    0.04 sec
+prefill MMQ K-quant screen failed: stream: no CUDA-capable device is detected
+
+
+0% tests passed, 2 tests failed out of 2
+
+Total Test time (real) =   0.12 sec
+
+The following tests FAILED:
+	 99 - prefill_gather_test (Failed)
+	102 - prefill_mmq_kquant_test (Failed)
+Errors while running CTest

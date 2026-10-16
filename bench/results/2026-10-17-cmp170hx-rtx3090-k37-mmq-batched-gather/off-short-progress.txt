@@ -1,0 +1,8 @@
+2026-10-16T23:39:04.342+00:00 START off-short pid=713740
+2026-10-16T23:41:23.861+00:00 PASS off-short warmup prefill=1475.3ms
+2026-10-16T23:41:24.844+00:00 PASS off-short rep1-small prefill=685.6ms
+2026-10-16T23:41:26.390+00:00 PASS off-short rep1-medium prefill=1239.5ms
+2026-10-16T23:41:27.364+00:00 PASS off-short rep2-small prefill=681.9ms
+2026-10-16T23:41:28.915+00:00 PASS off-short rep2-medium prefill=1246.7ms
+2026-10-16T23:41:29.881+00:00 PASS off-short rep3-small prefill=668.1ms
+2026-10-16T23:41:31.419+00:00 PASS off-short rep3-medium prefill=1242.3ms

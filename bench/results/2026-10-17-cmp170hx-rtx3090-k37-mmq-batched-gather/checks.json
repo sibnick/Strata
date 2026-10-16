@@ -1,0 +1,31 @@
+{
+  "status": "passed",
+  "arms": [
+    "preserved",
+    "off-large",
+    "on-large",
+    "on-short",
+    "off-short",
+    "counts-off",
+    "counts-on"
+  ],
+  "requests": 30,
+  "mechanism": {
+    "0": {
+      "off_launches": 83589,
+      "on_launches": 5361,
+      "experts": 83589,
+      "bytes": 261412134912,
+      "fallbacks": 0,
+      "launch_reduction_percent": 93.58647668951656
+    },
+    "1": {
+      "off_launches": 24489,
+      "on_launches": 1573,
+      "experts": 24489,
+      "bytes": 77328470016,
+      "fallbacks": 0,
+      "launch_reduction_percent": 93.57670790967373
+    }
+  }
+}

@@ -2139,6 +2139,23 @@ bool Prefill::run_impl(const int64_t* tokens, int64_t n, int64_t pos0, std::stri
     } help_scope{m, helped};
     PfTimer pt;
     PeTimer pe;
+    static const bool batch_gather = [] {
+        const char* v = std::getenv("STRATA_PREFILL_BATCH_GATHER");
+        if (v == nullptr || std::strcmp(v, "1") != 0) return false;
+#if defined(STRATA_PREFILL_MMQ) && !defined(STRATA_USE_HIP) && !defined(STRATA_HIP_GFX906)
+        std::fprintf(stderr, "strata: batched gather enabled for routed native MMQ experts; staged experts flush "
+                             "immediately; fused, peer/helper and non-native paths unchanged\n");
+        return true;
+#else
+        std::fprintf(stderr, "strata: STRATA_PREFILL_BATCH_GATHER requires CUDA MMQ; keeping the existing gather path\n");
+        return false;
+#endif
+    }();
+    static const bool gather_counts = [] {
+        const char* v = std::getenv("STRATA_PREFILL_GATHER_COUNTS");
+        return v != nullptr && std::strcmp(v, "1") == 0;
+    }();
+    uint64_t gather_launches = 0, gather_experts = 0, gather_bytes = 0, gather_fallbacks = 0;
     if (m.pp) pe.dev = m.pp->dev; else pe.on = false;
     const cudaStream_t cs = (cudaStream_t) m.cs;
     // the MMQ row table lives in the borrowed cache slots, which the refill after a prompt overwrites with experts:
@@ -3831,7 +3848,7 @@ bool Prefill::run_impl(const int64_t* tokens, int64_t n, int64_t pos0, std::stri
                             const char* v = std::getenv("STRATA_PREFILL_GROUP_GATHER");
                             return v == nullptr || std::atoi(v) != 0;
                         }();
-                        const bool group_gather = group_env && stream_all && use_mmq && lay.native &&
+                        const bool group_gather = group_env && (stream_all || batch_gather) && use_mmq && lay.native &&
                                                   MMQ_GROUP <= mmq::kGatherGroupMax;
                         mmq::GatherGroup gg;
                         int gg_slots[MMQ_GROUP];
@@ -3846,9 +3863,10 @@ bool Prefill::run_impl(const int64_t* tokens, int64_t n, int64_t pos0, std::stri
                                 pt.mark(kPfDequant, cs);
                             }
                             // NVFP4: each expert's scales go next to its group slot in the same launch
-                            if (!mmq::gather_native_group(gg, f.up_off, mmq_gub / 2, f.down_off, mmq_db, m.grp_gu, mmq_gub,
-                                                          m.grp_d, mmq_db, m.cs, f.tail_off,
-                                                          f.tail_off ? m.grp_tail : nullptr, zero)) {
+                            const bool grouped = mmq::gather_native_group(gg, f.up_off, mmq_gub / 2, f.down_off, mmq_db,
+                                                                          m.grp_gu, mmq_gub, m.grp_d, mmq_db, m.cs,
+                                                                          f.tail_off, f.tail_off ? m.grp_tail : nullptr, zero);
+                            if (!grouped) {
                                 for (int i = gg.first; i < gg.n; ++i) {   // not 16-byte aligned: one at a time
                                     const uint8_t* b = gg.blob[i];
                                     mmq::gather_native(b, b + f.up_off, mmq_gub / 2, b + f.down_off, mmq_db,
@@ -3856,6 +3874,13 @@ bool Prefill::run_impl(const int64_t* tokens, int64_t n, int64_t pos0, std::stri
                                                        f.tail_off ? b + f.tail_off : nullptr,
                                                        f.tail_off ? m.grp_tail + i * 4 : nullptr, i + 1 == gg.n ? zero : 0);
                                 }
+                            }
+                            if (gather_counts) {
+                                const uint64_t count = (uint64_t) (gg.n - gg.first);
+                                gather_launches += grouped ? 1 : count;
+                                gather_experts += count;
+                                gather_bytes += count * (mmq_gub + mmq_db + (f.tail_off ? 16 : 0)) + 2 * zero;
+                                gather_fallbacks += !grouped;
                             }
                             if (gg_nslots > 0) {
                                 const int rel = gg_slots[gg_nslots - 1];
@@ -3879,7 +3904,12 @@ bool Prefill::run_impl(const int64_t* tokens, int64_t n, int64_t pos0, std::stri
                                     gg.blob[q] = blob_dev;
                                     gg.n = (int) q + 1;
                                     if (slot >= 0) gg_slots[gg_nslots++] = slot;
-                                    if (!last_of_group) return true;
+                                    if (!last_of_group) {
+                                        // The short walk has only eight staging slots, fewer than an MMQ group.
+                                        // Never hold a staged slot across iterations: stage_one may refill it.
+                                        if (!stream_all && slot >= 0) flush(0);
+                                        return true;
+                                    }
                                     flush(MMQ_TAIL);
                                     gg = mmq::GatherGroup{};
                                 } else if (lay.native) {
@@ -3889,6 +3919,12 @@ bool Prefill::run_impl(const int64_t* tokens, int64_t n, int64_t pos0, std::stri
                                                        mmq_db, m.grp_gu + q * mmq_gub, m.grp_d + q * mmq_db, m.cs,
                                                        f.tail_off ? blob_dev + f.tail_off : nullptr,
                                                        f.tail_off ? m.grp_tail + q * 4 : nullptr, last_of_group ? MMQ_TAIL : 0);
+                                    if (gather_counts) {
+                                        ++gather_launches;
+                                        ++gather_experts;
+                                        gather_bytes += mmq_gub + mmq_db + (f.tail_off ? 16 : 0) +
+                                                        (last_of_group ? 2 * MMQ_TAIL : 0);
+                                    }
                                 } else {
                                     mmq::gather_strata_q2(blob_dev, m.grp_gu + q * mmq_gub, m.grp_d + q * mmq_db, m.cs);
                                     if (last_of_group) {
@@ -3968,8 +4004,10 @@ bool Prefill::run_impl(const int64_t* tokens, int64_t n, int64_t pos0, std::stri
                                     ++stats_.experts_resident;
                                     if (!compute(j, m.cache->device_slot(m.host_res[(size_t) l * m.g->n_expert + e]), -1)) return false;
                                 } else {
-                                    pt.mark(kPfWaitCopy, cs);
-                                    cudaStreamWaitEvent(m.cs, m.copied[stage_of[j]], 0);
+                                    if (!group_gather) {
+                                        pt.mark(kPfWaitCopy, cs);
+                                        cudaStreamWaitEvent(m.cs, m.copied[stage_of[j]], 0);
+                                    }
                                     if (!compute(j, m.stage_dev[stage_of[j]], stage_of[j])) return false;
                                     --pending;   // compute recorded the slot's release event before any reuse
                                 }
@@ -4265,6 +4303,12 @@ bool Prefill::run_impl(const int64_t* tokens, int64_t n, int64_t pos0, std::stri
                      (long long) kv_prefetches);
     }
     stats_.ms_total += ms_since(t_start);
+    if (gather_counts)
+        std::fprintf(stderr, "strata gather counts: device=%d layers=%lld:%lld tokens=%lld scope=routed-native "
+                             "launches=%llu experts=%llu bytes=%llu fallbacks=%llu\n",
+                     m.device, (long long) LB, (long long) LE, (long long) n,
+                     (unsigned long long) gather_launches, (unsigned long long) gather_experts,
+                     (unsigned long long) gather_bytes, (unsigned long long) gather_fallbacks);
     if (pt.on) {
         pt.fold();
         double total = 0.0;

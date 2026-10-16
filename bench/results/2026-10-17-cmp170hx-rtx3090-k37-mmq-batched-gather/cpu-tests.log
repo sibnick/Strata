@@ -1,0 +1,9 @@
+test_hard_guards (test_batch.BatchTests.test_hard_guards) ... ok
+test_mixed_ring_and_partial_flush_model (test_batch.BatchTests.test_mixed_ring_and_partial_flush_model) ... ok
+test_original_fixtures_and_outputs (test_batch.BatchTests.test_original_fixtures_and_outputs) ... ok
+test_startup_rejects_ownership_and_mapping_mismatch (test_batch.BatchTests.test_startup_rejects_ownership_and_mapping_mismatch) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.002s
+
+OK

@@ -1,0 +1,20 @@
+{
+  "preserved": {
+    "path": "/home/nikolay/projects/copilot-worktrees/170hx-3090/sibnick-fuzzy-spoon/build/cuda-short-profile/libstrata_kq.so",
+    "dso_sha256": "f0476d2db4fc631d77b2923f35dacdc7dcbb80462e583356c85d773768a12ef4",
+    "sass_normalized_sha256": "74fd8cec289c5932582625ee8b13d7bbe3cdedcb4463b7af158d9ebb38592f56",
+    "sass_lines": 1534144
+  },
+  "clean": {
+    "path": "/home/nikolay/projects/copilot-worktrees/170hx-3090/sibnick-animated-robot/build/clean-unpatched/libstrata_kq.so",
+    "dso_sha256": "4592ec55f87d08d11850944ffead01ed4a07d4868eb69706b70312b52a62c8d4",
+    "sass_normalized_sha256": "74fd8cec289c5932582625ee8b13d7bbe3cdedcb4463b7af158d9ebb38592f56",
+    "sass_lines": 1534144
+  },
+  "candidate": {
+    "path": "/home/nikolay/projects/copilot-worktrees/170hx-3090/sibnick-animated-robot/build/cuda-batched/libstrata_kq.so",
+    "dso_sha256": "3ba4cc2c791be319e5c010965b95c75443fb52194b52ea28c43c1fd8397335a0",
+    "sass_normalized_sha256": "74fd8cec289c5932582625ee8b13d7bbe3cdedcb4463b7af158d9ebb38592f56",
+    "sass_lines": 1534144
+  }
+}
