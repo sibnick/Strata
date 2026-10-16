@@ -1,0 +1,1102 @@
+{
+  "adaptive_32k_sanity": {
+    "answer": "ORIGIN: IRIS-4Q7-LANTERN\nCENTER: CEDAR-8M2-QUARRY\nFINAL: ORBIT-6V9-KETTLE",
+    "generation_cap": 192,
+    "input_tokens": 32788,
+    "mtp_accepted_offered": [
+      18,
+      22
+    ],
+    "output_tokens": 37,
+    "prefill_ms": 39150.0,
+    "prompt_ids_sha256": "48619c77cba7b5b9aff070dd990675453a327c4bf25a8637bfae195ecfc454a7",
+    "wall_seconds_to_done": 39.56991478300006
+  },
+  "adaptive_metrics": {
+    "adaptive": {
+      "all_relevant_engine_lines": [
+        "strata serve: decode expert cache hit rate: 96.4% (2842 hits / 2947 lookups); 43 more read by the GPU over PCIe or from another GPU (1.4% of all 2990 routed)",
+        "strata serve: resident RAM: 2.94 GiB of experts in RAM, 28 exchanged with the VRAM tier, 0 blob reads from the file",
+        "strata serve: expert tiers: GPU 2842 hits this request; since the start RAM 2914 blobs, files 0 blobs 73867.1 MB read (the GGUF in place)",
+        "strata serve: file tier I/O this request: the OS read 137565.7 MB from storage (6 major faults) for 73867.1 MB of expert reads",
+        "strata serve: decode expert cache hit rate: 98.1% (3171 hits / 3231 lookups); 19 more read by the GPU over PCIe or from another GPU (0.6% of all 3250 routed)",
+        "strata serve: resident RAM: 2.94 GiB of experts in RAM, 48 exchanged with the VRAM tier, 0 blob reads from the file",
+        "strata serve: expert tiers: GPU 3171 hits this request; since the start RAM 3619 blobs, files 0 blobs 73867.1 MB read (the GGUF in place)",
+        "strata serve: file tier I/O this request: the OS read 28.9 MB from storage (0 major faults) for 0.0 MB of expert reads",
+        "strata serve: decode expert cache hit rate: 98.5% (2937 hits / 2982 lookups); 8 more read by the GPU over PCIe or from another GPU (0.3% of all 2990 routed)",
+        "strata serve: resident RAM: 2.94 GiB of experts in RAM, 53 exchanged with the VRAM tier, 0 blob reads from the file",
+        "strata serve: expert tiers: GPU 2937 hits this request; since the start RAM 4901 blobs, files 0 blobs 73867.1 MB read (the GGUF in place)",
+        "strata serve: file tier I/O this request: the OS read 50.5 MB from storage (0 major faults) for 0.0 MB of expert reads",
+        "strata serve: decode expert cache hit rate: 98.9% (3211 hits / 3246 lookups); 4 more read by the GPU over PCIe or from another GPU (0.1% of all 3250 routed)",
+        "strata serve: resident RAM: 2.94 GiB of experts in RAM, 55 exchanged with the VRAM tier, 0 blob reads from the file",
+        "strata serve: expert tiers: GPU 3211 hits this request; since the start RAM 7581 blobs, files 0 blobs 73867.1 MB read (the GGUF in place)",
+        "strata serve: file tier I/O this request: the OS read 88.9 MB from storage (0 major faults) for 0.0 MB of expert reads",
+        "strata serve: decode expert cache hit rate: 98.8% (3332 hits / 3373 lookups); 7 more read by the GPU over PCIe or from another GPU (0.2% of all 3380 routed)",
+        "strata serve: resident RAM: 2.94 GiB of experts in RAM, 56 exchanged with the VRAM tier, 0 blob reads from the file",
+        "strata serve: expert tiers: GPU 3332 hits this request; since the start RAM 8243 blobs, files 0 blobs 73867.1 MB read (the GGUF in place)",
+        "strata serve: file tier I/O this request: the OS read 28.7 MB from storage (0 major faults) for 0.0 MB of expert reads",
+        "strata serve: decode expert cache hit rate: 98.8% (2950 hits / 2985 lookups); 5 more read by the GPU over PCIe or from another GPU (0.2% of all 2990 routed)",
+        "strata serve: resident RAM: 2.94 GiB of experts in RAM, 57 exchanged with the VRAM tier, 0 blob reads from the file",
+        "strata serve: expert tiers: GPU 2950 hits this request; since the start RAM 9503 blobs, files 0 blobs 73867.1 MB read (the GGUF in place)",
+        "strata serve: file tier I/O this request: the OS read 50.8 MB from storage (0 major faults) for 0.0 MB of expert reads",
+        "strata serve: decode expert cache hit rate: 99.0% (3216 hits / 3247 lookups); 3 more read by the GPU over PCIe or from another GPU (0.1% of all 3250 routed)",
+        "strata serve: resident RAM: 2.94 GiB of experts in RAM, 57 exchanged with the VRAM tier, 0 blob reads from the file",
+        "strata serve: expert tiers: GPU 3216 hits this request; since the start RAM 12163 blobs, files 0 blobs 73867.1 MB read (the GGUF in place)",
+        "strata serve: file tier I/O this request: the OS read 88.9 MB from storage (0 major faults) for 0.0 MB of expert reads",
+        "strata serve: decode expert cache hit rate: 98.9% (3208 hits / 3243 lookups); 7 more read by the GPU over PCIe or from another GPU (0.2% of all 3250 routed)",
+        "strata serve: resident RAM: 2.94 GiB of experts in RAM, 59 exchanged with the VRAM tier, 0 blob reads from the file",
+        "strata serve: expert tiers: GPU 3208 hits this request; since the start RAM 12818 blobs, files 0 blobs 73867.1 MB read (the GGUF in place)",
+        "strata serve: file tier I/O this request: the OS read 28.7 MB from storage (0 major faults) for 0.0 MB of expert reads",
+        "strata serve: decode expert cache hit rate: 98.9% (2951 hits / 2985 lookups); 5 more read by the GPU over PCIe or from another GPU (0.2% of all 2990 routed)",
+        "strata serve: resident RAM: 2.94 GiB of experts in RAM, 59 exchanged with the VRAM tier, 0 blob reads from the file",
+        "strata serve: expert tiers: GPU 2951 hits this request; since the start RAM 14076 blobs, files 0 blobs 73867.1 MB read (the GGUF in place)",
+        "strata serve: file tier I/O this request: the OS read 50.4 MB from storage (0 major faults) for 0.0 MB of expert reads",
+        "strata serve: decode expert cache hit rate: 99.1% (3219 hits / 3247 lookups); 3 more read by the GPU over PCIe or from another GPU (0.1% of all 3250 routed)",
+        "strata serve: resident RAM: 2.94 GiB of experts in RAM, 59 exchanged with the VRAM tier, 0 blob reads from the file",
+        "strata serve: expert tiers: GPU 3219 hits this request; since the start RAM 16732 blobs, files 0 blobs 73867.1 MB read (the GGUF in place)",
+        "strata serve: file tier I/O this request: the OS read 88.8 MB from storage (0 major faults) for 0.0 MB of expert reads",
+        "strata serve: decode expert cache hit rate: 98.6% (5243 hits / 5318 lookups); 12 more read by the GPU over PCIe or from another GPU (0.2% of all 5330 routed)",
+        "strata serve: resident RAM: 2.94 GiB of experts in RAM, 74 exchanged with the VRAM tier, 0 blob reads from the file",
+        "strata serve: expert tiers: GPU 5243 hits this request; since the start RAM 69728 blobs, files 0 blobs 73867.1 MB read (the GGUF in place)",
+        "strata serve: file tier I/O this request: the OS read 1304.7 MB from storage (0 major faults) for 0.0 MB of expert reads"
+      ],
+      "per_request": [
+        {
+          "adaptive_lines": [
+            "strata serve: decode expert cache hit rate: 96.4% (2842 hits / 2947 lookups); 43 more read by the GPU over PCIe or from another GPU (1.4% of all 2990 routed)",
+            "strata serve: resident RAM: 2.94 GiB of experts in RAM, 28 exchanged with the VRAM tier, 0 blob reads from the file",
+            "strata serve: expert tiers: GPU 2842 hits this request; since the start RAM 2914 blobs, files 0 blobs 73867.1 MB read (the GGUF in place)",
+            "strata serve: file tier I/O this request: the OS read 137565.7 MB from storage (6 major faults) for 73867.1 MB of expert reads"
+          ],
+          "exchange_events_cumulative": 28,
+          "exchange_events_this_request": 28,
+          "expert_file_read_mb_reported": 73867.1,
+          "expert_file_read_note": "The warmup counter includes startup-cumulative reads; subsequent request counters report their measured expert-read delta.",
+          "file_read_line": "strata serve: file tier I/O this request: the OS read 137565.7 MB from storage (6 major faults) for 73867.1 MB of expert reads",
+          "profile_cache_and_tier_lines": [
+            "strata serve: decode expert cache hit rate: 96.4% (2842 hits / 2947 lookups); 43 more read by the GPU over PCIe or from another GPU (1.4% of all 2990 routed)",
+            "strata serve: resident RAM: 2.94 GiB of experts in RAM, 28 exchanged with the VRAM tier, 0 blob reads from the file",
+            "strata serve: expert tiers: GPU 2842 hits this request; since the start RAM 2914 blobs, files 0 blobs 73867.1 MB read (the GGUF in place)"
+          ],
+          "profile_cache_metrics": {
+            "gpu_cache_hits": 2842,
+            "gpu_cache_lookups": 2947,
+            "hit_rate_percent": 96.4,
+            "other_gpu_read_percent": 1.4,
+            "other_gpu_reads": 43,
+            "routed_experts": 2990
+          },
+          "request": "warmup",
+          "resident_ram_blobs_this_request": 2914,
+          "tier_counters": {
+            "file_blobs_cumulative": 0,
+            "file_expert_mb_cumulative": 73867.1,
+            "gpu_cache_hits_this_request": 2842,
+            "resident_ram_blobs_cumulative": 2914
+          }
+        },
+        {
+          "adaptive_lines": [
+            "strata serve: decode expert cache hit rate: 98.1% (3171 hits / 3231 lookups); 19 more read by the GPU over PCIe or from another GPU (0.6% of all 3250 routed)",
+            "strata serve: resident RAM: 2.94 GiB of experts in RAM, 48 exchanged with the VRAM tier, 0 blob reads from the file",
+            "strata serve: expert tiers: GPU 3171 hits this request; since the start RAM 3619 blobs, files 0 blobs 73867.1 MB read (the GGUF in place)",
+            "strata serve: file tier I/O this request: the OS read 28.9 MB from storage (0 major faults) for 0.0 MB of expert reads"
+          ],
+          "exchange_events_cumulative": 48,
+          "exchange_events_this_request": 20,
+          "expert_file_read_mb_reported": 0.0,
+          "expert_file_read_note": null,
+          "file_read_line": "strata serve: file tier I/O this request: the OS read 28.9 MB from storage (0 major faults) for 0.0 MB of expert reads",
+          "profile_cache_and_tier_lines": [
+            "strata serve: decode expert cache hit rate: 98.1% (3171 hits / 3231 lookups); 19 more read by the GPU over PCIe or from another GPU (0.6% of all 3250 routed)",
+            "strata serve: resident RAM: 2.94 GiB of experts in RAM, 48 exchanged with the VRAM tier, 0 blob reads from the file",
+            "strata serve: expert tiers: GPU 3171 hits this request; since the start RAM 3619 blobs, files 0 blobs 73867.1 MB read (the GGUF in place)"
+          ],
+          "profile_cache_metrics": {
+            "gpu_cache_hits": 3171,
+            "gpu_cache_lookups": 3231,
+            "hit_rate_percent": 98.1,
+            "other_gpu_read_percent": 0.6,
+            "other_gpu_reads": 19,
+            "routed_experts": 3250
+          },
+          "request": "rep1-small",
+          "resident_ram_blobs_this_request": 705,
+          "tier_counters": {
+            "file_blobs_cumulative": 0,
+            "file_expert_mb_cumulative": 73867.1,
+            "gpu_cache_hits_this_request": 3171,
+            "resident_ram_blobs_cumulative": 3619
+          }
+        },
+        {
+          "adaptive_lines": [
+            "strata serve: decode expert cache hit rate: 98.5% (2937 hits / 2982 lookups); 8 more read by the GPU over PCIe or from another GPU (0.3% of all 2990 routed)",
+            "strata serve: resident RAM: 2.94 GiB of experts in RAM, 53 exchanged with the VRAM tier, 0 blob reads from the file",
+            "strata serve: expert tiers: GPU 2937 hits this request; since the start RAM 4901 blobs, files 0 blobs 73867.1 MB read (the GGUF in place)",
+            "strata serve: file tier I/O this request: the OS read 50.5 MB from storage (0 major faults) for 0.0 MB of expert reads"
+          ],
+          "exchange_events_cumulative": 53,
+          "exchange_events_this_request": 5,
+          "expert_file_read_mb_reported": 0.0,
+          "expert_file_read_note": null,
+          "file_read_line": "strata serve: file tier I/O this request: the OS read 50.5 MB from storage (0 major faults) for 0.0 MB of expert reads",
+          "profile_cache_and_tier_lines": [
+            "strata serve: decode expert cache hit rate: 98.5% (2937 hits / 2982 lookups); 8 more read by the GPU over PCIe or from another GPU (0.3% of all 2990 routed)",
+            "strata serve: resident RAM: 2.94 GiB of experts in RAM, 53 exchanged with the VRAM tier, 0 blob reads from the file",
+            "strata serve: expert tiers: GPU 2937 hits this request; since the start RAM 4901 blobs, files 0 blobs 73867.1 MB read (the GGUF in place)"
+          ],
+          "profile_cache_metrics": {
+            "gpu_cache_hits": 2937,
+            "gpu_cache_lookups": 2982,
+            "hit_rate_percent": 98.5,
+            "other_gpu_read_percent": 0.3,
+            "other_gpu_reads": 8,
+            "routed_experts": 2990
+          },
+          "request": "rep1-medium",
+          "resident_ram_blobs_this_request": 1282,
+          "tier_counters": {
+            "file_blobs_cumulative": 0,
+            "file_expert_mb_cumulative": 73867.1,
+            "gpu_cache_hits_this_request": 2937,
+            "resident_ram_blobs_cumulative": 4901
+          }
+        },
+        {
+          "adaptive_lines": [
+            "strata serve: decode expert cache hit rate: 98.9% (3211 hits / 3246 lookups); 4 more read by the GPU over PCIe or from another GPU (0.1% of all 3250 routed)",
+            "strata serve: resident RAM: 2.94 GiB of experts in RAM, 55 exchanged with the VRAM tier, 0 blob reads from the file",
+            "strata serve: expert tiers: GPU 3211 hits this request; since the start RAM 7581 blobs, files 0 blobs 73867.1 MB read (the GGUF in place)",
+            "strata serve: file tier I/O this request: the OS read 88.9 MB from storage (0 major faults) for 0.0 MB of expert reads"
+          ],
+          "exchange_events_cumulative": 55,
+          "exchange_events_this_request": 2,
+          "expert_file_read_mb_reported": 0.0,
+          "expert_file_read_note": null,
+          "file_read_line": "strata serve: file tier I/O this request: the OS read 88.9 MB from storage (0 major faults) for 0.0 MB of expert reads",
+          "profile_cache_and_tier_lines": [
+            "strata serve: decode expert cache hit rate: 98.9% (3211 hits / 3246 lookups); 4 more read by the GPU over PCIe or from another GPU (0.1% of all 3250 routed)",
+            "strata serve: resident RAM: 2.94 GiB of experts in RAM, 55 exchanged with the VRAM tier, 0 blob reads from the file",
+            "strata serve: expert tiers: GPU 3211 hits this request; since the start RAM 7581 blobs, files 0 blobs 73867.1 MB read (the GGUF in place)"
+          ],
+          "profile_cache_metrics": {
+            "gpu_cache_hits": 3211,
+            "gpu_cache_lookups": 3246,
+            "hit_rate_percent": 98.9,
+            "other_gpu_read_percent": 0.1,
+            "other_gpu_reads": 4,
+            "routed_experts": 3250
+          },
+          "request": "rep1-large",
+          "resident_ram_blobs_this_request": 2680,
+          "tier_counters": {
+            "file_blobs_cumulative": 0,
+            "file_expert_mb_cumulative": 73867.1,
+            "gpu_cache_hits_this_request": 3211,
+            "resident_ram_blobs_cumulative": 7581
+          }
+        },
+        {
+          "adaptive_lines": [
+            "strata serve: decode expert cache hit rate: 98.8% (3332 hits / 3373 lookups); 7 more read by the GPU over PCIe or from another GPU (0.2% of all 3380 routed)",
+            "strata serve: resident RAM: 2.94 GiB of experts in RAM, 56 exchanged with the VRAM tier, 0 blob reads from the file",
+            "strata serve: expert tiers: GPU 3332 hits this request; since the start RAM 8243 blobs, files 0 blobs 73867.1 MB read (the GGUF in place)",
+            "strata serve: file tier I/O this request: the OS read 28.7 MB from storage (0 major faults) for 0.0 MB of expert reads"
+          ],
+          "exchange_events_cumulative": 56,
+          "exchange_events_this_request": 1,
+          "expert_file_read_mb_reported": 0.0,
+          "expert_file_read_note": null,
+          "file_read_line": "strata serve: file tier I/O this request: the OS read 28.7 MB from storage (0 major faults) for 0.0 MB of expert reads",
+          "profile_cache_and_tier_lines": [
+            "strata serve: decode expert cache hit rate: 98.8% (3332 hits / 3373 lookups); 7 more read by the GPU over PCIe or from another GPU (0.2% of all 3380 routed)",
+            "strata serve: resident RAM: 2.94 GiB of experts in RAM, 56 exchanged with the VRAM tier, 0 blob reads from the file",
+            "strata serve: expert tiers: GPU 3332 hits this request; since the start RAM 8243 blobs, files 0 blobs 73867.1 MB read (the GGUF in place)"
+          ],
+          "profile_cache_metrics": {
+            "gpu_cache_hits": 3332,
+            "gpu_cache_lookups": 3373,
+            "hit_rate_percent": 98.8,
+            "other_gpu_read_percent": 0.2,
+            "other_gpu_reads": 7,
+            "routed_experts": 3380
+          },
+          "request": "rep2-small",
+          "resident_ram_blobs_this_request": 662,
+          "tier_counters": {
+            "file_blobs_cumulative": 0,
+            "file_expert_mb_cumulative": 73867.1,
+            "gpu_cache_hits_this_request": 3332,
+            "resident_ram_blobs_cumulative": 8243
+          }
+        },
+        {
+          "adaptive_lines": [
+            "strata serve: decode expert cache hit rate: 98.8% (2950 hits / 2985 lookups); 5 more read by the GPU over PCIe or from another GPU (0.2% of all 2990 routed)",
+            "strata serve: resident RAM: 2.94 GiB of experts in RAM, 57 exchanged with the VRAM tier, 0 blob reads from the file",
+            "strata serve: expert tiers: GPU 2950 hits this request; since the start RAM 9503 blobs, files 0 blobs 73867.1 MB read (the GGUF in place)",
+            "strata serve: file tier I/O this request: the OS read 50.8 MB from storage (0 major faults) for 0.0 MB of expert reads"
+          ],
+          "exchange_events_cumulative": 57,
+          "exchange_events_this_request": 1,
+          "expert_file_read_mb_reported": 0.0,
+          "expert_file_read_note": null,
+          "file_read_line": "strata serve: file tier I/O this request: the OS read 50.8 MB from storage (0 major faults) for 0.0 MB of expert reads",
+          "profile_cache_and_tier_lines": [
+            "strata serve: decode expert cache hit rate: 98.8% (2950 hits / 2985 lookups); 5 more read by the GPU over PCIe or from another GPU (0.2% of all 2990 routed)",
+            "strata serve: resident RAM: 2.94 GiB of experts in RAM, 57 exchanged with the VRAM tier, 0 blob reads from the file",
+            "strata serve: expert tiers: GPU 2950 hits this request; since the start RAM 9503 blobs, files 0 blobs 73867.1 MB read (the GGUF in place)"
+          ],
+          "profile_cache_metrics": {
+            "gpu_cache_hits": 2950,
+            "gpu_cache_lookups": 2985,
+            "hit_rate_percent": 98.8,
+            "other_gpu_read_percent": 0.2,
+            "other_gpu_reads": 5,
+            "routed_experts": 2990
+          },
+          "request": "rep2-medium",
+          "resident_ram_blobs_this_request": 1260,
+          "tier_counters": {
+            "file_blobs_cumulative": 0,
+            "file_expert_mb_cumulative": 73867.1,
+            "gpu_cache_hits_this_request": 2950,
+            "resident_ram_blobs_cumulative": 9503
+          }
+        },
+        {
+          "adaptive_lines": [
+            "strata serve: decode expert cache hit rate: 99.0% (3216 hits / 3247 lookups); 3 more read by the GPU over PCIe or from another GPU (0.1% of all 3250 routed)",
+            "strata serve: resident RAM: 2.94 GiB of experts in RAM, 57 exchanged with the VRAM tier, 0 blob reads from the file",
+            "strata serve: expert tiers: GPU 3216 hits this request; since the start RAM 12163 blobs, files 0 blobs 73867.1 MB read (the GGUF in place)",
+            "strata serve: file tier I/O this request: the OS read 88.9 MB from storage (0 major faults) for 0.0 MB of expert reads"
+          ],
+          "exchange_events_cumulative": 57,
+          "exchange_events_this_request": 0,
+          "expert_file_read_mb_reported": 0.0,
+          "expert_file_read_note": null,
+          "file_read_line": "strata serve: file tier I/O this request: the OS read 88.9 MB from storage (0 major faults) for 0.0 MB of expert reads",
+          "profile_cache_and_tier_lines": [
+            "strata serve: decode expert cache hit rate: 99.0% (3216 hits / 3247 lookups); 3 more read by the GPU over PCIe or from another GPU (0.1% of all 3250 routed)",
+            "strata serve: resident RAM: 2.94 GiB of experts in RAM, 57 exchanged with the VRAM tier, 0 blob reads from the file",
+            "strata serve: expert tiers: GPU 3216 hits this request; since the start RAM 12163 blobs, files 0 blobs 73867.1 MB read (the GGUF in place)"
+          ],
+          "profile_cache_metrics": {
+            "gpu_cache_hits": 3216,
+            "gpu_cache_lookups": 3247,
+            "hit_rate_percent": 99.0,
+            "other_gpu_read_percent": 0.1,
+            "other_gpu_reads": 3,
+            "routed_experts": 3250
+          },
+          "request": "rep2-large",
+          "resident_ram_blobs_this_request": 2660,
+          "tier_counters": {
+            "file_blobs_cumulative": 0,
+            "file_expert_mb_cumulative": 73867.1,
+            "gpu_cache_hits_this_request": 3216,
+            "resident_ram_blobs_cumulative": 12163
+          }
+        },
+        {
+          "adaptive_lines": [
+            "strata serve: decode expert cache hit rate: 98.9% (3208 hits / 3243 lookups); 7 more read by the GPU over PCIe or from another GPU (0.2% of all 3250 routed)",
+            "strata serve: resident RAM: 2.94 GiB of experts in RAM, 59 exchanged with the VRAM tier, 0 blob reads from the file",
+            "strata serve: expert tiers: GPU 3208 hits this request; since the start RAM 12818 blobs, files 0 blobs 73867.1 MB read (the GGUF in place)",
+            "strata serve: file tier I/O this request: the OS read 28.7 MB from storage (0 major faults) for 0.0 MB of expert reads"
+          ],
+          "exchange_events_cumulative": 59,
+          "exchange_events_this_request": 2,
+          "expert_file_read_mb_reported": 0.0,
+          "expert_file_read_note": null,
+          "file_read_line": "strata serve: file tier I/O this request: the OS read 28.7 MB from storage (0 major faults) for 0.0 MB of expert reads",
+          "profile_cache_and_tier_lines": [
+            "strata serve: decode expert cache hit rate: 98.9% (3208 hits / 3243 lookups); 7 more read by the GPU over PCIe or from another GPU (0.2% of all 3250 routed)",
+            "strata serve: resident RAM: 2.94 GiB of experts in RAM, 59 exchanged with the VRAM tier, 0 blob reads from the file",
+            "strata serve: expert tiers: GPU 3208 hits this request; since the start RAM 12818 blobs, files 0 blobs 73867.1 MB read (the GGUF in place)"
+          ],
+          "profile_cache_metrics": {
+            "gpu_cache_hits": 3208,
+            "gpu_cache_lookups": 3243,
+            "hit_rate_percent": 98.9,
+            "other_gpu_read_percent": 0.2,
+            "other_gpu_reads": 7,
+            "routed_experts": 3250
+          },
+          "request": "rep3-small",
+          "resident_ram_blobs_this_request": 655,
+          "tier_counters": {
+            "file_blobs_cumulative": 0,
+            "file_expert_mb_cumulative": 73867.1,
+            "gpu_cache_hits_this_request": 3208,
+            "resident_ram_blobs_cumulative": 12818
+          }
+        },
+        {
+          "adaptive_lines": [
+            "strata serve: decode expert cache hit rate: 98.9% (2951 hits / 2985 lookups); 5 more read by the GPU over PCIe or from another GPU (0.2% of all 2990 routed)",
+            "strata serve: resident RAM: 2.94 GiB of experts in RAM, 59 exchanged with the VRAM tier, 0 blob reads from the file",
+            "strata serve: expert tiers: GPU 2951 hits this request; since the start RAM 14076 blobs, files 0 blobs 73867.1 MB read (the GGUF in place)",
+            "strata serve: file tier I/O this request: the OS read 50.4 MB from storage (0 major faults) for 0.0 MB of expert reads"
+          ],
+          "exchange_events_cumulative": 59,
+          "exchange_events_this_request": 0,
+          "expert_file_read_mb_reported": 0.0,
+          "expert_file_read_note": null,
+          "file_read_line": "strata serve: file tier I/O this request: the OS read 50.4 MB from storage (0 major faults) for 0.0 MB of expert reads",
+          "profile_cache_and_tier_lines": [
+            "strata serve: decode expert cache hit rate: 98.9% (2951 hits / 2985 lookups); 5 more read by the GPU over PCIe or from another GPU (0.2% of all 2990 routed)",
+            "strata serve: resident RAM: 2.94 GiB of experts in RAM, 59 exchanged with the VRAM tier, 0 blob reads from the file",
+            "strata serve: expert tiers: GPU 2951 hits this request; since the start RAM 14076 blobs, files 0 blobs 73867.1 MB read (the GGUF in place)"
+          ],
+          "profile_cache_metrics": {
+            "gpu_cache_hits": 2951,
+            "gpu_cache_lookups": 2985,
+            "hit_rate_percent": 98.9,
+            "other_gpu_read_percent": 0.2,
+            "other_gpu_reads": 5,
+            "routed_experts": 2990
+          },
+          "request": "rep3-medium",
+          "resident_ram_blobs_this_request": 1258,
+          "tier_counters": {
+            "file_blobs_cumulative": 0,
+            "file_expert_mb_cumulative": 73867.1,
+            "gpu_cache_hits_this_request": 2951,
+            "resident_ram_blobs_cumulative": 14076
+          }
+        },
+        {
+          "adaptive_lines": [
+            "strata serve: decode expert cache hit rate: 99.1% (3219 hits / 3247 lookups); 3 more read by the GPU over PCIe or from another GPU (0.1% of all 3250 routed)",
+            "strata serve: resident RAM: 2.94 GiB of experts in RAM, 59 exchanged with the VRAM tier, 0 blob reads from the file",
+            "strata serve: expert tiers: GPU 3219 hits this request; since the start RAM 16732 blobs, files 0 blobs 73867.1 MB read (the GGUF in place)",
+            "strata serve: file tier I/O this request: the OS read 88.8 MB from storage (0 major faults) for 0.0 MB of expert reads"
+          ],
+          "exchange_events_cumulative": 59,
+          "exchange_events_this_request": 0,
+          "expert_file_read_mb_reported": 0.0,
+          "expert_file_read_note": null,
+          "file_read_line": "strata serve: file tier I/O this request: the OS read 88.8 MB from storage (0 major faults) for 0.0 MB of expert reads",
+          "profile_cache_and_tier_lines": [
+            "strata serve: decode expert cache hit rate: 99.1% (3219 hits / 3247 lookups); 3 more read by the GPU over PCIe or from another GPU (0.1% of all 3250 routed)",
+            "strata serve: resident RAM: 2.94 GiB of experts in RAM, 59 exchanged with the VRAM tier, 0 blob reads from the file",
+            "strata serve: expert tiers: GPU 3219 hits this request; since the start RAM 16732 blobs, files 0 blobs 73867.1 MB read (the GGUF in place)"
+          ],
+          "profile_cache_metrics": {
+            "gpu_cache_hits": 3219,
+            "gpu_cache_lookups": 3247,
+            "hit_rate_percent": 99.1,
+            "other_gpu_read_percent": 0.1,
+            "other_gpu_reads": 3,
+            "routed_experts": 3250
+          },
+          "request": "rep3-large",
+          "resident_ram_blobs_this_request": 2656,
+          "tier_counters": {
+            "file_blobs_cumulative": 0,
+            "file_expert_mb_cumulative": 73867.1,
+            "gpu_cache_hits_this_request": 3219,
+            "resident_ram_blobs_cumulative": 16732
+          }
+        },
+        {
+          "adaptive_lines": [
+            "strata serve: decode expert cache hit rate: 98.6% (5243 hits / 5318 lookups); 12 more read by the GPU over PCIe or from another GPU (0.2% of all 5330 routed)",
+            "strata serve: resident RAM: 2.94 GiB of experts in RAM, 74 exchanged with the VRAM tier, 0 blob reads from the file",
+            "strata serve: expert tiers: GPU 5243 hits this request; since the start RAM 69728 blobs, files 0 blobs 73867.1 MB read (the GGUF in place)",
+            "strata serve: file tier I/O this request: the OS read 1304.7 MB from storage (0 major faults) for 0.0 MB of expert reads"
+          ],
+          "exchange_events_cumulative": 74,
+          "exchange_events_this_request": 15,
+          "expert_file_read_mb_reported": 0.0,
+          "expert_file_read_note": null,
+          "file_read_line": "strata serve: file tier I/O this request: the OS read 1304.7 MB from storage (0 major faults) for 0.0 MB of expert reads",
+          "profile_cache_and_tier_lines": [
+            "strata serve: decode expert cache hit rate: 98.6% (5243 hits / 5318 lookups); 12 more read by the GPU over PCIe or from another GPU (0.2% of all 5330 routed)",
+            "strata serve: resident RAM: 2.94 GiB of experts in RAM, 74 exchanged with the VRAM tier, 0 blob reads from the file",
+            "strata serve: expert tiers: GPU 5243 hits this request; since the start RAM 69728 blobs, files 0 blobs 73867.1 MB read (the GGUF in place)"
+          ],
+          "profile_cache_metrics": {
+            "gpu_cache_hits": 5243,
+            "gpu_cache_lookups": 5318,
+            "hit_rate_percent": 98.6,
+            "other_gpu_read_percent": 0.2,
+            "other_gpu_reads": 12,
+            "routed_experts": 5330
+          },
+          "request": "sanity-32k",
+          "resident_ram_blobs_this_request": 52996,
+          "tier_counters": {
+            "file_blobs_cumulative": 0,
+            "file_expert_mb_cumulative": 73867.1,
+            "gpu_cache_hits_this_request": 5243,
+            "resident_ram_blobs_cumulative": 69728
+          }
+        }
+      ],
+      "per_stage_swap_bytes": null,
+      "per_stage_swap_bytes_note": "The unchanged runtime emits aggregate exchange counts and no layer IDs or per-stage byte totals. No trace/profiling instrumentation or runtime change was authorized, so per-stage swap bytes are not inferred.",
+      "synchronous_adaptation_rounds": null,
+      "synchronous_adaptation_rounds_note": "The unchanged request-end diagnostics expose cumulative exchange counts, but no per-request adaptation-round count or accepted-round histogram."
+    },
+    "control": {
+      "all_relevant_engine_lines": [
+        "strata serve: decode expert cache hit rate: 95.1% (2785 hits / 2928 lookups); 62 more read by the GPU over PCIe or from another GPU (2.1% of all 2990 routed)",
+        "strata serve: resident RAM: 2.94 GiB of experts in RAM, 0 exchanged with the VRAM tier, 0 blob reads from the file",
+        "strata serve: expert tiers: GPU 2785 hits this request; since the start RAM 2924 blobs, files 0 blobs 73867.1 MB read (the GGUF in place)",
+        "strata serve: file tier I/O this request: the OS read 137873.2 MB from storage (13 major faults) for 73867.1 MB of expert reads",
+        "strata serve: decode expert cache hit rate: 94.9% (3009 hits / 3171 lookups); 79 more read by the GPU over PCIe or from another GPU (2.4% of all 3250 routed)",
+        "strata serve: resident RAM: 2.94 GiB of experts in RAM, 0 exchanged with the VRAM tier, 0 blob reads from the file",
+        "strata serve: expert tiers: GPU 3009 hits this request; since the start RAM 3761 blobs, files 0 blobs 73867.1 MB read (the GGUF in place)",
+        "strata serve: file tier I/O this request: the OS read 33.1 MB from storage (0 major faults) for 0.0 MB of expert reads",
+        "strata serve: decode expert cache hit rate: 94.7% (2758 hits / 2913 lookups); 77 more read by the GPU over PCIe or from another GPU (2.6% of all 2990 routed)",
+        "strata serve: resident RAM: 2.94 GiB of experts in RAM, 0 exchanged with the VRAM tier, 0 blob reads from the file",
+        "strata serve: expert tiers: GPU 2758 hits this request; since the start RAM 5233 blobs, files 0 blobs 73867.1 MB read (the GGUF in place)",
+        "strata serve: file tier I/O this request: the OS read 54.9 MB from storage (0 major faults) for 0.0 MB of expert reads",
+        "strata serve: decode expert cache hit rate: 95.1% (2785 hits / 2928 lookups); 62 more read by the GPU over PCIe or from another GPU (2.1% of all 2990 routed)",
+        "strata serve: resident RAM: 2.94 GiB of experts in RAM, 0 exchanged with the VRAM tier, 0 blob reads from the file",
+        "strata serve: expert tiers: GPU 2785 hits this request; since the start RAM 8157 blobs, files 0 blobs 73867.1 MB read (the GGUF in place)",
+        "strata serve: file tier I/O this request: the OS read 88.5 MB from storage (0 major faults) for 0.0 MB of expert reads",
+        "strata serve: decode expert cache hit rate: 94.9% (3009 hits / 3171 lookups); 79 more read by the GPU over PCIe or from another GPU (2.4% of all 3250 routed)",
+        "strata serve: resident RAM: 2.94 GiB of experts in RAM, 0 exchanged with the VRAM tier, 0 blob reads from the file",
+        "strata serve: expert tiers: GPU 3009 hits this request; since the start RAM 8994 blobs, files 0 blobs 73867.1 MB read (the GGUF in place)",
+        "strata serve: file tier I/O this request: the OS read 28.6 MB from storage (0 major faults) for 0.0 MB of expert reads",
+        "strata serve: decode expert cache hit rate: 94.7% (2758 hits / 2913 lookups); 77 more read by the GPU over PCIe or from another GPU (2.6% of all 2990 routed)",
+        "strata serve: resident RAM: 2.94 GiB of experts in RAM, 0 exchanged with the VRAM tier, 0 blob reads from the file",
+        "strata serve: expert tiers: GPU 2758 hits this request; since the start RAM 10466 blobs, files 0 blobs 73867.1 MB read (the GGUF in place)",
+        "strata serve: file tier I/O this request: the OS read 50.5 MB from storage (0 major faults) for 0.0 MB of expert reads",
+        "strata serve: decode expert cache hit rate: 95.1% (2785 hits / 2928 lookups); 62 more read by the GPU over PCIe or from another GPU (2.1% of all 2990 routed)",
+        "strata serve: resident RAM: 2.94 GiB of experts in RAM, 0 exchanged with the VRAM tier, 0 blob reads from the file",
+        "strata serve: expert tiers: GPU 2785 hits this request; since the start RAM 13390 blobs, files 0 blobs 73867.1 MB read (the GGUF in place)",
+        "strata serve: file tier I/O this request: the OS read 88.8 MB from storage (0 major faults) for 0.0 MB of expert reads",
+        "strata serve: decode expert cache hit rate: 94.9% (3009 hits / 3171 lookups); 79 more read by the GPU over PCIe or from another GPU (2.4% of all 3250 routed)",
+        "strata serve: resident RAM: 2.94 GiB of experts in RAM, 0 exchanged with the VRAM tier, 0 blob reads from the file",
+        "strata serve: expert tiers: GPU 3009 hits this request; since the start RAM 14227 blobs, files 0 blobs 73867.1 MB read (the GGUF in place)",
+        "strata serve: file tier I/O this request: the OS read 28.6 MB from storage (0 major faults) for 0.0 MB of expert reads",
+        "strata serve: decode expert cache hit rate: 94.7% (2758 hits / 2913 lookups); 77 more read by the GPU over PCIe or from another GPU (2.6% of all 2990 routed)",
+        "strata serve: resident RAM: 2.94 GiB of experts in RAM, 0 exchanged with the VRAM tier, 0 blob reads from the file",
+        "strata serve: expert tiers: GPU 2758 hits this request; since the start RAM 15699 blobs, files 0 blobs 73867.1 MB read (the GGUF in place)",
+        "strata serve: file tier I/O this request: the OS read 50.4 MB from storage (0 major faults) for 0.0 MB of expert reads",
+        "strata serve: decode expert cache hit rate: 95.1% (2785 hits / 2928 lookups); 62 more read by the GPU over PCIe or from another GPU (2.1% of all 2990 routed)",
+        "strata serve: resident RAM: 2.94 GiB of experts in RAM, 0 exchanged with the VRAM tier, 0 blob reads from the file",
+        "strata serve: expert tiers: GPU 2785 hits this request; since the start RAM 18623 blobs, files 0 blobs 73867.1 MB read (the GGUF in place)",
+        "strata serve: file tier I/O this request: the OS read 88.9 MB from storage (0 major faults) for 0.0 MB of expert reads"
+      ],
+      "per_request": [
+        {
+          "adaptive_lines": [
+            "strata serve: decode expert cache hit rate: 95.1% (2785 hits / 2928 lookups); 62 more read by the GPU over PCIe or from another GPU (2.1% of all 2990 routed)",
+            "strata serve: resident RAM: 2.94 GiB of experts in RAM, 0 exchanged with the VRAM tier, 0 blob reads from the file",
+            "strata serve: expert tiers: GPU 2785 hits this request; since the start RAM 2924 blobs, files 0 blobs 73867.1 MB read (the GGUF in place)",
+            "strata serve: file tier I/O this request: the OS read 137873.2 MB from storage (13 major faults) for 73867.1 MB of expert reads"
+          ],
+          "exchange_events_cumulative": 0,
+          "exchange_events_this_request": 0,
+          "expert_file_read_mb_reported": 73867.1,
+          "expert_file_read_note": "The warmup counter includes startup-cumulative reads; subsequent request counters report their measured expert-read delta.",
+          "file_read_line": "strata serve: file tier I/O this request: the OS read 137873.2 MB from storage (13 major faults) for 73867.1 MB of expert reads",
+          "profile_cache_and_tier_lines": [
+            "strata serve: decode expert cache hit rate: 95.1% (2785 hits / 2928 lookups); 62 more read by the GPU over PCIe or from another GPU (2.1% of all 2990 routed)",
+            "strata serve: resident RAM: 2.94 GiB of experts in RAM, 0 exchanged with the VRAM tier, 0 blob reads from the file",
+            "strata serve: expert tiers: GPU 2785 hits this request; since the start RAM 2924 blobs, files 0 blobs 73867.1 MB read (the GGUF in place)"
+          ],
+          "profile_cache_metrics": {
+            "gpu_cache_hits": 2785,
+            "gpu_cache_lookups": 2928,
+            "hit_rate_percent": 95.1,
+            "other_gpu_read_percent": 2.1,
+            "other_gpu_reads": 62,
+            "routed_experts": 2990
+          },
+          "request": "warmup",
+          "resident_ram_blobs_this_request": 2924,
+          "tier_counters": {
+            "file_blobs_cumulative": 0,
+            "file_expert_mb_cumulative": 73867.1,
+            "gpu_cache_hits_this_request": 2785,
+            "resident_ram_blobs_cumulative": 2924
+          }
+        },
+        {
+          "adaptive_lines": [
+            "strata serve: decode expert cache hit rate: 94.9% (3009 hits / 3171 lookups); 79 more read by the GPU over PCIe or from another GPU (2.4% of all 3250 routed)",
+            "strata serve: resident RAM: 2.94 GiB of experts in RAM, 0 exchanged with the VRAM tier, 0 blob reads from the file",
+            "strata serve: expert tiers: GPU 3009 hits this request; since the start RAM 3761 blobs, files 0 blobs 73867.1 MB read (the GGUF in place)",
+            "strata serve: file tier I/O this request: the OS read 33.1 MB from storage (0 major faults) for 0.0 MB of expert reads"
+          ],
+          "exchange_events_cumulative": 0,
+          "exchange_events_this_request": 0,
+          "expert_file_read_mb_reported": 0.0,
+          "expert_file_read_note": null,
+          "file_read_line": "strata serve: file tier I/O this request: the OS read 33.1 MB from storage (0 major faults) for 0.0 MB of expert reads",
+          "profile_cache_and_tier_lines": [
+            "strata serve: decode expert cache hit rate: 94.9% (3009 hits / 3171 lookups); 79 more read by the GPU over PCIe or from another GPU (2.4% of all 3250 routed)",
+            "strata serve: resident RAM: 2.94 GiB of experts in RAM, 0 exchanged with the VRAM tier, 0 blob reads from the file",
+            "strata serve: expert tiers: GPU 3009 hits this request; since the start RAM 3761 blobs, files 0 blobs 73867.1 MB read (the GGUF in place)"
+          ],
+          "profile_cache_metrics": {
+            "gpu_cache_hits": 3009,
+            "gpu_cache_lookups": 3171,
+            "hit_rate_percent": 94.9,
+            "other_gpu_read_percent": 2.4,
+            "other_gpu_reads": 79,
+            "routed_experts": 3250
+          },
+          "request": "rep1-small",
+          "resident_ram_blobs_this_request": 837,
+          "tier_counters": {
+            "file_blobs_cumulative": 0,
+            "file_expert_mb_cumulative": 73867.1,
+            "gpu_cache_hits_this_request": 3009,
+            "resident_ram_blobs_cumulative": 3761
+          }
+        },
+        {
+          "adaptive_lines": [
+            "strata serve: decode expert cache hit rate: 94.7% (2758 hits / 2913 lookups); 77 more read by the GPU over PCIe or from another GPU (2.6% of all 2990 routed)",
+            "strata serve: resident RAM: 2.94 GiB of experts in RAM, 0 exchanged with the VRAM tier, 0 blob reads from the file",
+            "strata serve: expert tiers: GPU 2758 hits this request; since the start RAM 5233 blobs, files 0 blobs 73867.1 MB read (the GGUF in place)",
+            "strata serve: file tier I/O this request: the OS read 54.9 MB from storage (0 major faults) for 0.0 MB of expert reads"
+          ],
+          "exchange_events_cumulative": 0,
+          "exchange_events_this_request": 0,
+          "expert_file_read_mb_reported": 0.0,
+          "expert_file_read_note": null,
+          "file_read_line": "strata serve: file tier I/O this request: the OS read 54.9 MB from storage (0 major faults) for 0.0 MB of expert reads",
+          "profile_cache_and_tier_lines": [
+            "strata serve: decode expert cache hit rate: 94.7% (2758 hits / 2913 lookups); 77 more read by the GPU over PCIe or from another GPU (2.6% of all 2990 routed)",
+            "strata serve: resident RAM: 2.94 GiB of experts in RAM, 0 exchanged with the VRAM tier, 0 blob reads from the file",
+            "strata serve: expert tiers: GPU 2758 hits this request; since the start RAM 5233 blobs, files 0 blobs 73867.1 MB read (the GGUF in place)"
+          ],
+          "profile_cache_metrics": {
+            "gpu_cache_hits": 2758,
+            "gpu_cache_lookups": 2913,
+            "hit_rate_percent": 94.7,
+            "other_gpu_read_percent": 2.6,
+            "other_gpu_reads": 77,
+            "routed_experts": 2990
+          },
+          "request": "rep1-medium",
+          "resident_ram_blobs_this_request": 1472,
+          "tier_counters": {
+            "file_blobs_cumulative": 0,
+            "file_expert_mb_cumulative": 73867.1,
+            "gpu_cache_hits_this_request": 2758,
+            "resident_ram_blobs_cumulative": 5233
+          }
+        },
+        {
+          "adaptive_lines": [
+            "strata serve: decode expert cache hit rate: 95.1% (2785 hits / 2928 lookups); 62 more read by the GPU over PCIe or from another GPU (2.1% of all 2990 routed)",
+            "strata serve: resident RAM: 2.94 GiB of experts in RAM, 0 exchanged with the VRAM tier, 0 blob reads from the file",
+            "strata serve: expert tiers: GPU 2785 hits this request; since the start RAM 8157 blobs, files 0 blobs 73867.1 MB read (the GGUF in place)",
+            "strata serve: file tier I/O this request: the OS read 88.5 MB from storage (0 major faults) for 0.0 MB of expert reads"
+          ],
+          "exchange_events_cumulative": 0,
+          "exchange_events_this_request": 0,
+          "expert_file_read_mb_reported": 0.0,
+          "expert_file_read_note": null,
+          "file_read_line": "strata serve: file tier I/O this request: the OS read 88.5 MB from storage (0 major faults) for 0.0 MB of expert reads",
+          "profile_cache_and_tier_lines": [
+            "strata serve: decode expert cache hit rate: 95.1% (2785 hits / 2928 lookups); 62 more read by the GPU over PCIe or from another GPU (2.1% of all 2990 routed)",
+            "strata serve: resident RAM: 2.94 GiB of experts in RAM, 0 exchanged with the VRAM tier, 0 blob reads from the file",
+            "strata serve: expert tiers: GPU 2785 hits this request; since the start RAM 8157 blobs, files 0 blobs 73867.1 MB read (the GGUF in place)"
+          ],
+          "profile_cache_metrics": {
+            "gpu_cache_hits": 2785,
+            "gpu_cache_lookups": 2928,
+            "hit_rate_percent": 95.1,
+            "other_gpu_read_percent": 2.1,
+            "other_gpu_reads": 62,
+            "routed_experts": 2990
+          },
+          "request": "rep1-large",
+          "resident_ram_blobs_this_request": 2924,
+          "tier_counters": {
+            "file_blobs_cumulative": 0,
+            "file_expert_mb_cumulative": 73867.1,
+            "gpu_cache_hits_this_request": 2785,
+            "resident_ram_blobs_cumulative": 8157
+          }
+        },
+        {
+          "adaptive_lines": [
+            "strata serve: decode expert cache hit rate: 94.9% (3009 hits / 3171 lookups); 79 more read by the GPU over PCIe or from another GPU (2.4% of all 3250 routed)",
+            "strata serve: resident RAM: 2.94 GiB of experts in RAM, 0 exchanged with the VRAM tier, 0 blob reads from the file",
+            "strata serve: expert tiers: GPU 3009 hits this request; since the start RAM 8994 blobs, files 0 blobs 73867.1 MB read (the GGUF in place)",
+            "strata serve: file tier I/O this request: the OS read 28.6 MB from storage (0 major faults) for 0.0 MB of expert reads"
+          ],
+          "exchange_events_cumulative": 0,
+          "exchange_events_this_request": 0,
+          "expert_file_read_mb_reported": 0.0,
+          "expert_file_read_note": null,
+          "file_read_line": "strata serve: file tier I/O this request: the OS read 28.6 MB from storage (0 major faults) for 0.0 MB of expert reads",
+          "profile_cache_and_tier_lines": [
+            "strata serve: decode expert cache hit rate: 94.9% (3009 hits / 3171 lookups); 79 more read by the GPU over PCIe or from another GPU (2.4% of all 3250 routed)",
+            "strata serve: resident RAM: 2.94 GiB of experts in RAM, 0 exchanged with the VRAM tier, 0 blob reads from the file",
+            "strata serve: expert tiers: GPU 3009 hits this request; since the start RAM 8994 blobs, files 0 blobs 73867.1 MB read (the GGUF in place)"
+          ],
+          "profile_cache_metrics": {
+            "gpu_cache_hits": 3009,
+            "gpu_cache_lookups": 3171,
+            "hit_rate_percent": 94.9,
+            "other_gpu_read_percent": 2.4,
+            "other_gpu_reads": 79,
+            "routed_experts": 3250
+          },
+          "request": "rep2-small",
+          "resident_ram_blobs_this_request": 837,
+          "tier_counters": {
+            "file_blobs_cumulative": 0,
+            "file_expert_mb_cumulative": 73867.1,
+            "gpu_cache_hits_this_request": 3009,
+            "resident_ram_blobs_cumulative": 8994
+          }
+        },
+        {
+          "adaptive_lines": [
+            "strata serve: decode expert cache hit rate: 94.7% (2758 hits / 2913 lookups); 77 more read by the GPU over PCIe or from another GPU (2.6% of all 2990 routed)",
+            "strata serve: resident RAM: 2.94 GiB of experts in RAM, 0 exchanged with the VRAM tier, 0 blob reads from the file",
+            "strata serve: expert tiers: GPU 2758 hits this request; since the start RAM 10466 blobs, files 0 blobs 73867.1 MB read (the GGUF in place)",
+            "strata serve: file tier I/O this request: the OS read 50.5 MB from storage (0 major faults) for 0.0 MB of expert reads"
+          ],
+          "exchange_events_cumulative": 0,
+          "exchange_events_this_request": 0,
+          "expert_file_read_mb_reported": 0.0,
+          "expert_file_read_note": null,
+          "file_read_line": "strata serve: file tier I/O this request: the OS read 50.5 MB from storage (0 major faults) for 0.0 MB of expert reads",
+          "profile_cache_and_tier_lines": [
+            "strata serve: decode expert cache hit rate: 94.7% (2758 hits / 2913 lookups); 77 more read by the GPU over PCIe or from another GPU (2.6% of all 2990 routed)",
+            "strata serve: resident RAM: 2.94 GiB of experts in RAM, 0 exchanged with the VRAM tier, 0 blob reads from the file",
+            "strata serve: expert tiers: GPU 2758 hits this request; since the start RAM 10466 blobs, files 0 blobs 73867.1 MB read (the GGUF in place)"
+          ],
+          "profile_cache_metrics": {
+            "gpu_cache_hits": 2758,
+            "gpu_cache_lookups": 2913,
+            "hit_rate_percent": 94.7,
+            "other_gpu_read_percent": 2.6,
+            "other_gpu_reads": 77,
+            "routed_experts": 2990
+          },
+          "request": "rep2-medium",
+          "resident_ram_blobs_this_request": 1472,
+          "tier_counters": {
+            "file_blobs_cumulative": 0,
+            "file_expert_mb_cumulative": 73867.1,
+            "gpu_cache_hits_this_request": 2758,
+            "resident_ram_blobs_cumulative": 10466
+          }
+        },
+        {
+          "adaptive_lines": [
+            "strata serve: decode expert cache hit rate: 95.1% (2785 hits / 2928 lookups); 62 more read by the GPU over PCIe or from another GPU (2.1% of all 2990 routed)",
+            "strata serve: resident RAM: 2.94 GiB of experts in RAM, 0 exchanged with the VRAM tier, 0 blob reads from the file",
+            "strata serve: expert tiers: GPU 2785 hits this request; since the start RAM 13390 blobs, files 0 blobs 73867.1 MB read (the GGUF in place)",
+            "strata serve: file tier I/O this request: the OS read 88.8 MB from storage (0 major faults) for 0.0 MB of expert reads"
+          ],
+          "exchange_events_cumulative": 0,
+          "exchange_events_this_request": 0,
+          "expert_file_read_mb_reported": 0.0,
+          "expert_file_read_note": null,
+          "file_read_line": "strata serve: file tier I/O this request: the OS read 88.8 MB from storage (0 major faults) for 0.0 MB of expert reads",
+          "profile_cache_and_tier_lines": [
+            "strata serve: decode expert cache hit rate: 95.1% (2785 hits / 2928 lookups); 62 more read by the GPU over PCIe or from another GPU (2.1% of all 2990 routed)",
+            "strata serve: resident RAM: 2.94 GiB of experts in RAM, 0 exchanged with the VRAM tier, 0 blob reads from the file",
+            "strata serve: expert tiers: GPU 2785 hits this request; since the start RAM 13390 blobs, files 0 blobs 73867.1 MB read (the GGUF in place)"
+          ],
+          "profile_cache_metrics": {
+            "gpu_cache_hits": 2785,
+            "gpu_cache_lookups": 2928,
+            "hit_rate_percent": 95.1,
+            "other_gpu_read_percent": 2.1,
+            "other_gpu_reads": 62,
+            "routed_experts": 2990
+          },
+          "request": "rep2-large",
+          "resident_ram_blobs_this_request": 2924,
+          "tier_counters": {
+            "file_blobs_cumulative": 0,
+            "file_expert_mb_cumulative": 73867.1,
+            "gpu_cache_hits_this_request": 2785,
+            "resident_ram_blobs_cumulative": 13390
+          }
+        },
+        {
+          "adaptive_lines": [
+            "strata serve: decode expert cache hit rate: 94.9% (3009 hits / 3171 lookups); 79 more read by the GPU over PCIe or from another GPU (2.4% of all 3250 routed)",
+            "strata serve: resident RAM: 2.94 GiB of experts in RAM, 0 exchanged with the VRAM tier, 0 blob reads from the file",
+            "strata serve: expert tiers: GPU 3009 hits this request; since the start RAM 14227 blobs, files 0 blobs 73867.1 MB read (the GGUF in place)",
+            "strata serve: file tier I/O this request: the OS read 28.6 MB from storage (0 major faults) for 0.0 MB of expert reads"
+          ],
+          "exchange_events_cumulative": 0,
+          "exchange_events_this_request": 0,
+          "expert_file_read_mb_reported": 0.0,
+          "expert_file_read_note": null,
+          "file_read_line": "strata serve: file tier I/O this request: the OS read 28.6 MB from storage (0 major faults) for 0.0 MB of expert reads",
+          "profile_cache_and_tier_lines": [
+            "strata serve: decode expert cache hit rate: 94.9% (3009 hits / 3171 lookups); 79 more read by the GPU over PCIe or from another GPU (2.4% of all 3250 routed)",
+            "strata serve: resident RAM: 2.94 GiB of experts in RAM, 0 exchanged with the VRAM tier, 0 blob reads from the file",
+            "strata serve: expert tiers: GPU 3009 hits this request; since the start RAM 14227 blobs, files 0 blobs 73867.1 MB read (the GGUF in place)"
+          ],
+          "profile_cache_metrics": {
+            "gpu_cache_hits": 3009,
+            "gpu_cache_lookups": 3171,
+            "hit_rate_percent": 94.9,
+            "other_gpu_read_percent": 2.4,
+            "other_gpu_reads": 79,
+            "routed_experts": 3250
+          },
+          "request": "rep3-small",
+          "resident_ram_blobs_this_request": 837,
+          "tier_counters": {
+            "file_blobs_cumulative": 0,
+            "file_expert_mb_cumulative": 73867.1,
+            "gpu_cache_hits_this_request": 3009,
+            "resident_ram_blobs_cumulative": 14227
+          }
+        },
+        {
+          "adaptive_lines": [
+            "strata serve: decode expert cache hit rate: 94.7% (2758 hits / 2913 lookups); 77 more read by the GPU over PCIe or from another GPU (2.6% of all 2990 routed)",
+            "strata serve: resident RAM: 2.94 GiB of experts in RAM, 0 exchanged with the VRAM tier, 0 blob reads from the file",
+            "strata serve: expert tiers: GPU 2758 hits this request; since the start RAM 15699 blobs, files 0 blobs 73867.1 MB read (the GGUF in place)",
+            "strata serve: file tier I/O this request: the OS read 50.4 MB from storage (0 major faults) for 0.0 MB of expert reads"
+          ],
+          "exchange_events_cumulative": 0,
+          "exchange_events_this_request": 0,
+          "expert_file_read_mb_reported": 0.0,
+          "expert_file_read_note": null,
+          "file_read_line": "strata serve: file tier I/O this request: the OS read 50.4 MB from storage (0 major faults) for 0.0 MB of expert reads",
+          "profile_cache_and_tier_lines": [
+            "strata serve: decode expert cache hit rate: 94.7% (2758 hits / 2913 lookups); 77 more read by the GPU over PCIe or from another GPU (2.6% of all 2990 routed)",
+            "strata serve: resident RAM: 2.94 GiB of experts in RAM, 0 exchanged with the VRAM tier, 0 blob reads from the file",
+            "strata serve: expert tiers: GPU 2758 hits this request; since the start RAM 15699 blobs, files 0 blobs 73867.1 MB read (the GGUF in place)"
+          ],
+          "profile_cache_metrics": {
+            "gpu_cache_hits": 2758,
+            "gpu_cache_lookups": 2913,
+            "hit_rate_percent": 94.7,
+            "other_gpu_read_percent": 2.6,
+            "other_gpu_reads": 77,
+            "routed_experts": 2990
+          },
+          "request": "rep3-medium",
+          "resident_ram_blobs_this_request": 1472,
+          "tier_counters": {
+            "file_blobs_cumulative": 0,
+            "file_expert_mb_cumulative": 73867.1,
+            "gpu_cache_hits_this_request": 2758,
+            "resident_ram_blobs_cumulative": 15699
+          }
+        },
+        {
+          "adaptive_lines": [
+            "strata serve: decode expert cache hit rate: 95.1% (2785 hits / 2928 lookups); 62 more read by the GPU over PCIe or from another GPU (2.1% of all 2990 routed)",
+            "strata serve: resident RAM: 2.94 GiB of experts in RAM, 0 exchanged with the VRAM tier, 0 blob reads from the file",
+            "strata serve: expert tiers: GPU 2785 hits this request; since the start RAM 18623 blobs, files 0 blobs 73867.1 MB read (the GGUF in place)",
+            "strata serve: file tier I/O this request: the OS read 88.9 MB from storage (0 major faults) for 0.0 MB of expert reads"
+          ],
+          "exchange_events_cumulative": 0,
+          "exchange_events_this_request": 0,
+          "expert_file_read_mb_reported": 0.0,
+          "expert_file_read_note": null,
+          "file_read_line": "strata serve: file tier I/O this request: the OS read 88.9 MB from storage (0 major faults) for 0.0 MB of expert reads",
+          "profile_cache_and_tier_lines": [
+            "strata serve: decode expert cache hit rate: 95.1% (2785 hits / 2928 lookups); 62 more read by the GPU over PCIe or from another GPU (2.1% of all 2990 routed)",
+            "strata serve: resident RAM: 2.94 GiB of experts in RAM, 0 exchanged with the VRAM tier, 0 blob reads from the file",
+            "strata serve: expert tiers: GPU 2785 hits this request; since the start RAM 18623 blobs, files 0 blobs 73867.1 MB read (the GGUF in place)"
+          ],
+          "profile_cache_metrics": {
+            "gpu_cache_hits": 2785,
+            "gpu_cache_lookups": 2928,
+            "hit_rate_percent": 95.1,
+            "other_gpu_read_percent": 2.1,
+            "other_gpu_reads": 62,
+            "routed_experts": 2990
+          },
+          "request": "rep3-large",
+          "resident_ram_blobs_this_request": 2924,
+          "tier_counters": {
+            "file_blobs_cumulative": 0,
+            "file_expert_mb_cumulative": 73867.1,
+            "gpu_cache_hits_this_request": 2785,
+            "resident_ram_blobs_cumulative": 18623
+          }
+        }
+      ],
+      "per_stage_swap_bytes": null,
+      "per_stage_swap_bytes_note": "The unchanged runtime emits aggregate exchange counts and no layer IDs or per-stage byte totals. No trace/profiling instrumentation or runtime change was authorized, so per-stage swap bytes are not inferred.",
+      "synchronous_adaptation_rounds": null,
+      "synchronous_adaptation_rounds_note": "The unchanged request-end diagnostics expose cumulative exchange counts, but no per-request adaptation-round count or accepted-round histogram."
+    }
+  },
+  "arms": {
+    "adaptive": {
+      "compute_processes_after": "",
+      "maximum_process_swap_bytes": 0,
+      "maximum_rss_bytes": 9754533888,
+      "maximum_sample_gap_seconds": 1.1005734720001783,
+      "maximum_system_swap_bytes": 138674176,
+      "minimum_gpu_free_bytes": {
+        "0": 1501233152,
+        "1": 4614062080
+      },
+      "minimum_host_available_bytes": 7540260864,
+      "sample_count": 171
+    },
+    "control": {
+      "compute_processes_after": "",
+      "maximum_process_swap_bytes": 0,
+      "maximum_rss_bytes": 9344704512,
+      "maximum_sample_gap_seconds": 1.0998344409999845,
+      "maximum_system_swap_bytes": 62914560,
+      "minimum_gpu_free_bytes": {
+        "0": 1528496128,
+        "1": 4637130752
+      },
+      "minimum_host_available_bytes": 8200015872,
+      "sample_count": 131
+    }
+  },
+  "description": "Descriptive K35 A/B: ordinary CPU-computed resident-RAM misses versus synchronous adaptive RAM-to-GPU promotion; MMQ enabled in both.",
+  "limits": [
+    "Serial arms are descriptive, not randomized or interleaved.",
+    "The 32K prompt is one sanity request, not a long-context performance claim.",
+    "One-second samples are sampled extrema, not a hard OOM guarantee.",
+    "Only CUDA was exercised; no default, runtime algorithm, split, or backend was changed.",
+    "Adaptive per-stage swap bytes are not emitted by the unchanged runtime and are not inferred."
+  ],
+  "resident_complement_exact": {
+    "cold_pairs": 997,
+    "cold_pairs_by_layer": {
+      "35": 71,
+      "36": 72,
+      "37": 71,
+      "38": 57,
+      "39": 89,
+      "40": 71,
+      "41": 57,
+      "42": 75,
+      "43": 76,
+      "44": 85,
+      "45": 88,
+      "46": 88,
+      "47": 97
+    },
+    "cold_payload_bytes_by_layer": {
+      "35": 218112000,
+      "36": 221184000,
+      "37": 218112000,
+      "38": 175104000,
+      "39": 273408000,
+      "40": 218112000,
+      "41": 175104000,
+      "42": 230400000,
+      "43": 233472000,
+      "44": 261120000,
+      "45": 270336000,
+      "46": 315392000,
+      "47": 347648000
+    },
+    "ledger": "bench/results/2026-10-16-cmp170hx-rtx3090-k37/ledger-chunk256.csv",
+    "ledger_sha256": "142e1fe37cd5ffde74e05ed9f4c79dfada9974510036aef7548978aa7786d01e",
+    "pinned_bytes_basis": "The runtime reported a mapped pinned complement and matching resident/pinned sizes; the exact logical payload is the profile-selected cold-pair sum using the recorded per-layer expert payload sizes.",
+    "pinned_expert_payload_bytes_exact": 3157504000,
+    "profile_sha256": "8f59b4aa8873209dff11c11e37bcda9529a1335b724a1afeea37bf6388975baf",
+    "resident_expert_payload_bytes_exact": 3157504000,
+    "stage1_gpu_cache_pairs": 5659,
+    "stage1_profiled_pairs": 6656
+  },
+  "result": "passed",
+  "short_comparison": {
+    "large": {
+      "adaptive_median_prefill_ms": 2362.0,
+      "adaptive_median_wall_seconds": 2.5976576390003174,
+      "adaptive_over_control_wall_ratio": 1.003065303953963,
+      "control_median_prefill_ms": 2357.8,
+      "control_median_wall_seconds": 2.5897193620003236,
+      "generated_ids_match": true,
+      "input_tokens": 1977,
+      "mtp_accepted_offered": {
+        "adaptive": [
+          [
+            9,
+            12
+          ],
+          [
+            9,
+            12
+          ],
+          [
+            9,
+            12
+          ]
+        ],
+        "control": [
+          [
+            10,
+            11
+          ],
+          [
+            10,
+            11
+          ],
+          [
+            10,
+            11
+          ]
+        ]
+      }
+    },
+    "medium": {
+      "adaptive_median_prefill_ms": 1233.9,
+      "adaptive_median_wall_seconds": 1.4563516710004478,
+      "adaptive_over_control_wall_ratio": 0.9951822322299623,
+      "control_median_prefill_ms": 1227.7,
+      "control_median_wall_seconds": 1.4634020020002936,
+      "generated_ids_match": true,
+      "input_tokens": 994,
+      "mtp_accepted_offered": {
+        "adaptive": [
+          [
+            10,
+            11
+          ],
+          [
+            10,
+            11
+          ],
+          [
+            10,
+            11
+          ]
+        ],
+        "control": [
+          [
+            10,
+            11
+          ],
+          [
+            10,
+            11
+          ],
+          [
+            10,
+            11
+          ]
+        ]
+      }
+    },
+    "small": {
+      "adaptive_median_prefill_ms": 676.8,
+      "adaptive_median_wall_seconds": 0.9219374990007054,
+      "adaptive_over_control_wall_ratio": 0.9978212027779901,
+      "control_median_prefill_ms": 676.3,
+      "control_median_wall_seconds": 0.9239506000012625,
+      "generated_ids_match": true,
+      "input_tokens": 502,
+      "mtp_accepted_offered": {
+        "adaptive": [
+          [
+            9,
+            12
+          ],
+          [
+            9,
+            13
+          ],
+          [
+            9,
+            12
+          ]
+        ],
+        "control": [
+          [
+            9,
+            12
+          ],
+          [
+            9,
+            12
+          ],
+          [
+            9,
+            12
+          ]
+        ]
+      }
+    }
+  },
+  "startup": {
+    "CMP_first_reserve_mib": 1024,
+    "RTX_later_reserve_mib": 2049,
+    "adaptive": {
+      "cold_complement": {
+        "expected_unowned_pairs_from_profile_owners": 997,
+        "fully_page_locked": true,
+        "pinned_gib": 2.94,
+        "reported_unowned_gib": 2.94,
+        "reported_unowned_pairs": 997,
+        "resident_gib": 2.94
+      },
+      "stage1_cache": {
+        "configured_later_reserve_mib": 2049,
+        "physical_device": "RTX 3090 index 0",
+        "profiled_pairs": 6656,
+        "reported_gib": 16.59,
+        "reported_stage_room_gib": 16.59,
+        "resident_pairs": 5659,
+        "slots": 5659
+      },
+      "startup_ready_gpu_free_bytes": [
+        {
+          "free_bytes": 1593507840,
+          "physical_index": 0,
+          "total_bytes": 25769803776,
+          "used_bytes": 24176295936
+        },
+        {
+          "free_bytes": 4727308288,
+          "physical_index": 1,
+          "total_bytes": 68719476736,
+          "used_bytes": 63992168448
+        }
+      ]
+    },
+    "control": {
+      "cold_complement": {
+        "expected_unowned_pairs_from_profile_owners": 997,
+        "fully_page_locked": true,
+        "pinned_gib": 2.94,
+        "reported_unowned_gib": 2.94,
+        "reported_unowned_pairs": 997,
+        "resident_gib": 2.94
+      },
+      "stage1_cache": {
+        "configured_later_reserve_mib": 2049,
+        "physical_device": "RTX 3090 index 0",
+        "profiled_pairs": 6656,
+        "reported_gib": 16.59,
+        "reported_stage_room_gib": 16.59,
+        "resident_pairs": 5659,
+        "slots": 5659
+      },
+      "startup_ready_gpu_free_bytes": [
+        {
+          "free_bytes": 1595604992,
+          "physical_index": 0,
+          "total_bytes": 25769803776,
+          "used_bytes": 24174198784
+        },
+        {
+          "free_bytes": 4727308288,
+          "physical_index": 1,
+          "total_bytes": 68719476736,
+          "used_bytes": 63992168448
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "active_runner_or_helper_processes": [],
+  "arms": {
+    "adaptive": {
+      "compute_processes_after": "",
+      "engine_return_code": 0,
+      "status": "passed"
+    },
+    "control": {
+      "compute_processes_after": "",
+      "engine_return_code": 0,
+      "status": "passed"
+    }
+  },
+  "checked_utc": "2026-10-16T21:57:19.329924+00:00",
+  "engine_processes": [
+    {
+      "arm": "control",
+      "pid": 441311,
+      "process_absent": true
+    },
+    {
+      "arm": "adaptive",
+      "pid": 448684,
+      "process_absent": true
+    }
+  ],
+  "gpu_devices": [
+    {
+      "driver_version": "610.43.03",
+      "index": 0,
+      "memory_free": "24096 MiB",
+      "memory_total": "24576 MiB",
+      "memory_used": "28 MiB",
+      "name": "NVIDIA GeForce RTX 3090",
+      "utilization_gpu": "0 %",
+      "uuid": "GPU-01f295eb-2ee0-838a-ba5b-db97f075a5f7"
+    },
+    {
+      "driver_version": "610.43.03",
+      "index": 1,
+      "memory_free": "64897 MiB",
+      "memory_total": "65536 MiB",
+      "memory_used": "16 MiB",
+      "name": "NVIDIA CMP 170HX",
+      "utilization_gpu": "0 %",
+      "uuid": "GPU-79d96de3-4783-ba96-d95c-fe5e0364528e"
+    }
+  ],
+  "host_memavailable_bytes": 17812131840,
+  "nvml_compute_apps": ""
+}
