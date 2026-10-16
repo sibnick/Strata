@@ -1,0 +1,805 @@
+Survey packet 32k: The following is a chronological collection of routine field notes. Individual archive records are embedded among unrelated operational observations.
+
+The notes cover maintenance, visitor flow, weather, and record handling at several public sites. Values in ordinary entries are not archive verification codes.
+
+Archive record ORIGIN: This is the opening record in the dispatch packet. At the Alder Quay archive desk, the sealed register lists verification code IRIS-4Q7-LANTERN. Preserve the code exactly as written.
+
+Field entry 00000: On Thursday at 17:15, a field coordinator visited the west greenhouse and checked the handheld gauge against the routine sheet. The observer noted a group of visitors following the marked route; the comparison read 36 units, within the ordinary range recorded for that location. The summary was filed with the other ordinary site notes.
+
+Field entry 00001: On Monday at 09:10, a maintenance technician visited the canal lock and checked the handheld gauge against the routine sheet. The observer noted a clear view of the path after the temporary barrier was moved; the comparison read 75 units, within the ordinary range recorded for that location. The coordinator asked the next shift to use the same reference point.
+
+Field entry 00002: On Sunday at 07:20, a field coordinator visited the stone viaduct and checked the radio check sheet against the routine sheet. The observer noted a short delay while the key holder finished another inspection; the comparison read 16 units, within the ordinary range recorded for that location. The crew kept the original notation so later visitors could compare conditions.
+
+Field entry 00003: On Friday at 17:30, a records clerk visited the river workshop and checked the paper map against the routine sheet. The observer noted several damp leaves gathered beside the drain; the comparison read 52 units, within the ordinary range recorded for that location. The crew kept the original notation so later visitors could compare conditions.
+
+Field entry 00004: On Saturday at 11:15, a maintenance technician visited the east pump house and checked the paper map against the routine sheet. The observer noted a measured queue that cleared before the next scheduled check; the comparison read 34 units, within the ordinary range recorded for that location. The coordinator asked the next shift to use the same reference point.
+
+Field entry 00005: On Monday at 09:45, the evening custodian visited the south depot and checked the sample labels against the routine sheet. The observer noted several damp leaves gathered beside the drain; the comparison read 16 units, within the ordinary range recorded for that location. The team left the route open and added the observation to its next review.
+
+Field entry 00006: On Wednesday at 15:30, the site steward visited the canal lock and checked the weather display against the routine sheet. The observer noted an empty crate returned to the correct storage bay; the comparison read 70 units, within the ordinary range recorded for that location. The team left the route open and added the observation to its next review.
+
+Field entry 00007: On Friday at 09:50, a volunteer surveyor visited the south depot and checked the weather display against the routine sheet. The observer noted a loose hinge that remained safe to use; the comparison read 42 units, within the ordinary range recorded for that location. The team left the route open and added the observation to its next review.
+
+Field entry 00008: On Tuesday at 20:00, the site steward visited the library annex and checked the paper map against the routine sheet. The observer noted fresh chalk marks near the public notice board; the comparison read 19 units, within the ordinary range recorded for that location. The summary was filed with the other ordinary site notes.
+
+Field entry 00009: On Saturday at 06:20, a maintenance technician visited the stone viaduct and checked the handheld gauge against the routine sheet. The observer noted a quiet interval between the morning and afternoon rounds; the comparison read 19 units, within the ordinary range recorded for that location. The clerk marked the entry for comparison with the following day's report.
+
+Field entry 00010: On Monday at 18:50, a maintenance technician visited the south depot and checked the sample labels against the routine sheet. The observer noted a brief change in the wind after the clouds moved east; the comparison read 36 units, within the ordinary range recorded for that location. The crew kept the original notation so later visitors could compare conditions.
+
+Field entry 00011: On Sunday at 20:30, a field coordinator visited the orchard loading lane and checked the weather display against the routine sheet. The observer noted a row of seedlings protected from the afternoon sun; the comparison read 39 units, within the ordinary range recorded for that location. The clerk marked the entry for comparison with the following day's report.
+
+Field entry 00012: On Wednesday at 09:45, a field coordinator visited the east pump house and checked the radio check sheet against the routine sheet. The observer noted a quiet interval between the morning and afternoon rounds; the comparison read 33 units, within the ordinary range recorded for that location. The clerk marked the entry for comparison with the following day's report.
+
+Field entry 00013: On Friday at 19:10, a maintenance technician visited the north footbridge and checked the weather display against the routine sheet. The observer noted a short delay while the key holder finished another inspection; the comparison read 42 units, within the ordinary range recorded for that location. No equipment was moved; the next check remained on the normal schedule.
+
+Field entry 00014: On Sunday at 07:30, the evening custodian visited the south depot and checked the inspection ledger against the routine sheet. The observer noted a short delay while the key holder finished another inspection; the comparison read 25 units, within the ordinary range recorded for that location. A second observer confirmed the location without changing the recorded reading.
+
+Field entry 00015: On Tuesday at 11:10, a records clerk visited the north footbridge and checked the paper map against the routine sheet. The observer noted an empty crate returned to the correct storage bay; the comparison read 55 units, within the ordinary range recorded for that location. The summary was filed with the other ordinary site notes.
+
+Field entry 00016: On Friday at 21:50, a records clerk visited the south depot and checked the radio check sheet against the routine sheet. The observer noted fresh chalk marks near the public notice board; the comparison read 46 units, within the ordinary range recorded for that location. The clerk marked the entry for comparison with the following day's report.
+
+Field entry 00017: On Saturday at 18:20, the evening custodian visited the north footbridge and checked the inspection ledger against the routine sheet. The observer noted a narrow patch of shade along the retaining wall; the comparison read 15 units, within the ordinary range recorded for that location. No equipment was moved; the next check remained on the normal schedule.
+
+Field entry 00018: On Thursday at 14:50, a records clerk visited the old rail platform and checked the inspection ledger against the routine sheet. The observer noted a short delay while the key holder finished another inspection; the comparison read 88 units, within the ordinary range recorded for that location. The team left the route open and added the observation to its next review.
+
+Field entry 00019: On Wednesday at 08:20, a records clerk visited the south depot and checked the radio check sheet against the routine sheet. The observer noted a quiet interval between the morning and afternoon rounds; the comparison read 19 units, within the ordinary range recorded for that location. A second observer confirmed the location without changing the recorded reading.
+
+Field entry 00020: On Wednesday at 16:45, a maintenance technician visited the hilltop water tank and checked the handheld gauge against the routine sheet. The observer noted a row of seedlings protected from the afternoon sun; the comparison read 56 units, within the ordinary range recorded for that location. The summary was filed with the other ordinary site notes.
+
+Field entry 00021: On Monday at 19:50, the evening custodian visited the west greenhouse and checked the weather display against the routine sheet. The observer noted a quiet interval between the morning and afternoon rounds; the comparison read 82 units, within the ordinary range recorded for that location. The summary was filed with the other ordinary site notes.
+
+Field entry 00022: On Tuesday at 14:15, the site steward visited the canal lock and checked the weather display against the routine sheet. The observer noted a brief change in the wind after the clouds moved east; the comparison read 76 units, within the ordinary range recorded for that location. The summary was filed with the other ordinary site notes.
+
+Field entry 00023: On Wednesday at 20:00, a field coordinator visited the river workshop and checked the radio check sheet against the routine sheet. The observer noted a row of seedlings protected from the afternoon sun; the comparison read 16 units, within the ordinary range recorded for that location. The team left the route open and added the observation to its next review.
+
+Field entry 00024: On Thursday at 08:30, a field coordinator visited the canal lock and checked the paper map against the routine sheet. The observer noted a measured queue that cleared before the next scheduled check; the comparison read 37 units, within the ordinary range recorded for that location. The note was copied into the routine log before the shift changed.
+
+Field entry 00025: On Saturday at 18:40, the site steward visited the river workshop and checked the paper map against the routine sheet. The observer noted a brief change in the wind after the clouds moved east; the comparison read 49 units, within the ordinary range recorded for that location. No equipment was moved; the next check remained on the normal schedule.
+
+Field entry 00026: On Monday at 11:00, the site steward visited the east pump house and checked the sample labels against the routine sheet. The observer noted a quiet interval between the morning and afternoon rounds; the comparison read 29 units, within the ordinary range recorded for that location. The note was copied into the routine log before the shift changed.
+
+Field entry 00027: On Friday at 07:00, a records clerk visited the lower ferry landing and checked the weather display against the routine sheet. The observer noted a measured queue that cleared before the next scheduled check; the comparison read 87 units, within the ordinary range recorded for that location. A second observer confirmed the location without changing the recorded reading.
+
+Field entry 00028: On Monday at 11:20, the evening custodian visited the museum courtyard and checked the handheld gauge against the routine sheet. The observer noted a loose hinge that remained safe to use; the comparison read 38 units, within the ordinary range recorded for that location. The crew kept the original notation so later visitors could compare conditions.
+
+Field entry 00029: On Saturday at 17:20, the evening custodian visited the stone viaduct and checked the radio check sheet against the routine sheet. The observer noted a clear view of the path after the temporary barrier was moved; the comparison read 83 units, within the ordinary range recorded for that location. The summary was filed with the other ordinary site notes.
+
+Field entry 00030: On Thursday at 15:00, a maintenance technician visited the west greenhouse and checked the sample labels against the routine sheet. The observer noted a loose hinge that remained safe to use; the comparison read 74 units, within the ordinary range recorded for that location. The crew kept the original notation so later visitors could compare conditions.
+
+Field entry 00031: On Tuesday at 16:45, the evening custodian visited the coastal footpath and checked the sample labels against the routine sheet. The observer noted several damp leaves gathered beside the drain; the comparison read 66 units, within the ordinary range recorded for that location. No equipment was moved; the next check remained on the normal schedule.
+
+Field entry 00032: On Sunday at 11:45, a field coordinator visited the orchard loading lane and checked the weather display against the routine sheet. The observer noted a short delay while the key holder finished another inspection; the comparison read 58 units, within the ordinary range recorded for that location. The coordinator asked the next shift to use the same reference point.
+
+Field entry 00033: On Sunday at 11:45, the evening custodian visited the hillside weather station and checked the handheld gauge against the routine sheet. The observer noted a group of visitors following the marked route; the comparison read 59 units, within the ordinary range recorded for that location. The coordinator asked the next shift to use the same reference point.
+
+Field entry 00034: On Thursday at 12:45, a field coordinator visited the hilltop water tank and checked the radio check sheet against the routine sheet. The observer noted a short delay while the key holder finished another inspection; the comparison read 20 units, within the ordinary range recorded for that location. No equipment was moved; the next check remained on the normal schedule.
+
+Field entry 00035: On Monday at 07:45, a field coordinator visited the community boat shed and checked the inspection ledger against the routine sheet. The observer noted a repair request already listed in the weekly maintenance book; the comparison read 61 units, within the ordinary range recorded for that location. A second observer confirmed the location without changing the recorded reading.
+
+Field entry 00036: On Tuesday at 08:50, a records clerk visited the river workshop and checked the sample labels against the routine sheet. The observer noted a small difference between the printed map and the new sign; the comparison read 81 units, within the ordinary range recorded for that location. No equipment was moved; the next check remained on the normal schedule.
+
+Field entry 00037: On Saturday at 15:10, a field coordinator visited the museum courtyard and checked the inspection ledger against the routine sheet. The observer noted a measured queue that cleared before the next scheduled check; the comparison read 14 units, within the ordinary range recorded for that location. No equipment was moved; the next check remained on the normal schedule.
+
+Field entry 00038: On Sunday at 15:30, the site steward visited the farm access gate and checked the paper map against the routine sheet. The observer noted several damp leaves gathered beside the drain; the comparison read 48 units, within the ordinary range recorded for that location. The crew kept the original notation so later visitors could compare conditions.
+
+Field entry 00039: On Saturday at 06:20, a maintenance technician visited the stone viaduct and checked the radio check sheet against the routine sheet. The observer noted a group of visitors following the marked route; the comparison read 84 units, within the ordinary range recorded for that location. The crew kept the original notation so later visitors could compare conditions.
+
+Field entry 00040: On Saturday at 15:30, a volunteer surveyor visited the south depot and checked the handheld gauge against the routine sheet. The observer noted a loose hinge that remained safe to use; the comparison read 26 units, within the ordinary range recorded for that location. The team left the route open and added the observation to its next review.
+
+Field entry 00041: On Friday at 14:30, a field coordinator visited the east pump house and checked the handheld gauge against the routine sheet. The observer noted a measured queue that cleared before the next scheduled check; the comparison read 81 units, within the ordinary range recorded for that location. The note was copied into the routine log before the shift changed.
+
+Field entry 00042: On Saturday at 08:15, a records clerk visited the stone viaduct and checked the sample labels against the routine sheet. The observer noted a narrow patch of shade along the retaining wall; the comparison read 34 units, within the ordinary range recorded for that location. The clerk marked the entry for comparison with the following day's report.
+
+Field entry 00043: On Monday at 18:00, a maintenance technician visited the market service road and checked the handheld gauge against the routine sheet. The observer noted a loose hinge that remained safe to use; the comparison read 84 units, within the ordinary range recorded for that location. A second observer confirmed the location without changing the recorded reading.
+
+Field entry 00044: On Tuesday at 06:40, a field coordinator visited the stone viaduct and checked the sample labels against the routine sheet. The observer noted a narrow patch of shade along the retaining wall; the comparison read 86 units, within the ordinary range recorded for that location. No equipment was moved; the next check remained on the normal schedule.
+
+Field entry 00045: On Monday at 20:40, the site steward visited the farm access gate and checked the inspection ledger against the routine sheet. The observer noted a narrow patch of shade along the retaining wall; the comparison read 48 units, within the ordinary range recorded for that location. The coordinator asked the next shift to use the same reference point.
+
+Field entry 00046: On Tuesday at 11:15, a volunteer surveyor visited the orchard loading lane and checked the paper map against the routine sheet. The observer noted a group of visitors following the marked route; the comparison read 86 units, within the ordinary range recorded for that location. The team left the route open and added the observation to its next review.
+
+Field entry 00047: On Friday at 12:10, the site steward visited the museum courtyard and checked the inspection ledger against the routine sheet. The observer noted several damp leaves gathered beside the drain; the comparison read 46 units, within the ordinary range recorded for that location. No equipment was moved; the next check remained on the normal schedule.
+
+Field entry 00048: On Friday at 19:40, the site steward visited the museum courtyard and checked the sample labels against the routine sheet. The observer noted a loose hinge that remained safe to use; the comparison read 20 units, within the ordinary range recorded for that location. The team left the route open and added the observation to its next review.
+
+Field entry 00049: On Sunday at 09:20, a records clerk visited the market service road and checked the radio check sheet against the routine sheet. The observer noted a repair request already listed in the weekly maintenance book; the comparison read 30 units, within the ordinary range recorded for that location. The crew kept the original notation so later visitors could compare conditions.
+
+Field entry 00050: On Tuesday at 13:40, a records clerk visited the river workshop and checked the inspection ledger against the routine sheet. The observer noted a row of seedlings protected from the afternoon sun; the comparison read 16 units, within the ordinary range recorded for that location. The clerk marked the entry for comparison with the following day's report.
+
+Field entry 00051: On Friday at 17:00, a volunteer surveyor visited the museum courtyard and checked the sample labels against the routine sheet. The observer noted a loose hinge that remained safe to use; the comparison read 16 units, within the ordinary range recorded for that location. The team left the route open and added the observation to its next review.
+
+Field entry 00052: On Saturday at 12:50, a field coordinator visited the community boat shed and checked the paper map against the routine sheet. The observer noted a small difference between the printed map and the new sign; the comparison read 55 units, within the ordinary range recorded for that location. The crew kept the original notation so later visitors could compare conditions.
+
+Field entry 00053: On Thursday at 18:45, a field coordinator visited the west greenhouse and checked the inspection ledger against the routine sheet. The observer noted a measured queue that cleared before the next scheduled check; the comparison read 14 units, within the ordinary range recorded for that location. The team left the route open and added the observation to its next review.
+
+Field entry 00054: On Monday at 16:15, the site steward visited the old rail platform and checked the sample labels against the routine sheet. The observer noted a brief change in the wind after the clouds moved east; the comparison read 25 units, within the ordinary range recorded for that location. The note was copied into the routine log before the shift changed.
+
+Field entry 00055: On Wednesday at 10:30, a maintenance technician visited the library annex and checked the sample labels against the routine sheet. The observer noted a loose hinge that remained safe to use; the comparison read 78 units, within the ordinary range recorded for that location. The summary was filed with the other ordinary site notes.
+
+Field entry 00056: On Friday at 14:45, the site steward visited the south depot and checked the sample labels against the routine sheet. The observer noted a repair request already listed in the weekly maintenance book; the comparison read 55 units, within the ordinary range recorded for that location. No equipment was moved; the next check remained on the normal schedule.
+
+Field entry 00057: On Thursday at 21:40, a field coordinator visited the lower ferry landing and checked the weather display against the routine sheet. The observer noted a group of visitors following the marked route; the comparison read 18 units, within the ordinary range recorded for that location. The team left the route open and added the observation to its next review.
+
+Field entry 00058: On Monday at 06:20, a records clerk visited the stone viaduct and checked the handheld gauge against the routine sheet. The observer noted a small difference between the printed map and the new sign; the comparison read 58 units, within the ordinary range recorded for that location. No equipment was moved; the next check remained on the normal schedule.
+
+Field entry 00059: On Wednesday at 12:20, a volunteer surveyor visited the stone viaduct and checked the radio check sheet against the routine sheet. The observer noted a brief change in the wind after the clouds moved east; the comparison read 34 units, within the ordinary range recorded for that location. A second observer confirmed the location without changing the recorded reading.
+
+Field entry 00060: On Wednesday at 17:20, a volunteer surveyor visited the south depot and checked the inspection ledger against the routine sheet. The observer noted an empty crate returned to the correct storage bay; the comparison read 87 units, within the ordinary range recorded for that location. The summary was filed with the other ordinary site notes.
+
+Field entry 00061: On Friday at 09:10, a records clerk visited the stone viaduct and checked the handheld gauge against the routine sheet. The observer noted a repair request already listed in the weekly maintenance book; the comparison read 19 units, within the ordinary range recorded for that location. The crew kept the original notation so later visitors could compare conditions.
+
+Field entry 00062: On Wednesday at 10:40, a field coordinator visited the lower ferry landing and checked the paper map against the routine sheet. The observer noted fresh chalk marks near the public notice board; the comparison read 33 units, within the ordinary range recorded for that location. The summary was filed with the other ordinary site notes.
+
+Field entry 00063: On Friday at 20:20, a records clerk visited the museum courtyard and checked the weather display against the routine sheet. The observer noted an empty crate returned to the correct storage bay; the comparison read 84 units, within the ordinary range recorded for that location. A second observer confirmed the location without changing the recorded reading.
+
+Field entry 00064: On Sunday at 11:00, the site steward visited the coastal footpath and checked the sample labels against the routine sheet. The observer noted a group of visitors following the marked route; the comparison read 70 units, within the ordinary range recorded for that location. The note was copied into the routine log before the shift changed.
+
+Field entry 00065: On Thursday at 06:40, a maintenance technician visited the south depot and checked the sample labels against the routine sheet. The observer noted two delivery carts waiting beside the painted line; the comparison read 68 units, within the ordinary range recorded for that location. No equipment was moved; the next check remained on the normal schedule.
+
+Field entry 00066: On Wednesday at 12:10, the site steward visited the hillside weather station and checked the paper map against the routine sheet. The observer noted several damp leaves gathered beside the drain; the comparison read 51 units, within the ordinary range recorded for that location. The note was copied into the routine log before the shift changed.
+
+Field entry 00067: On Thursday at 21:15, the site steward visited the hilltop water tank and checked the handheld gauge against the routine sheet. The observer noted a small difference between the printed map and the new sign; the comparison read 67 units, within the ordinary range recorded for that location. A second observer confirmed the location without changing the recorded reading.
+
+Field entry 00068: On Monday at 19:10, a volunteer surveyor visited the stone viaduct and checked the handheld gauge against the routine sheet. The observer noted several damp leaves gathered beside the drain; the comparison read 46 units, within the ordinary range recorded for that location. The summary was filed with the other ordinary site notes.
+
+Field entry 00069: On Monday at 15:20, the evening custodian visited the old rail platform and checked the paper map against the routine sheet. The observer noted several damp leaves gathered beside the drain; the comparison read 65 units, within the ordinary range recorded for that location. The clerk marked the entry for comparison with the following day's report.
+
+Field entry 00070: On Monday at 12:10, a volunteer surveyor visited the east pump house and checked the inspection ledger against the routine sheet. The observer noted several damp leaves gathered beside the drain; the comparison read 14 units, within the ordinary range recorded for that location. The clerk marked the entry for comparison with the following day's report.
+
+Field entry 00071: On Friday at 19:40, a volunteer surveyor visited the north footbridge and checked the weather display against the routine sheet. The observer noted two delivery carts waiting beside the painted line; the comparison read 85 units, within the ordinary range recorded for that location. The note was copied into the routine log before the shift changed.
+
+Field entry 00072: On Monday at 10:00, a records clerk visited the hilltop water tank and checked the handheld gauge against the routine sheet. The observer noted a clear view of the path after the temporary barrier was moved; the comparison read 24 units, within the ordinary range recorded for that location. A second observer confirmed the location without changing the recorded reading.
+
+Field entry 00073: On Tuesday at 08:50, a volunteer surveyor visited the orchard loading lane and checked the handheld gauge against the routine sheet. The observer noted a brief change in the wind after the clouds moved east; the comparison read 79 units, within the ordinary range recorded for that location. The clerk marked the entry for comparison with the following day's report.
+
+Field entry 00074: On Friday at 11:00, a maintenance technician visited the canal lock and checked the inspection ledger against the routine sheet. The observer noted two delivery carts waiting beside the painted line; the comparison read 53 units, within the ordinary range recorded for that location. The note was copied into the routine log before the shift changed.
+
+Field entry 00075: On Tuesday at 16:00, the site steward visited the farm access gate and checked the inspection ledger against the routine sheet. The observer noted a narrow patch of shade along the retaining wall; the comparison read 54 units, within the ordinary range recorded for that location. The summary was filed with the other ordinary site notes.
+
+Field entry 00076: On Wednesday at 08:20, the site steward visited the farm access gate and checked the sample labels against the routine sheet. The observer noted a quiet interval between the morning and afternoon rounds; the comparison read 48 units, within the ordinary range recorded for that location. The coordinator asked the next shift to use the same reference point.
+
+Field entry 00077: On Sunday at 13:45, a records clerk visited the library annex and checked the sample labels against the routine sheet. The observer noted a group of visitors following the marked route; the comparison read 42 units, within the ordinary range recorded for that location. A second observer confirmed the location without changing the recorded reading.
+
+Field entry 00078: On Saturday at 18:45, a field coordinator visited the orchard loading lane and checked the handheld gauge against the routine sheet. The observer noted an empty crate returned to the correct storage bay; the comparison read 40 units, within the ordinary range recorded for that location. The summary was filed with the other ordinary site notes.
+
+Field entry 00079: On Thursday at 09:10, the site steward visited the east pump house and checked the paper map against the routine sheet. The observer noted a clear view of the path after the temporary barrier was moved; the comparison read 69 units, within the ordinary range recorded for that location. The clerk marked the entry for comparison with the following day's report.
+
+Field entry 00080: On Sunday at 09:20, a maintenance technician visited the orchard loading lane and checked the weather display against the routine sheet. The observer noted a brief change in the wind after the clouds moved east; the comparison read 16 units, within the ordinary range recorded for that location. The summary was filed with the other ordinary site notes.
+
+Field entry 00081: On Saturday at 14:15, a volunteer surveyor visited the library annex and checked the radio check sheet against the routine sheet. The observer noted a repair request already listed in the weekly maintenance book; the comparison read 38 units, within the ordinary range recorded for that location. The note was copied into the routine log before the shift changed.
+
+Field entry 00082: On Saturday at 21:15, a volunteer surveyor visited the library annex and checked the paper map against the routine sheet. The observer noted a quiet interval between the morning and afternoon rounds; the comparison read 62 units, within the ordinary range recorded for that location. The crew kept the original notation so later visitors could compare conditions.
+
+Field entry 00083: On Friday at 12:40, a field coordinator visited the north footbridge and checked the paper map against the routine sheet. The observer noted a short delay while the key holder finished another inspection; the comparison read 30 units, within the ordinary range recorded for that location. The clerk marked the entry for comparison with the following day's report.
+
+Field entry 00084: On Tuesday at 20:50, a field coordinator visited the community boat shed and checked the radio check sheet against the routine sheet. The observer noted a measured queue that cleared before the next scheduled check; the comparison read 21 units, within the ordinary range recorded for that location. The clerk marked the entry for comparison with the following day's report.
+
+Field entry 00085: On Monday at 13:40, a maintenance technician visited the museum courtyard and checked the weather display against the routine sheet. The observer noted a short delay while the key holder finished another inspection; the comparison read 32 units, within the ordinary range recorded for that location. The crew kept the original notation so later visitors could compare conditions.
+
+Field entry 00086: On Friday at 20:30, the evening custodian visited the west greenhouse and checked the paper map against the routine sheet. The observer noted a narrow patch of shade along the retaining wall; the comparison read 43 units, within the ordinary range recorded for that location. The crew kept the original notation so later visitors could compare conditions.
+
+Field entry 00087: On Sunday at 17:10, a field coordinator visited the market service road and checked the paper map against the routine sheet. The observer noted two delivery carts waiting beside the painted line; the comparison read 40 units, within the ordinary range recorded for that location. The note was copied into the routine log before the shift changed.
+
+Field entry 00088: On Friday at 09:40, the site steward visited the east pump house and checked the handheld gauge against the routine sheet. The observer noted several damp leaves gathered beside the drain; the comparison read 41 units, within the ordinary range recorded for that location. The summary was filed with the other ordinary site notes.
+
+Field entry 00089: On Wednesday at 16:15, the site steward visited the library annex and checked the sample labels against the routine sheet. The observer noted fresh chalk marks near the public notice board; the comparison read 84 units, within the ordinary range recorded for that location. The clerk marked the entry for comparison with the following day's report.
+
+Field entry 00090: On Monday at 16:50, a maintenance technician visited the hillside weather station and checked the paper map against the routine sheet. The observer noted a group of visitors following the marked route; the comparison read 42 units, within the ordinary range recorded for that location. A second observer confirmed the location without changing the recorded reading.
+
+Field entry 00091: On Friday at 12:15, the site steward visited the old rail platform and checked the sample labels against the routine sheet. The observer noted a short delay while the key holder finished another inspection; the comparison read 63 units, within the ordinary range recorded for that location. A second observer confirmed the location without changing the recorded reading.
+
+Field entry 00092: On Thursday at 06:50, the site steward visited the coastal footpath and checked the inspection ledger against the routine sheet. The observer noted a group of visitors following the marked route; the comparison read 27 units, within the ordinary range recorded for that location. No equipment was moved; the next check remained on the normal schedule.
+
+Field entry 00093: On Wednesday at 11:00, the site steward visited the east pump house and checked the sample labels against the routine sheet. The observer noted a brief change in the wind after the clouds moved east; the comparison read 67 units, within the ordinary range recorded for that location. The note was copied into the routine log before the shift changed.
+
+Field entry 00094: On Wednesday at 17:45, a maintenance technician visited the lower ferry landing and checked the sample labels against the routine sheet. The observer noted an empty crate returned to the correct storage bay; the comparison read 44 units, within the ordinary range recorded for that location. The summary was filed with the other ordinary site notes.
+
+Field entry 00095: On Saturday at 19:40, a volunteer surveyor visited the river workshop and checked the sample labels against the routine sheet. The observer noted a repair request already listed in the weekly maintenance book; the comparison read 61 units, within the ordinary range recorded for that location. No equipment was moved; the next check remained on the normal schedule.
+
+Field entry 00096: On Saturday at 17:00, a volunteer surveyor visited the hillside weather station and checked the handheld gauge against the routine sheet. The observer noted a short delay while the key holder finished another inspection; the comparison read 61 units, within the ordinary range recorded for that location. No equipment was moved; the next check remained on the normal schedule.
+
+Field entry 00097: On Saturday at 06:50, a records clerk visited the stone viaduct and checked the radio check sheet against the routine sheet. The observer noted a brief change in the wind after the clouds moved east; the comparison read 46 units, within the ordinary range recorded for that location. No equipment was moved; the next check remained on the normal schedule.
+
+Field entry 00098: On Saturday at 15:40, a volunteer surveyor visited the east pump house and checked the radio check sheet against the routine sheet. The observer noted a narrow patch of shade along the retaining wall; the comparison read 26 units, within the ordinary range recorded for that location. No equipment was moved; the next check remained on the normal schedule.
+
+Field entry 00099: On Tuesday at 19:50, a maintenance technician visited the hillside weather station and checked the weather display against the routine sheet. The observer noted fresh chalk marks near the public notice board; the comparison read 71 units, within the ordinary range recorded for that location. The coordinator asked the next shift to use the same reference point.
+
+Field entry 00100: On Thursday at 08:10, a volunteer surveyor visited the north footbridge and checked the sample labels against the routine sheet. The observer noted a row of seedlings protected from the afternoon sun; the comparison read 41 units, within the ordinary range recorded for that location. The crew kept the original notation so later visitors could compare conditions.
+
+Field entry 00101: On Friday at 07:10, a records clerk visited the stone viaduct and checked the paper map against the routine sheet. The observer noted a brief change in the wind after the clouds moved east; the comparison read 46 units, within the ordinary range recorded for that location. The crew kept the original notation so later visitors could compare conditions.
+
+Field entry 00102: On Tuesday at 21:40, the site steward visited the north footbridge and checked the handheld gauge against the routine sheet. The observer noted several damp leaves gathered beside the drain; the comparison read 55 units, within the ordinary range recorded for that location. The crew kept the original notation so later visitors could compare conditions.
+
+Field entry 00103: On Tuesday at 15:45, a volunteer surveyor visited the lower ferry landing and checked the sample labels against the routine sheet. The observer noted a steady reading after the instrument was allowed to settle; the comparison read 13 units, within the ordinary range recorded for that location. The note was copied into the routine log before the shift changed.
+
+Field entry 00104: On Monday at 09:50, a records clerk visited the community boat shed and checked the radio check sheet against the routine sheet. The observer noted a clear view of the path after the temporary barrier was moved; the comparison read 80 units, within the ordinary range recorded for that location. No equipment was moved; the next check remained on the normal schedule.
+
+Field entry 00105: On Saturday at 20:10, the site steward visited the lower ferry landing and checked the inspection ledger against the routine sheet. The observer noted a short delay while the key holder finished another inspection; the comparison read 55 units, within the ordinary range recorded for that location. A second observer confirmed the location without changing the recorded reading.
+
+Field entry 00106: On Monday at 18:50, the site steward visited the hillside weather station and checked the handheld gauge against the routine sheet. The observer noted two delivery carts waiting beside the painted line; the comparison read 38 units, within the ordinary range recorded for that location. The crew kept the original notation so later visitors could compare conditions.
+
+Field entry 00107: On Monday at 15:30, a volunteer surveyor visited the market service road and checked the paper map against the routine sheet. The observer noted a quiet interval between the morning and afternoon rounds; the comparison read 45 units, within the ordinary range recorded for that location. The coordinator asked the next shift to use the same reference point.
+
+Field entry 00108: On Wednesday at 21:40, a field coordinator visited the hilltop water tank and checked the handheld gauge against the routine sheet. The observer noted a narrow patch of shade along the retaining wall; the comparison read 59 units, within the ordinary range recorded for that location. The coordinator asked the next shift to use the same reference point.
+
+Field entry 00109: On Thursday at 08:00, the evening custodian visited the hillside weather station and checked the handheld gauge against the routine sheet. The observer noted several damp leaves gathered beside the drain; the comparison read 67 units, within the ordinary range recorded for that location. The summary was filed with the other ordinary site notes.
+
+Field entry 00110: On Tuesday at 10:30, a field coordinator visited the stone viaduct and checked the handheld gauge against the routine sheet. The observer noted a row of seedlings protected from the afternoon sun; the comparison read 72 units, within the ordinary range recorded for that location. The crew kept the original notation so later visitors could compare conditions.
+
+Field entry 00111: On Sunday at 07:50, a field coordinator visited the east pump house and checked the handheld gauge against the routine sheet. The observer noted an empty crate returned to the correct storage bay; the comparison read 72 units, within the ordinary range recorded for that location. A second observer confirmed the location without changing the recorded reading.
+
+Field entry 00112: On Wednesday at 13:40, the evening custodian visited the river workshop and checked the handheld gauge against the routine sheet. The observer noted a row of seedlings protected from the afternoon sun; the comparison read 21 units, within the ordinary range recorded for that location. The note was copied into the routine log before the shift changed.
+
+Field entry 00113: On Saturday at 13:30, a records clerk visited the orchard loading lane and checked the handheld gauge against the routine sheet. The observer noted a clear view of the path after the temporary barrier was moved; the comparison read 63 units, within the ordinary range recorded for that location. The clerk marked the entry for comparison with the following day's report.
+
+Field entry 00114: On Monday at 13:10, a records clerk visited the canal lock and checked the inspection ledger against the routine sheet. The observer noted a row of seedlings protected from the afternoon sun; the comparison read 31 units, within the ordinary range recorded for that location. The note was copied into the routine log before the shift changed.
+
+Field entry 00115: On Sunday at 08:40, the site steward visited the library annex and checked the weather display against the routine sheet. The observer noted an empty crate returned to the correct storage bay; the comparison read 52 units, within the ordinary range recorded for that location. The clerk marked the entry for comparison with the following day's report.
+
+Field entry 00116: On Saturday at 13:15, a field coordinator visited the community boat shed and checked the paper map against the routine sheet. The observer noted a repair request already listed in the weekly maintenance book; the comparison read 64 units, within the ordinary range recorded for that location. The crew kept the original notation so later visitors could compare conditions.
+
+Field entry 00117: On Monday at 15:20, a volunteer surveyor visited the canal lock and checked the handheld gauge against the routine sheet. The observer noted a loose hinge that remained safe to use; the comparison read 67 units, within the ordinary range recorded for that location. The summary was filed with the other ordinary site notes.
+
+Field entry 00118: On Wednesday at 19:40, the evening custodian visited the farm access gate and checked the sample labels against the routine sheet. The observer noted two delivery carts waiting beside the painted line; the comparison read 41 units, within the ordinary range recorded for that location. The crew kept the original notation so later visitors could compare conditions.
+
+Field entry 00119: On Friday at 13:50, a field coordinator visited the west greenhouse and checked the paper map against the routine sheet. The observer noted a small difference between the printed map and the new sign; the comparison read 33 units, within the ordinary range recorded for that location. The note was copied into the routine log before the shift changed.
+
+Field entry 00120: On Tuesday at 11:00, the site steward visited the orchard loading lane and checked the radio check sheet against the routine sheet. The observer noted a row of seedlings protected from the afternoon sun; the comparison read 36 units, within the ordinary range recorded for that location. The team left the route open and added the observation to its next review.
+
+Field entry 00121: On Friday at 21:45, a records clerk visited the west greenhouse and checked the inspection ledger against the routine sheet. The observer noted a row of seedlings protected from the afternoon sun; the comparison read 86 units, within the ordinary range recorded for that location. The crew kept the original notation so later visitors could compare conditions.
+
+Field entry 00122: On Friday at 18:10, a maintenance technician visited the coastal footpath and checked the weather display against the routine sheet. The observer noted a group of visitors following the marked route; the comparison read 19 units, within the ordinary range recorded for that location. The crew kept the original notation so later visitors could compare conditions.
+
+Field entry 00123: On Saturday at 06:40, a field coordinator visited the canal lock and checked the weather display against the routine sheet. The observer noted a small difference between the printed map and the new sign; the comparison read 31 units, within the ordinary range recorded for that location. The crew kept the original notation so later visitors could compare conditions.
+
+Field entry 00124: On Wednesday at 15:15, a maintenance technician visited the south depot and checked the inspection ledger against the routine sheet. The observer noted a small difference between the printed map and the new sign; the comparison read 23 units, within the ordinary range recorded for that location. The crew kept the original notation so later visitors could compare conditions.
+
+Field entry 00125: On Sunday at 10:15, a volunteer surveyor visited the stone viaduct and checked the paper map against the routine sheet. The observer noted a group of visitors following the marked route; the comparison read 52 units, within the ordinary range recorded for that location. The coordinator asked the next shift to use the same reference point.
+
+Field entry 00126: On Saturday at 12:40, the site steward visited the river workshop and checked the radio check sheet against the routine sheet. The observer noted a short delay while the key holder finished another inspection; the comparison read 82 units, within the ordinary range recorded for that location. The summary was filed with the other ordinary site notes.
+
+Field entry 00127: On Monday at 14:50, a volunteer surveyor visited the farm access gate and checked the handheld gauge against the routine sheet. The observer noted a loose hinge that remained safe to use; the comparison read 39 units, within the ordinary range recorded for that location. The team left the route open and added the observation to its next review.
+
+Field entry 00128: On Friday at 18:15, a maintenance technician visited the old rail platform and checked the inspection ledger against the routine sheet. The observer noted a row of seedlings protected from the afternoon sun; the comparison read 81 units, within the ordinary range recorded for that location. The note was copied into the routine log before the shift changed.
+
+Field entry 00129: On Monday at 20:00, a volunteer surveyor visited the orchard loading lane and checked the paper map against the routine sheet. The observer noted fresh chalk marks near the public notice board; the comparison read 13 units, within the ordinary range recorded for that location. The crew kept the original notation so later visitors could compare conditions.
+
+Field entry 00130: On Monday at 15:50, a volunteer surveyor visited the farm access gate and checked the radio check sheet against the routine sheet. The observer noted a small difference between the printed map and the new sign; the comparison read 67 units, within the ordinary range recorded for that location. A second observer confirmed the location without changing the recorded reading.
+
+Field entry 00131: On Monday at 14:20, a records clerk visited the east pump house and checked the radio check sheet against the routine sheet. The observer noted a brief change in the wind after the clouds moved east; the comparison read 86 units, within the ordinary range recorded for that location. No equipment was moved; the next check remained on the normal schedule.
+
+Field entry 00132: On Monday at 17:00, the site steward visited the old rail platform and checked the weather display against the routine sheet. The observer noted a steady reading after the instrument was allowed to settle; the comparison read 32 units, within the ordinary range recorded for that location. A second observer confirmed the location without changing the recorded reading.
+
+Field entry 00133: On Monday at 21:20, the site steward visited the west greenhouse and checked the paper map against the routine sheet. The observer noted a small difference between the printed map and the new sign; the comparison read 26 units, within the ordinary range recorded for that location. The coordinator asked the next shift to use the same reference point.
+
+Field entry 00134: On Saturday at 17:30, a field coordinator visited the library annex and checked the weather display against the routine sheet. The observer noted a measured queue that cleared before the next scheduled check; the comparison read 52 units, within the ordinary range recorded for that location. The summary was filed with the other ordinary site notes.
+
+Field entry 00135: On Friday at 12:20, the evening custodian visited the library annex and checked the weather display against the routine sheet. The observer noted a clear view of the path after the temporary barrier was moved; the comparison read 56 units, within the ordinary range recorded for that location. No equipment was moved; the next check remained on the normal schedule.
+
+Field entry 00136: On Monday at 10:50, a maintenance technician visited the east pump house and checked the handheld gauge against the routine sheet. The observer noted several damp leaves gathered beside the drain; the comparison read 87 units, within the ordinary range recorded for that location. The clerk marked the entry for comparison with the following day's report.
+
+Field entry 00137: On Monday at 09:15, the site steward visited the hillside weather station and checked the sample labels against the routine sheet. The observer noted a short delay while the key holder finished another inspection; the comparison read 52 units, within the ordinary range recorded for that location. The crew kept the original notation so later visitors could compare conditions.
+
+Field entry 00138: On Monday at 18:40, a records clerk visited the west greenhouse and checked the handheld gauge against the routine sheet. The observer noted an empty crate returned to the correct storage bay; the comparison read 61 units, within the ordinary range recorded for that location. No equipment was moved; the next check remained on the normal schedule.
+
+Field entry 00139: On Monday at 11:15, a field coordinator visited the south depot and checked the sample labels against the routine sheet. The observer noted a loose hinge that remained safe to use; the comparison read 66 units, within the ordinary range recorded for that location. The summary was filed with the other ordinary site notes.
+
+Field entry 00140: On Monday at 19:30, a maintenance technician visited the old rail platform and checked the paper map against the routine sheet. The observer noted a row of seedlings protected from the afternoon sun; the comparison read 32 units, within the ordinary range recorded for that location. The note was copied into the routine log before the shift changed.
+
+Field entry 00141: On Thursday at 17:30, a records clerk visited the community boat shed and checked the inspection ledger against the routine sheet. The observer noted a measured queue that cleared before the next scheduled check; the comparison read 48 units, within the ordinary range recorded for that location. The clerk marked the entry for comparison with the following day's report.
+
+Field entry 00142: On Monday at 18:15, the site steward visited the east pump house and checked the sample labels against the routine sheet. The observer noted fresh chalk marks near the public notice board; the comparison read 87 units, within the ordinary range recorded for that location. The team left the route open and added the observation to its next review.
+
+Field entry 00143: On Wednesday at 16:40, a records clerk visited the old rail platform and checked the radio check sheet against the routine sheet. The observer noted a measured queue that cleared before the next scheduled check; the comparison read 42 units, within the ordinary range recorded for that location. The crew kept the original notation so later visitors could compare conditions.
+
+Field entry 00144: On Friday at 06:15, a volunteer surveyor visited the orchard loading lane and checked the sample labels against the routine sheet. The observer noted a brief change in the wind after the clouds moved east; the comparison read 86 units, within the ordinary range recorded for that location. The team left the route open and added the observation to its next review.
+
+Field entry 00145: On Tuesday at 11:20, a records clerk visited the west greenhouse and checked the radio check sheet against the routine sheet. The observer noted a row of seedlings protected from the afternoon sun; the comparison read 26 units, within the ordinary range recorded for that location. No equipment was moved; the next check remained on the normal schedule.
+
+Field entry 00146: On Monday at 12:20, a records clerk visited the community boat shed and checked the handheld gauge against the routine sheet. The observer noted fresh chalk marks near the public notice board; the comparison read 85 units, within the ordinary range recorded for that location. The note was copied into the routine log before the shift changed.
+
+Field entry 00147: On Wednesday at 10:45, a field coordinator visited the farm access gate and checked the handheld gauge against the routine sheet. The observer noted a loose hinge that remained safe to use; the comparison read 34 units, within the ordinary range recorded for that location. The note was copied into the routine log before the shift changed.
+
+Field entry 00148: On Tuesday at 16:30, the evening custodian visited the west greenhouse and checked the paper map against the routine sheet. The observer noted two delivery carts waiting beside the painted line; the comparison read 75 units, within the ordinary range recorded for that location. No equipment was moved; the next check remained on the normal schedule.
+
+Field entry 00149: On Tuesday at 21:50, a maintenance technician visited the south depot and checked the inspection ledger against the routine sheet. The observer noted a narrow patch of shade along the retaining wall; the comparison read 77 units, within the ordinary range recorded for that location. The crew kept the original notation so later visitors could compare conditions.
+
+Field entry 00150: On Sunday at 18:40, a maintenance technician visited the south depot and checked the weather display against the routine sheet. The observer noted a loose hinge that remained safe to use; the comparison read 80 units, within the ordinary range recorded for that location. The coordinator asked the next shift to use the same reference point.
+
+Field entry 00151: On Sunday at 18:30, the evening custodian visited the lower ferry landing and checked the radio check sheet against the routine sheet. The observer noted a group of visitors following the marked route; the comparison read 63 units, within the ordinary range recorded for that location. The note was copied into the routine log before the shift changed.
+
+Field entry 00152: On Thursday at 06:10, a maintenance technician visited the stone viaduct and checked the paper map against the routine sheet. The observer noted a small difference between the printed map and the new sign; the comparison read 19 units, within the ordinary range recorded for that location. The note was copied into the routine log before the shift changed.
+
+Field entry 00153: On Friday at 17:15, a field coordinator visited the north footbridge and checked the radio check sheet against the routine sheet. The observer noted a brief change in the wind after the clouds moved east; the comparison read 71 units, within the ordinary range recorded for that location. The coordinator asked the next shift to use the same reference point.
+
+Field entry 00154: On Monday at 06:20, the site steward visited the river workshop and checked the handheld gauge against the routine sheet. The observer noted a small difference between the printed map and the new sign; the comparison read 21 units, within the ordinary range recorded for that location. The coordinator asked the next shift to use the same reference point.
+
+Field entry 00155: On Monday at 15:50, a field coordinator visited the hillside weather station and checked the handheld gauge against the routine sheet. The observer noted a clear view of the path after the temporary barrier was moved; the comparison read 14 units, within the ordinary range recorded for that location. The team left the route open and added the observation to its next review.
+
+Field entry 00156: On Tuesday at 18:30, a maintenance technician visited the farm access gate and checked the weather display against the routine sheet. The observer noted two delivery carts waiting beside the painted line; the comparison read 21 units, within the ordinary range recorded for that location. A second observer confirmed the location without changing the recorded reading.
+
+Field entry 00157: On Monday at 11:45, the site steward visited the south depot and checked the handheld gauge against the routine sheet. The observer noted fresh chalk marks near the public notice board; the comparison read 58 units, within the ordinary range recorded for that location. The note was copied into the routine log before the shift changed.
+
+Field entry 00158: On Sunday at 17:10, a maintenance technician visited the canal lock and checked the radio check sheet against the routine sheet. The observer noted a short delay while the key holder finished another inspection; the comparison read 46 units, within the ordinary range recorded for that location. The coordinator asked the next shift to use the same reference point.
+
+Field entry 00159: On Sunday at 06:15, a volunteer surveyor visited the old rail platform and checked the radio check sheet against the routine sheet. The observer noted a measured queue that cleared before the next scheduled check; the comparison read 28 units, within the ordinary range recorded for that location. The coordinator asked the next shift to use the same reference point.
+
+Field entry 00160: On Tuesday at 16:50, a field coordinator visited the market service road and checked the paper map against the routine sheet. The observer noted a loose hinge that remained safe to use; the comparison read 50 units, within the ordinary range recorded for that location. The summary was filed with the other ordinary site notes.
+
+Field entry 00161: On Sunday at 15:50, a records clerk visited the community boat shed and checked the radio check sheet against the routine sheet. The observer noted a short delay while the key holder finished another inspection; the comparison read 19 units, within the ordinary range recorded for that location. The clerk marked the entry for comparison with the following day's report.
+
+Field entry 00162: On Tuesday at 16:40, the evening custodian visited the river workshop and checked the inspection ledger against the routine sheet. The observer noted several damp leaves gathered beside the drain; the comparison read 65 units, within the ordinary range recorded for that location. The clerk marked the entry for comparison with the following day's report.
+
+Field entry 00163: On Thursday at 19:00, a records clerk visited the north footbridge and checked the inspection ledger against the routine sheet. The observer noted a row of seedlings protected from the afternoon sun; the comparison read 86 units, within the ordinary range recorded for that location. The crew kept the original notation so later visitors could compare conditions.
+
+Field entry 00164: On Thursday at 19:50, a records clerk visited the hilltop water tank and checked the weather display against the routine sheet. The observer noted a repair request already listed in the weekly maintenance book; the comparison read 58 units, within the ordinary range recorded for that location. The summary was filed with the other ordinary site notes.
+
+Field entry 00165: On Thursday at 16:30, a maintenance technician visited the hilltop water tank and checked the radio check sheet against the routine sheet. The observer noted a row of seedlings protected from the afternoon sun; the comparison read 20 units, within the ordinary range recorded for that location. The summary was filed with the other ordinary site notes.
+
+Field entry 00166: On Tuesday at 17:15, a field coordinator visited the hilltop water tank and checked the inspection ledger against the routine sheet. The observer noted a loose hinge that remained safe to use; the comparison read 63 units, within the ordinary range recorded for that location. The team left the route open and added the observation to its next review.
+
+Field entry 00167: On Friday at 06:40, a records clerk visited the east pump house and checked the inspection ledger against the routine sheet. The observer noted a loose hinge that remained safe to use; the comparison read 44 units, within the ordinary range recorded for that location. The team left the route open and added the observation to its next review.
+
+Field entry 00168: On Friday at 06:10, a volunteer surveyor visited the farm access gate and checked the paper map against the routine sheet. The observer noted an empty crate returned to the correct storage bay; the comparison read 66 units, within the ordinary range recorded for that location. The coordinator asked the next shift to use the same reference point.
+
+Field entry 00169: On Sunday at 15:30, a field coordinator visited the museum courtyard and checked the handheld gauge against the routine sheet. The observer noted a repair request already listed in the weekly maintenance book; the comparison read 70 units, within the ordinary range recorded for that location. The clerk marked the entry for comparison with the following day's report.
+
+Field entry 00170: On Tuesday at 12:40, a maintenance technician visited the east pump house and checked the radio check sheet against the routine sheet. The observer noted a measured queue that cleared before the next scheduled check; the comparison read 61 units, within the ordinary range recorded for that location. The clerk marked the entry for comparison with the following day's report.
+
+Field entry 00171: On Monday at 07:30, the site steward visited the hilltop water tank and checked the handheld gauge against the routine sheet. The observer noted a loose hinge that remained safe to use; the comparison read 19 units, within the ordinary range recorded for that location. The team left the route open and added the observation to its next review.
+
+Field entry 00172: On Sunday at 13:10, a volunteer surveyor visited the library annex and checked the weather display against the routine sheet. The observer noted a row of seedlings protected from the afternoon sun; the comparison read 67 units, within the ordinary range recorded for that location. A second observer confirmed the location without changing the recorded reading.
+
+Field entry 00173: On Sunday at 21:45, the site steward visited the river workshop and checked the radio check sheet against the routine sheet. The observer noted a group of visitors following the marked route; the comparison read 65 units, within the ordinary range recorded for that location. The note was copied into the routine log before the shift changed.
+
+Field entry 00174: On Monday at 14:00, a field coordinator visited the hillside weather station and checked the paper map against the routine sheet. The observer noted an empty crate returned to the correct storage bay; the comparison read 67 units, within the ordinary range recorded for that location. The crew kept the original notation so later visitors could compare conditions.
+
+Field entry 00175: On Monday at 06:15, the site steward visited the hilltop water tank and checked the weather display against the routine sheet. The observer noted a clear view of the path after the temporary barrier was moved; the comparison read 81 units, within the ordinary range recorded for that location. A second observer confirmed the location without changing the recorded reading.
+
+Field entry 00176: On Wednesday at 11:00, a field coordinator visited the coastal footpath and checked the radio check sheet against the routine sheet. The observer noted fresh chalk marks near the public notice board; the comparison read 15 units, within the ordinary range recorded for that location. A second observer confirmed the location without changing the recorded reading.
+
+Field entry 00177: On Saturday at 10:40, a volunteer surveyor visited the west greenhouse and checked the weather display against the routine sheet. The observer noted a group of visitors following the marked route; the comparison read 35 units, within the ordinary range recorded for that location. The note was copied into the routine log before the shift changed.
+
+Field entry 00178: On Wednesday at 16:45, a volunteer surveyor visited the river workshop and checked the inspection ledger against the routine sheet. The observer noted a small difference between the printed map and the new sign; the comparison read 77 units, within the ordinary range recorded for that location. The summary was filed with the other ordinary site notes.
+
+Field entry 00179: On Wednesday at 19:30, a maintenance technician visited the north footbridge and checked the paper map against the routine sheet. The observer noted several damp leaves gathered beside the drain; the comparison read 71 units, within the ordinary range recorded for that location. The crew kept the original notation so later visitors could compare conditions.
+
+Field entry 00180: On Monday at 10:50, a volunteer surveyor visited the hillside weather station and checked the radio check sheet against the routine sheet. The observer noted several damp leaves gathered beside the drain; the comparison read 46 units, within the ordinary range recorded for that location. The crew kept the original notation so later visitors could compare conditions.
+
+Field entry 00181: On Friday at 13:30, a records clerk visited the community boat shed and checked the weather display against the routine sheet. The observer noted fresh chalk marks near the public notice board; the comparison read 70 units, within the ordinary range recorded for that location. The note was copied into the routine log before the shift changed.
+
+Field entry 00182: On Sunday at 17:30, a records clerk visited the coastal footpath and checked the handheld gauge against the routine sheet. The observer noted a clear view of the path after the temporary barrier was moved; the comparison read 85 units, within the ordinary range recorded for that location. No equipment was moved; the next check remained on the normal schedule.
+
+Field entry 00183: On Tuesday at 08:00, a volunteer surveyor visited the river workshop and checked the radio check sheet against the routine sheet. The observer noted a measured queue that cleared before the next scheduled check; the comparison read 45 units, within the ordinary range recorded for that location. The summary was filed with the other ordinary site notes.
+
+Field entry 00184: On Monday at 19:15, a field coordinator visited the lower ferry landing and checked the inspection ledger against the routine sheet. The observer noted a brief change in the wind after the clouds moved east; the comparison read 16 units, within the ordinary range recorded for that location. The clerk marked the entry for comparison with the following day's report.
+
+Field entry 00185: On Saturday at 13:10, a field coordinator visited the stone viaduct and checked the handheld gauge against the routine sheet. The observer noted a measured queue that cleared before the next scheduled check; the comparison read 71 units, within the ordinary range recorded for that location. The crew kept the original notation so later visitors could compare conditions.
+
+Field entry 00186: On Friday at 19:40, a records clerk visited the stone viaduct and checked the handheld gauge against the routine sheet. The observer noted several damp leaves gathered beside the drain; the comparison read 22 units, within the ordinary range recorded for that location. No equipment was moved; the next check remained on the normal schedule.
+
+Field entry 00187: On Tuesday at 18:45, a volunteer surveyor visited the canal lock and checked the paper map against the routine sheet. The observer noted a repair request already listed in the weekly maintenance book; the comparison read 52 units, within the ordinary range recorded for that location. A second observer confirmed the location without changing the recorded reading.
+
+Field entry 00188: On Friday at 07:50, the site steward visited the library annex and checked the sample labels against the routine sheet. The observer noted an empty crate returned to the correct storage bay; the comparison read 70 units, within the ordinary range recorded for that location. The coordinator asked the next shift to use the same reference point.
+
+Field entry 00189: On Wednesday at 08:30, the site steward visited the market service road and checked the weather display against the routine sheet. The observer noted a short delay while the key holder finished another inspection; the comparison read 23 units, within the ordinary range recorded for that location. No equipment was moved; the next check remained on the normal schedule.
+
+Field entry 00190: On Sunday at 09:45, the site steward visited the orchard loading lane and checked the weather display against the routine sheet. The observer noted a steady reading after the instrument was allowed to settle; the comparison read 58 units, within the ordinary range recorded for that location. The crew kept the original notation so later visitors could compare conditions.
+
+Field entry 00191: On Tuesday at 08:20, a field coordinator visited the coastal footpath and checked the sample labels against the routine sheet. The observer noted a row of seedlings protected from the afternoon sun; the comparison read 79 units, within the ordinary range recorded for that location. The coordinator asked the next shift to use the same reference point.
+
+Field entry 00192: On Friday at 17:30, a field coordinator visited the canal lock and checked the paper map against the routine sheet. The observer noted a narrow patch of shade along the retaining wall; the comparison read 45 units, within the ordinary range recorded for that location. A second observer confirmed the location without changing the recorded reading.
+
+Field entry 00193: On Tuesday at 06:50, the site steward visited the library annex and checked the handheld gauge against the routine sheet. The observer noted a loose hinge that remained safe to use; the comparison read 58 units, within the ordinary range recorded for that location. The team left the route open and added the observation to its next review.
+
+Field entry 00194: On Wednesday at 20:00, the evening custodian visited the east pump house and checked the handheld gauge against the routine sheet. The observer noted a group of visitors following the marked route; the comparison read 34 units, within the ordinary range recorded for that location. No equipment was moved; the next check remained on the normal schedule.
+
+Field entry 00195: On Sunday at 17:10, a volunteer surveyor visited the market service road and checked the radio check sheet against the routine sheet. The observer noted two delivery carts waiting beside the painted line; the comparison read 88 units, within the ordinary range recorded for that location. The crew kept the original notation so later visitors could compare conditions.
+
+Field entry 00196: On Wednesday at 11:15, the evening custodian visited the south depot and checked the radio check sheet against the routine sheet. The observer noted a loose hinge that remained safe to use; the comparison read 30 units, within the ordinary range recorded for that location. The coordinator asked the next shift to use the same reference point.
+
+Field entry 00197: On Tuesday at 06:50, a records clerk visited the lower ferry landing and checked the sample labels against the routine sheet. The observer noted a group of visitors following the marked route; the comparison read 55 units, within the ordinary range recorded for that location. The team left the route open and added the observation to its next review.
+
+Field entry 00198: On Monday at 16:30, a maintenance technician visited the west greenhouse and checked the inspection ledger against the routine sheet. The observer noted a measured queue that cleared before the next scheduled check; the comparison read 31 units, within the ordinary range recorded for that location. The crew kept the original notation so later visitors could compare conditions.
+
+Field entry 00199: On Thursday at 17:15, a maintenance technician visited the west greenhouse and checked the weather display against the routine sheet. The observer noted a short delay while the key holder finished another inspection; the comparison read 83 units, within the ordinary range recorded for that location. A second observer confirmed the location without changing the recorded reading.
+
+Archive record CENTER: This is the cross-check record filed during the middle review. At the Cedar Quarry sample room, the sealed register lists verification code CEDAR-8M2-QUARRY. Preserve the code exactly as written.
+
+Field entry 00200: On Friday at 06:20, the site steward visited the south depot and checked the handheld gauge against the routine sheet. The observer noted a small difference between the printed map and the new sign; the comparison read 72 units, within the ordinary range recorded for that location. The coordinator asked the next shift to use the same reference point.
+
+Field entry 00201: On Sunday at 17:20, a maintenance technician visited the lower ferry landing and checked the radio check sheet against the routine sheet. The observer noted a repair request already listed in the weekly maintenance book; the comparison read 13 units, within the ordinary range recorded for that location. No equipment was moved; the next check remained on the normal schedule.
+
+Field entry 00202: On Saturday at 20:00, a records clerk visited the south depot and checked the sample labels against the routine sheet. The observer noted a row of seedlings protected from the afternoon sun; the comparison read 38 units, within the ordinary range recorded for that location. A second observer confirmed the location without changing the recorded reading.
+
+Field entry 00203: On Wednesday at 19:15, the site steward visited the stone viaduct and checked the weather display against the routine sheet. The observer noted a steady reading after the instrument was allowed to settle; the comparison read 33 units, within the ordinary range recorded for that location. The clerk marked the entry for comparison with the following day's report.
+
+Field entry 00204: On Wednesday at 13:45, a volunteer surveyor visited the orchard loading lane and checked the inspection ledger against the routine sheet. The observer noted a loose hinge that remained safe to use; the comparison read 68 units, within the ordinary range recorded for that location. The summary was filed with the other ordinary site notes.
+
+Field entry 00205: On Friday at 10:45, a field coordinator visited the river workshop and checked the radio check sheet against the routine sheet. The observer noted fresh chalk marks near the public notice board; the comparison read 64 units, within the ordinary range recorded for that location. The clerk marked the entry for comparison with the following day's report.
+
+Field entry 00206: On Thursday at 12:45, a volunteer surveyor visited the lower ferry landing and checked the inspection ledger against the routine sheet. The observer noted fresh chalk marks near the public notice board; the comparison read 72 units, within the ordinary range recorded for that location. The team left the route open and added the observation to its next review.
+
+Field entry 00207: On Sunday at 11:00, a records clerk visited the old rail platform and checked the weather display against the routine sheet. The observer noted a quiet interval between the morning and afternoon rounds; the comparison read 22 units, within the ordinary range recorded for that location. The clerk marked the entry for comparison with the following day's report.
+
+Field entry 00208: On Friday at 08:50, the evening custodian visited the hillside weather station and checked the handheld gauge against the routine sheet. The observer noted a brief change in the wind after the clouds moved east; the comparison read 77 units, within the ordinary range recorded for that location. The coordinator asked the next shift to use the same reference point.
+
+Field entry 00209: On Wednesday at 19:50, a volunteer surveyor visited the hilltop water tank and checked the weather display against the routine sheet. The observer noted a clear view of the path after the temporary barrier was moved; the comparison read 25 units, within the ordinary range recorded for that location. The note was copied into the routine log before the shift changed.
+
+Field entry 00210: On Monday at 17:50, a maintenance technician visited the hilltop water tank and checked the inspection ledger against the routine sheet. The observer noted two delivery carts waiting beside the painted line; the comparison read 64 units, within the ordinary range recorded for that location. The coordinator asked the next shift to use the same reference point.
+
+Field entry 00211: On Thursday at 20:40, a records clerk visited the north footbridge and checked the handheld gauge against the routine sheet. The observer noted a narrow patch of shade along the retaining wall; the comparison read 55 units, within the ordinary range recorded for that location. The crew kept the original notation so later visitors could compare conditions.
+
+Field entry 00212: On Saturday at 16:50, a maintenance technician visited the old rail platform and checked the paper map against the routine sheet. The observer noted a small difference between the printed map and the new sign; the comparison read 26 units, within the ordinary range recorded for that location. The crew kept the original notation so later visitors could compare conditions.
+
+Field entry 00213: On Sunday at 20:00, a field coordinator visited the lower ferry landing and checked the paper map against the routine sheet. The observer noted a group of visitors following the marked route; the comparison read 15 units, within the ordinary range recorded for that location. The clerk marked the entry for comparison with the following day's report.
+
+Field entry 00214: On Saturday at 13:15, a records clerk visited the hillside weather station and checked the sample labels against the routine sheet. The observer noted a brief change in the wind after the clouds moved east; the comparison read 57 units, within the ordinary range recorded for that location. The coordinator asked the next shift to use the same reference point.
+
+Field entry 00215: On Saturday at 19:00, a records clerk visited the canal lock and checked the sample labels against the routine sheet. The observer noted a short delay while the key holder finished another inspection; the comparison read 71 units, within the ordinary range recorded for that location. The team left the route open and added the observation to its next review.
+
+Field entry 00216: On Monday at 21:10, a maintenance technician visited the library annex and checked the radio check sheet against the routine sheet. The observer noted a quiet interval between the morning and afternoon rounds; the comparison read 48 units, within the ordinary range recorded for that location. The clerk marked the entry for comparison with the following day's report.
+
+Field entry 00217: On Sunday at 08:45, the site steward visited the canal lock and checked the sample labels against the routine sheet. The observer noted a quiet interval between the morning and afternoon rounds; the comparison read 33 units, within the ordinary range recorded for that location. The crew kept the original notation so later visitors could compare conditions.
+
+Field entry 00218: On Monday at 19:20, the site steward visited the orchard loading lane and checked the inspection ledger against the routine sheet. The observer noted a short delay while the key holder finished another inspection; the comparison read 47 units, within the ordinary range recorded for that location. The team left the route open and added the observation to its next review.
+
+Field entry 00219: On Tuesday at 07:15, the site steward visited the canal lock and checked the radio check sheet against the routine sheet. The observer noted a brief change in the wind after the clouds moved east; the comparison read 61 units, within the ordinary range recorded for that location. The crew kept the original notation so later visitors could compare conditions.
+
+Field entry 00220: On Monday at 19:30, a field coordinator visited the library annex and checked the inspection ledger against the routine sheet. The observer noted a narrow patch of shade along the retaining wall; the comparison read 53 units, within the ordinary range recorded for that location. The coordinator asked the next shift to use the same reference point.
+
+Field entry 00221: On Thursday at 08:20, a maintenance technician visited the museum courtyard and checked the weather display against the routine sheet. The observer noted an empty crate returned to the correct storage bay; the comparison read 54 units, within the ordinary range recorded for that location. No equipment was moved; the next check remained on the normal schedule.
+
+Field entry 00222: On Friday at 14:15, the site steward visited the south depot and checked the sample labels against the routine sheet. The observer noted a loose hinge that remained safe to use; the comparison read 56 units, within the ordinary range recorded for that location. The clerk marked the entry for comparison with the following day's report.
+
+Field entry 00223: On Wednesday at 17:00, the site steward visited the river workshop and checked the inspection ledger against the routine sheet. The observer noted a steady reading after the instrument was allowed to settle; the comparison read 62 units, within the ordinary range recorded for that location. The summary was filed with the other ordinary site notes.
+
+Field entry 00224: On Wednesday at 17:40, the site steward visited the old rail platform and checked the paper map against the routine sheet. The observer noted an empty crate returned to the correct storage bay; the comparison read 86 units, within the ordinary range recorded for that location. The summary was filed with the other ordinary site notes.
+
+Field entry 00225: On Thursday at 12:15, the evening custodian visited the west greenhouse and checked the inspection ledger against the routine sheet. The observer noted a row of seedlings protected from the afternoon sun; the comparison read 26 units, within the ordinary range recorded for that location. The coordinator asked the next shift to use the same reference point.
+
+Field entry 00226: On Tuesday at 10:15, a field coordinator visited the stone viaduct and checked the sample labels against the routine sheet. The observer noted a narrow patch of shade along the retaining wall; the comparison read 43 units, within the ordinary range recorded for that location. The note was copied into the routine log before the shift changed.
+
+Field entry 00227: On Saturday at 16:40, the evening custodian visited the west greenhouse and checked the radio check sheet against the routine sheet. The observer noted a steady reading after the instrument was allowed to settle; the comparison read 54 units, within the ordinary range recorded for that location. The crew kept the original notation so later visitors could compare conditions.
+
+Field entry 00228: On Monday at 17:15, the evening custodian visited the canal lock and checked the radio check sheet against the routine sheet. The observer noted a repair request already listed in the weekly maintenance book; the comparison read 54 units, within the ordinary range recorded for that location. The team left the route open and added the observation to its next review.
+
+Field entry 00229: On Monday at 14:10, the site steward visited the coastal footpath and checked the paper map against the routine sheet. The observer noted a quiet interval between the morning and afternoon rounds; the comparison read 45 units, within the ordinary range recorded for that location. The team left the route open and added the observation to its next review.
+
+Field entry 00230: On Tuesday at 17:20, the site steward visited the library annex and checked the radio check sheet against the routine sheet. The observer noted a narrow patch of shade along the retaining wall; the comparison read 30 units, within the ordinary range recorded for that location. The clerk marked the entry for comparison with the following day's report.
+
+Field entry 00231: On Monday at 11:50, a maintenance technician visited the canal lock and checked the handheld gauge against the routine sheet. The observer noted a row of seedlings protected from the afternoon sun; the comparison read 88 units, within the ordinary range recorded for that location. The crew kept the original notation so later visitors could compare conditions.
+
+Field entry 00232: On Monday at 10:45, the evening custodian visited the north footbridge and checked the paper map against the routine sheet. The observer noted a measured queue that cleared before the next scheduled check; the comparison read 25 units, within the ordinary range recorded for that location. A second observer confirmed the location without changing the recorded reading.
+
+Field entry 00233: On Wednesday at 15:20, the evening custodian visited the west greenhouse and checked the paper map against the routine sheet. The observer noted a narrow patch of shade along the retaining wall; the comparison read 31 units, within the ordinary range recorded for that location. A second observer confirmed the location without changing the recorded reading.
+
+Field entry 00234: On Monday at 09:15, the site steward visited the old rail platform and checked the paper map against the routine sheet. The observer noted a group of visitors following the marked route; the comparison read 31 units, within the ordinary range recorded for that location. The crew kept the original notation so later visitors could compare conditions.
+
+Field entry 00235: On Sunday at 17:50, the site steward visited the canal lock and checked the inspection ledger against the routine sheet. The observer noted a loose hinge that remained safe to use; the comparison read 40 units, within the ordinary range recorded for that location. The coordinator asked the next shift to use the same reference point.
+
+Field entry 00236: On Monday at 12:00, the evening custodian visited the library annex and checked the radio check sheet against the routine sheet. The observer noted a row of seedlings protected from the afternoon sun; the comparison read 22 units, within the ordinary range recorded for that location. The crew kept the original notation so later visitors could compare conditions.
+
+Field entry 00237: On Saturday at 08:45, the evening custodian visited the community boat shed and checked the weather display against the routine sheet. The observer noted a clear view of the path after the temporary barrier was moved; the comparison read 62 units, within the ordinary range recorded for that location. The team left the route open and added the observation to its next review.
+
+Field entry 00238: On Thursday at 08:40, a maintenance technician visited the farm access gate and checked the handheld gauge against the routine sheet. The observer noted a repair request already listed in the weekly maintenance book; the comparison read 78 units, within the ordinary range recorded for that location. The crew kept the original notation so later visitors could compare conditions.
+
+Field entry 00239: On Monday at 21:40, a records clerk visited the farm access gate and checked the handheld gauge against the routine sheet. The observer noted a clear view of the path after the temporary barrier was moved; the comparison read 12 units, within the ordinary range recorded for that location. The crew kept the original notation so later visitors could compare conditions.
+
+Field entry 00240: On Saturday at 11:15, a maintenance technician visited the hilltop water tank and checked the radio check sheet against the routine sheet. The observer noted an empty crate returned to the correct storage bay; the comparison read 62 units, within the ordinary range recorded for that location. A second observer confirmed the location without changing the recorded reading.
+
+Field entry 00241: On Sunday at 16:30, a maintenance technician visited the orchard loading lane and checked the handheld gauge against the routine sheet. The observer noted several damp leaves gathered beside the drain; the comparison read 55 units, within the ordinary range recorded for that location. No equipment was moved; the next check remained on the normal schedule.
+
+Field entry 00242: On Sunday at 06:10, a maintenance technician visited the lower ferry landing and checked the sample labels against the routine sheet. The observer noted a brief change in the wind after the clouds moved east; the comparison read 88 units, within the ordinary range recorded for that location. The coordinator asked the next shift to use the same reference point.
+
+Field entry 00243: On Friday at 20:10, a records clerk visited the stone viaduct and checked the handheld gauge against the routine sheet. The observer noted a narrow patch of shade along the retaining wall; the comparison read 21 units, within the ordinary range recorded for that location. The summary was filed with the other ordinary site notes.
+
+Field entry 00244: On Wednesday at 20:40, a records clerk visited the old rail platform and checked the paper map against the routine sheet. The observer noted an empty crate returned to the correct storage bay; the comparison read 35 units, within the ordinary range recorded for that location. The summary was filed with the other ordinary site notes.
+
+Field entry 00245: On Monday at 07:15, a maintenance technician visited the stone viaduct and checked the sample labels against the routine sheet. The observer noted a brief change in the wind after the clouds moved east; the comparison read 73 units, within the ordinary range recorded for that location. The note was copied into the routine log before the shift changed.
+
+Field entry 00246: On Sunday at 09:40, a volunteer surveyor visited the south depot and checked the paper map against the routine sheet. The observer noted an empty crate returned to the correct storage bay; the comparison read 26 units, within the ordinary range recorded for that location. The team left the route open and added the observation to its next review.
+
+Field entry 00247: On Friday at 21:40, the evening custodian visited the west greenhouse and checked the sample labels against the routine sheet. The observer noted an empty crate returned to the correct storage bay; the comparison read 53 units, within the ordinary range recorded for that location. The coordinator asked the next shift to use the same reference point.
+
+Field entry 00248: On Thursday at 20:45, a maintenance technician visited the east pump house and checked the weather display against the routine sheet. The observer noted an empty crate returned to the correct storage bay; the comparison read 37 units, within the ordinary range recorded for that location. The team left the route open and added the observation to its next review.
+
+Field entry 00249: On Saturday at 18:50, a maintenance technician visited the lower ferry landing and checked the inspection ledger against the routine sheet. The observer noted a repair request already listed in the weekly maintenance book; the comparison read 49 units, within the ordinary range recorded for that location. The note was copied into the routine log before the shift changed.
+
+Field entry 00250: On Wednesday at 20:00, a maintenance technician visited the community boat shed and checked the inspection ledger against the routine sheet. The observer noted a quiet interval between the morning and afternoon rounds; the comparison read 25 units, within the ordinary range recorded for that location. The clerk marked the entry for comparison with the following day's report.
+
+Field entry 00251: On Tuesday at 09:50, the evening custodian visited the east pump house and checked the handheld gauge against the routine sheet. The observer noted a steady reading after the instrument was allowed to settle; the comparison read 33 units, within the ordinary range recorded for that location. The summary was filed with the other ordinary site notes.
+
+Field entry 00252: On Wednesday at 13:30, a field coordinator visited the market service road and checked the radio check sheet against the routine sheet. The observer noted several damp leaves gathered beside the drain; the comparison read 26 units, within the ordinary range recorded for that location. The coordinator asked the next shift to use the same reference point.
+
+Field entry 00253: On Tuesday at 06:40, a maintenance technician visited the market service road and checked the sample labels against the routine sheet. The observer noted a steady reading after the instrument was allowed to settle; the comparison read 17 units, within the ordinary range recorded for that location. The clerk marked the entry for comparison with the following day's report.
+
+Field entry 00254: On Thursday at 16:10, a field coordinator visited the community boat shed and checked the handheld gauge against the routine sheet. The observer noted a repair request already listed in the weekly maintenance book; the comparison read 32 units, within the ordinary range recorded for that location. A second observer confirmed the location without changing the recorded reading.
+
+Field entry 00255: On Saturday at 08:50, a volunteer surveyor visited the west greenhouse and checked the sample labels against the routine sheet. The observer noted a repair request already listed in the weekly maintenance book; the comparison read 24 units, within the ordinary range recorded for that location. The team left the route open and added the observation to its next review.
+
+Field entry 00256: On Saturday at 16:20, a records clerk visited the lower ferry landing and checked the radio check sheet against the routine sheet. The observer noted a short delay while the key holder finished another inspection; the comparison read 24 units, within the ordinary range recorded for that location. No equipment was moved; the next check remained on the normal schedule.
+
+Field entry 00257: On Saturday at 13:40, the evening custodian visited the orchard loading lane and checked the handheld gauge against the routine sheet. The observer noted a short delay while the key holder finished another inspection; the comparison read 44 units, within the ordinary range recorded for that location. The team left the route open and added the observation to its next review.
+
+Field entry 00258: On Monday at 20:10, a records clerk visited the museum courtyard and checked the handheld gauge against the routine sheet. The observer noted a narrow patch of shade along the retaining wall; the comparison read 18 units, within the ordinary range recorded for that location. The team left the route open and added the observation to its next review.
+
+Field entry 00259: On Tuesday at 18:15, a field coordinator visited the library annex and checked the radio check sheet against the routine sheet. The observer noted a narrow patch of shade along the retaining wall; the comparison read 75 units, within the ordinary range recorded for that location. The summary was filed with the other ordinary site notes.
+
+Field entry 00260: On Sunday at 11:20, a volunteer surveyor visited the stone viaduct and checked the radio check sheet against the routine sheet. The observer noted an empty crate returned to the correct storage bay; the comparison read 18 units, within the ordinary range recorded for that location. No equipment was moved; the next check remained on the normal schedule.
+
+Field entry 00261: On Wednesday at 07:45, a volunteer surveyor visited the north footbridge and checked the sample labels against the routine sheet. The observer noted a quiet interval between the morning and afternoon rounds; the comparison read 84 units, within the ordinary range recorded for that location. The clerk marked the entry for comparison with the following day's report.
+
+Field entry 00262: On Wednesday at 10:30, a maintenance technician visited the community boat shed and checked the handheld gauge against the routine sheet. The observer noted several damp leaves gathered beside the drain; the comparison read 44 units, within the ordinary range recorded for that location. The summary was filed with the other ordinary site notes.
+
+Field entry 00263: On Monday at 11:15, a volunteer surveyor visited the museum courtyard and checked the radio check sheet against the routine sheet. The observer noted a short delay while the key holder finished another inspection; the comparison read 69 units, within the ordinary range recorded for that location. The team left the route open and added the observation to its next review.
+
+Field entry 00264: On Thursday at 21:45, a field coordinator visited the orchard loading lane and checked the sample labels against the routine sheet. The observer noted a group of visitors following the marked route; the comparison read 19 units, within the ordinary range recorded for that location. No equipment was moved; the next check remained on the normal schedule.
+
+Field entry 00265: On Friday at 07:00, the evening custodian visited the orchard loading lane and checked the weather display against the routine sheet. The observer noted a repair request already listed in the weekly maintenance book; the comparison read 69 units, within the ordinary range recorded for that location. The clerk marked the entry for comparison with the following day's report.
+
+Field entry 00266: On Sunday at 09:20, a volunteer surveyor visited the hillside weather station and checked the radio check sheet against the routine sheet. The observer noted fresh chalk marks near the public notice board; the comparison read 62 units, within the ordinary range recorded for that location. A second observer confirmed the location without changing the recorded reading.
+
+Field entry 00267: On Monday at 18:30, a volunteer surveyor visited the market service road and checked the paper map against the routine sheet. The observer noted two delivery carts waiting beside the painted line; the comparison read 84 units, within the ordinary range recorded for that location. The crew kept the original notation so later visitors could compare conditions.
+
+Field entry 00268: On Monday at 07:30, a records clerk visited the north footbridge and checked the handheld gauge against the routine sheet. The observer noted a short delay while the key holder finished another inspection; the comparison read 62 units, within the ordinary range recorded for that location. The team left the route open and added the observation to its next review.
+
+Field entry 00269: On Monday at 08:10, a maintenance technician visited the coastal footpath and checked the inspection ledger against the routine sheet. The observer noted fresh chalk marks near the public notice board; the comparison read 29 units, within the ordinary range recorded for that location. The team left the route open and added the observation to its next review.
+
+Field entry 00270: On Wednesday at 16:20, a records clerk visited the stone viaduct and checked the handheld gauge against the routine sheet. The observer noted several damp leaves gathered beside the drain; the comparison read 74 units, within the ordinary range recorded for that location. The team left the route open and added the observation to its next review.
+
+Field entry 00271: On Friday at 06:20, the evening custodian visited the old rail platform and checked the paper map against the routine sheet. The observer noted a group of visitors following the marked route; the comparison read 34 units, within the ordinary range recorded for that location. The note was copied into the routine log before the shift changed.
+
+Field entry 00272: On Tuesday at 10:10, a records clerk visited the east pump house and checked the weather display against the routine sheet. The observer noted a short delay while the key holder finished another inspection; the comparison read 21 units, within the ordinary range recorded for that location. The clerk marked the entry for comparison with the following day's report.
+
+Field entry 00273: On Tuesday at 08:15, the evening custodian visited the orchard loading lane and checked the radio check sheet against the routine sheet. The observer noted a brief change in the wind after the clouds moved east; the comparison read 55 units, within the ordinary range recorded for that location. No equipment was moved; the next check remained on the normal schedule.
+
+Field entry 00274: On Friday at 11:10, a field coordinator visited the orchard loading lane and checked the inspection ledger against the routine sheet. The observer noted a repair request already listed in the weekly maintenance book; the comparison read 48 units, within the ordinary range recorded for that location. No equipment was moved; the next check remained on the normal schedule.
+
+Field entry 00275: On Thursday at 09:30, a field coordinator visited the orchard loading lane and checked the weather display against the routine sheet. The observer noted a quiet interval between the morning and afternoon rounds; the comparison read 71 units, within the ordinary range recorded for that location. The summary was filed with the other ordinary site notes.
+
+Field entry 00276: On Friday at 14:45, the evening custodian visited the coastal footpath and checked the inspection ledger against the routine sheet. The observer noted two delivery carts waiting beside the painted line; the comparison read 16 units, within the ordinary range recorded for that location. The coordinator asked the next shift to use the same reference point.
+
+Field entry 00277: On Monday at 09:45, a maintenance technician visited the lower ferry landing and checked the paper map against the routine sheet. The observer noted two delivery carts waiting beside the painted line; the comparison read 40 units, within the ordinary range recorded for that location. The team left the route open and added the observation to its next review.
+
+Field entry 00278: On Monday at 06:20, the evening custodian visited the canal lock and checked the paper map against the routine sheet. The observer noted two delivery carts waiting beside the painted line; the comparison read 19 units, within the ordinary range recorded for that location. No equipment was moved; the next check remained on the normal schedule.
+
+Field entry 00279: On Saturday at 14:00, a volunteer surveyor visited the hilltop water tank and checked the inspection ledger against the routine sheet. The observer noted a loose hinge that remained safe to use; the comparison read 74 units, within the ordinary range recorded for that location. The clerk marked the entry for comparison with the following day's report.
+
+Field entry 00280: On Monday at 12:40, a field coordinator visited the hillside weather station and checked the radio check sheet against the routine sheet. The observer noted a steady reading after the instrument was allowed to settle; the comparison read 51 units, within the ordinary range recorded for that location. The coordinator asked the next shift to use the same reference point.
+
+Field entry 00281: On Saturday at 19:20, the site steward visited the museum courtyard and checked the inspection ledger against the routine sheet. The observer noted a small difference between the printed map and the new sign; the comparison read 34 units, within the ordinary range recorded for that location. The crew kept the original notation so later visitors could compare conditions.
+
+Field entry 00282: On Thursday at 19:45, a records clerk visited the market service road and checked the paper map against the routine sheet. The observer noted a row of seedlings protected from the afternoon sun; the comparison read 68 units, within the ordinary range recorded for that location. The coordinator asked the next shift to use the same reference point.
+
+Field entry 00283: On Thursday at 11:30, a field coordinator visited the hillside weather station and checked the inspection ledger against the routine sheet. The observer noted a brief change in the wind after the clouds moved east; the comparison read 23 units, within the ordinary range recorded for that location. A second observer confirmed the location without changing the recorded reading.
+
+Field entry 00284: On Wednesday at 16:45, a records clerk visited the north footbridge and checked the radio check sheet against the routine sheet. The observer noted several damp leaves gathered beside the drain; the comparison read 27 units, within the ordinary range recorded for that location. The crew kept the original notation so later visitors could compare conditions.
+
+Field entry 00285: On Friday at 07:40, a volunteer surveyor visited the museum courtyard and checked the inspection ledger against the routine sheet. The observer noted a group of visitors following the marked route; the comparison read 22 units, within the ordinary range recorded for that location. The team left the route open and added the observation to its next review.
+
+Field entry 00286: On Saturday at 15:15, a volunteer surveyor visited the north footbridge and checked the paper map against the routine sheet. The observer noted a measured queue that cleared before the next scheduled check; the comparison read 72 units, within the ordinary range recorded for that location. The clerk marked the entry for comparison with the following day's report.
+
+Field entry 00287: On Wednesday at 19:40, a volunteer surveyor visited the coastal footpath and checked the handheld gauge against the routine sheet. The observer noted a clear view of the path after the temporary barrier was moved; the comparison read 38 units, within the ordinary range recorded for that location. The coordinator asked the next shift to use the same reference point.
+
+Field entry 00288: On Thursday at 21:40, a records clerk visited the library annex and checked the handheld gauge against the routine sheet. The observer noted a group of visitors following the marked route; the comparison read 80 units, within the ordinary range recorded for that location. The clerk marked the entry for comparison with the following day's report.
+
+Field entry 00289: On Thursday at 21:45, a volunteer surveyor visited the east pump house and checked the sample labels against the routine sheet. The observer noted several damp leaves gathered beside the drain; the comparison read 60 units, within the ordinary range recorded for that location. The coordinator asked the next shift to use the same reference point.
+
+Field entry 00290: On Tuesday at 10:50, a records clerk visited the library annex and checked the sample labels against the routine sheet. The observer noted a small difference between the printed map and the new sign; the comparison read 33 units, within the ordinary range recorded for that location. The crew kept the original notation so later visitors could compare conditions.
+
+Field entry 00291: On Sunday at 17:20, a maintenance technician visited the north footbridge and checked the sample labels against the routine sheet. The observer noted a row of seedlings protected from the afternoon sun; the comparison read 40 units, within the ordinary range recorded for that location. The note was copied into the routine log before the shift changed.
+
+Field entry 00292: On Wednesday at 15:40, a field coordinator visited the farm access gate and checked the radio check sheet against the routine sheet. The observer noted a steady reading after the instrument was allowed to settle; the comparison read 38 units, within the ordinary range recorded for that location. A second observer confirmed the location without changing the recorded reading.
+
+Field entry 00293: On Tuesday at 12:40, a volunteer surveyor visited the north footbridge and checked the radio check sheet against the routine sheet. The observer noted an empty crate returned to the correct storage bay; the comparison read 71 units, within the ordinary range recorded for that location. The coordinator asked the next shift to use the same reference point.
+
+Field entry 00294: On Thursday at 09:15, a field coordinator visited the community boat shed and checked the paper map against the routine sheet. The observer noted a measured queue that cleared before the next scheduled check; the comparison read 35 units, within the ordinary range recorded for that location. A second observer confirmed the location without changing the recorded reading.
+
+Field entry 00295: On Wednesday at 09:30, the site steward visited the lower ferry landing and checked the paper map against the routine sheet. The observer noted two delivery carts waiting beside the painted line; the comparison read 59 units, within the ordinary range recorded for that location. The clerk marked the entry for comparison with the following day's report.
+
+Field entry 00296: On Tuesday at 19:45, the evening custodian visited the stone viaduct and checked the paper map against the routine sheet. The observer noted an empty crate returned to the correct storage bay; the comparison read 71 units, within the ordinary range recorded for that location. A second observer confirmed the location without changing the recorded reading.
+
+Field entry 00297: On Tuesday at 07:20, a field coordinator visited the market service road and checked the paper map against the routine sheet. The observer noted a brief change in the wind after the clouds moved east; the comparison read 76 units, within the ordinary range recorded for that location. The coordinator asked the next shift to use the same reference point.
+
+Field entry 00298: On Thursday at 21:10, a field coordinator visited the hilltop water tank and checked the sample labels against the routine sheet. The observer noted several damp leaves gathered beside the drain; the comparison read 22 units, within the ordinary range recorded for that location. The coordinator asked the next shift to use the same reference point.
+
+Field entry 00299: On Tuesday at 15:45, a field coordinator visited the farm access gate and checked the inspection ledger against the routine sheet. The observer noted a group of visitors following the marked route; the comparison read 22 units, within the ordinary range recorded for that location. The summary was filed with the other ordinary site notes.
+
+Field entry 00300: On Saturday at 09:20, a volunteer surveyor visited the stone viaduct and checked the weather display against the routine sheet. The observer noted a steady reading after the instrument was allowed to settle; the comparison read 73 units, within the ordinary range recorded for that location. The summary was filed with the other ordinary site notes.
+
+Field entry 00301: On Tuesday at 21:20, the evening custodian visited the west greenhouse and checked the paper map against the routine sheet. The observer noted a short delay while the key holder finished another inspection; the comparison read 28 units, within the ordinary range recorded for that location. The note was copied into the routine log before the shift changed.
+
+Field entry 00302: On Monday at 19:30, the site steward visited the canal lock and checked the paper map against the routine sheet. The observer noted a brief change in the wind after the clouds moved east; the comparison read 48 units, within the ordinary range recorded for that location. A second observer confirmed the location without changing the recorded reading.
+
+Field entry 00303: On Saturday at 19:50, a field coordinator visited the south depot and checked the sample labels against the routine sheet. The observer noted a narrow patch of shade along the retaining wall; the comparison read 50 units, within the ordinary range recorded for that location. The team left the route open and added the observation to its next review.
+
+Field entry 00304: On Friday at 13:20, the evening custodian visited the old rail platform and checked the radio check sheet against the routine sheet. The observer noted an empty crate returned to the correct storage bay; the comparison read 31 units, within the ordinary range recorded for that location. The note was copied into the routine log before the shift changed.
+
+Field entry 00305: On Monday at 08:50, a volunteer surveyor visited the hilltop water tank and checked the radio check sheet against the routine sheet. The observer noted a measured queue that cleared before the next scheduled check; the comparison read 58 units, within the ordinary range recorded for that location. A second observer confirmed the location without changing the recorded reading.
+
+Field entry 00306: On Wednesday at 19:00, the site steward visited the canal lock and checked the inspection ledger against the routine sheet. The observer noted a repair request already listed in the weekly maintenance book; the comparison read 77 units, within the ordinary range recorded for that location. The coordinator asked the next shift to use the same reference point.
+
+Field entry 00307: On Wednesday at 10:10, a volunteer surveyor visited the community boat shed and checked the sample labels against the routine sheet. The observer noted fresh chalk marks near the public notice board; the comparison read 25 units, within the ordinary range recorded for that location. No equipment was moved; the next check remained on the normal schedule.
+
+Field entry 00308: On Friday at 06:20, a field coordinator visited the hillside weather station and checked the paper map against the routine sheet. The observer noted several damp leaves gathered beside the drain; the comparison read 57 units, within the ordinary range recorded for that location. The note was copied into the routine log before the shift changed.
+
+Field entry 00309: On Tuesday at 19:00, the site steward visited the market service road and checked the paper map against the routine sheet. The observer noted a group of visitors following the marked route; the comparison read 82 units, within the ordinary range recorded for that location. The summary was filed with the other ordinary site notes.
+
+Field entry 00310: On Tuesday at 20:10, a records clerk visited the lower ferry landing and checked the weather display against the routine sheet. The observer noted a group of visitors following the marked route; the comparison read 70 units, within the ordinary range recorded for that location. The summary was filed with the other ordinary site notes.
+
+Field entry 00311: On Monday at 20:10, a field coordinator visited the hilltop water tank and checked the inspection ledger against the routine sheet. The observer noted several damp leaves gathered beside the drain; the comparison read 65 units, within the ordinary range recorded for that location. A second observer confirmed the location without changing the recorded reading.
+
+Field entry 00312: On Tuesday at 12:20, a volunteer surveyor visited the orchard loading lane and checked the paper map against the routine sheet. The observer noted a narrow patch of shade along the retaining wall; the comparison read 24 units, within the ordinary range recorded for that location. The team left the route open and added the observation to its next review.
+
+Field entry 00313: On Tuesday at 08:50, a maintenance technician visited the south depot and checked the radio check sheet against the routine sheet. The observer noted a group of visitors following the marked route; the comparison read 32 units, within the ordinary range recorded for that location. The clerk marked the entry for comparison with the following day's report.
+
+Field entry 00314: On Friday at 21:00, a maintenance technician visited the lower ferry landing and checked the radio check sheet against the routine sheet. The observer noted several damp leaves gathered beside the drain; the comparison read 22 units, within the ordinary range recorded for that location. The crew kept the original notation so later visitors could compare conditions.
+
+Field entry 00315: On Thursday at 09:30, the site steward visited the hilltop water tank and checked the radio check sheet against the routine sheet. The observer noted a group of visitors following the marked route; the comparison read 13 units, within the ordinary range recorded for that location. The note was copied into the routine log before the shift changed.
+
+Field entry 00316: On Monday at 12:40, the site steward visited the coastal footpath and checked the inspection ledger against the routine sheet. The observer noted a brief change in the wind after the clouds moved east; the comparison read 16 units, within the ordinary range recorded for that location. The team left the route open and added the observation to its next review.
+
+Field entry 00317: On Wednesday at 16:20, the evening custodian visited the river workshop and checked the inspection ledger against the routine sheet. The observer noted a brief change in the wind after the clouds moved east; the comparison read 77 units, within the ordinary range recorded for that location. The team left the route open and added the observation to its next review.
+
+Field entry 00318: On Friday at 20:45, a field coordinator visited the west greenhouse and checked the sample labels against the routine sheet. The observer noted a steady reading after the instrument was allowed to settle; the comparison read 28 units, within the ordinary range recorded for that location. The clerk marked the entry for comparison with the following day's report.
+
+Field entry 00319: On Saturday at 17:30, a records clerk visited the community boat shed and checked the paper map against the routine sheet. The observer noted a small difference between the printed map and the new sign; the comparison read 20 units, within the ordinary range recorded for that location. No equipment was moved; the next check remained on the normal schedule.
+
+Field entry 00320: On Tuesday at 12:40, a volunteer surveyor visited the stone viaduct and checked the inspection ledger against the routine sheet. The observer noted a measured queue that cleared before the next scheduled check; the comparison read 76 units, within the ordinary range recorded for that location. The clerk marked the entry for comparison with the following day's report.
+
+Field entry 00321: On Tuesday at 11:45, a volunteer surveyor visited the stone viaduct and checked the handheld gauge against the routine sheet. The observer noted a brief change in the wind after the clouds moved east; the comparison read 64 units, within the ordinary range recorded for that location. The crew kept the original notation so later visitors could compare conditions.
+
+Field entry 00322: On Thursday at 16:40, the site steward visited the canal lock and checked the sample labels against the routine sheet. The observer noted a narrow patch of shade along the retaining wall; the comparison read 59 units, within the ordinary range recorded for that location. A second observer confirmed the location without changing the recorded reading.
+
+Field entry 00323: On Saturday at 07:00, a maintenance technician visited the community boat shed and checked the handheld gauge against the routine sheet. The observer noted several damp leaves gathered beside the drain; the comparison read 39 units, within the ordinary range recorded for that location. The team left the route open and added the observation to its next review.
+
+Field entry 00324: On Monday at 15:10, a records clerk visited the hillside weather station and checked the inspection ledger against the routine sheet. The observer noted a loose hinge that remained safe to use; the comparison read 86 units, within the ordinary range recorded for that location. No equipment was moved; the next check remained on the normal schedule.
+
+Field entry 00325: On Wednesday at 08:00, a records clerk visited the community boat shed and checked the radio check sheet against the routine sheet. The observer noted a steady reading after the instrument was allowed to settle; the comparison read 49 units, within the ordinary range recorded for that location. The note was copied into the routine log before the shift changed.
+
+Field entry 00326: On Sunday at 18:10, the evening custodian visited the old rail platform and checked the paper map against the routine sheet. The observer noted a brief change in the wind after the clouds moved east; the comparison read 82 units, within the ordinary range recorded for that location. The clerk marked the entry for comparison with the following day's report.
+
+Field entry 00327: On Tuesday at 11:40, a volunteer surveyor visited the south depot and checked the weather display against the routine sheet. The observer noted a narrow patch of shade along the retaining wall; the comparison read 49 units, within the ordinary range recorded for that location. No equipment was moved; the next check remained on the normal schedule.
+
+Field entry 00328: On Sunday at 19:15, the evening custodian visited the community boat shed and checked the sample labels against the routine sheet. The observer noted several damp leaves gathered beside the drain; the comparison read 57 units, within the ordinary range recorded for that location. No equipment was moved; the next check remained on the normal schedule.
+
+Field entry 00329: On Friday at 12:00, a field coordinator visited the old rail platform and checked the paper map against the routine sheet. The observer noted a measured queue that cleared before the next scheduled check; the comparison read 86 units, within the ordinary range recorded for that location. The coordinator asked the next shift to use the same reference point.
+
+Field entry 00330: On Wednesday at 09:45, a maintenance technician visited the river workshop and checked the radio check sheet against the routine sheet. The observer noted a brief change in the wind after the clouds moved east; the comparison read 31 units, within the ordinary range recorded for that location. The coordinator asked the next shift to use the same reference point.
+
+Field entry 00331: On Friday at 08:10, a volunteer surveyor visited the north footbridge and checked the inspection ledger against the routine sheet. The observer noted a steady reading after the instrument was allowed to settle; the comparison read 34 units, within the ordinary range recorded for that location. The team left the route open and added the observation to its next review.
+
+Field entry 00332: On Monday at 13:15, the evening custodian visited the canal lock and checked the paper map against the routine sheet. The observer noted a steady reading after the instrument was allowed to settle; the comparison read 86 units, within the ordinary range recorded for that location. The coordinator asked the next shift to use the same reference point.
+
+Field entry 00333: On Wednesday at 08:30, the evening custodian visited the orchard loading lane and checked the inspection ledger against the routine sheet. The observer noted a loose hinge that remained safe to use; the comparison read 26 units, within the ordinary range recorded for that location. The summary was filed with the other ordinary site notes.
+
+Field entry 00334: On Monday at 10:10, a records clerk visited the canal lock and checked the paper map against the routine sheet. The observer noted a short delay while the key holder finished another inspection; the comparison read 55 units, within the ordinary range recorded for that location. The summary was filed with the other ordinary site notes.
+
+Field entry 00335: On Monday at 08:45, a maintenance technician visited the market service road and checked the weather display against the routine sheet. The observer noted a group of visitors following the marked route; the comparison read 28 units, within the ordinary range recorded for that location. The team left the route open and added the observation to its next review.
+
+Field entry 00336: On Thursday at 14:45, the evening custodian visited the east pump house and checked the paper map against the routine sheet. The observer noted a clear view of the path after the temporary barrier was moved; the comparison read 35 units, within the ordinary range recorded for that location. The coordinator asked the next shift to use the same reference point.
+
+Field entry 00337: On Sunday at 19:10, the site steward visited the farm access gate and checked the paper map against the routine sheet. The observer noted a repair request already listed in the weekly maintenance book; the comparison read 57 units, within the ordinary range recorded for that location. The team left the route open and added the observation to its next review.
+
+Field entry 00338: On Saturday at 19:10, a maintenance technician visited the library annex and checked the inspection ledger against the routine sheet. The observer noted two delivery carts waiting beside the painted line; the comparison read 12 units, within the ordinary range recorded for that location. The crew kept the original notation so later visitors could compare conditions.
+
+Field entry 00339: On Wednesday at 13:30, a field coordinator visited the farm access gate and checked the handheld gauge against the routine sheet. The observer noted two delivery carts waiting beside the painted line; the comparison read 18 units, within the ordinary range recorded for that location. The note was copied into the routine log before the shift changed.
+
+Field entry 00340: On Sunday at 08:20, a volunteer surveyor visited the west greenhouse and checked the handheld gauge against the routine sheet. The observer noted a narrow patch of shade along the retaining wall; the comparison read 17 units, within the ordinary range recorded for that location. The team left the route open and added the observation to its next review.
+
+Field entry 00341: On Thursday at 08:40, a volunteer surveyor visited the market service road and checked the sample labels against the routine sheet. The observer noted several damp leaves gathered beside the drain; the comparison read 81 units, within the ordinary range recorded for that location. The clerk marked the entry for comparison with the following day's report.
+
+Field entry 00342: On Sunday at 16:45, a volunteer surveyor visited the north footbridge and checked the sample labels against the routine sheet. The observer noted a measured queue that cleared before the next scheduled check; the comparison read 72 units, within the ordinary range recorded for that location. A second observer confirmed the location without changing the recorded reading.
+
+Field entry 00343: On Tuesday at 09:50, the evening custodian visited the market service road and checked the radio check sheet against the routine sheet. The observer noted a row of seedlings protected from the afternoon sun; the comparison read 59 units, within the ordinary range recorded for that location. The note was copied into the routine log before the shift changed.
+
+Field entry 00344: On Sunday at 07:00, the site steward visited the stone viaduct and checked the inspection ledger against the routine sheet. The observer noted fresh chalk marks near the public notice board; the comparison read 69 units, within the ordinary range recorded for that location. The summary was filed with the other ordinary site notes.
+
+Field entry 00345: On Monday at 09:50, a field coordinator visited the hilltop water tank and checked the inspection ledger against the routine sheet. The observer noted an empty crate returned to the correct storage bay; the comparison read 44 units, within the ordinary range recorded for that location. The note was copied into the routine log before the shift changed.
+
+Field entry 00346: On Sunday at 16:45, a field coordinator visited the west greenhouse and checked the inspection ledger against the routine sheet. The observer noted several damp leaves gathered beside the drain; the comparison read 21 units, within the ordinary range recorded for that location. The clerk marked the entry for comparison with the following day's report.
+
+Field entry 00347: On Tuesday at 20:00, a records clerk visited the east pump house and checked the radio check sheet against the routine sheet. The observer noted a brief change in the wind after the clouds moved east; the comparison read 13 units, within the ordinary range recorded for that location. The coordinator asked the next shift to use the same reference point.
+
+Field entry 00348: On Thursday at 10:45, a volunteer surveyor visited the old rail platform and checked the weather display against the routine sheet. The observer noted a loose hinge that remained safe to use; the comparison read 51 units, within the ordinary range recorded for that location. The note was copied into the routine log before the shift changed.
+
+Field entry 00349: On Sunday at 16:50, a field coordinator visited the coastal footpath and checked the sample labels against the routine sheet. The observer noted a steady reading after the instrument was allowed to settle; the comparison read 60 units, within the ordinary range recorded for that location. No equipment was moved; the next check remained on the normal schedule.
+
+Field entry 00350: On Saturday at 09:15, a volunteer surveyor visited the east pump house and checked the radio check sheet against the routine sheet. The observer noted a loose hinge that remained safe to use; the comparison read 64 units, within the ordinary range recorded for that location. The crew kept the original notation so later visitors could compare conditions.
+
+Field entry 00351: On Saturday at 20:10, a maintenance technician visited the south depot and checked the handheld gauge against the routine sheet. The observer noted a small difference between the printed map and the new sign; the comparison read 37 units, within the ordinary range recorded for that location. The crew kept the original notation so later visitors could compare conditions.
+
+Field entry 00352: On Monday at 15:15, the evening custodian visited the stone viaduct and checked the radio check sheet against the routine sheet. The observer noted a row of seedlings protected from the afternoon sun; the comparison read 83 units, within the ordinary range recorded for that location. No equipment was moved; the next check remained on the normal schedule.
+
+Field entry 00353: On Monday at 07:45, a field coordinator visited the south depot and checked the inspection ledger against the routine sheet. The observer noted a measured queue that cleared before the next scheduled check; the comparison read 65 units, within the ordinary range recorded for that location. The summary was filed with the other ordinary site notes.
+
+Field entry 00354: On Wednesday at 11:40, the evening custodian visited the museum courtyard and checked the weather display against the routine sheet. The observer noted fresh chalk marks near the public notice board; the comparison read 64 units, within the ordinary range recorded for that location. The clerk marked the entry for comparison with the following day's report.
+
+Field entry 00355: On Wednesday at 18:00, the site steward visited the library annex and checked the weather display against the routine sheet. The observer noted fresh chalk marks near the public notice board; the comparison read 58 units, within the ordinary range recorded for that location. The crew kept the original notation so later visitors could compare conditions.
+
+Field entry 00356: On Thursday at 14:10, the site steward visited the old rail platform and checked the weather display against the routine sheet. The observer noted a repair request already listed in the weekly maintenance book; the comparison read 45 units, within the ordinary range recorded for that location. The note was copied into the routine log before the shift changed.
+
+Field entry 00357: On Sunday at 08:40, a field coordinator visited the stone viaduct and checked the radio check sheet against the routine sheet. The observer noted a row of seedlings protected from the afternoon sun; the comparison read 70 units, within the ordinary range recorded for that location. A second observer confirmed the location without changing the recorded reading.
+
+Field entry 00358: On Friday at 19:20, the site steward visited the library annex and checked the weather display against the routine sheet. The observer noted a short delay while the key holder finished another inspection; the comparison read 81 units, within the ordinary range recorded for that location. The team left the route open and added the observation to its next review.
+
+Field entry 00359: On Sunday at 21:30, a field coordinator visited the west greenhouse and checked the inspection ledger against the routine sheet. The observer noted a loose hinge that remained safe to use; the comparison read 37 units, within the ordinary range recorded for that location. The clerk marked the entry for comparison with the following day's report.
+
+Field entry 00360: On Friday at 14:30, a volunteer surveyor visited the old rail platform and checked the radio check sheet against the routine sheet. The observer noted a brief change in the wind after the clouds moved east; the comparison read 44 units, within the ordinary range recorded for that location. The clerk marked the entry for comparison with the following day's report.
+
+Field entry 00361: On Tuesday at 16:40, a volunteer surveyor visited the east pump house and checked the sample labels against the routine sheet. The observer noted a quiet interval between the morning and afternoon rounds; the comparison read 38 units, within the ordinary range recorded for that location. A second observer confirmed the location without changing the recorded reading.
+
+Field entry 00362: On Wednesday at 07:20, a field coordinator visited the library annex and checked the sample labels against the routine sheet. The observer noted fresh chalk marks near the public notice board; the comparison read 49 units, within the ordinary range recorded for that location. A second observer confirmed the location without changing the recorded reading.
+
+Field entry 00363: On Thursday at 13:40, a records clerk visited the lower ferry landing and checked the paper map against the routine sheet. The observer noted a loose hinge that remained safe to use; the comparison read 40 units, within the ordinary range recorded for that location. No equipment was moved; the next check remained on the normal schedule.
+
+Field entry 00364: On Tuesday at 18:50, the evening custodian visited the orchard loading lane and checked the radio check sheet against the routine sheet. The observer noted a quiet interval between the morning and afternoon rounds; the comparison read 62 units, within the ordinary range recorded for that location. The coordinator asked the next shift to use the same reference point.
+
+Field entry 00365: On Thursday at 21:20, a field coordinator visited the stone viaduct and checked the radio check sheet against the routine sheet. The observer noted a row of seedlings protected from the afternoon sun; the comparison read 59 units, within the ordinary range recorded for that location. The note was copied into the routine log before the shift changed.
+
+Field entry 00366: On Sunday at 17:30, a volunteer surveyor visited the coastal footpath and checked the paper map against the routine sheet. The observer noted a clear view of the path after the temporary barrier was moved; the comparison read 34 units, within the ordinary range recorded for that location. The summary was filed with the other ordinary site notes.
+
+Field entry 00367: On Monday at 17:45, the site steward visited the farm access gate and checked the weather display against the routine sheet. The observer noted a row of seedlings protected from the afternoon sun; the comparison read 26 units, within the ordinary range recorded for that location. A second observer confirmed the location without changing the recorded reading.
+
+Field entry 00368: On Monday at 08:50, a volunteer surveyor visited the coastal footpath and checked the sample labels against the routine sheet. The observer noted an empty crate returned to the correct storage bay; the comparison read 76 units, within the ordinary range recorded for that location. The crew kept the original notation so later visitors could compare conditions.
+
+Field entry 00369: On Tuesday at 17:30, a records clerk visited the stone viaduct and checked the radio check sheet against the routine sheet. The observer noted a repair request already listed in the weekly maintenance book; the comparison read 80 units, within the ordinary range recorded for that location. No equipment was moved; the next check remained on the normal schedule.
+
+Field entry 00370: On Sunday at 10:30, a maintenance technician visited the orchard loading lane and checked the inspection ledger against the routine sheet. The observer noted a short delay while the key holder finished another inspection; the comparison read 19 units, within the ordinary range recorded for that location. The team left the route open and added the observation to its next review.
+
+Field entry 00371: On Monday at 06:10, the site steward visited the west greenhouse and checked the weather display against the routine sheet. The observer noted a brief change in the wind after the clouds moved east; the comparison read 87 units, within the ordinary range recorded for that location. The team left the route open and added the observation to its next review.
+
+Field entry 00372: On Saturday at 13:45, a field coordinator visited the library annex and checked the weather display against the routine sheet. The observer noted several damp leaves gathered beside the drain; the comparison read 57 units, within the ordinary range recorded for that location. The clerk marked the entry for comparison with the following day's report.
+
+Field entry 00373: On Saturday at 10:50, a field coordinator visited the canal lock and checked the sample labels against the routine sheet. The observer noted a brief change in the wind after the clouds moved east; the comparison read 43 units, within the ordinary range recorded for that location. The crew kept the original notation so later visitors could compare conditions.
+
+Field entry 00374: On Friday at 14:50, the site steward visited the canal lock and checked the inspection ledger against the routine sheet. The observer noted a small difference between the printed map and the new sign; the comparison read 21 units, within the ordinary range recorded for that location. The note was copied into the routine log before the shift changed.
+
+Field entry 00375: On Saturday at 13:15, a volunteer surveyor visited the stone viaduct and checked the sample labels against the routine sheet. The observer noted a quiet interval between the morning and afternoon rounds; the comparison read 39 units, within the ordinary range recorded for that location. The crew kept the original notation so later visitors could compare conditions.
+
+Field entry 00376: On Thursday at 11:15, the evening custodian visited the stone viaduct and checked the inspection ledger against the routine sheet. The observer noted several damp leaves gathered beside the drain; the comparison read 38 units, within the ordinary range recorded for that location. The summary was filed with the other ordinary site notes.
+
+Field entry 00377: On Wednesday at 09:00, the site steward visited the museum courtyard and checked the weather display against the routine sheet. The observer noted a small difference between the printed map and the new sign; the comparison read 32 units, within the ordinary range recorded for that location. The clerk marked the entry for comparison with the following day's report.
+
+Field entry 00378: On Sunday at 15:30, the site steward visited the lower ferry landing and checked the handheld gauge against the routine sheet. The observer noted several damp leaves gathered beside the drain; the comparison read 29 units, within the ordinary range recorded for that location. A second observer confirmed the location without changing the recorded reading.
+
+Field entry 00379: On Friday at 17:20, a records clerk visited the hillside weather station and checked the paper map against the routine sheet. The observer noted a small difference between the printed map and the new sign; the comparison read 24 units, within the ordinary range recorded for that location. The summary was filed with the other ordinary site notes.
+
+Field entry 00380: On Thursday at 12:45, a volunteer surveyor visited the coastal footpath and checked the sample labels against the routine sheet. The observer noted a clear view of the path after the temporary barrier was moved; the comparison read 64 units, within the ordinary range recorded for that location. The team left the route open and added the observation to its next review.
+
+Field entry 00381: On Tuesday at 07:00, the evening custodian visited the orchard loading lane and checked the paper map against the routine sheet. The observer noted a clear view of the path after the temporary barrier was moved; the comparison read 60 units, within the ordinary range recorded for that location. The crew kept the original notation so later visitors could compare conditions.
+
+Field entry 00382: On Monday at 07:00, a field coordinator visited the west greenhouse and checked the handheld gauge against the routine sheet. The observer noted a clear view of the path after the temporary barrier was moved; the comparison read 25 units, within the ordinary range recorded for that location. The team left the route open and added the observation to its next review.
+
+Field entry 00383: On Sunday at 14:00, a records clerk visited the lower ferry landing and checked the sample labels against the routine sheet. The observer noted fresh chalk marks near the public notice board; the comparison read 75 units, within the ordinary range recorded for that location. The crew kept the original notation so later visitors could compare conditions.
+
+Field entry 00384: On Monday at 20:45, a volunteer surveyor visited the orchard loading lane and checked the sample labels against the routine sheet. The observer noted a brief change in the wind after the clouds moved east; the comparison read 85 units, within the ordinary range recorded for that location. The team left the route open and added the observation to its next review.
+
+Field entry 00385: On Tuesday at 09:00, the site steward visited the lower ferry landing and checked the weather display against the routine sheet. The observer noted several damp leaves gathered beside the drain; the comparison read 62 units, within the ordinary range recorded for that location. The clerk marked the entry for comparison with the following day's report.
+
+Field entry 00386: On Friday at 20:50, a volunteer surveyor visited the north footbridge and checked the inspection ledger against the routine sheet. The observer noted a group of visitors following the marked route; the comparison read 35 units, within the ordinary range recorded for that location. The note was copied into the routine log before the shift changed.
+
+Field entry 00387: On Saturday at 10:20, the evening custodian visited the south depot and checked the sample labels against the routine sheet. The observer noted a quiet interval between the morning and afternoon rounds; the comparison read 33 units, within the ordinary range recorded for that location. The crew kept the original notation so later visitors could compare conditions.
+
+Field entry 00388: On Tuesday at 11:00, a volunteer surveyor visited the community boat shed and checked the handheld gauge against the routine sheet. The observer noted an empty crate returned to the correct storage bay; the comparison read 58 units, within the ordinary range recorded for that location. No equipment was moved; the next check remained on the normal schedule.
+
+Field entry 00389: On Friday at 20:20, the site steward visited the canal lock and checked the inspection ledger against the routine sheet. The observer noted a narrow patch of shade along the retaining wall; the comparison read 74 units, within the ordinary range recorded for that location. The team left the route open and added the observation to its next review.
+
+Field entry 00390: On Sunday at 07:10, a records clerk visited the canal lock and checked the radio check sheet against the routine sheet. The observer noted a narrow patch of shade along the retaining wall; the comparison read 79 units, within the ordinary range recorded for that location. The coordinator asked the next shift to use the same reference point.
+
+Field entry 00391: On Tuesday at 09:40, the evening custodian visited the community boat shed and checked the inspection ledger against the routine sheet. The observer noted a row of seedlings protected from the afternoon sun; the comparison read 35 units, within the ordinary range recorded for that location. A second observer confirmed the location without changing the recorded reading.
+
+Field entry 00392: On Saturday at 16:10, a records clerk visited the hilltop water tank and checked the paper map against the routine sheet. The observer noted a brief change in the wind after the clouds moved east; the comparison read 24 units, within the ordinary range recorded for that location. The coordinator asked the next shift to use the same reference point.
+
+Field entry 00393: On Wednesday at 16:15, a volunteer surveyor visited the coastal footpath and checked the handheld gauge against the routine sheet. The observer noted a repair request already listed in the weekly maintenance book; the comparison read 79 units, within the ordinary range recorded for that location. The team left the route open and added the observation to its next review.
+
+Field entry 00394: On Friday at 07:50, a volunteer surveyor visited the hilltop water tank and checked the handheld gauge against the routine sheet. The observer noted a narrow patch of shade along the retaining wall; the comparison read 50 units, within the ordinary range recorded for that location. A second observer confirmed the location without changing the recorded reading.
+
+Field entry 00395: On Sunday at 07:10, a field coordinator visited the south depot and checked the radio check sheet against the routine sheet. The observer noted a quiet interval between the morning and afternoon rounds; the comparison read 16 units, within the ordinary range recorded for that location. The coordinator asked the next shift to use the same reference point.
+
+Field entry 00396: On Wednesday at 08:30, a field coordinator visited the market service road and checked the sample labels against the routine sheet. The observer noted a clear view of the path after the temporary barrier was moved; the comparison read 41 units, within the ordinary range recorded for that location. The note was copied into the routine log before the shift changed.
+
+Archive record FINAL: This is the closing record, filed before the packet was sealed. At the Orbit Kettle return cabinet, the sealed register lists verification code ORBIT-6V9-KETTLE. Preserve the code exactly as written.
+
+Retrieval task: find the verification code in the ORIGIN, CENTER, and FINAL archive records. Return exactly three lines, in this order, with the labels and codes only: ORIGIN: <code>, CENTER: <code>, FINAL: <code>. Copy each code exactly; do not infer or normalize it.

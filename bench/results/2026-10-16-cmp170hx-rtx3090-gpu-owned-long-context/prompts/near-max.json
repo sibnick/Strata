@@ -1,0 +1,22 @@
+{
+  "actual_input_tokens": 261682,
+  "context_tokens": 262144,
+  "expected": {
+    "CENTER": "CEDAR-8M2-QUARRY",
+    "FINAL": "ORBIT-6V9-KETTLE",
+    "ORIGIN": "IRIS-4Q7-LANTERN"
+  },
+  "filler_paragraphs": 3194,
+  "generation_cap": 192,
+  "input_plus_generation_cap": 261874,
+  "name": "near-max",
+  "needle_offsets_token": {
+    "CENTER": 130846,
+    "FINAL": 261559,
+    "ORIGIN": 59
+  },
+  "prompt_ids_sha256": "67a876781b4fde7323b1b340a5e55700acb3f6741dc19d953d32229c42cf55ed",
+  "prompt_text_sha256": "10c7eb3f6a8a385458ecbaee8d71e00f2bae6995b6d1664ba57f3d0d5ea6ecbc",
+  "seed": 53,
+  "target_input_tokens": 261632
+}
