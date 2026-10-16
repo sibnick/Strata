@@ -1,0 +1,22 @@
+{
+  "actual_input_tokens": 502,
+  "context_tokens": 262144,
+  "expected": {
+    "CENTER": "928",
+    "FINAL": "365",
+    "ORIGIN": "714"
+  },
+  "filler_paragraphs": 3,
+  "generation_cap": 32,
+  "input_plus_generation_cap": 534,
+  "name": "small",
+  "needle_offsets_token": {
+    "CENTER": 258,
+    "FINAL": 384,
+    "ORIGIN": 58
+  },
+  "prompt_ids_sha256": "92e4898c7878ebc799b5e931e0a697cdf9043d7b2dcd6423c1ebc48646202421",
+  "prompt_text_sha256": "be84c4658d1a0cd095b868e5f59d6482c070675ec308262b03b4b4d26e4618a6",
+  "seed": 83,
+  "target_input_tokens": 448
+}

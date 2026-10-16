@@ -1,0 +1,19 @@
+{
+  "compute_processes": "",
+  "devices": "0, NVIDIA GeForce RTX 3090, GPU-01f295eb-2ee0-838a-ba5b-db97f075a5f7, 610.43.03\n1, NVIDIA CMP 170HX, GPU-79d96de3-4783-ba96-d95c-fe5e0364528e, 610.43.03\n",
+  "gpu_memory_bytes": [
+    {
+      "free_bytes": 25266225152,
+      "physical_index": 0,
+      "total_bytes": 25769803776,
+      "used_bytes": 503578624
+    },
+    {
+      "free_bytes": 68048519168,
+      "physical_index": 1,
+      "total_bytes": 68719476736,
+      "used_bytes": 670957568
+    }
+  ],
+  "utc": "2026-10-16T20:15:32.525337+00:00"
+}

@@ -1,0 +1,12 @@
+2026-10-16T20:07:54.120+00:00 START control pid=215916
+2026-10-16T20:11:06.422+00:00 READY control startup=192.304s
+2026-10-16T20:11:12.460+00:00 PASS control warmup prefill=5720.9ms wall=5.9738s
+2026-10-16T20:11:14.260+00:00 PASS control rep1-small prefill=1518.0ms wall=1.7249s
+2026-10-16T20:11:17.390+00:00 PASS control rep1-medium prefill=2837.8ms wall=3.0657s
+2026-10-16T20:11:23.144+00:00 PASS control rep1-large prefill=5451.5ms wall=5.6875s
+2026-10-16T20:11:24.919+00:00 PASS control rep2-small prefill=1507.5ms wall=1.7145s
+2026-10-16T20:11:28.083+00:00 PASS control rep2-medium prefill=2848.9ms wall=3.1010s
+2026-10-16T20:11:33.823+00:00 PASS control rep2-large prefill=5449.8ms wall=5.6814s
+2026-10-16T20:11:35.611+00:00 PASS control rep3-small prefill=1517.8ms wall=1.7256s
+2026-10-16T20:11:38.815+00:00 PASS control rep3-medium prefill=2870.0ms wall=3.1355s
+2026-10-16T20:11:44.619+00:00 PASS control rep3-large prefill=5505.7ms wall=5.7365s
