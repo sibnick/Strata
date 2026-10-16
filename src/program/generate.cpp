@@ -4290,6 +4290,31 @@ int main(int argc, char** argv) {
         std::fprintf(stderr, "strata generate: layer split auto: K=%s - predicted %.1f ms per decode window; the caches "
                              "hold %lld of %zu profiled pairs (~%.1f%% of the routed mass), best of %lld placements\n",
                      ks.c_str(), best_ms, (long long) best_held, profile.size(), 100.0 * best_mass, (long long) tried);
+        if (const char* v = std::getenv("STRATA_SPLIT_LEDGER"); v && std::atoi(v) != 0) {
+            double ledger_mass = 0.0;
+            int64_t ledger_held = 0;
+            (void) predict(best, ledger_mass, ledger_held);
+            const std::vector<PartStat> ledger = parts_of(best);
+            for (int i = 0; i < ns; ++i) {
+                const int dev = i == 0 ? 0 : stages[(size_t) i - 1]->dev;
+                const int64_t lb = i == 0 ? 0 : best[(size_t) i - 1];
+                const int64_t le = i + 1 < ns ? best[(size_t) i] : g.n_layers;
+                const uint64_t session = strata::core::session_bytes(g, o.max_context, K, lb, le);
+                const uint64_t weights = i == 0 ? 0 : carve_bytes(lb, le);
+                const int64_t expert_room = ledger[(size_t) i].cap;
+                const int64_t expert_used = ledger[(size_t) i].used;
+                const int64_t slack = std::max<int64_t>(expert_room - expert_used, 0);
+                std::fprintf(stderr,
+                             "strata generate: layer split ledger: CUDA%d layers [%lld,%lld): "
+                             "%lld B usable before carve, session %llu B, trimmed weights %llu B, "
+                             "expert capacity %lld B, profile-ranked cache %lld B (%lld pairs), "
+                             "%lld B unassigned\n",
+                             dev, (long long) lb, (long long) le, (long long) cap[(size_t) i],
+                             (unsigned long long) session, (unsigned long long) weights,
+                             (long long) expert_room, (long long) expert_used,
+                             (long long) ledger[(size_t) i].cnt, (long long) slack);
+            }
+        }
         // #1428: a near tie on a mixed pair.  The model prices a decode window only (the prompt path is not in it), and on
         // cards of different speed or link the winner can flip within a few percent of error: say which other split is
         // almost as good, so the user can try it.  Recommend, never force: this only prints.

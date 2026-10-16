@@ -11,6 +11,111 @@ verify window (a few hundred KB through pinned RAM), not twice per layer. No NVL
 needed; cards on x4 or x1 slots work, and the PCIe share of each card is probed on its own link. A `--pcie-frac` you give
 is every card's share and skips those probes; there is no per-card setting yet.
 
+## Sizing UD-Q4_K_XL on a CMP 170HX and RTX 3090
+
+The optional CUDA target `strata-split-memory` reads the GGUF headers and native pack index, not the expert
+payload. It compares CMP-first boundaries 36, 37 and 38 using the engine's session and owned-prefill sizing
+functions. It does not change inference defaults. Build and run it from the repository root:
+
+```sh
+cmake --build build --target strata-split-memory -j2
+build/strata-split-memory --pack build/pack/ud-q4-k-xl \
+  --native /path/to/Qwen3.8-Flash-Next-UD-Q4_K_XL-00001-of-00004.gguf \
+  --mtp /path/to/mtp/rt --context 262144 --chunk 256 > split-memory.csv
+python tools/test_split_memory.py
+```
+
+This is a sizing command, not a CPU-only command: the existing metadata loader initializes CUDA and temporarily
+allocates 24 MiB of pinned staging buffers even when every payload is skipped. A run on this machine reduced
+available host RAM by about 151 MiB at its sampled low point. It allocates no expert cache, weights or full-context
+session. Check host headroom before running it.
+
+The CSV reports bytes, with stage 0 = CMP and stage 1 = RTX. The stage -1 rows contain shared file sizes and
+individual layers' expert payloads. The canonical arena and session rows are exact logical allocation sizes;
+the projection, head and prefill rows are allocation estimates, including the sizing functions' rounding and
+slack. Each total additionally includes a 64 MiB projection-padding allowance, a 96 MiB verifier allowance,
+384 MiB for MTP state/workspaces beyond its files and subset head, and 1 GiB for additional CUDA use and safety.
+These allowances are **not measurements or proofs of fit**. MTP files and subset-head costs are only added on
+the last stage; the `mtp_files_payload` row is informational, already included in `mtp_total_with_runtime_reserve`.
+The context and chunk numbers are capacities, not a completed prompt measurement.
+
+For the four UD-Q4_K_XL shards at revision `38bb39ee97821de2c9009abb7e93950eec396e66`, the expert payload is
+77,017,907,200 bytes. At 262,144 cells with INT8 KV, the two session arenas total 4,000,221,184 bytes. With owned
+prefill buffers and a 96-blob ring, the estimated per-card requirements, including the above allowances, are:
+
+| Boundary | CMP bytes, chunk 256 | RTX bytes, chunk 256 | CMP bytes, chunk 2048 | RTX bytes, chunk 2048 |
+|---|---:|---:|---:|---:|
+| 36 | 65,785,561,088 | 25,436,781,804 | 66,777,513,984 | 26,428,734,700 |
+| 37 | 67,456,991,232 | 23,761,157,356 | 68,448,944,128 | 24,753,110,252 |
+| 38 | 69,130,518,528 | 22,087,630,060 | 70,122,471,424 | 23,079,582,956 |
+
+On this machine with NVIDIA driver 610.43.03, a bounded 16 MiB pinned-buffer DMA probe found CUDA/PCI order
+0 = RTX 3090, 1 = CMP 170HX. Use engine `--gpu 1,0` for CMP-first. The RTX had 24,687,935,488 bytes free and
+copied 1 GiB H2D at 24.54 GB/s (Gen4 x16 sampled); the CMP had 67,727,917,056 bytes free and copied at
+0.790 GB/s (Gen1 x4 sampled). Peer access was unavailable in both directions. These are small DMA-load
+measurements, **not full-model under-load measurements**.
+
+The selection rule is to reject a boundary if either card's requirement exceeds its measured free memory;
+never reduce the safety allowances merely to make it fit. Against that free-memory snapshot only K37 with
+chunk 256 passes; its remaining margins after the listed allowances are 270,925,824 bytes on CMP and
+926,778,132 bytes on RTX. All three boundaries fail with chunk 2048. K37/256 was therefore selected for a
+guarded test, **not as a measured best split**. Its accounting assumes
+`--trim-stage-weights --kv int8 --max-context 262144 --spec 2 --prefill 256 --no-prefill-borrow`,
+`STRATA_SPLIT_RING=96`, the default 32,768-cell MTP window, and no batch, vision or KV streaming.
+
+Host RAM is a separate constraint. `--resident-budget-gib` caps only the resident expert copy. This model's
+PLE file is 28,800,138,240 bytes: use `--ple-io direct` to avoid loading it into RAM. The mapped token embedding
+is 675,430,400 bytes; its accessed pages can become resident. Expert assembly normally retains about 257
+largest-blob buffers (1,026,355,200 bytes here), but that is not a hard pool cap. Direct expert reads under the
+budgeted mode require `STRATA_UNBUFFERED_LOAD=1`: the default heuristic can choose buffered reads when a
+recurring subset fits, even when the entire model does not. File-cache growth, CUDA/driver allocations and
+other runtime caches are **not** bounded by the expert budget.
+
+A guarded K37 retry with a 1 MiB expert budget, direct reads, 1,024 PLE cached rows and one CPU worker was
+stopped during dense-weight loading when available host RAM crossed a 25 GiB reaction threshold
+(minimum sampled 26,775,670,784 bytes, above the requested 24 GiB floor). No expert-cache fill, complete
+startup or decode was validated. The external monitor is not a hard cgroup limit. The remaining host-memory
+loss is unexplained; driver-pool retention is only a hypothesis. Recover host headroom before another full
+attempt rather than lowering the floor or resetting a desktop GPU without approval.
+
+**Subsequent live result (user-authorized 4 GiB host floor).** With the same K37/256 configuration, a
+5 GiB reaction threshold and a longer startup limit, both profile fills completed: 18,944 primary experts
+(55.13 GiB) and 5,632 secondary experts (16.60 GiB), all 24,576 experts resident. The primary fill took
+232.9 seconds at 254 MB/s; startup and the short request took about seven minutes in total. The earlier
+four-minute timeout was insufficient, not evidence of a stalled fill.
+
+The engine reached `READY 262144 stop` and completed a three-token diagnostic prompt followed by four generated
+tokens, with no expert-file reads during the request. With everything loaded, its `cudaMemGetInfo` trace
+reported 1,110 MiB free on CMP and 1,713 MiB on RTX. The request captured one- and two-token graphs successfully;
+the last logged capture began with 1,100 MiB free on CMP and 1,721 MiB on RTX. These readings have MiB
+granularity, not byte precision. Host `MemAvailable` samples printed every ten seconds stayed at or above
+21,780,000,768 bytes (20.28 GiB), and swap free was unchanged before/after. The process exited and both GPUs
+released their model allocations. The monitor hit a `/proc/<pid>/io` permission race at exit, so its final
+subprocess exit code and 100 ms minimum were not recorded; the engine log contains `DONE` and no engine error.
+
+Allocations missing from the first expert-plus-session model are now visible: 1,097 MiB for the loaded MTP
+files/state/workspace group, a later 275.7 MiB draft subset head, 84.4 MiB verifier buffers on **each** card,
+and 518 MiB consumed on CMP between the before-prefill and after-head/prefill trace marks. That last group
+exceeds the standalone 346 MiB prefill estimate: do not mistake the component estimates for exact physical
+driver accounting. The conservative total still leaves the measured above-1-GiB margins in this run.
+Although `--spec 2` was requested, suffix lookup expanded the verify capacity to four; MTP stayed capped at
+two. The live evidence therefore covers that larger verifier configuration, not just a two-token allocation.
+
+For this hardware/artifact/configuration, **K37/256 is a demonstrated full-residency startup and short-decode
+configuration**, with at least 1 GiB reported free per card in the observed path. Keep that minimum margin,
+remeasure free memory if other GPU applications change, and reject a run if either card falls below it.
+This is not a fastest-split claim, a peak-memory bound for all requests, a 262K-token prompt test, or a quality
+benchmark. Full-context correctness/performance remains separate work. The 4 GiB host floor was explicitly
+authorized for the retry; it is not a new default or an OOM guarantee.
+The [preserved K37/chunk256 baseline](../bench/results/2026-10-16-cmp170hx-rtx3090-k37/README.md)
+retains the exact launch command, artifact hashes and raw logs. Use it as the working baseline, not as the
+fastest configuration.
+
+For the existing profile-based `--layer-split auto` search, `STRATA_SPLIT_LEDGER=1` also prints its selected
+stages' usable bytes, session carve, later-stage weight estimate and profile-ranked cache capacities. This
+describes that cache-based prediction, not the all-expert-resident rule above; the primary's weight carve is
+zero there because its weights were already loaded. With the variable unset, the default path is unchanged.
+
 ## Using it
 
 **Nothing to type.** `START-HERE.bat` (Linux: `./setup.sh`) lists your NVIDIA cards and says for each one whether
