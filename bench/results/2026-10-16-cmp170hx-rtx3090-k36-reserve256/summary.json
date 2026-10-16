@@ -1,0 +1,162 @@
+{
+  "completed_requests": 10,
+  "engine_return_code": 0,
+  "error": null,
+  "last_checkpoint": "PP 1976 1977 2366 835.1",
+  "limits": [
+    "K37 was an earlier serial run with different reserve/monitor; not randomized/interleaved or best-split evidence.",
+    "Only <=2K input, <=32 output; allocated262144 capacity is not processed tokens.",
+    "RTX reserve/monitor256MiB; CMP reserve1024/monitor640; host5GiB reaction unchanged.",
+    "Periodic sampling cannot guarantee no transient pressure/OOM."
+  ],
+  "max_process_rss_bytes": 5081366528,
+  "max_process_swap_bytes": 0,
+  "max_sample_gap_seconds": 1.09974173000046,
+  "max_system_swap_bytes": 1310720,
+  "min_gpu_free_bytes": {
+    "0": 360382464,
+    "1": 2670002176
+  },
+  "min_host_available_bytes": 13487013888,
+  "ownership_lines": [
+    "strata generate: --gpu-owned-experts: CUDA0 owns layers [0,36), 18432 experts, 57619251200 resident bytes",
+    "strata generate: --gpu-owned-experts: CUDA1 owns layers [36,48), 6144 experts, 19398656000 resident bytes",
+    "strata generate: --gpu-owned-experts: all 24576 experts are resident in their owning GPU caches; prompt cache loans and the CPU complement are disabled; startup file-tier reads accounted for 77024563200 bytes; no file fallback is expected after startup"
+  ],
+  "requests": {
+    "large": {
+      "decode_ms": [
+        205.7,
+        207.6,
+        207.9
+      ],
+      "generated_ids_match_k37": true,
+      "input_tokens": 1977,
+      "median_prefill_ms": 2362.6,
+      "median_wall_seconds_to_done": 2.572790709000401,
+      "mtp_accepted_offered": [
+        [
+          10,
+          11
+        ],
+        [
+          10,
+          11
+        ],
+        [
+          10,
+          11
+        ]
+      ],
+      "prefill_ms": [
+        2349.9,
+        2362.6,
+        2366.3
+      ],
+      "prior_k37_median_wall_seconds": 2.6348115370001324,
+      "prior_k37_wall_over_k36": 1.0241064412207195,
+      "repetitions": 3,
+      "ttft_seconds_observed": [
+        2.3669086449990573,
+        2.3786066089996893,
+        2.3829455409995717
+      ],
+      "wall_seconds_to_done": [
+        2.558592363999196,
+        2.572790709000401,
+        2.5771633770000335
+      ],
+      "zero_expert_read_deltas": true
+    },
+    "medium": {
+      "decode_ms": [
+        210.2,
+        205.5,
+        206.7
+      ],
+      "generated_ids_match_k37": true,
+      "input_tokens": 994,
+      "median_prefill_ms": 1238.6,
+      "median_wall_seconds_to_done": 1.4481344100004208,
+      "mtp_accepted_offered": [
+        [
+          10,
+          11
+        ],
+        [
+          10,
+          11
+        ],
+        [
+          10,
+          11
+        ]
+      ],
+      "prefill_ms": [
+        1239.4,
+        1230.1,
+        1238.6
+      ],
+      "prior_k37_median_wall_seconds": 1.4977974299999914,
+      "prior_k37_wall_over_k36": 1.034294482374434,
+      "repetitions": 3,
+      "ttft_seconds_observed": [
+        1.2561299659992073,
+        1.24622888399972,
+        1.2543745319999289
+      ],
+      "wall_seconds_to_done": [
+        1.4529389990002528,
+        1.438511110998661,
+        1.4481344100004208
+      ],
+      "zero_expert_read_deltas": true
+    },
+    "small": {
+      "decode_ms": [
+        208.3,
+        204.3,
+        202.9
+      ],
+      "generated_ids_match_k37": true,
+      "input_tokens": 502,
+      "median_prefill_ms": 670.6,
+      "median_wall_seconds_to_done": 0.8776322140001867,
+      "mtp_accepted_offered": [
+        [
+          10,
+          11
+        ],
+        [
+          10,
+          11
+        ],
+        [
+          10,
+          11
+        ]
+      ],
+      "prefill_ms": [
+        689.1,
+        670.6,
+        668.1
+      ],
+      "prior_k37_median_wall_seconds": 0.9054196340002818,
+      "prior_k37_wall_over_k36": 1.0316618049757336,
+      "repetitions": 3,
+      "ttft_seconds_observed": [
+        0.7051572810014477,
+        0.6864864050003234,
+        0.6844096000004356
+      ],
+      "wall_seconds_to_done": [
+        0.9010172190010053,
+        0.8776322140001867,
+        0.8736076519999187
+      ],
+      "zero_expert_read_deltas": true
+    }
+  },
+  "startup_seconds": 179.6001948789999,
+  "status": "passed"
+}

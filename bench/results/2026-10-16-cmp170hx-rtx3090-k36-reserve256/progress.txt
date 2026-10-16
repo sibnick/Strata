@@ -1,0 +1,12 @@
+2026-10-16T20:31:01.752+00:00 START mmq pid=267442
+2026-10-16T20:34:01.351+00:00 READY mmq startup=179.600s
+2026-10-16T20:34:04.242+00:00 PASS mmq warmup prefill=2574.1ms wall=2.8124s
+2026-10-16T20:34:05.212+00:00 PASS mmq rep1-small prefill=689.1ms wall=0.9010s
+2026-10-16T20:34:06.738+00:00 PASS mmq rep1-medium prefill=1239.4ms wall=1.4529s
+2026-10-16T20:34:09.361+00:00 PASS mmq rep1-large prefill=2349.9ms wall=2.5586s
+2026-10-16T20:34:10.302+00:00 PASS mmq rep2-small prefill=670.6ms wall=0.8776s
+2026-10-16T20:34:11.808+00:00 PASS mmq rep2-medium prefill=1230.1ms wall=1.4385s
+2026-10-16T20:34:14.447+00:00 PASS mmq rep2-large prefill=2362.6ms wall=2.5728s
+2026-10-16T20:34:15.391+00:00 PASS mmq rep3-small prefill=668.1ms wall=0.8736s
+2026-10-16T20:34:16.910+00:00 PASS mmq rep3-medium prefill=1238.6ms wall=1.4481s
+2026-10-16T20:34:19.559+00:00 PASS mmq rep3-large prefill=2366.3ms wall=2.5772s
