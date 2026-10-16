@@ -1,0 +1,11 @@
+COMMAND /tmp/strata-gpu-owned-cuda/strata --pack /home/nikolay/projects/copilot-worktrees/170hx-3090/sibnick-upgraded-succotash/build/pack/ud-q4-k-xl --native /home/nikolay/projects/Strata-data/models/UD-Q4_K_XL/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00001-of-00004.gguf --gpu 1,0 --layer-split 37 --trim-stage-weights --max-context 262144 --kv int8 --mtp /home/nikolay/projects/Strata-data/mtp/rt --spec 2 --prefill 256 --no-prefill-borrow --mmap-experts --gpu-owned-experts --resident-budget-gib 0.001 --expert-profile /home/nikolay/projects/copilot-worktrees/170hx-3090/sibnick-upgraded-succotash/data/expert-profile.bin --ple-io direct --ple-row-cache 1024 --vram-reserve-mib 1024 --vram-reserve-later-mib 1024 --pool-workers 1 --serve --prompt-cache 0 --conversation-cache-min-free-mib 4096
+ENV_OVERRIDES {'STRATA_FILL_AHEAD': '0', 'STRATA_IO_PREFETCH': '0', 'STRATA_PIN_RESERVE_GIB': '4', 'STRATA_REFILL_BLOCKING': '1', 'STRATA_RESIDENT_HEADROOM_GIB': '4', 'STRATA_SPLIT_RING': '96', 'STRATA_STAGE_PIN': '0', 'STRATA_TRACE': '1', 'STRATA_UNBUFFERED_LOAD': '1'} CUDA_VISIBLE_DEVICES=unset
+PROMPT_IDS_SHA256 703319b41b3ae612f36af6f2c9084a8c0228f79f5015e195269f8e0c9024093a tokens 256
+GPU_INITIAL [(0, 23761, 364), (1, 64897, 16)]
+SAMPLE 0.0s host_available=21792202752 gpu(index,free_MiB,used_MiB)=[(0, 23761, 364), (1, 64897, 16)]
+SAMPLE 2.1s host_available=21170122752 gpu(index,free_MiB,used_MiB)=[(0, 23761, 364), (1, 64335, 577)]
+SAMPLE 4.1s host_available=20839141376 gpu(index,free_MiB,used_MiB)=[(0, 23759, 366), (1, 63465, 1447)]
+SAMPLE 6.2s host_available=20797820928 gpu(index,free_MiB,used_MiB)=[(0, 23759, 365), (1, 62265, 2647)]
+SAMPLE 8.2s host_available=20814630912 gpu(index,free_MiB,used_MiB)=[(0, 23758, 366), (1, 61067, 3845)]
+SAMPLE 10.3s host_available=22086672384 gpu(index,free_MiB,used_MiB)=[(0, 23763, 362), (1, 64897, 16)]
+RESULT 1 completed minimum_host_available_bytes 20640002048 minimum_gpu_free_MiB {0: 23758, 1: 61067} elapsed_seconds 10.6
