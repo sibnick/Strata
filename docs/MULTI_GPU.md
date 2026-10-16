@@ -116,6 +116,33 @@ stages' usable bytes, session carve, later-stage weight estimate and profile-ran
 describes that cache-based prediction, not the all-expert-resident rule above; the primary's weight carve is
 zero there because its weights were already loaded. With the variable unset, the default path is unchanged.
 
+## Experimental static GPU ownership
+
+`--gpu-owned-experts` is an opt-in mode for an explicit `--layer-split` across GPUs. Use it with
+`--mmap-experts` and a complete `--expert-profile`. Each device must fit every expert in its assigned layers, in
+addition to the session, prompt buffers and runtime reserve. The engine reports the required and available bytes
+and stops rather than starting with a partial cache. It does not affect the default cache or split behavior.
+
+For example, the K37 split uses CUDA1 first and CUDA0 second on the machine described above:
+
+```sh
+STRATA_UNBUFFERED_LOAD=1 build/strata generate \
+  --gpu 1,0 --serve --layer-split 37 --trim-stage-weights \
+  --mmap-experts --resident-budget-gib 0.001 --gpu-owned-experts \
+  --expert-profile data/expert-profile.bin --prefill 256 --no-prefill-borrow
+```
+
+The profile must rank every `(layer, expert)` pair exactly once. At startup the engine assembles one expert at a
+time into a reusable buffer no larger than the largest expert blob, then uses a blocking host-to-device copy before
+reusing it. Native GGUF expert rows are copied from their original tensor spans into that same buffer. The mode
+does not build the CPU expert complement or use the ordinary growing blob-staging pool; mapped files still reserve
+virtual address space, and the OS file cache and other runtime allocations are not hard-bounded by
+`--resident-budget-gib`.
+
+Prompt buffers remain separately allocated for the session. Prompt cache loans, head-aliasing, adaptive swaps,
+elastic cache resizing, automatic splits, and peer/remote expert caches are not supported in this mode. The
+runtime checks every expert slot after filling each device and does not continue if any assigned layer is missing.
+
 ## Using it
 
 **Nothing to type.** `START-HERE.bat` (Linux: `./setup.sh`) lists your NVIDIA cards and says for each one whether

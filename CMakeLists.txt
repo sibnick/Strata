@@ -280,6 +280,11 @@ if(STRATA_BUILD_TESTS)
   target_include_directories(split_rules_test PRIVATE include)
   add_test(NAME split_rules_test COMMAND split_rules_test)
 
+  # static whole-layer GPU ownership: full profile coverage, exact mixed-size capacity and slot ownership (no GPU)
+  add_executable(gpu_ownership_test tests/program/gpu_ownership_test.cpp)
+  target_include_directories(gpu_ownership_test PRIVATE include)
+  add_test(NAME gpu_ownership_test COMMAND gpu_ownership_test)
+
   # the default CPU prefill share is not armed when every expert is resident (#1595): header-only rule, no GPU
   add_executable(share_rules_test tests/prefill/share_rules_test.cpp)
   target_include_directories(share_rules_test PRIVATE include)
