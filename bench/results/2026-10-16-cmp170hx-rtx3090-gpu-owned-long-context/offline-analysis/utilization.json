@@ -1,0 +1,552 @@
+{
+  "completed_prefill": {
+    "128k": {
+      "gpu": {
+        "0": {
+          "name": "NVIDIA GeForce RTX 3090",
+          "power_w": {
+            "maximum": 195.85,
+            "mean": 172.086,
+            "median": 170.975,
+            "minimum": 154.58,
+            "sample_count": 370
+          },
+          "samples_at_or_above_90_percent": 57,
+          "samples_at_or_below_20_percent": 231,
+          "utilization_percent": {
+            "maximum": 100,
+            "mean": 35.662,
+            "median": 16.0,
+            "minimum": 0,
+            "sample_count": 370
+          }
+        },
+        "1": {
+          "name": "NVIDIA CMP 170HX",
+          "power_w": {
+            "maximum": 182.78,
+            "mean": 169.701,
+            "median": 170.135,
+            "minimum": 137.59,
+            "sample_count": 370
+          },
+          "samples_at_or_above_90_percent": 370,
+          "samples_at_or_below_20_percent": 0,
+          "utilization_percent": {
+            "maximum": 99,
+            "mean": 97.851,
+            "median": 99.0,
+            "minimum": 91,
+            "sample_count": 370
+          }
+        }
+      },
+      "input_tokens": 131094,
+      "pcie": {
+        "0": {
+          "rx_mb_s": {
+            "maximum": 1108.0,
+            "mean": 94.344,
+            "median": 33.0,
+            "minimum": 0.0,
+            "sample_count": 363
+          },
+          "tx_mb_s": {
+            "maximum": 3058.0,
+            "mean": 2128.165,
+            "median": 2047.0,
+            "minimum": 0.0,
+            "sample_count": 363
+          }
+        },
+        "1": {
+          "rx_mb_s": {
+            "maximum": 243.0,
+            "mean": 121.397,
+            "median": 120.0,
+            "minimum": 68.0,
+            "sample_count": 363
+          },
+          "tx_mb_s": {
+            "maximum": 579.0,
+            "mean": 39.711,
+            "median": 24.0,
+            "minimum": 18.0,
+            "sample_count": 363
+          }
+        }
+      },
+      "prefill_tokens_per_second": 328.1891317110051
+    },
+    "32k": {
+      "gpu": {
+        "0": {
+          "name": "NVIDIA GeForce RTX 3090",
+          "power_w": {
+            "maximum": 192.22,
+            "mean": 175.076,
+            "median": 176.87,
+            "minimum": 156.23,
+            "sample_count": 84
+          },
+          "samples_at_or_above_90_percent": 19,
+          "samples_at_or_below_20_percent": 51,
+          "utilization_percent": {
+            "maximum": 100,
+            "mean": 40.155,
+            "median": 16.0,
+            "minimum": 11,
+            "sample_count": 84
+          }
+        },
+        "1": {
+          "name": "NVIDIA CMP 170HX",
+          "power_w": {
+            "maximum": 172.59,
+            "mean": 162.296,
+            "median": 163.19,
+            "minimum": 139.99,
+            "sample_count": 84
+          },
+          "samples_at_or_above_90_percent": 84,
+          "samples_at_or_below_20_percent": 0,
+          "utilization_percent": {
+            "maximum": 99,
+            "mean": 97.369,
+            "median": 98.0,
+            "minimum": 91,
+            "sample_count": 84
+          }
+        }
+      },
+      "input_tokens": 32788,
+      "pcie": {
+        "0": {
+          "rx_mb_s": {
+            "maximum": 698.0,
+            "mean": 106.157,
+            "median": 33.0,
+            "minimum": 20.0,
+            "sample_count": 83
+          },
+          "tx_mb_s": {
+            "maximum": 3210.0,
+            "mean": 2322.699,
+            "median": 2090.0,
+            "minimum": 1040.0,
+            "sample_count": 83
+          }
+        },
+        "1": {
+          "rx_mb_s": {
+            "maximum": 252.0,
+            "mean": 117.458,
+            "median": 118.0,
+            "minimum": 48.0,
+            "sample_count": 83
+          },
+          "tx_mb_s": {
+            "maximum": 584.0,
+            "mean": 55.53,
+            "median": 24.0,
+            "minimum": 20.0,
+            "sample_count": 83
+          }
+        }
+      },
+      "prefill_tokens_per_second": 346.0580851551129
+    },
+    "8k": {
+      "gpu": {
+        "0": {
+          "name": "NVIDIA GeForce RTX 3090",
+          "power_w": {
+            "maximum": 189.58,
+            "mean": 169.889,
+            "median": 173.14499999999998,
+            "minimum": 109.61,
+            "sample_count": 18
+          },
+          "samples_at_or_above_90_percent": 1,
+          "samples_at_or_below_20_percent": 11,
+          "utilization_percent": {
+            "maximum": 95,
+            "mean": 33.389,
+            "median": 16.5,
+            "minimum": 11,
+            "sample_count": 18
+          }
+        },
+        "1": {
+          "name": "NVIDIA CMP 170HX",
+          "power_w": {
+            "maximum": 167.39,
+            "mean": 162.533,
+            "median": 163.265,
+            "minimum": 153.06,
+            "sample_count": 18
+          },
+          "samples_at_or_above_90_percent": 18,
+          "samples_at_or_below_20_percent": 0,
+          "utilization_percent": {
+            "maximum": 99,
+            "mean": 97.722,
+            "median": 98.5,
+            "minimum": 94,
+            "sample_count": 18
+          }
+        }
+      },
+      "input_tokens": 8202,
+      "pcie": {
+        "0": {
+          "rx_mb_s": {
+            "maximum": 198.0,
+            "mean": 55.611,
+            "median": 32.5,
+            "minimum": 23.0,
+            "sample_count": 18
+          },
+          "tx_mb_s": {
+            "maximum": 3017.0,
+            "mean": 2432.333,
+            "median": 2162.0,
+            "minimum": 1973.0,
+            "sample_count": 18
+          }
+        },
+        "1": {
+          "rx_mb_s": {
+            "maximum": 240.0,
+            "mean": 128.444,
+            "median": 120.0,
+            "minimum": 65.0,
+            "sample_count": 18
+          },
+          "tx_mb_s": {
+            "maximum": 179.0,
+            "mean": 32.444,
+            "median": 24.0,
+            "minimum": 21.0,
+            "sample_count": 18
+          }
+        }
+      },
+      "prefill_tokens_per_second": 347.78405332519213
+    },
+    "near-max": {
+      "elapsed_time_quarters": [
+        {
+          "gpu": {
+            "0": {
+              "name": "NVIDIA GeForce RTX 3090",
+              "power_w": {
+                "maximum": 193.96,
+                "mean": 173.194,
+                "median": 172.1,
+                "minimum": 153.58,
+                "sample_count": 191
+              },
+              "samples_at_or_above_90_percent": 36,
+              "samples_at_or_below_20_percent": 120,
+              "utilization_percent": {
+                "maximum": 100,
+                "mean": 36.592,
+                "median": 16,
+                "minimum": 0,
+                "sample_count": 191
+              }
+            },
+            "1": {
+              "name": "NVIDIA CMP 170HX",
+              "power_w": {
+                "maximum": 179.25,
+                "mean": 169.822,
+                "median": 170.97,
+                "minimum": 131.75,
+                "sample_count": 191
+              },
+              "samples_at_or_above_90_percent": 191,
+              "samples_at_or_below_20_percent": 0,
+              "utilization_percent": {
+                "maximum": 99,
+                "mean": 97.759,
+                "median": 99,
+                "minimum": 91,
+                "sample_count": 191
+              }
+            }
+          },
+          "quarter": 1
+        },
+        {
+          "gpu": {
+            "0": {
+              "name": "NVIDIA GeForce RTX 3090",
+              "power_w": {
+                "maximum": 194.96,
+                "mean": 171.241,
+                "median": 165.94,
+                "minimum": 155.52,
+                "sample_count": 191
+              },
+              "samples_at_or_above_90_percent": 30,
+              "samples_at_or_below_20_percent": 123,
+              "utilization_percent": {
+                "maximum": 100,
+                "mean": 31.921,
+                "median": 16,
+                "minimum": 0,
+                "sample_count": 191
+              }
+            },
+            "1": {
+              "name": "NVIDIA CMP 170HX",
+              "power_w": {
+                "maximum": 182.59,
+                "mean": 170.815,
+                "median": 171.0,
+                "minimum": 152.1,
+                "sample_count": 191
+              },
+              "samples_at_or_above_90_percent": 191,
+              "samples_at_or_below_20_percent": 0,
+              "utilization_percent": {
+                "maximum": 99,
+                "mean": 97.911,
+                "median": 99,
+                "minimum": 93,
+                "sample_count": 191
+              }
+            }
+          },
+          "quarter": 2
+        },
+        {
+          "gpu": {
+            "0": {
+              "name": "NVIDIA GeForce RTX 3090",
+              "power_w": {
+                "maximum": 195.67,
+                "mean": 171.032,
+                "median": 168.715,
+                "minimum": 155.65,
+                "sample_count": 186
+              },
+              "samples_at_or_above_90_percent": 30,
+              "samples_at_or_below_20_percent": 116,
+              "utilization_percent": {
+                "maximum": 100,
+                "mean": 31.855,
+                "median": 16.0,
+                "minimum": 0,
+                "sample_count": 186
+              }
+            },
+            "1": {
+              "name": "NVIDIA CMP 170HX",
+              "power_w": {
+                "maximum": 186.23,
+                "mean": 172.259,
+                "median": 172.29500000000002,
+                "minimum": 158.7,
+                "sample_count": 186
+              },
+              "samples_at_or_above_90_percent": 186,
+              "samples_at_or_below_20_percent": 0,
+              "utilization_percent": {
+                "maximum": 99,
+                "mean": 97.758,
+                "median": 98.5,
+                "minimum": 93,
+                "sample_count": 186
+              }
+            }
+          },
+          "quarter": 3
+        },
+        {
+          "gpu": {
+            "0": {
+              "name": "NVIDIA GeForce RTX 3090",
+              "power_w": {
+                "maximum": 198.28,
+                "mean": 174.257,
+                "median": 171.45499999999998,
+                "minimum": 160.79,
+                "sample_count": 184
+              },
+              "samples_at_or_above_90_percent": 23,
+              "samples_at_or_below_20_percent": 109,
+              "utilization_percent": {
+                "maximum": 99,
+                "mean": 38.25,
+                "median": 16.0,
+                "minimum": 11,
+                "sample_count": 184
+              }
+            },
+            "1": {
+              "name": "NVIDIA CMP 170HX",
+              "power_w": {
+                "maximum": 194.88,
+                "mean": 176.367,
+                "median": 175.655,
+                "minimum": 157.61,
+                "sample_count": 184
+              },
+              "samples_at_or_above_90_percent": 184,
+              "samples_at_or_below_20_percent": 0,
+              "utilization_percent": {
+                "maximum": 99,
+                "mean": 97.576,
+                "median": 98.0,
+                "minimum": 93,
+                "sample_count": 184
+              }
+            }
+          },
+          "quarter": 4
+        }
+      ],
+      "gpu": {
+        "0": {
+          "name": "NVIDIA GeForce RTX 3090",
+          "power_w": {
+            "maximum": 198.28,
+            "mean": 172.423,
+            "median": 169.56,
+            "minimum": 153.58,
+            "sample_count": 752
+          },
+          "samples_at_or_above_90_percent": 119,
+          "samples_at_or_below_20_percent": 468,
+          "utilization_percent": {
+            "maximum": 100,
+            "mean": 34.64,
+            "median": 16.0,
+            "minimum": 0,
+            "sample_count": 752
+          }
+        },
+        "1": {
+          "name": "NVIDIA CMP 170HX",
+          "power_w": {
+            "maximum": 194.88,
+            "mean": 172.278,
+            "median": 172.38,
+            "minimum": 131.75,
+            "sample_count": 752
+          },
+          "samples_at_or_above_90_percent": 752,
+          "samples_at_or_below_20_percent": 0,
+          "utilization_percent": {
+            "maximum": 99,
+            "mean": 97.753,
+            "median": 99.0,
+            "minimum": 91,
+            "sample_count": 752
+          }
+        }
+      },
+      "input_tokens": 261682,
+      "pcie": {
+        "0": {
+          "rx_mb_s": {
+            "maximum": 2729.0,
+            "mean": 86.981,
+            "median": 30.0,
+            "minimum": 0.0,
+            "sample_count": 751
+          },
+          "tx_mb_s": {
+            "maximum": 3133.0,
+            "mean": 1757.313,
+            "median": 2021.0,
+            "minimum": 0.0,
+            "sample_count": 751
+          }
+        },
+        "1": {
+          "rx_mb_s": {
+            "maximum": 244.0,
+            "mean": 120.561,
+            "median": 120.0,
+            "minimum": 45.0,
+            "sample_count": 751
+          },
+          "tx_mb_s": {
+            "maximum": 580.0,
+            "mean": 38.385,
+            "median": 24.0,
+            "minimum": 18.0,
+            "sample_count": 751
+          }
+        }
+      },
+      "prefill_tokens_per_second": 318.6735837108481
+    }
+  },
+  "input_sha256": {
+    "main-engine.log": "a813dc7276482f951353b0219a9b2888273b4cfe450d8caf40dda6ede3f55631",
+    "main-monitor.jsonl": "6c2fee0776d62b03a9898ec32c6c3dc2a19f7ffef4a383271b3fc65b85eaf00e",
+    "main-pcie.log": "b3ffe1748d67d5667517e72104d62013db724a42466e0f1296746146d32e75e5",
+    "main-results.json": "d483378ee93660e444ab4a862f246779b85506efb3056c3edc7d09818270fb53"
+  },
+  "method": {
+    "decode": "0.389-0.601 seconds; too short for reliable phase attribution at this sampling cadence",
+    "execution": "offline only; no CUDA calls, model startup, or artifact rehash",
+    "gpu_indices": "physical nvidia-smi indices, not command-order CUDA indices",
+    "pcie_units": "MB/s as printed by nvidia-smi dmon; whole-device counters",
+    "prefill_window": "request elapsed [2, TTFT - 2] seconds; approximate phase interior",
+    "statistics": "unweighted sample statistics, not exact device time fractions",
+    "utilization": "whole-device sampled kernel activity, not achieved FLOPs or occupancy"
+  },
+  "sample_intervals_seconds": {
+    "maximum": 1.7930000000000064,
+    "mean": 1.087,
+    "median": 1.0790000000000646,
+    "minimum": 1.0009999999999764,
+    "sample_count": 1549
+  },
+  "startup": {
+    "0": {
+      "name": "NVIDIA GeForce RTX 3090",
+      "power_w": {
+        "maximum": 123.73,
+        "mean": 52.862,
+        "median": 34.49,
+        "minimum": 23.11,
+        "sample_count": 275
+      },
+      "samples_at_or_above_90_percent": 0,
+      "samples_at_or_below_20_percent": 100,
+      "utilization_percent": {
+        "maximum": 54,
+        "mean": 28.218,
+        "median": 36,
+        "minimum": 0,
+        "sample_count": 275
+      }
+    },
+    "1": {
+      "name": "NVIDIA CMP 170HX",
+      "power_w": {
+        "maximum": 57.19,
+        "mean": 44.095,
+        "median": 38.24,
+        "minimum": 31.86,
+        "sample_count": 275
+      },
+      "samples_at_or_above_90_percent": 4,
+      "samples_at_or_below_20_percent": 73,
+      "utilization_percent": {
+        "maximum": 100,
+        "mean": 27.182,
+        "median": 30,
+        "minimum": 0,
+        "sample_count": 275
+      }
+    }
+  }
+}
