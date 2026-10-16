@@ -5159,10 +5159,12 @@ int main(int argc, char** argv) {
     // and gives that cache the difference.  A recommendation to try, so it is not the default.
     auto owned_prefill_mib = [&]() -> int64_t {
         if (!(o.prefill_chunk > 0 && !pf_borrow)) return 0;
-        static const bool exact = [] { const char* v = std::getenv("STRATA_OWNED_PRICE"); return v != nullptr && std::string(v) == "exact"; }();
+        const char* price = std::getenv("STRATA_OWNED_PRICE");
+        const bool exact = o.gpu_owned_experts || (price != nullptr && std::string(price) == "exact");
         if (!exact) return 160 + (o.prefill_chunk * 680) / 1024;
         const int64_t mib = ((int64_t) strata::prefill::Prefill::bytes_needed_owned(g, ss, o.prefill_chunk, srcp != nullptr) + (1 << 20) - 1) >> 20;
-        std::fprintf(stderr, "strata generate: STRATA_OWNED_PRICE=exact: the prompt path's own buffers for a %lld-token chunk: %lld MiB (the 0.1.39 rule: %lld MiB)\n",
+        std::fprintf(stderr, "strata generate: %s: the prompt path's own buffers for a %lld-token chunk: %lld MiB (the 0.1.39 rule: %lld MiB)\n",
+                     o.gpu_owned_experts ? "--gpu-owned-experts exact prefill pricing" : "STRATA_OWNED_PRICE=exact",
                      (long long) o.prefill_chunk, (long long) mib, (long long) (160 + (o.prefill_chunk * 680) / 1024));
         return mib + 64;   // a margin for the allocator
     };
@@ -5473,7 +5475,8 @@ int main(int argc, char** argv) {
                                          : 0;
             const uint64_t reserve =
                 ((uint64_t) std::max<int64_t>(0, o.vram_reserve_mib + prefill_mib) << 20) +
-                (uint64_t) std::max<int64_t>(0, mtp_bind) + (uint64_t) std::max<int64_t>(0, pipe_first);
+                (uint64_t) std::max<int64_t>(0, mtp_bind) + (uint64_t) std::max<int64_t>(0, pipe_first) +
+                ((uint64_t) kWindowMib << 20);
             const uint64_t usable = free_b > reserve ? (uint64_t) free_b - reserve : 0;
             if (required > usable) {
                 std::fprintf(stderr, "strata generate: --gpu-owned-experts: CUDA0 needs %llu bytes for %zu assigned "
@@ -5751,10 +5754,38 @@ int main(int argc, char** argv) {
         const auto& lay = strata::kernels::cpu::expert_layout();
         // the drafter and the head are already allocated by now (they load above, before this), so what is left
         // to hold back is the windows - and `free_b` has already lost the drafter.
-        const int64_t room = stage_room(st.dev, true, false);
+        int64_t room = stage_room(st.dev, true, false);
         const strata::core::OnDevice on(st.dev);
         uint64_t required = 0, required_slots = 0;
         if (o.gpu_owned_experts) {
+            uint64_t extra_reserve = 0;
+            uint64_t exact_prefill_extra = 0;
+            uint64_t mtp_bind_reserve = 0;
+            if (o.prefill_chunk > 0 && !pf_borrow) {
+                const uint64_t owned_bytes = strata::prefill::Prefill::bytes_needed_owned(
+                    g, st.ss, o.prefill_chunk, srcp != nullptr);
+                const uint64_t exact_prefill_reserve =
+                    ((owned_bytes + (1ull << 20) - 1) >> 20) + 64;
+                const uint64_t estimated_prefill_reserve = (uint64_t) std::max<int64_t>(0, split_pf_mib);
+                if (exact_prefill_reserve > estimated_prefill_reserve)
+                    exact_prefill_extra = (exact_prefill_reserve - estimated_prefill_reserve) << 20;
+                extra_reserve += exact_prefill_extra;
+            }
+            if (!mtp_first && stp.get() == last_st && !o.mtp.empty() && st.head.loaded()) {
+                const int64_t bind_bytes = (int64_t) mtp.bind_bytes(st.head.row_bytes(), n_vocab);
+                if (bind_bytes > 0) {
+                    mtp_bind_reserve = (uint64_t) bind_bytes;
+                    extra_reserve += mtp_bind_reserve;
+                }
+            }
+            std::fprintf(stderr, "strata generate: --gpu-owned-experts: CUDA%d adds %llu bytes for exact owned-prefill "
+                                 "scratch and %llu bytes for the MTP bind; the stage reserve already includes "
+                                 "%d MiB for the verifier\n",
+                         st.dev, (unsigned long long) exact_prefill_extra,
+                         (unsigned long long) mtp_bind_reserve, (int) kWindowMib);
+            room = extra_reserve >= (uint64_t) std::max<int64_t>(room, 0)
+                       ? 0
+                       : room - (int64_t) extra_reserve;
             if (!ownership_requirement(st.lb, st.le, required, required_slots)) {
                 std::fprintf(stderr, "strata generate: --gpu-owned-experts: CUDA%d: %s\n", st.dev, err.c_str());
                 return 1;
@@ -5774,8 +5805,8 @@ int main(int argc, char** argv) {
             const uint64_t usable = (uint64_t) std::max<int64_t>(room, 0);
             if (required > usable) {
                 std::fprintf(stderr, "strata generate: --gpu-owned-experts: CUDA%d needs %llu bytes for %zu assigned "
-                                     "experts, but %zu bytes are free (%llu after the stage reserve); refusing partial "
-                                     "ownership\n",
+                                     "experts, but %zu bytes are free (%llu after the stage reserve, exact owned-prefill "
+                                     "scratch and draft binding); refusing partial ownership\n",
                              st.dev, (unsigned long long) required, st.profile.size(), free_b,
                              (unsigned long long) usable);
                 return 1;
