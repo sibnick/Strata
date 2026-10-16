@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import hashlib
 import os
+import re
 import subprocess
 import time
 from pathlib import Path
@@ -18,11 +19,13 @@ MODEL = Path("/home/nikolay/projects/Strata-data/models/UD-Q4_K_XL/UD-Q4_K_XL/"
              "Qwen3.8-Flash-Next-UD-Q4_K_XL-00001-of-00004.gguf")
 MTP = Path("/home/nikolay/projects/Strata-data/mtp/rt")
 PROMPT_IDS = OUT / "prompt.ids"
+RUN_MANIFEST = OUT / "run-manifest.txt"
 GIB = 1 << 30
 HOST_START_FLOOR = int(5.5 * GIB)
 HOST_STOP_FLOOR = 5 * GIB
 GPU_STOP_FLOOR_MIB = 1024
 TIME_LIMIT_SECONDS = 1200
+GENERATE_TOKENS = 64
 
 
 def available_host_bytes() -> int:
@@ -64,7 +67,10 @@ def run_mode(owned: bool, ids: list[int], env: dict[str, str]) -> int:
     ]
     if owned:
         args.append("--gpu-owned-experts")
-    print(f"COMMAND_{name.upper()}", join(args), flush=True)
+    command = join(args)
+    print(f"COMMAND_{name.upper()}", command, flush=True)
+    with RUN_MANIFEST.open("a", encoding="utf-8") as manifest:
+        manifest.write(f"COMMAND_{name.upper()} {command}\n")
     print(f"GPU_INITIAL_{name.upper()}", gpu_memory(), flush=True)
     started = time.monotonic()
     min_host = available_host_bytes()
@@ -77,7 +83,7 @@ def run_mode(owned: bool, ids: list[int], env: dict[str, str]) -> int:
         process = subprocess.Popen(
             args, env=env, stdin=subprocess.PIPE, stdout=log, stderr=subprocess.STDOUT, text=True,
         )
-        process.stdin.write("GEN 64 " + ",".join(map(str, ids)) + "\nQUIT\n")
+        process.stdin.write(f"GEN {GENERATE_TOKENS} " + ",".join(map(str, ids)) + "\nQUIT\n")
         process.stdin.flush()
         process.stdin.close()
         while process.poll() is None:
@@ -157,13 +163,37 @@ def main() -> int:
         STRATA_IO_PREFETCH="0",
         STRATA_REFILL_BLOCKING="1",
     )
-    print("ENGINE_SHA256", hashlib.sha256(ENGINE.read_bytes()).hexdigest(), flush=True)
-    print("PROMPT_IDS_SHA256", hashlib.sha256(PROMPT_IDS.read_bytes()).hexdigest(), flush=True)
-    print("ENV_OVERRIDES", {key: env[key] for key in sorted(env) if key.startswith("STRATA_")},
-          "CUDA_VISIBLE_DEVICES=unset", flush=True)
+    binary_sha = hashlib.sha256(ENGINE.read_bytes()).hexdigest()
+    prompt_sha = hashlib.sha256(PROMPT_IDS.read_bytes()).hexdigest()
+    env_overrides = {key: env[key] for key in sorted(env) if key.startswith("STRATA_")}
+    identity = (f"ENGINE_SHA256 {binary_sha}\nPROMPT_IDS_SHA256 {prompt_sha} tokens {len(ids)}\n"
+                f"ENV_OVERRIDES {env_overrides!r} CUDA_VISIBLE_DEVICES=unset\n"
+                "RUN_ORDER owned_then_flag_off\n"
+                f"GENERATION_CAP {GENERATE_TOKENS}\n"
+                f"HOST_START_FLOOR_BYTES {HOST_START_FLOOR}\n"
+                f"HOST_REACTION_THRESHOLD_BYTES {HOST_STOP_FLOOR}\n"
+                f"GPU_FREE_REACTION_THRESHOLD_MIB {GPU_STOP_FLOOR_MIB}\n"
+                "MONITOR_INTERVAL_SECONDS 2\n"
+                f"TIME_LIMIT_SECONDS {TIME_LIMIT_SECONDS}\n")
+    RUN_MANIFEST.write_text(identity, encoding="utf-8")
+    print(identity, end="", flush=True)
     for owned in (True, False):
         if run_mode(owned, ids, env) != 0:
             return 1
+    generated = {}
+    for name in ("owned", "flag-off"):
+        text = (OUT / f"{name}-engine.txt").read_text(encoding="utf-8", errors="replace")
+        generated[name] = [int(value) for value in re.findall(r"^T (\d+)$", text, re.MULTILINE)]
+    if any(len(values) != GENERATE_TOKENS for values in generated.values()):
+        print("OUTPUT_TOKEN_COUNT_MISMATCH", {name: len(values) for name, values in generated.items()}, flush=True)
+        return 1
+    if generated["owned"] != generated["flag-off"]:
+        print("GENERATED_OUTPUTS_DIFFER", flush=True)
+        return 1
+    (OUT / "generated.ids").write_text(",".join(map(str, generated["owned"])) + "\n", encoding="ascii")
+    with RUN_MANIFEST.open("a", encoding="utf-8") as manifest:
+        manifest.write(f"GENERATED_TOKEN_COUNT {len(generated['owned'])}\n")
+        manifest.write("GENERATED_IDS_IDENTICAL true\n")
     return 0
 
 

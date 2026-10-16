@@ -1,0 +1,16 @@
+source_commit=0327ba279ba50a34894f6aac16e5fe3c21106611
+binary=/tmp/strata-gpu-owned-cuda/strata
+binary_sha256=06a89cd0a9e8725ead0da3b55cc85c4cc11e8d33e4864d2e97b3aeec354ad1eb
+build_directory=/tmp/strata-gpu-owned-cuda
+cmake_cache_sha256=fee6be1a4eefc5da96c3b06f9adceb2f88e1f4b21485ec213c47aac95bce86c7
+build_type=Release
+cuda_compiler=/usr/local/cuda-13.4/bin/nvcc
+cuda_version=13.4.92
+cuda_architectures=80;86
+driver_version=610.43.03
+gpus=CUDA0:CMP_170HX;CUDA1:RTX_3090
+model_artifact_manifest=../2026-10-16-cmp170hx-rtx3090-k37/artifacts.json
+model_artifact_manifest_sha256=de3b5214d60af2709d19baf8deed4f1c89e35006e26023882794437011d2ddd6
+expert_profile_sha256=8f59b4aa8873209dff11c11e37bcda9529a1335b724a1afeea37bf6388975baf
+prompt_token_count=256
+prompt_ids_sha256=f22c0a1e3197ca995477fae9c638c3c8267837b4025f082ae9f320f5724cb042

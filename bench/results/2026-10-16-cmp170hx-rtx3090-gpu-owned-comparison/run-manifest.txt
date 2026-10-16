@@ -1,0 +1,33 @@
+engine_sha256=06a89cd0a9e8725ead0da3b55cc85c4cc11e8d33e4864d2e97b3aeec354ad1eb
+source_commit=0327ba279ba50a34894f6aac16e5fe3c21106611
+prompt_ids_sha256=f22c0a1e3197ca995477fae9c638c3c8267837b4025f082ae9f320f5724cb042
+prompt_token_count=256
+generation_cap=64
+cuda_visible_devices=unset
+
+environment_overrides:
+  STRATA_FILL_AHEAD=0
+  STRATA_IO_PREFETCH=0
+  STRATA_PIN_RESERVE_GIB=4
+  STRATA_REFILL_BLOCKING=1
+  STRATA_RESIDENT_HEADROOM_GIB=4
+  STRATA_SPLIT_RING=96
+  STRATA_STAGE_PIN=0
+  STRATA_TRACE=1
+  STRATA_UNBUFFERED_LOAD=1
+
+command_owned:
+/tmp/strata-gpu-owned-cuda/strata --pack /home/nikolay/projects/copilot-worktrees/170hx-3090/sibnick-upgraded-succotash/build/pack/ud-q4-k-xl --native /home/nikolay/projects/Strata-data/models/UD-Q4_K_XL/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00001-of-00004.gguf --gpu 1,0 --layer-split 37 --trim-stage-weights --max-context 262144 --kv int8 --mtp /home/nikolay/projects/Strata-data/mtp/rt --spec 2 --prefill 256 --no-prefill-borrow --mmap-experts --resident-budget-gib 0.001 --expert-profile /home/nikolay/projects/copilot-worktrees/170hx-3090/sibnick-upgraded-succotash/data/expert-profile.bin --ple-io direct --ple-row-cache 1024 --vram-reserve-mib 1024 --vram-reserve-later-mib 1024 --pool-workers 1 --serve --prompt-cache 0 --conversation-cache-min-free-mib 4096 --gpu-owned-experts
+
+command_flag_off:
+/tmp/strata-gpu-owned-cuda/strata --pack /home/nikolay/projects/copilot-worktrees/170hx-3090/sibnick-upgraded-succotash/build/pack/ud-q4-k-xl --native /home/nikolay/projects/Strata-data/models/UD-Q4_K_XL/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00001-of-00004.gguf --gpu 1,0 --layer-split 37 --trim-stage-weights --max-context 262144 --kv int8 --mtp /home/nikolay/projects/Strata-data/mtp/rt --spec 2 --prefill 256 --no-prefill-borrow --mmap-experts --resident-budget-gib 0.001 --expert-profile /home/nikolay/projects/copilot-worktrees/170hx-3090/sibnick-upgraded-succotash/data/expert-profile.bin --ple-io direct --ple-row-cache 1024 --vram-reserve-mib 1024 --vram-reserve-later-mib 1024 --pool-workers 1 --serve --prompt-cache 0 --conversation-cache-min-free-mib 4096
+
+runner=compare-run.py
+order=owned_then_flag_off
+runner_host_headroom_start_bytes=5.5_GiB
+runner_host_reaction_threshold_bytes=5_GiB
+runner_gpu_free_reaction_threshold=1024_MiB
+runner_monitor_interval=2_seconds
+runner_time_limit=1200_seconds
+output_token_count=64
+output_ids_identical=true
