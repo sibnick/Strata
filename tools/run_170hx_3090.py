@@ -11,6 +11,8 @@ import socket
 import subprocess
 import sys
 import time
+import urllib.error
+import urllib.request
 
 ROOT = Path(__file__).resolve().parents[1]
 BUILD = Path(os.environ.get("STRATA_170HX_BUILD", ROOT / "build/cuda-170hx-3090")).resolve()
@@ -34,6 +36,7 @@ PROMPT_INIT_HEADROOM = 512 * MIB
 PIDFILE = RUNTIME / "api-supervisor.pid"
 CONFIG = RUNTIME / "strata-api.json"
 LOG = RUNTIME / "server.log"
+ENGINE_LOG = RUNTIME / "engine.log"
 stop_signal = None
 
 ENVIRONMENT = {
@@ -113,6 +116,21 @@ def check_paths():
                            "\nSet STRATA_PACK, STRATA_NATIVE, STRATA_MTP, or STRATA_EXPERT_PROFILE as needed.")
 
 
+def validate_engine_flags(help_text):
+    required = ("--prefill-stage-chunks", "--mtp-draft-vocab", "--gpu-owned-experts")
+    missing = [flag for flag in required if flag not in help_text]
+    if missing:
+        raise RuntimeError(
+            f"{engine_path()} is stale or was built without runner options: {', '.join(missing)}. "
+            "Run ./run-170hx-3090.sh build before check or start."
+        )
+
+
+def check_engine_flags():
+    result = run([engine_path(), "--help"], capture=True)
+    validate_engine_flags(result.stdout + result.stderr)
+
+
 def memory_available():
     for line in Path("/proc/meminfo").read_text().splitlines():
         if line.startswith("MemAvailable:"):
@@ -152,6 +170,17 @@ def api_is_listening():
         return probe.connect_ex((HOST, PORT)) == 0
 
 
+def api_health():
+    try:
+        with urllib.request.urlopen(f"http://{HOST}:{PORT}/health", timeout=1) as response:
+            health = json.load(response)
+    except (OSError, ValueError, urllib.error.URLError):
+        return None
+    if not isinstance(health, dict) or health.get("status") != "ok" or health.get("service") != "strata":
+        return None
+    return health
+
+
 def build_config():
     args = [
         "--pack", str(PACK),
@@ -185,6 +214,7 @@ def build_config():
         "args": args,
         "cwd": str(ROOT),
         "tokenizer": str(PACK / "tokenizer"),
+        "log": str(ENGINE_LOG),
         "model_name": "qwen3.8-flash-next-unsloth-ud-q4_k_xl",
         "host": HOST,
         "port": PORT,
@@ -271,6 +301,7 @@ def sizing_admission():
 
 def preflight():
     check_paths()
+    check_engine_flags()
     if memory_available() < HOST_START:
         raise RuntimeError("host MemAvailable is below the required 6 GiB startup threshold")
     if api_is_listening():
@@ -378,12 +409,30 @@ def start():
     )
     log.close()
     PIDFILE.write_text(f"{process.pid}\n")
-    time.sleep(1)
+    time.sleep(2)
     if process.poll() is not None:
         PIDFILE.unlink(missing_ok=True)
-        raise RuntimeError(f"API supervisor exited during startup; inspect {LOG}")
-    print(f"Started K36 API supervisor PID {process.pid}; log: {LOG}")
-    print("The API is loopback-only at http://127.0.0.1:8080.")
+        details = "\n".join(
+            f"--- {path} ---\n{tail_file(path)}"
+            for path in (ENGINE_LOG, LOG) if path.exists()
+        )
+        message = f"API supervisor exited during startup (code {process.returncode})."
+        if details:
+            message += "\n" + details
+        raise RuntimeError(message)
+    health = api_health()
+    if health and health.get("loaded") is True:
+        print(f"K36 API ready at http://{HOST}:{PORT}; supervisor PID {process.pid}; log: {LOG}")
+    else:
+        print(f"K36 startup is still in progress; supervisor PID {process.pid}; log: {LOG}")
+        print("The API is not ready yet. Check with status; readiness requires /health loaded=true.")
+
+
+def tail_file(path, lines=30):
+    try:
+        return "\n".join(Path(path).read_text(encoding="utf-8", errors="replace").splitlines()[-lines:])
+    except OSError as exc:
+        return f"could not read log: {exc}"
 
 
 def stop():
@@ -412,7 +461,13 @@ def status():
         active = False
         pid = ""
     print(f"supervisor: {'running PID ' + pid if active else 'stopped'}")
-    print(f"API port: {'listening' if api_is_listening() else 'unbound'}")
+    health = api_health()
+    if health and health.get("loaded") is True:
+        print(f"API: ready at http://{HOST}:{PORT} (model loaded)")
+    elif health:
+        print(f"API: responding at http://{HOST}:{PORT}, but model is not loaded")
+    else:
+        print("API: not ready (health endpoint unavailable)")
     print(f"host MemAvailable: {memory_available() / GIB:.2f} GiB")
 
 

@@ -213,9 +213,12 @@ draft-vocabulary file passed to inference, requires at least 6 GiB host
 its free VRAM plus the mandatory 512 MiB prompt-init headroom. The ledger
 initializes CUDA and allocates bounded metadata/pinned staging memory; it
 does not load model weights or start inference. Check and startup refuse to
-overlap an existing NVIDIA compute process. `start` repeats admission using
-a fresh snapshot. Runtime config, ledger output, PID and logs stay under the
-ignored build directory.
+overlap an existing NVIDIA compute process. The runner also rejects an engine
+binary missing the recipe's required flags, with an instruction to rebuild it.
+`start` repeats admission using a fresh snapshot. It reports the API ready only after `/health` returns
+`loaded: true`; until then it reports startup in progress. Engine stderr is
+saved separately from the API/supervisor log. Runtime config, ledger output,
+PID and logs stay under the ignored build directory.
 
 The runner keeps discretionary CUDA reserves at 0 MiB, adds no external
 free-VRAM abort, binds only to `127.0.0.1:8080`, and refuses startup below

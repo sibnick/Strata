@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 import importlib.util
+import json
 from pathlib import Path
+from unittest.mock import MagicMock, patch
 import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -29,6 +31,7 @@ class RunnerRecipeTests(unittest.TestCase):
         config = runner.build_config()
         args = config["args"]
         self.assertEqual((config["host"], config["port"]), ("127.0.0.1", 8080))
+        self.assertEqual(config["log"], str(runner.ENGINE_LOG))
         self.assertIn("--serve", args)
         self.assertIn("--gpu-owned-experts", args)
         self.assertIn("--no-prefill-borrow", args)
@@ -37,6 +40,29 @@ class RunnerRecipeTests(unittest.TestCase):
     def test_cyrillic_subset_is_not_an_ngram_switch(self):
         self.assertTrue(runner.DRAFT_VOCAB.is_file())
         self.assertIn("--mtp-draft-vocab", runner.build_config()["args"])
+
+    def test_readiness_requires_a_valid_loaded_health_response(self):
+        response = MagicMock()
+        response.read.return_value = json.dumps({
+            "status": "ok", "service": "strata", "loaded": True,
+        }).encode()
+        response.__enter__.return_value = response
+        with patch.object(runner.urllib.request, "urlopen", return_value=response) as urlopen:
+            self.assertTrue(runner.api_health()["loaded"])
+        urlopen.assert_called_once_with("http://127.0.0.1:8080/health", timeout=1)
+
+        response.read.return_value = json.dumps({
+            "status": "ok", "service": "strata", "loaded": False,
+        }).encode()
+        with patch.object(runner.urllib.request, "urlopen", return_value=response):
+            self.assertFalse(runner.api_health()["loaded"])
+
+        with patch.object(runner.urllib.request, "urlopen", side_effect=OSError("not listening")):
+            self.assertIsNone(runner.api_health())
+
+    def test_stale_engine_help_is_rejected_before_startup(self):
+        with self.assertRaisesRegex(RuntimeError, "Run ./run-170hx-3090.sh build"):
+            runner.validate_engine_flags("--gpu-owned-experts")
 
 
 if __name__ == "__main__":
