@@ -1,0 +1,23 @@
+{
+  "compute_processes": "",
+  "engine_and_pcie_pids": {
+    "256": {
+      "806067": false,
+      "806065": false
+    },
+    "384": {
+      "815480": false,
+      "815478": false
+    },
+    "512": {
+      "824153": false,
+      "824151": false
+    },
+    "256-bracket": {
+      "833011": false,
+      "833009": false
+    }
+  },
+  "gpu_state": "0, GPU-01f295eb-2ee0-838a-ba5b-db97f075a5f7, 24096 MiB, 300.00 W\n1, GPU-79d96de3-4783-ba96-d95c-fe5e0364528e, 64897 MiB, 250.00 W\n",
+  "runtime_diff": ""
+}
