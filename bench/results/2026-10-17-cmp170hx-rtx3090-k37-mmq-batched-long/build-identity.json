@@ -1,0 +1,15 @@
+{
+  "backends": "CUDA SM80+86 unchanged; no new backend build or kernel/source edits. HIP/SYCL not validated.",
+  "build_identity_reference": "bench/results/2026-10-17-cmp170hx-rtx3090-k37-mmq-batched-gather/build-identity.json",
+  "candidate_hashes": {
+    "CMakeLists.txt": "28a206ac64b9b7ef06146c03cf9c6351dd199678ae9525e7c5aa0eb0b16d4bc6",
+    "build/cuda-batched/CMakeCache.txt": "ed24afeaea0eba2df5cddb447d4c598eecaf5a5e3d9aa58d8de4d0bc296437f4",
+    "build/cuda-batched/libstrata_kq.so": "3ba4cc2c791be319e5c010965b95c75443fb52194b52ea28c43c1fd8397335a0",
+    "build/cuda-batched/strata": "aba34837fe52effa15450a85a82d6cde9af6a55c7866361ecd1f49099a5f6af9",
+    "src/prefill/prefill.cpp": "d85eca64d947b85bda090e6a894d7267834847d3507d6f664f677631ec36c729"
+  },
+  "kq_sass_identity_reference": "bench/results/2026-10-17-cmp170hx-rtx3090-k37-mmq-batched-gather/kq-sass-identity.json",
+  "rebuild": "None. Reusing unchanged successful batching binary, DSO and CMake cache from97b83332 short validation.",
+  "runtime_source_diff_since_97b83332": "",
+  "source_commit": "97b833328d9fe22036467f09a05f784f35c90ef2"
+}

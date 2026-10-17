@@ -1,0 +1,85 @@
+{
+  "files": [
+    {
+      "bytes": 151339,
+      "path_relative_to_results": "2026-10-16-cmp170hx-rtx3090-gpu-owned-long-context/prompts/32k.txt",
+      "sha256": "bccff648b9ba7d921cce44468f43377e02b6ed683ed1cd5e63c1b9fa2643085a"
+    },
+    {
+      "bytes": 146173,
+      "path_relative_to_results": "2026-10-16-cmp170hx-rtx3090-gpu-owned-long-context/prompts/32k.ids",
+      "sha256": "48619c77cba7b5b9aff070dd990675453a327c4bf25a8637bfae195ecfc454a7"
+    },
+    {
+      "bytes": 612,
+      "path_relative_to_results": "2026-10-16-cmp170hx-rtx3090-gpu-owned-long-context/prompts/32k.json",
+      "sha256": "1809c2e36d8b16afccc7d9bb172c305034a846ef39c7cfbef52ddf4375e19eb6"
+    },
+    {
+      "bytes": 1211942,
+      "path_relative_to_results": "2026-10-16-cmp170hx-rtx3090-gpu-owned-long-context/prompts/near-max.txt",
+      "sha256": "8db9a83cb46c0210d696a34cba7d962a5fd2249918dab72a148515598ef69505"
+    },
+    {
+      "bytes": 1166616,
+      "path_relative_to_results": "2026-10-16-cmp170hx-rtx3090-gpu-owned-long-context/prompts/near-max.ids",
+      "sha256": "67a876781b4fde7323b1b340a5e55700acb3f6741dc19d953d32229c42cf55ed"
+    },
+    {
+      "bytes": 623,
+      "path_relative_to_results": "2026-10-16-cmp170hx-rtx3090-gpu-owned-long-context/prompts/near-max.json",
+      "sha256": "791c43b0a60ef52479b063cd98d93e90cbd958751ffd38312555235c8567ff97"
+    },
+    {
+      "bytes": 24131,
+      "path_relative_to_results": "2026-10-16-cmp170hx-rtx3090-k37-mmq-long-context/mmq/results.json",
+      "sha256": "f681169a7dc0db5c0ad18d455e69a9377602ddd176604a7c4ed2f5f6ce2f15de"
+    },
+    {
+      "bytes": 1795,
+      "path_relative_to_results": "2026-10-16-cmp170hx-rtx3090-k37-mmq-long-context/prompt-references.json",
+      "sha256": "dc7b1858392bb0b4b137cdf1cd67fd3a353351a364d55a6801d1adb1c4021156"
+    },
+    {
+      "bytes": 14522,
+      "path_relative_to_results": "2026-10-16-cmp170hx-rtx3090-k37-mmq-long-context/run-long.py",
+      "sha256": "4fb1a523a5e3e3f5018ba09c66abc35753cb2db0778f348b76a0a97b36512c99"
+    },
+    {
+      "bytes": 14337,
+      "path_relative_to_results": "2026-10-17-cmp170hx-rtx3090-k37-mmq-batched-gather/run.py",
+      "sha256": "fc12d91471185b87b287366611b1d736f00e8b9bdf066e617a3f945871a31a70"
+    },
+    {
+      "bytes": 3356,
+      "path_relative_to_results": "2026-10-17-cmp170hx-rtx3090-k37-mmq-batched-gather/build-identity.json",
+      "sha256": "74b1f9160516bfbfe4bfa8104b71d8b0b3dc9de5fa5f9c52296c478f18855bdf"
+    },
+    {
+      "bytes": 1076,
+      "path_relative_to_results": "2026-10-17-cmp170hx-rtx3090-k37-mmq-batched-gather/kq-sass-identity.json",
+      "sha256": "f4d736570cb2b9d41aebaf0fef6fd65b889eb058094eba56cec114ba366f9604"
+    },
+    {
+      "bytes": 8859,
+      "path_relative_to_results": "2026-10-16-cmp170hx-rtx3090-mmq-640/prompts/large.ids",
+      "sha256": "953be64023898d51c4e513b40fefb66721ed2c643a7c18713c15edc81d4c014f"
+    },
+    {
+      "bytes": 569,
+      "path_relative_to_results": "2026-10-16-cmp170hx-rtx3090-mmq-640/prompts/large.json",
+      "sha256": "62e47daae4800429cc0afe375773618f40405d97ecf025c264d56d8b5937f059"
+    },
+    {
+      "bytes": 9087,
+      "path_relative_to_results": "2026-10-16-cmp170hx-rtx3090-mmq-640/prompts/large.txt",
+      "sha256": "8ce357f78ed31b52c8f8cb7862408b2d411004f0d3a4bf34f2d05968faad17d0"
+    }
+  ],
+  "historical_results": {
+    "path_relative_to_results": "2026-10-16-cmp170hx-rtx3090-gpu-owned-long-context/main-results.json",
+    "sha256": "d483378ee93660e444ab4a862f246779b85506efb3056c3edc7d09818270fb53"
+  },
+  "note": "Original committed fixtures and prior helper/build evidence reused read-only, no regeneration; raw ID file and text file hashes are distinguished from metadata prompt_text_sha256 (text without trailing newline).",
+  "original_evidence_commit": "9c3c0c25c88a0fe0a403d00a03956989540ffa0c"
+}
