@@ -325,16 +325,27 @@ guard terminated the profiled process. The request did not report completion,
 generated IDs were unavailable, and no Nsight Compute report was finalized;
 there are no usable kernel metrics or parity result from this attempt.
 Minimum sampled free VRAM was 257 MiB on the RTX 3090 and 255 MiB on the CMP.
-The observed host-memory decline during the request is unexplained; the run
-did not distinguish file-backed residency from profiler/runtime allocations,
-and no disk cache was flushed. Nsight Compute warned that GPU caches were
-uncontrolled. This is not evidence that NCU itself caused the host-memory
-decline.
+The saved samples do not attribute the host-memory decline to a process:
+the harness recorded only aggregate `MemAvailable`, not per-process RSS/PSS,
+and no disk cache was flushed. The installed Nsight Compute 2026.3.1
+Profiling Guide says kernel replay saves all GPU memory accessible to the
+selected kernel and may spill that snapshot to CPU host memory when device
+memory is insufficient. The sharp host decline coincided with the profiled
+request, when free device memory was already close to the admission floor.
+That makes profiler replay spill a plausible explanation, not a proven cause.
+Nsight Compute also warned that GPU caches were uncontrolled because cache
+flushing was disabled. Do not repeat this kernel-replay capture unchanged.
+
+Application replay avoids kernel memory save/restore, but reruns the full
+application for every profiling pass. In this setup that entails reloading
+the model and reissuing the request, so it is not a safe substitute without
+a separately bounded admission plan and host-process telemetry.
 
 Cleanup was verified: no inference, Nsight, or API process remained, and
 `127.0.0.1:8080` stayed unbound. The failed capture metadata, monitor samples,
 and sanitized profiler log are retained in
 `gpu-utilization-capture-ncu-cmp-sm80/`; no prompt or response text was saved.
-The next step is to explain the request-time host-memory decline from existing
-non-invasive records before considering another model load. In particular,
-do not lower the host stop threshold or retry the capture unchanged.
+The next step, if profiling continues, is a telemetry-only harness revision
+that records per-process RSS/PSS and relevant host memory counters before any
+new model load. Keep the 5 GiB stop threshold; do not retry kernel replay
+unchanged or switch to full-application replay without a separate memory plan.
