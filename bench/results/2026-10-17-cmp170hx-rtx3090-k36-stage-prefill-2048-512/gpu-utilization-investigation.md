@@ -149,6 +149,30 @@ Minimum sampled free VRAM was 296,747,008 bytes (283 MiB) on the RTX and
 15.0 GiB. Startup admission passed, including the 512 MiB prompt-init
 headroom. The engine and monitor exited with no remaining compute process.
 
+### Bounded CUDA timeline attempt
+
+After the separately approved exclusive pause, Nsight Systems 2026.3.2 traced
+one fresh request using the exact historical 1,977-token fixture, cap 32, and
+unchanged K36 2048/512 runtime. The request completed in 1,673.1 ms prefill
+and 250.2 ms decode, with MTP accepting 9 of 12 proposals. All 22 generated
+token IDs were compared offline with the historical fixture and matched
+exactly. Only the prompt-ID hash was retained; the temporary output-ID file
+was removed after comparison.
+
+Nsight stopped collection but remained in report generation beyond the
+120-second wait. No `.nsys-rep` or SQLite timeline was produced, so this
+attempt does not separate CUDA kernels, CPU launch gaps, copies, or stage
+waits, and it supports no optimization choice or speedup claim. It was not
+rerun. The sampled minimum free memory was 277,872,640 bytes (265 MiB) on
+physical GPU 0 (RTX 3090), 1,685,061,632 bytes (1,607 MiB) on physical GPU 1
+(CMP 170HX), and 13,432,557,568 bytes (12.51 GiB) host `MemAvailable`. The
+capture session and its orphaned Nsight agent were cleared. The ordinary API
+was restored using `api/start-api.sh` and verified loaded/healthy at
+`127.0.0.1:8080`; it remains on the tested K36 configuration. The timeline
+harness now restores the API in its cleanup path and records cleanup errors,
+but a future profile still needs a bounded way to complete Nsight report
+finalization on this host.
+
 ## Decision and ranked follow-up
 
 1. If further work is approved, enable `--stats` to capture the reader's
