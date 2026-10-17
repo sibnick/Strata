@@ -18,7 +18,7 @@ from urllib.request import urlopen
 OUT = Path(__file__).resolve().parent
 ROOT = OUT.parents[2]
 CONFIG = OUT / "api/strata-api.json"
-CAPTURE = OUT / "gpu-utilization-capture-ncu-cmp-sm80"
+CAPTURE = OUT / "gpu-utilization-capture-ncu-cmp-sm80-1gib"
 PRIOR_CAPTURE = OUT / "gpu-utilization-capture-cuda-timeline-cmp-sm80/capture.json"
 PROXY = OUT / "nsys_engine_proxy.py"
 SHORT_RUN = OUT.parent / "2026-10-17-cmp170hx-rtx3090-k37-mmq-batched-gather/run.py"
@@ -27,6 +27,7 @@ TOKEN_COUNT = 1977
 OUTPUT_CAP = 32
 GIB = 1 << 30
 MIB = 1 << 20
+HOST_LIMIT_BYTES = GIB
 METRICS = (
     "gpu__time_duration.avg,"
     "sm__throughput.avg.pct_of_peak_sustained_elapsed,"
@@ -46,6 +47,72 @@ def mem_available():
         if line.startswith("MemAvailable:"):
             return int(line.split()[1]) * 1024
     raise RuntimeError("MemAvailable is missing")
+
+
+def host_memory_snapshot():
+    fields = {
+        "MemAvailable": "mem_available_bytes",
+        "MemFree": "mem_free_bytes",
+        "Cached": "cached_bytes",
+        "Buffers": "buffers_bytes",
+        "Slab": "slab_bytes",
+        "SReclaimable": "sreclaimable_bytes",
+        "PageTables": "page_tables_bytes",
+        "Unevictable": "unevictable_bytes",
+    }
+    result = {}
+    for line in Path("/proc/meminfo").read_text().splitlines():
+        key, _, value = line.partition(":")
+        if key in fields:
+            result[fields[key]] = int(value.strip().split()[0]) * 1024
+    if "mem_available_bytes" not in result:
+        raise RuntimeError("MemAvailable is missing")
+    return result
+
+
+def process_tree(root_pid):
+    children = {}
+    for entry in Path("/proc").iterdir():
+        if not entry.name.isdigit():
+            continue
+        try:
+            stat = entry.joinpath("stat").read_text()
+            fields = stat[stat.rfind(")") + 2:].split()
+            children.setdefault(int(fields[1]), []).append(int(entry.name))
+        except (FileNotFoundError, ProcessLookupError, PermissionError, ValueError, IndexError):
+            continue
+    result, pending = [], [root_pid]
+    while pending:
+        parent = pending.pop()
+        result.append(parent)
+        pending.extend(children.get(parent, []))
+    return result
+
+
+def process_memory_snapshot(root_pid):
+    snapshot = {}
+    for pid in process_tree(root_pid):
+        base = Path(f"/proc/{pid}")
+        try:
+            status = base.joinpath("status").read_text()
+            cmdline = base.joinpath("cmdline").read_bytes().replace(b"\0", b" ").decode(
+                errors="replace"
+            ).strip()
+            rss = next(
+                int(line.split()[1]) * 1024
+                for line in status.splitlines() if line.startswith("VmRSS:")
+            )
+            pss = None
+            for line in base.joinpath("smaps_rollup").read_text().splitlines():
+                if line.startswith("Pss:"):
+                    pss = int(line.split()[1]) * 1024
+                    break
+            snapshot[str(pid)] = {
+                "cmdline": cmdline[:240], "rss_bytes": rss, "pss_bytes": pss,
+            }
+        except (FileNotFoundError, ProcessLookupError, PermissionError, StopIteration, ValueError):
+            continue
+    return snapshot
 
 
 def sha256_file(path):
@@ -135,8 +202,8 @@ def main():
         raise RuntimeError(f"Nsight Compute is unavailable: {NCU}")
     if api_is_listening():
         raise RuntimeError("port 8080 is active; this capture never stops or restarts the API")
-    if mem_available() < 6 * GIB:
-        raise RuntimeError("host MemAvailable is below the 6 GiB startup threshold")
+    if mem_available() < HOST_LIMIT_BYTES:
+        raise RuntimeError("host MemAvailable is below the 1 GiB startup threshold")
     active = compute_processes()
     if active:
         raise RuntimeError(f"GPU compute process exists; refusing to overlap: {active}")
@@ -192,7 +259,7 @@ def main():
             raise RuntimeError(f"physical GPU {physical} fails mandatory prompt-init admission")
 
     prompt, expected_ids, reference = load_fixture()
-    if mem_available() < 6 * GIB or compute_processes():
+    if mem_available() < HOST_LIMIT_BYTES or compute_processes():
         raise RuntimeError("fresh host/CUDA admission changed while preparing the fixture")
     CAPTURE.mkdir()
     config_path = CAPTURE / "engine-config.json"
@@ -246,12 +313,12 @@ def main():
         },
         "memory_policy": {
             "engine_reserves_mib": [0, 0], "external_gpu_free_abort": False,
-            "host_start_gib": 6, "host_stop_gib": 5,
+            "host_start_gib": 1, "host_stop_gib": 1,
             "mandatory_cuda_admission": True, "mandatory_prompt_init_headroom_mib": 512,
             "cache_flush": False,
         },
         "admission": admission,
-        "initial_host_memavailable_bytes": mem_available(),
+        "initial_host_memory": host_memory_snapshot(),
         "initial_gpu_memory": initial_gpu,
         "timestamps": {},
         "request_result": None,
@@ -281,13 +348,14 @@ def main():
         gpu = gpu_rows()
         row = {
             "utc": utc_now(), "elapsed_seconds": now - start, "phase": phase,
-            "mem_available_bytes": mem_available(),
+            "host_memory": host_memory_snapshot(),
             "gpu_free_bytes": {str(i): gpu[i]["free_bytes"] for i in (0, 1)},
             "engine_pid": engine_pid,
+            "process_memory": process_memory_snapshot(os.getpid()),
         }
         monitor.append(row)
-        if row["mem_available_bytes"] < 5 * GIB:
-            raise RuntimeError("host MemAvailable fell below the 5 GiB stop threshold")
+        if row["host_memory"]["mem_available_bytes"] < HOST_LIMIT_BYTES:
+            raise RuntimeError("host MemAvailable fell below the 1 GiB stop threshold")
 
     try:
         with log_path.open("w", buffering=1) as log:
@@ -378,8 +446,8 @@ def main():
                 pass
         result["finished_utc"] = utc_now()
         result["min_host_memavailable_bytes"] = min(
-            (row["mem_available_bytes"] for row in monitor),
-            default=mem_available(),
+            (row["host_memory"]["mem_available_bytes"] for row in monitor),
+            default=host_memory_snapshot()["mem_available_bytes"],
         )
         result["min_gpu_free_bytes"] = {
             str(i): min((row["gpu_free_bytes"][str(i)] for row in monitor),

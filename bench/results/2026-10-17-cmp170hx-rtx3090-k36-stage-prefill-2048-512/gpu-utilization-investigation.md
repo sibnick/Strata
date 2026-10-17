@@ -302,39 +302,51 @@ this capture.
 **Decision:** no optimization was implemented. The trace prioritizes CMP MMQ
 over launch-overhead reduction, but does not select a specific
 `mul_mat_q` tile; several tile variants contribute, and the graph decode path
-has no kernel-node detail. A bounded Nsight Compute follow-up was attempted;
-the host stop guard interrupted it during the short request before any kernel
-metrics or exact-output check were available. No optimization is supported by
-that incomplete attempt. Do not tune the RTX, change PLE, or claim 100%
-simultaneous utilization from these captures.
+has no kernel-node detail. A bounded Nsight Compute follow-up was attempted. The first attempt used the
+previous 6/5 GiB host start/stop thresholds and stopped during the request.
+After the user explicitly authorized replacing both thresholds with 1 GiB, a
+second attempt added per-process RSS/PSS and host-memory telemetry; its 1 GiB
+stop guard also interrupted the request before any kernel metrics or
+exact-output check were available. No optimization is supported by either
+incomplete attempt. Do not tune the RTX, change PLE, or claim 100% simultaneous
+utilization from these captures.
 
 ### Bounded Nsight Compute attempt
 
 After the Intel-only measurement reservation was released, a standalone
-Nsight Compute attempt targeted one CMP CUDA-device-0 launch of the prominent
-Q4_K `mul_mat_q<(ggml_type)12, (int)128, ...>` variant from the exact tested
-K36 2048/512 binary. It used the historical 1,977-token fixture, cap 32,
-unchanged PLE/cache settings, 0 MiB engine reserves, no external GPU-free
-abort, mandatory CUDA admission and 512 MiB prompt-init headroom, and host
-start/stop thresholds of 6/5 GiB. The API remained stopped throughout.
+Nsight Compute attempt targeted one CMP CUDA-device-0 launch of
+the prominent Q4_K `mul_mat_q<(ggml_type)12, (int)128, ...>` variant from the
+exact tested K36 2048/512 binary. It used the historical 1,977-token fixture,
+cap 32, unchanged PLE/cache settings, 0 MiB engine reserves, no external
+GPU-free abort, mandatory CUDA admission and 512 MiB prompt-init headroom,
+and user-authorized 1 GiB host start/stop thresholds. The API remained stopped
+throughout.
 
 The engine loaded and reported `READY`; the fixture request was then sent.
-`MemAvailable` fell from 12.29 GiB at request start to 7.16 GiB and then
-3.72 GiB over the next three one-second samples. The required 5 GiB stop
-guard terminated the profiled process. The request did not report completion,
-generated IDs were unavailable, and no Nsight Compute report was finalized;
-there are no usable kernel metrics or parity result from this attempt.
-Minimum sampled free VRAM was 257 MiB on the RTX 3090 and 255 MiB on the CMP.
-The saved samples do not attribute the host-memory decline to a process:
-the harness recorded only aggregate `MemAvailable`, not per-process RSS/PSS,
-and no disk cache was flushed. The installed Nsight Compute 2026.3.1
-Profiling Guide says kernel replay saves all GPU memory accessible to the
-selected kernel and may spill that snapshot to CPU host memory when device
-memory is insufficient. The sharp host decline coincided with the profiled
-request, when free device memory was already close to the admission floor.
-That makes profiler replay spill a plausible explanation, not a proven cause.
-Nsight Compute also warned that GPU caches were uncontrolled because cache
-flushing was disabled. Do not repeat this kernel-replay capture unchanged.
+The added process telemetry showed `MemAvailable` at 13.32 GiB at request
+start, then 9.82, 7.53, 7.46, 5.03, 1.10, 1.80, and 0.80 GiB over subsequent
+one-second samples. The 1 GiB stop guard terminated the profiler at the last
+sample. The request did not report completion, generated IDs were unavailable,
+and no Nsight Compute report was finalized; there are no usable kernel metrics
+or parity result. Minimum sampled free VRAM was 257 MiB on the RTX 3090 and
+255 MiB on the CMP.
+
+During the request, the target engine's PSS grew from about 5.5 GiB at request
+start to 24.3 GiB at the last sample. The Nsight Compute process PSS remained
+below 0.2 GiB. System `Cached` rose from about 11.8 to 22.0 GiB. This narrows
+the observation to memory charged to the profiled target and/or shared mapped
+pages, but does not distinguish normal application mappings from
+profiler-managed mappings inside the target. It also does not establish that
+the OS page cache caused the increase. No disk cache was flushed.
+
+The installed Nsight Compute 2026.3.1 Profiling Guide says kernel replay saves
+all GPU memory accessible to the selected kernel and may spill that snapshot
+to CPU host memory when device memory is insufficient. This remains a
+possible contributor, but the small Nsight process PSS means the saved
+telemetry cannot attribute the bulk growth to the profiler process itself.
+Nsight Compute warned that GPU caches were uncontrolled because cache
+flushing was disabled. Do not repeat kernel replay unchanged or reduce the
+1 GiB guard further.
 
 Application replay avoids kernel memory save/restore, but reruns the full
 application for every profiling pass. In this setup that entails reloading
@@ -344,8 +356,12 @@ a separately bounded admission plan and host-process telemetry.
 Cleanup was verified: no inference, Nsight, or API process remained, and
 `127.0.0.1:8080` stayed unbound. The failed capture metadata, monitor samples,
 and sanitized profiler log are retained in
-`gpu-utilization-capture-ncu-cmp-sm80/`; no prompt or response text was saved.
-The next step, if profiling continues, is a telemetry-only harness revision
-that records per-process RSS/PSS and relevant host memory counters before any
-new model load. Keep the 5 GiB stop threshold; do not retry kernel replay
-unchanged or switch to full-application replay without a separate memory plan.
+`gpu-utilization-capture-ncu-cmp-sm80/` and
+`gpu-utilization-capture-ncu-cmp-sm80-1gib/`; no prompt or response text was
+saved.
+The retry added per-process RSS/PSS and host counters. Before another model
+load, the remaining investigation is to identify the target process mappings
+that grow during request execution, using existing source/log evidence or a
+separate non-inference memory probe. Keep the 1 GiB user-authorized floor; do
+not retry kernel replay unchanged or switch to full-application replay without
+a separate memory plan.
