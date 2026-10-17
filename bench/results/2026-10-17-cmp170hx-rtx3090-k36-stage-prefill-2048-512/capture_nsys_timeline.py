@@ -40,6 +40,21 @@ def mem_available():
     raise RuntimeError("MemAvailable is missing")
 
 
+def sha256_file(path):
+    digest = hashlib.sha256()
+    with Path(path).open("rb") as source:
+        for block in iter(lambda: source.read(1024 * 1024), b""):
+            digest.update(block)
+    return digest.hexdigest()
+
+
+def sha256_git_blob(revision, path):
+    blob = subprocess.check_output(
+        ["git", "show", f"{revision}:{path}"], cwd=ROOT,
+    )
+    return hashlib.sha256(blob).hexdigest()
+
+
 def gpu_rows():
     raw = subprocess.check_output([
         "nvidia-smi", "--query-gpu=index,uuid,name,memory.free",
@@ -236,8 +251,9 @@ def main():
     env.update({str(key): str(value) for key, value in config["env"].items()})
     profiler_command = [
         "nsys", "profile", "--start-later=true", f"--session-new={session}",
-        "--trace=cuda,cublas,osrt", "--sample=process-tree", "--cpuctxsw=process-tree",
-        "--cuda-event-trace=false", "--osrt-threshold=10000", "--stats=true",
+        "--trace=cuda,cublas,osrt", "--sample=none", "--cpuctxsw=process-tree",
+        "--resolve-symbols=false", "--cuda-event-trace=false",
+        "--osrt-threshold=10000", "--stats=false",
         "--show-output=true", "--discard-environment=true", f"--output={profile_output}",
         sys.executable, str(PROXY), "--config", str(sanitized_config),
         "--token-ids-output", str(ids_path),
@@ -266,11 +282,12 @@ def main():
                 ["nsys", "--version"], text=True, stderr=subprocess.STDOUT, timeout=10
             ).strip(),
             "trace": ["cuda", "cublas", "osrt"],
-            "cpu_thread_scheduling": "process-tree", "cpu_sampling": "process-tree",
+            "cpu_thread_scheduling": "process-tree", "cpu_sampling": "none",
+            "resolve_symbols": False,
             "collection_starts_after_model_ready": True,
             "collection_stops_after_done": True,
             "cuda_event_trace": False, "osrt_threshold_ns": 10000,
-            "stats_enabled": True,
+            "stats_enabled": False,
         },
         "request": {
             "fixture": "historical-large", "prompt_tokens": TOKEN_COUNT,
@@ -289,6 +306,27 @@ def main():
         "initial_gpu_memory": initial_gpu,
         "timestamps": {}, "request_result": None,
         "engine_pid": None, "profile_cli_pid": None,
+    }
+    source_revision_premerge = subprocess.check_output(
+        ["git", "rev-parse", "HEAD^1"], cwd=ROOT, text=True,
+    ).strip()
+    tested_baseline = subprocess.check_output(
+        ["git", "rev-parse", "ef991b2f"], cwd=ROOT, text=True,
+    ).strip()
+    source_paths = (
+        "src/prefill/prefill.cpp", "src/prefill/moe_mmq.cu",
+        "src/program/generate.cpp", "src/program/split_memory_ledger.cpp",
+    )
+    result["capture_identity"] = {
+        "source_revision_premerge": source_revision_premerge,
+        "preserved_tested_baseline": tested_baseline,
+        "engine_sha256": sha256_file(config["exe"]),
+        "kquant_library_sha256": sha256_file(ROOT / "build/cuda-per-stage/libstrata_kq.so"),
+        "source_sha256": {
+            rel: sha256_git_blob(source_revision_premerge, rel) for rel in source_paths
+        },
+        "capture_harness_sha256": sha256_file(Path(__file__)),
+        "proxy_sha256": sha256_file(PROXY),
     }
 
     def read_proxy():

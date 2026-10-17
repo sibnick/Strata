@@ -169,9 +169,8 @@ physical GPU 0 (RTX 3090), 1,685,061,632 bytes (1,607 MiB) on physical GPU 1
 capture session and its orphaned Nsight agent were cleared. The ordinary API
 was restored using `api/start-api.sh` and verified loaded/healthy at
 `127.0.0.1:8080`; it remains on the tested K36 configuration. The timeline
-harness now restores the API in its cleanup path and records cleanup errors,
-but a future profile still needs a bounded way to complete Nsight report
-finalization on this host.
+harness restores the API in its cleanup path and records cleanup errors. A
+later bounded capture resolved the report-finalization problem; see below.
 
 ## Decision and ranked follow-up
 
@@ -209,3 +208,104 @@ sha256sum -c bench/results/2026-10-17-cmp170hx-rtx3090-k36-stage-prefill-2048-51
 
 Existing K36/K37 evidence and checksums remain unchanged. This does not
 validate near-limit attention or establish full-context safety.
+
+### Third bounded capture: CMP kernel attribution
+
+The previous Nsight attempt had produced no report because finalization did not
+finish. A tiny CUDA probe established a working collection/export path when
+compiled explicitly for sm80 and run with CPU instruction sampling, symbol
+resolution, and automatic summary-stat generation disabled. The resulting
+SQLite export contained a real kernel record. The K36 runner now uses those
+bounded settings while retaining CUDA, cuBLAS, OS runtime, and process-tree
+thread-scheduling events.
+
+With the loopback API idle (`requests=0`, `in_flight=0`), one standalone engine
+was run under Nsight with the unchanged K36 2048/512 settings and the historical
+1,977-token fixture. The input was fresh; all 22 output IDs matched the
+historical reference, and MTP accepted 9 of 12 proposals. The profiled request
+reported 1,643.6 ms prefill and 249.3 ms decode. No warmup, extra variant,
+long-context, or near-limit workload ran. These are instrumented timings, not
+an unprofiled speed comparison.
+
+The capture directory is
+`gpu-utilization-capture-cuda-timeline-cmp-sm80/`. It contains the native
+Nsight report, SQLite event export, sanitized capture summary, monitoring
+samples, and `SHA256SUMS`. The profiler used
+`--trace=cuda,cublas,osrt --sample=none --cpuctxsw=process-tree
+--resolve-symbols=false --stats=false`; it did not collect CPU instruction
+samples. No prompt or response text was retained.
+
+The report maps CUDA device 0 to the CMP 170HX (physical GPU 1) and CUDA device
+1 to the RTX 3090 (physical GPU 0). During the 1,643.6 ms prefill window,
+Nsight recorded 7,544 CMP kernels with 748.4 ms of non-overlapping kernel
+activity (45.5% of the prompt window), from about 12 ms to 1,050 ms after the
+request began. The RTX recorded 7,598 kernels and 426.3 ms of kernel activity
+(25.9%), from about 1,145 ms to 1,636 ms. The CMP prefix therefore has about
+2.1 times the measured kernel-activity span of the RTX suffix. The timeline
+also shows a 77.2 MiB CMP device-to-host copy lasting 95.0 ms between the last
+recorded CMP prefill kernel and the first RTX prefill kernel. This is
+consistent with a stage handoff on the host-staged path, but the separate
+Nsight peer-copy records do not agree with the machine's known no-P2P topology;
+their labels and durations are not a trustworthy PCIe bandwidth measurement.
+
+On the CMP, `mul_mat_q` kernels consumed 442.8 ms across 2,775 launches, about
+59% of recorded kernel time. The MMQ `copy16_group_kernel` consumed 56.3 ms
+across 945 launches; quantization and prompt-attention kernels consumed 10.9
+and 24.5 ms. This makes CMP MMQ compute the leading kernel family to examine,
+not the RTX. It does not establish SM occupancy, memory-bandwidth saturation,
+or which MMQ tile is inefficient.
+
+The decode interval contains 24 CMP and 41 RTX CUDA-graph activity records,
+with 160.5 ms and 59.0 ms of unioned graph intervals, respectively. The export
+has no graph-node kernel records, so decode is visible only at graph granularity;
+it cannot identify individual decode kernels. During prefill the trace also
+records 97 `cudaStreamSynchronize` calls totaling 1,314 ms, while 14,624
+`cudaLaunchKernel` calls total 29.9 ms. Across the request, the corresponding
+totals are 1,536 ms for 167 stream synchronizations and 33.1 ms for 17,874
+kernel-launch calls. Synchronization durations overlap device work and other
+threads, so they are not additive wall time; they indicate substantial waiting,
+not a measured GPU-idle duration. Launch API time is much smaller and is not
+the first target.
+
+The trace includes 12 `cuLibraryLoadData` calls totaling 219.9 ms in the first
+263 ms, likely first-use library/module loading rather than steady-state kernel
+cost. It also records 10,665 `pread` calls totaling 3,275.6 ms across threads.
+Those calls are consistent with direct PLE reader activity, but their summed
+time overlaps across threads and the run did not flush or measure storage
+caches. The user-noted faster later reads remain a cache-state caveat. PLE
+settings and cache behavior were left unchanged; no PLE optimization was
+attempted.
+
+The approved memory policy was retained: 0 MiB engine reserves, no external
+GPU-free abort, host start/stop thresholds of 6/5 GiB, mandatory CUDA
+admission, and the 512 MiB prompt-init headroom. Startup margins after that
+headroom were 1,733,296,128 bytes on the CMP and 220,824,340 bytes on the RTX.
+Minimum sampled free VRAM was 1,685,061,632 bytes (1,607 MiB) on the CMP and
+277,872,640 bytes (265 MiB) on the RTX; minimum host `MemAvailable` was
+12,910,485,504 bytes (12.02 GiB). No CUDA engine or Nsight process remained
+after the capture. The API was restored and verified healthy by the capture
+cleanup, then stopped again when the user asked; it is now intentionally off
+and port 8080 is unbound.
+
+The captured runtime used the pre-merge executable SHA-256
+`6b4e64e6fee8d6aff5a208d37579f507dd050c81d5d7030b2f0e05a515f2e643` and
+K-quant library SHA-256
+`0a93ccd8f52a329da586a36e76cf5865a4c3ce0256b80e3da4b28ce937bdf27d`, with
+pre-merge source revision `1319480d1683d6f83de78413222a45e1d2058dd3`. The
+older `ef991b2f` run provenance records a different executable hash
+(`c13681c5...`) and earlier source revision (`448bce27...`). The profiled
+executable is the exact binary that had been running in the tested API, but
+this trace is attribution only, not a byte-identical comparison against that
+older provenance artifact. The merged source was not built or deployed for
+this capture.
+
+**Decision:** no optimization was implemented. The trace prioritizes CMP MMQ
+over launch-overhead reduction, but does not select a specific
+`mul_mat_q` tile; several tile variants contribute, and the graph decode path
+has no kernel-node detail. The smallest useful next measurement is one bounded
+Nsight Compute capture of the CMP's prominent
+`mul_mat_q<(ggml_type)12, (int)128, ...>` Q4_K variant, to determine whether
+its limiting resource is occupancy, memory traffic, or instruction throughput.
+Only if that points to a tile alternative should a default-off tile candidate
+be compared with the same pre-merge binary and exact-ID fixture. Do not tune
+the RTX, change PLE, or claim 100% simultaneous utilization from this trace.
