@@ -2145,6 +2145,7 @@ bool Prefill::run_impl(const int64_t* tokens, int64_t n, int64_t pos0, std::stri
     } help_scope{m, helped};
     PfTimer pt;
     PeTimer pe;
+    const bool prefill_timing = pt.on;
     static const bool batch_gather = [] {
         const char* v = std::getenv("STRATA_PREFILL_BATCH_GATHER");
         if (v == nullptr || std::strcmp(v, "1") != 0) return false;
@@ -2181,10 +2182,12 @@ bool Prefill::run_impl(const int64_t* tokens, int64_t n, int64_t pos0, std::stri
                            (ss.ple.w.key_bf16 != nullptr || ss.ple.w.key_native_data != nullptr) &&
                            m.region_bytes / ((uint64_t) (3 * strata::kernels::NG_HC_DIM + N + 4) * 4 + (uint64_t) N * 2 + 4096) >= 64;
     const int32_t prev0[2] = {prev[0], prev[1]};
-    auto ple_gather = [&m, &ss, tokens, n, prev0](int64_t c0, int buf, std::string& e) -> bool {
+    auto ple_gather = [&m, &ss, tokens, n, prev0, prefill_timing](int64_t c0, int buf, std::string& e) -> bool {
         const int64_t T = std::min(m.T, n - c0);
         auto at = [&](int64_t i) { return i < 2 ? prev0[i] : (int32_t) tokens[i - 2]; };   // prev0, then the tokens
         int32_t pv[2] = {at(c0), at(c0 + 1)};
+        Clock::time_point keys_start;
+        if (prefill_timing) keys_start = Clock::now();
         for (int64_t t = 0; t < T; ++t) {
             const int32_t tok = (int32_t) tokens[c0 + t];
             strata::kernels::ngram_rows(&tok, pv, 1, ss.ple.consts,
@@ -2192,7 +2195,17 @@ bool Prefill::run_impl(const int64_t* tokens, int64_t n, int64_t pos0, std::stri
             pv[0] = pv[1];
             pv[1] = tok;
         }
-        return ss.ple.table->gather_batch(m.ple_rows[buf].data(), (size_t) T, m.ple_emb_host[buf], e);
+        const double keys_ms = prefill_timing ? ms_since(keys_start) : 0.0;
+        Clock::time_point gather_start;
+        if (prefill_timing) gather_start = Clock::now();
+        const bool ok = ss.ple.table->gather_batch(m.ple_rows[buf].data(), (size_t) T,
+                                                    m.ple_emb_host[buf], e);
+        if (prefill_timing)
+            std::fprintf(stderr, "strata PLE prep timing: chunk %lld, %lld tokens: row keys %.3f ms, "
+                                 "batch gather total %.3f ms%s\n",
+                         (long long) c0, (long long) T, keys_ms, ms_since(gather_start),
+                         ok ? "" : " (failed)");
+        return ok;
     };
     std::string ple_next_err;
     std::future<bool> ple_next;             // declared after everything it reads: an early return waits for it
@@ -2290,11 +2303,16 @@ bool Prefill::run_impl(const int64_t* tokens, int64_t n, int64_t pos0, std::stri
             if (!ple_pending) return true;
             ple_pending = false;
             const auto tp = Clock::now();
+            Clock::time_point gather_wait_start;
+            if (prefill_timing) gather_wait_start = Clock::now();
             if (!ple_next.get()) {
                 err = ple_next_err;
                 return false;
             }
+            const double gather_wait_ms = prefill_timing ? ms_since(gather_wait_start) : 0.0;
             // #1996: the pageable fallback (no RAM to pin) goes up through a pinned slot; the pinned buffers as before
+            Clock::time_point upload_start;
+            if (prefill_timing) upload_start = Clock::now();
             if ((m.ple_pageable[ple_buf].empty()
                      ? cudaMemcpyAsync(m.ple_emb, m.ple_emb_host[ple_buf], (size_t) T * N * 4, cudaMemcpyHostToDevice, m.cs)
                      : m.up_ring.h2d(m.ple_emb, m.ple_emb_host[ple_buf], (size_t) T * N * 4, m.cs)) !=
@@ -2303,12 +2321,17 @@ bool Prefill::run_impl(const int64_t* tokens, int64_t n, int64_t pos0, std::stri
                 err = std::string("prefill: the PLE rows' upload failed: ") + cudaGetErrorString(cudaGetLastError());
                 return false;
             }
+            const double upload_enqueue_ms = prefill_timing ? ms_since(upload_start) : 0.0;
+            double prior_upload_wait_ms = 0.0;
             if (c0 + m.T < n) {
                 // the other buffer's upload (a chunk ago) is done before the SSD thread refills it
+                Clock::time_point prior_upload_start;
+                if (prefill_timing) prior_upload_start = Clock::now();
                 if (cudaEventSynchronize(m.ple_copied[ple_buf ^ 1]) != cudaSuccess) {
                     err = std::string("prefill: the PLE rows' upload failed: ") + cudaGetErrorString(cudaGetLastError());
                     return false;
                 }
+                if (prefill_timing) prior_upload_wait_ms = ms_since(prior_upload_start);
                 ple_next = std::async(std::launch::async, [&ple_gather, &ple_next_err, c1 = c0 + m.T, b = ple_buf ^ 1] {
                     strata::aux_cpus::pin_current_thread();
                     return ple_gather(c1, b, ple_next_err);
@@ -2316,6 +2339,11 @@ bool Prefill::run_impl(const int64_t* tokens, int64_t n, int64_t pos0, std::stri
             }
             ple_buf ^= 1;
             stats_.ms_ple += ms_since(tp);
+            if (prefill_timing)
+                std::fprintf(stderr, "strata PLE upload timing: chunk %lld, %lld tokens: gather future wait "
+                                     "%.3f ms, H2D enqueue %.3f ms, previous H2D completion wait %.3f ms\n",
+                             (long long) c0, (long long) T, gather_wait_ms, upload_enqueue_ms,
+                             prior_upload_wait_ms);
             return true;
         };
         for (int64_t t = 0; t < T; ++t) { prev[0] = prev[1]; prev[1] = (int32_t) tokens[c0 + t]; }

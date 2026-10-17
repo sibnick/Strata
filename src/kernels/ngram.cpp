@@ -9,7 +9,9 @@
 #include "strata/platform/memory.hpp"
 
 #include <cerrno>
+#include <chrono>
 #include <cmath>
+#include <cstdlib>
 #include <cstdio>
 #include <cstring>
 #include <limits>
@@ -507,7 +509,21 @@ bool PleTable::collect(float* out2560, std::string& err) {
 bool PleTable::gather_batch(const uint32_t* rows, size_t n_tokens, float* out, std::string& err) {
     if (impl_->pending) { err = "PleTable::gather_batch while a token is in flight"; return false; }
     const size_t n = n_tokens * (size_t) PLE_N_HEADS;
+    static const bool timing = [] {
+        const char* e = std::getenv("STRATA_PREFILL_TIMING");
+        return e != nullptr && e[0] == '1';
+    }();
+    auto report_timing = [&](const char* path, double match_ms, double prefetch_wait_ms,
+                             double issue_ms, double collect_ms, double decode_ms) {
+        if (!timing) return;
+        std::fprintf(stderr, "strata PLE gather timing: %zu tokens, %zu rows, %s: match %.3f ms, "
+                             "prefetch wait %.3f ms, issue %.3f ms, reader collect %.3f ms, decode %.3f ms\n",
+                     n_tokens, n, path, match_ms, prefetch_wait_ms, issue_ms, collect_ms, decode_ms);
+    };
     if (impl_->mode == PleIo::Direct) {
+        double match_ms = 0.0;
+        std::chrono::steady_clock::time_point match_start;
+        if (timing) match_start = std::chrono::steady_clock::now();
         // Fast path: if all requested tokens match our in-flight/completed prefetch slots, collect them directly
         // without issuing a second PleReader ticket or copying through RowCache.
         if (impl_->n_prefetch >= n_tokens && n_tokens <= Impl::kMaxPrefetch) {
@@ -519,32 +535,79 @@ bool PleTable::gather_batch(const uint32_t* rows, size_t n_tokens, float* out, s
                 }
             }
             if (exact_match) {
+                const double fast_match_ms = timing
+                    ? std::chrono::duration<double, std::milli>(
+                        std::chrono::steady_clock::now() - match_start).count()
+                    : 0.0;
+                std::chrono::steady_clock::time_point fast_collect_start;
+                if (timing) fast_collect_start = std::chrono::steady_clock::now();
                 for (size_t i = 0; i < impl_->n_prefetch; ++i) {
                     if (!impl_->reader.collect(impl_->prefetch_tickets[i], err)) {
                         impl_->n_prefetch = 0;
                         return false;
                     }
                 }
+                const double fast_collect_ms = timing
+                    ? std::chrono::duration<double, std::milli>(
+                        std::chrono::steady_clock::now() - fast_collect_start).count()
+                    : 0.0;
                 impl_->n_prefetch = 0;
+                std::chrono::steady_clock::time_point fast_decode_start;
+                if (timing) fast_decode_start = std::chrono::steady_clock::now();
                 for (size_t t = 0; t < n_tokens; ++t) {
                     for (int h = 0; h < PLE_N_HEADS; ++h) {
                         impl_->decode(impl_->prefetch_raw[t] + (size_t) h * impl_->rb,
                                       out + (t * PLE_N_HEADS + (size_t) h) * PLE_HEAD_DIM);
                     }
                 }
+                const double fast_decode_ms = timing
+                    ? std::chrono::duration<double, std::milli>(
+                        std::chrono::steady_clock::now() - fast_decode_start).count()
+                    : 0.0;
                 impl_->bytes_read += (uint64_t) n * impl_->rb;
+                report_timing("direct-prefetch", fast_match_ms, 0.0, 0.0,
+                              fast_collect_ms, fast_decode_ms);
                 return true;
             }
         }
+        if (timing)
+            match_ms = std::chrono::duration<double, std::milli>(
+                std::chrono::steady_clock::now() - match_start).count();
+        std::chrono::steady_clock::time_point wait_start;
+        if (timing) wait_start = std::chrono::steady_clock::now();
         wait_prefetches();
+        const double prefetch_wait_ms = timing
+            ? std::chrono::duration<double, std::milli>(std::chrono::steady_clock::now() - wait_start).count()
+            : 0.0;
+        std::chrono::steady_clock::time_point issue_start;
+        if (timing) issue_start = std::chrono::steady_clock::now();
         std::vector<uint8_t> raw(n * impl_->rb);
         const auto ticket = impl_->reader.issue(rows, n, raw.data());
+        const double issue_ms = timing
+            ? std::chrono::duration<double, std::milli>(std::chrono::steady_clock::now() - issue_start).count()
+            : 0.0;
+        std::chrono::steady_clock::time_point collect_start;
+        if (timing) collect_start = std::chrono::steady_clock::now();
         if (!impl_->reader.collect(ticket, err)) return false;
+        const double collect_ms = timing
+            ? std::chrono::duration<double, std::milli>(std::chrono::steady_clock::now() - collect_start).count()
+            : 0.0;
+        std::chrono::steady_clock::time_point decode_start;
+        if (timing) decode_start = std::chrono::steady_clock::now();
         for (size_t i = 0; i < n; ++i) impl_->decode(raw.data() + i * impl_->rb, out + i * PLE_HEAD_DIM);
+        const double decode_ms = timing
+            ? std::chrono::duration<double, std::milli>(std::chrono::steady_clock::now() - decode_start).count()
+            : 0.0;
         impl_->bytes_read += (uint64_t) n * impl_->rb;
+        report_timing("direct", match_ms, prefetch_wait_ms, issue_ms, collect_ms, decode_ms);
         return true;
     }
+    std::chrono::steady_clock::time_point wait_start;
+    if (timing) wait_start = std::chrono::steady_clock::now();
     wait_prefetches();
+    const double prefetch_wait_ms = timing
+        ? std::chrono::duration<double, std::milli>(std::chrono::steady_clock::now() - wait_start).count()
+        : 0.0;
     // #1984 #1971: a mapped table that is not in the file cache served this loop as serial demand faults, one random
     // 4 KiB page at a time (16 rows a token, 16 x the chunk's tokens for a prompt), and the first chunk of a prompt has
     // only layer 0 to hide it behind: a cold 27 GB table at ~0.2-1 ms a fault is minutes with no progress mark, which
@@ -572,11 +635,20 @@ bool PleTable::gather_batch(const uint32_t* rows, size_t n_tokens, float* out, s
         }
 #endif
     };
+    std::chrono::steady_clock::time_point row_access_start;
+    if (timing) row_access_start = std::chrono::steady_clock::now();
     hint(0, std::min(n, kWin));
     for (size_t w = 0; w < n; w += kWin) {
         if (w + kWin < n) hint(w + kWin, std::min(n, w + 2 * kWin));
         const size_t e = std::min(n, w + kWin);
         for (size_t i = w; i < e; ++i) read_row(rows[i], out + i * PLE_HEAD_DIM);
+    }
+    if (timing) {
+        const double row_access_ms = std::chrono::duration<double, std::milli>(
+            std::chrono::steady_clock::now() - row_access_start).count();
+        std::fprintf(stderr, "strata PLE gather timing: %zu tokens, %zu rows, mmap: prefetch wait %.3f ms, "
+                             "mapped row access/decode %.3f ms\n",
+                     n_tokens, n, prefetch_wait_ms, row_access_ms);
     }
     return true;
 }
