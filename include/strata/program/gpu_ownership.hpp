@@ -42,7 +42,7 @@ inline bool validate_full_profile(int64_t n_layers, int64_t n_experts,
 
 inline bool required_cache_bytes(const std::vector<uint64_t>& layer_blob_bytes, int64_t n_experts,
                                  int64_t first_layer, int64_t past_last_layer, uint64_t& bytes,
-                                 uint64_t& slots, std::string& err) {
+                                 uint64_t& slots, std::string& err, uint64_t slot_guard = 0) {
     bytes = 0;
     slots = 0;
     err.clear();
@@ -59,11 +59,12 @@ inline bool required_cache_bytes(const std::vector<uint64_t>& layer_blob_bytes, 
     slots = layers * (uint64_t) n_experts;
     for (int64_t layer = first_layer; layer < past_last_layer; ++layer) {
         const uint64_t blob = layer_blob_bytes[(size_t) layer];
-        if (blob == 0 || blob > std::numeric_limits<uint64_t>::max() - 255) {
+        if (blob == 0 || slot_guard > std::numeric_limits<uint64_t>::max() - blob ||
+            blob + slot_guard > std::numeric_limits<uint64_t>::max() - 255) {
             err = "invalid or overflowing expert blob size";
             return false;
         }
-        const uint64_t aligned = (blob + 255) & ~uint64_t{255};
+        const uint64_t aligned = (blob + slot_guard + 255) & ~uint64_t{255};
         if (aligned > std::numeric_limits<uint64_t>::max() / (uint64_t) n_experts) {
             err = "expert cache size overflows";
             return false;

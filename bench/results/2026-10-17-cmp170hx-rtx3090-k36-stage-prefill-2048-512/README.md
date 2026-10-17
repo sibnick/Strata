@@ -103,3 +103,14 @@ prior bounded inference checks covered short requests and one 32,788-token
 request only. The lowest measured free RTX memory in that run was 245 MiB.
 Use short API requests initially and do not interpret this launch as
 full-context safety validation.
+
+## Upstream merge caveat
+
+The sizing and inference results above are historical and predate the local
+merge of `origin/main` at `477ac13c`. The merged short-chunk prefill ring adds
+an estimated 90 MiB to the RTX 3090 stage scratch; applying that to the old
+idle snapshot leaves about 120.6 MiB beyond the mandatory 512 MiB prompt-init
+headroom. This is only a source-based estimate, not merged startup or
+inference validation. See
+[`upstream-merge-impact.md`](upstream-merge-impact.md) for the ranked effects,
+test results, and limits.

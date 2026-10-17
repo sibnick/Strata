@@ -30,8 +30,11 @@ int main() {
     CHECK(required_cache_bytes(blob_bytes, 3, 0, 2, bytes, slots, err));
     CHECK(bytes == 512 * 3 + 512 * 3);
     CHECK(slots == 6);
+    CHECK(required_cache_bytes(blob_bytes, 3, 0, 2, bytes, slots, err, 64));
+    CHECK(bytes == 512 * 3 + 768 * 3);
     CHECK(!required_cache_bytes(blob_bytes, 3, 1, 4, bytes, slots, err));
     CHECK(!required_cache_bytes({std::numeric_limits<uint64_t>::max()}, 1, 0, 1, bytes, slots, err));
+    CHECK(!required_cache_bytes({std::numeric_limits<uint64_t>::max()}, 1, 0, 1, bytes, slots, err, 1));
 
     const std::vector<int32_t> owner{0, 1, 2, 3};
     auto slot_of = [&](int64_t layer, int64_t expert) { return owner[(size_t) (layer * 2 + expert)]; };
