@@ -302,10 +302,39 @@ this capture.
 **Decision:** no optimization was implemented. The trace prioritizes CMP MMQ
 over launch-overhead reduction, but does not select a specific
 `mul_mat_q` tile; several tile variants contribute, and the graph decode path
-has no kernel-node detail. The smallest useful next measurement is one bounded
-Nsight Compute capture of the CMP's prominent
-`mul_mat_q<(ggml_type)12, (int)128, ...>` Q4_K variant, to determine whether
-its limiting resource is occupancy, memory traffic, or instruction throughput.
-Only if that points to a tile alternative should a default-off tile candidate
-be compared with the same pre-merge binary and exact-ID fixture. Do not tune
-the RTX, change PLE, or claim 100% simultaneous utilization from this trace.
+has no kernel-node detail. A bounded Nsight Compute follow-up was attempted;
+the host stop guard interrupted it during the short request before any kernel
+metrics or exact-output check were available. No optimization is supported by
+that incomplete attempt. Do not tune the RTX, change PLE, or claim 100%
+simultaneous utilization from these captures.
+
+### Bounded Nsight Compute attempt
+
+After the Intel-only measurement reservation was released, a standalone
+Nsight Compute attempt targeted one CMP CUDA-device-0 launch of the prominent
+Q4_K `mul_mat_q<(ggml_type)12, (int)128, ...>` variant from the exact tested
+K36 2048/512 binary. It used the historical 1,977-token fixture, cap 32,
+unchanged PLE/cache settings, 0 MiB engine reserves, no external GPU-free
+abort, mandatory CUDA admission and 512 MiB prompt-init headroom, and host
+start/stop thresholds of 6/5 GiB. The API remained stopped throughout.
+
+The engine loaded and reported `READY`; the fixture request was then sent.
+`MemAvailable` fell from 12.29 GiB at request start to 7.16 GiB and then
+3.72 GiB over the next three one-second samples. The required 5 GiB stop
+guard terminated the profiled process. The request did not report completion,
+generated IDs were unavailable, and no Nsight Compute report was finalized;
+there are no usable kernel metrics or parity result from this attempt.
+Minimum sampled free VRAM was 257 MiB on the RTX 3090 and 255 MiB on the CMP.
+The observed host-memory decline during the request is unexplained; the run
+did not distinguish file-backed residency from profiler/runtime allocations,
+and no disk cache was flushed. Nsight Compute warned that GPU caches were
+uncontrolled. This is not evidence that NCU itself caused the host-memory
+decline.
+
+Cleanup was verified: no inference, Nsight, or API process remained, and
+`127.0.0.1:8080` stayed unbound. The failed capture metadata, monitor samples,
+and sanitized profiler log are retained in
+`gpu-utilization-capture-ncu-cmp-sm80/`; no prompt or response text was saved.
+The next step is to explain the request-time host-memory decline from existing
+non-invasive records before considering another model load. In particular,
+do not lower the host stop threshold or retry the capture unchanged.

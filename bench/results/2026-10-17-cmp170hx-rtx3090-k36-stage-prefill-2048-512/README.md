@@ -89,13 +89,16 @@ the PID file is `api/server.pid` (runtime files are git-ignored).
 The real API smoke test passed on 2026-10-17 at 18:55:49 UTC: `/health`
 reported loaded, `/v1/models` returned the model ID above, and a non-streaming
 OpenAI chat completion returned `API_READY` (18 prompt tokens, 3 generated).
-The server is running as supervisor PID 198321, API process PID 198409, and
-engine PID 198456. It binds only to `127.0.0.1:8080`. After loading the full
-engine state, the engine reported 330 MiB free on the RTX 3090 and warned
-that this was low; the smoke completion passed. A later snapshot showed
-317 MiB free there, 1,669 MiB on the CMP, and 15.64 GiB host
+At the smoke-test time, the server ran as supervisor PID 198321, API process
+PID 198409, and engine PID 198456. It bound only to `127.0.0.1:8080`. After
+loading the full engine state, the engine reported 330 MiB free on the RTX
+3090 and warned that this was low; the smoke completion passed. A later
+snapshot showed 317 MiB free there, 1,669 MiB on the CMP, and 15.64 GiB host
 `MemAvailable`. These are snapshots, not safety guarantees. The sanitized
 result is retained in `api/smoke-result.json`.
+
+The API was subsequently stopped at the user's request and remains stopped;
+the historical PIDs above are not current process IDs.
 
 The launch has not been tested with near-limit prompts. It sets the engine's
 262,144 context and may allocate the full KV cache during model startup; the
