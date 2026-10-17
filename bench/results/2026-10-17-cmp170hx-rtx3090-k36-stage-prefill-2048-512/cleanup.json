@@ -1,0 +1,24 @@
+{
+  "compute_processes_after": "",
+  "engine_return_code": 0,
+  "final_free_memory_by_physical_index": [
+    {
+      "free_bytes": 25265438720,
+      "physical_index": 0,
+      "total_bytes": 25769803776,
+      "used_bytes": 504365056
+    },
+    {
+      "free_bytes": 68048519168,
+      "physical_index": 1,
+      "total_bytes": 68719476736,
+      "used_bytes": 670957568
+    }
+  ],
+  "host_memavailable_minimum_bytes": 16599871488,
+  "pcie_helper_return_code": 0,
+  "under_load_minimum_free_memory_by_physical_index": {
+    "0": 256835584,
+    "1": 1675952128
+  }
+}

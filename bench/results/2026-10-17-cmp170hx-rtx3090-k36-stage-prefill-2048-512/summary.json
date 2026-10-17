@@ -1,0 +1,224 @@
+{
+  "checks": {
+    "32788_token_historical_output_ids_and_recall": "passed",
+    "checksums": "recorded in SHA256SUMS",
+    "compute_process_cleanup": "passed",
+    "cuda_build_targets_strata_strata_kq_and_split_memory": "passed",
+    "full_fresh_prompt_input_no_reuse": "passed",
+    "hip_and_sycl": "not_tested",
+    "host_start_at_least_6_gib": "passed",
+    "host_stop_below_5_gib": "passed",
+    "larger_handoff_consumed_in_512_token_subchunks": "passed",
+    "mandatory_prompt_init_headroom_k36": "passed",
+    "offline_sizing_k36_k37": "passed",
+    "per_stage_cpu_contract_tests": "passed",
+    "post_warmup_measured_expert_source_reads": "zero",
+    "short_historical_output_ids_and_recall": "passed",
+    "split_memory_self_test": "passed",
+    "startup_configuration_and_allocation_admission": "passed"
+  },
+  "cleanup": {
+    "compute_processes_after": "",
+    "engine_return_code": 0,
+    "final_free_memory_by_physical_index": [
+      {
+        "free_bytes": 25265438720,
+        "physical_index": 0,
+        "total_bytes": 25769803776,
+        "used_bytes": 504365056
+      },
+      {
+        "free_bytes": 68048519168,
+        "physical_index": 1,
+        "total_bytes": 68719476736,
+        "used_bytes": 670957568
+      }
+    ],
+    "host_memavailable_minimum_bytes": 16599871488,
+    "pcie_helper_return_code": 0,
+    "under_load_minimum_free_memory_by_physical_index": {
+      "0": 256835584,
+      "1": 1675952128
+    }
+  },
+  "configuration": {
+    "context_cells": 262144,
+    "discretionary_gpu_reserve_mib": [
+      0,
+      0
+    ],
+    "external_gpu_free_abort_mib": null,
+    "host_start_gib": 6,
+    "host_stop_gib": 5,
+    "kv": "int8",
+    "layer_split": 36,
+    "mandatory_prompt_init_headroom_mib": 512,
+    "stage_chunks": [
+      2048,
+      512
+    ]
+  },
+  "gpu_workload_started": true,
+  "k36_admission": {
+    "0": {
+      "free_bytes": 68048519168,
+      "ledger_required_including_reserves_and_512_mib_prompt_headroom": 66316140544,
+      "margin_bytes": 1732378624,
+      "physical_gpu": 1
+    },
+    "1": {
+      "free_bytes": 25265438720,
+      "ledger_required_including_reserves_and_512_mib_prompt_headroom": 25044614380,
+      "margin_bytes": 220824340,
+      "physical_gpu": 0
+    }
+  },
+  "k37_offline_comparison": "Both stages passed offline admission; K37 was not run.",
+  "mixed_k36_32788_token_prefill_ms": 15529.8,
+  "mixed_k36_short_prefill_median_ms": 1409.0,
+  "mixed_k36_short_prefill_ms": [
+    1410.7,
+    1396.8,
+    1409.0
+  ],
+  "offline_sizing": {
+    "36": {
+      "0": {
+        "admission_margin_after_mandatory_headroom_bytes": 1733296128,
+        "admission_margin_bytes": 2270167040,
+        "chunk": 2048,
+        "components": {
+          "additional_cuda_and_safety_reserve": 0,
+          "canonical_arena": 1152277120,
+          "expert_payload": 57619251200,
+          "mtp_files_payload": 0,
+          "mtp_total_with_runtime_reserve": 0,
+          "native_projection_allocation_estimate": 2445279232,
+          "native_projection_padding_reserve": 67108864,
+          "output_head_allocation_estimate": 0,
+          "owned_prefill_allocation_estimate": 1430257664,
+          "required_free_before_model_load": 65779269632,
+          "session_arena": 2961460736,
+          "verify_reserve": 100663296
+        },
+        "fits_current_idle_free_memory": true,
+        "free_bytes_before_run": 68049436672,
+        "gpu_name": "NVIDIA CMP 170HX",
+        "mandatory_prompt_init_headroom_bytes": 536870912,
+        "owned_prefill_allocation_estimate": 1430257664,
+        "passes_mandatory_prompt_init_admission": true,
+        "physical_gpu": 1,
+        "required_free_before_model_load": 65779269632,
+        "required_with_mandatory_prompt_init_headroom": 66316140544,
+        "total_bytes": 68719476736
+      },
+      "1": {
+        "admission_margin_after_mandatory_headroom_bytes": 220824340,
+        "admission_margin_bytes": 757695252,
+        "chunk": 512,
+        "components": {
+          "additional_cuda_and_safety_reserve": 0,
+          "canonical_arena": 391246720,
+          "expert_payload": 19398656000,
+          "mtp_files_payload": 823887872,
+          "mtp_total_with_runtime_reserve": 1518763244,
+          "native_projection_allocation_estimate": 805306368,
+          "native_projection_padding_reserve": 67108864,
+          "output_head_allocation_estimate": 677380096,
+          "owned_prefill_allocation_estimate": 507510784,
+          "required_free_before_model_load": 24507743468,
+          "session_arena": 1038760448,
+          "verify_reserve": 100663296
+        },
+        "fits_current_idle_free_memory": true,
+        "free_bytes_before_run": 25265438720,
+        "gpu_name": "NVIDIA GeForce RTX 3090",
+        "mandatory_prompt_init_headroom_bytes": 536870912,
+        "owned_prefill_allocation_estimate": 507510784,
+        "passes_mandatory_prompt_init_admission": true,
+        "physical_gpu": 0,
+        "required_free_before_model_load": 24507743468,
+        "required_with_mandatory_prompt_init_headroom": 25044614380,
+        "total_bytes": 25769803776
+      }
+    },
+    "37": {
+      "0": {
+        "admission_margin_after_mandatory_headroom_bytes": 61865984,
+        "admission_margin_bytes": 598736896,
+        "chunk": 2048,
+        "components": {
+          "additional_cuda_and_safety_reserve": 0,
+          "canonical_arena": 1179398656,
+          "expert_payload": 59192115200,
+          "mtp_files_payload": 0,
+          "mtp_total_with_runtime_reserve": 0,
+          "native_projection_allocation_estimate": 2514485248,
+          "native_projection_padding_reserve": 67108864,
+          "output_head_allocation_estimate": 0,
+          "owned_prefill_allocation_estimate": 1430257664,
+          "required_free_before_model_load": 67450699776,
+          "session_arena": 2964729344,
+          "verify_reserve": 100663296
+        },
+        "fits_current_idle_free_memory": true,
+        "free_bytes_before_run": 68049436672,
+        "gpu_name": "NVIDIA CMP 170HX",
+        "mandatory_prompt_init_headroom_bytes": 536870912,
+        "owned_prefill_allocation_estimate": 1430257664,
+        "passes_mandatory_prompt_init_admission": true,
+        "physical_gpu": 1,
+        "required_free_before_model_load": 67450699776,
+        "required_with_mandatory_prompt_init_headroom": 67987570688,
+        "total_bytes": 68719476736
+      },
+      "1": {
+        "admission_margin_after_mandatory_headroom_bytes": 1896448788,
+        "admission_margin_bytes": 2433319700,
+        "chunk": 512,
+        "components": {
+          "additional_cuda_and_safety_reserve": 0,
+          "canonical_arena": 361503744,
+          "expert_payload": 17825792000,
+          "mtp_files_payload": 823887872,
+          "mtp_total_with_runtime_reserve": 1518763244,
+          "native_projection_allocation_estimate": 736100352,
+          "native_projection_padding_reserve": 67108864,
+          "output_head_allocation_estimate": 677380096,
+          "owned_prefill_allocation_estimate": 507510784,
+          "required_free_before_model_load": 22832119020,
+          "session_arena": 1035491840,
+          "verify_reserve": 100663296
+        },
+        "fits_current_idle_free_memory": true,
+        "free_bytes_before_run": 25265438720,
+        "gpu_name": "NVIDIA GeForce RTX 3090",
+        "mandatory_prompt_init_headroom_bytes": 536870912,
+        "owned_prefill_allocation_estimate": 507510784,
+        "passes_mandatory_prompt_init_admission": true,
+        "physical_gpu": 0,
+        "required_free_before_model_load": 22832119020,
+        "required_with_mandatory_prompt_init_headroom": 23368989932,
+        "total_bytes": 25769803776
+      }
+    }
+  },
+  "prior_uniform_1024_k37_descriptive_only": {
+    "not_a_contemporaneous_control": true,
+    "short_prefill_median_ms": 1368.6,
+    "short_prefill_ms": [
+      1368.6,
+      1360.8,
+      1369.0
+    ],
+    "single_32788_token_prefill_ms": 20237.2,
+    "source": "bench/results/2026-10-17-cmp170hx-rtx3090-k37-mmq-chunks768-1024/chunk1024/results.json"
+  },
+  "status": "passed",
+  "under_load_minimum_free_vram_bytes": {
+    "0": 256835584,
+    "1": 1675952128
+  },
+  "under_load_minimum_host_memavailable_bytes": 16599871488,
+  "warmup_expert_source_reads_mb": 77024.6
+}

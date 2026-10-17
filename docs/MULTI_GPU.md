@@ -96,15 +96,51 @@ idle free memory below, the source ledger reports:
 The free-memory snapshot was 68,049,436,672 B on the CMP and 25,265,438,720 B
 on the RTX. Although both K36 raw ledger totals are below that snapshot, the
 RTX does not meet the unchanged mandatory 512 MiB prompt-initialization
-headroom check. The bounded K36 GPU run was therefore not started. K37 passes
-this offline check but was not run with mixed chunks. These are source-based
-estimates, not measured peaks; no mixed-chunk speed, output or under-load
-memory result is established here.
+headroom check for 2,048/1,024. That bounded K36 GPU run was not started. K37
+passes this offline check but was not run with those mixed chunks. A separate
+2,048/512 K36 attempt and its measured results are recorded below.
 
 The requested test policy is zero reserves on both GPUs and no external
 free-VRAM abort, while retaining the host start-at-6/stop-below-5 GiB guards
 and mandatory CUDA/allocation admission. Removing the discretionary reserves
-does not override the failed prompt-init check above.
+does not override the failed 2,048/1,024 prompt-init check above.
+
+**K36 2,048/512 follow-up (2026-10-17).** Reducing only stage 1 to 512 lowered
+its source-priced scratch from 1,025,507,328 B to 507,510,784 B. The same
+512 MiB prompt-init admission then passed on both stages; at the idle snapshot
+the RTX margin beyond that headroom was 220,824,340 B. K37 also passed offline
+admission with these sizes, but was not run.
+
+The bounded K36 run passed one warmup, three 1,977-token requests with a
+32-token generation cap, and one 32,788-token request. It matched the
+historical output-ID fixtures and recall checks, consumed the complete fresh
+input on each request with zero prompt reuse, and the larger first-stage
+handoff was consumed as 512-token sub-chunks. After the warmup, all four
+measured requests reported 0.0 MB of expert source reads. The warmup itself
+reported 77,024.6 MB of expert reads; this is not counted as a measured
+post-warmup request and is retained in the raw counters.
+
+The three short-prefill times were 1,410.7, 1,396.8 and 1,409.0 ms (median
+1,409.0 ms); the 32,788-token prefill was 15,529.8 ms. The historical uniform
+1,024-token K37 run reported a 1,368.6 ms short median and 20,237.2 ms for its
+32,788-token request. This is descriptive only: the split differs and the
+runs were not contemporaneous.
+
+The minimum sampled free VRAM during the K36 run was 256,835,584 B
+(245 MiB) on RTX 3090 and 1,675,952,128 B (1,598.5 MiB) on CMP 170HX. Minimum
+host `MemAvailable` was 16,599,871,488 B (15.46 GiB), above the 5 GiB stop
+threshold. The engine and PCIe monitor exited with code 0, and no compute
+process remained. The small observed RTX margin is a real risk; this one
+successful run is not a memory-safety guarantee. The discretionary GPU
+reserves were zero on both cards, the external free-VRAM abort was disabled,
+and the mandatory 512 MiB prompt-init and CUDA allocation checks remained
+enabled. The guarded run did not use near-limit, 128K or 262K prompts.
+
+Raw logs, monitor samples, request outputs, source-ledger data, checks,
+provenance and checksums are in
+`bench/results/2026-10-17-cmp170hx-rtx3090-k36-stage-prefill-2048-512/`.
+CUDA targets `strata`, `strata_kq` and `strata-split-memory` were built.
+HIP and SYCL were not tested.
 
 Host RAM is a separate constraint. `--resident-budget-gib` caps only the resident expert copy. This model's
 PLE file is 28,800,138,240 bytes: use `--ple-io direct` to avoid loading it into RAM. The mapped token embedding
