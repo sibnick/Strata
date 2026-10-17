@@ -71,3 +71,24 @@ python3 -B bench/results/2026-10-17-cmp170hx-rtx3090-k36-stage-prefill-2048-512/
 CUDA targets `strata`, `strata_kq`, and `strata-split-memory` built
 successfully; the split-memory self-test passed. HIP and SYCL were not
 tested. `SHA256SUMS` records the evidence file hashes.
+
+## Local API service
+
+The `api/` folder contains the pinned server config and a host-memory-guarded
+launcher for a local OpenAI/Anthropic-compatible API. It reuses the exact
+tested engine, model pack, expert profile, prefill chunks and environment.
+Start with `bash api/start-api.sh`, stop with `bash api/stop-api.sh`.
+The default URL is `http://127.0.0.1:8080`; the model ID is
+`qwen3.8-flash-next-unsloth-ud-q4_k_xl`. No API key is configured because the
+listener is bound to loopback only. Start requires at least 6 GiB
+`MemAvailable`; the supervisor signals the API server to stop below 5 GiB.
+The engine still performs its own mandatory CUDA allocation/admission checks.
+The service log is `api/server.log`, the engine log is `api/engine.log`, and
+the PID file is `api/server.pid` (runtime files are git-ignored).
+
+The launch has not been tested with near-limit prompts. It sets the engine's
+262,144 context and may allocate the full KV cache during model startup; the
+prior bounded inference checks covered short requests and one 32,788-token
+request only. The lowest measured free RTX memory in that run was 245 MiB.
+Use short API requests initially and do not interpret this launch as
+full-context safety validation.

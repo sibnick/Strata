@@ -142,6 +142,26 @@ provenance and checksums are in
 CUDA targets `strata`, `strata_kq` and `strata-split-memory` were built.
 HIP and SYCL were not tested.
 
+### Starting the tested K36 configuration as a local API
+
+The committed launcher and server config are in that evidence directory's
+`api/` folder. Start the OpenAI- and Anthropic-compatible API with
+`bash bench/results/2026-10-17-cmp170hx-rtx3090-k36-stage-prefill-2048-512/api/start-api.sh`
+and stop it with the sibling `stop-api.sh`. It binds only to
+`127.0.0.1:8080`; no API key is configured or needed for loopback clients.
+The OpenAI base URL is `http://127.0.0.1:8080/v1` and the listed model ID is
+`qwen3.8-flash-next-unsloth-ud-q4_k_xl`. The launcher requires 6 GiB host
+`MemAvailable` before startup and supervises the service, asking it to stop
+below 5 GiB. The engine's mandatory CUDA allocation/admission checks remain
+active with zero discretionary reserves.
+
+The server loads the model and may allocate its full 262,144-cell KV cache
+at startup. Runtime validation so far covered only short prompts and one
+32,788-token prompt; near-limit, 128K and 262K input handling remains
+untested. The lowest sampled RTX free memory was 245 MiB, so do not treat
+this as a full-context safety guarantee. Logs and PID are under the launcher's
+`api/` directory (`server.log`, `engine.log`, `server.pid`).
+
 Host RAM is a separate constraint. `--resident-budget-gib` caps only the resident expert copy. This model's
 PLE file is 28,800,138,240 bytes: use `--ple-io direct` to avoid loading it into RAM. The mapped token embedding
 is 675,430,400 bytes; its accessed pages can become resident. Expert assembly normally retains about 257
