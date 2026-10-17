@@ -76,7 +76,7 @@ void self_test() {
 
 int main(int argc, char** argv) {
     try {
-        std::string pack, native, mtp;
+        std::string pack, native, mtp, draft_vocab;
         std::vector<int64_t> stage_chunks;
         int64_t context = 262144, chunk = 256, additional_reserve_mib = 1024;
         for (int i = 1; i < argc; ++i) {
@@ -88,7 +88,7 @@ int main(int argc, char** argv) {
             if (option == "--help") {
                 std::printf("usage: strata-split-memory --pack DIR --native SHARD1 --mtp DIR "
                             "[--context N] [--chunk N] [--prefill-stage-chunks N,N] "
-                            "[--additional-reserve-mib N]\n"
+                            "[--draft-vocab FILE] [--additional-reserve-mib N]\n"
                             "UD-Q4_K_XL, INT8 KV, K36/K37/K38, owned prefill buffers (96-blob ring),\n"
                             "MTP spec=2 with its default 32768-cell window; no batch, KV streaming or vision.\n"
                             "CSV byte estimates, not a speed prediction or a fit guarantee. Reads headers/index only;\n"
@@ -102,6 +102,7 @@ int main(int argc, char** argv) {
             if (option == "--pack") pack = value;
             else if (option == "--native") native = value;
             else if (option == "--mtp") mtp = value;
+            else if (option == "--draft-vocab") draft_vocab = value;
             else if (option == "--prefill-stage-chunks") {
                 size_t start = 0;
                 while (start < value.size()) {
@@ -203,7 +204,8 @@ int main(int argc, char** argv) {
         const uint64_t mtp_dense = std::filesystem::file_size(mtp + "/dense.bin");
         const uint64_t mtp_experts = std::filesystem::file_size(mtp + "/experts.bin");
         const uint64_t mtp_files = mtp_dense + mtp_experts;
-        const uint64_t vocab_bytes = std::filesystem::file_size(mtp + "/draft_vocab.bin");
+        const std::string vocab_path = draft_vocab.empty() ? mtp + "/draft_vocab.bin" : draft_vocab;
+        const uint64_t vocab_bytes = std::filesystem::file_size(vocab_path);
         if (!vocab_bytes || vocab_bytes % 4 || vocab_bytes / 4 > (uint64_t) geometry.n_vocab)
             throw std::runtime_error("invalid MTP draft vocabulary size");
         const uint64_t draft_head = allocation_bytes(vocab_bytes / 4 * (head / geometry.n_vocab));

@@ -170,6 +170,71 @@ untested. The lowest sampled RTX free memory was 245 MiB, so do not treat
 this as a full-context safety guarantee. Logs and PID are under the launcher's
 `api/` directory (`server.log`, `engine.log`, `server.pid`).
 
+### Root runner for the current K36 source
+
+`run-170hx-3090.sh` at the repository root builds the current checkout for
+CUDA sm_80 and sm_86, checks the K36 memory ledger using the Cyrillic MTP
+draft vocabulary, and starts a guarded loopback API. The recipe preserves the
+bounded-tested K36 settings above: CMP first, split 36, INT8 KV at 262,144
+cells, prefill chunks 2,048/512, resident GPU-owned experts, MMQ K-quant and
+batched gather. This is the best validated recipe for this machine, not a
+claim that every setting is globally optimal.
+
+Cyrillic support here is **MTP draft-vocabulary coverage**, not n-gram/PLE
+processing. The runner uses the checked-in `data/draft_vocab_cyrillic.bin`
+with `--mtp-draft-vocab`; it does not alter model tokenization, the n-gram
+table, or PLE settings.
+
+From the checkout root, configure the model data paths if they are not at the
+defaults. The defaults are `build/pack/ud-q4-k-xl` for the current checkout
+and `$HOME/projects/Strata-data` for the external model data. The expert
+profile defaults to `data/expert-profile.bin` in the checkout; set
+`STRATA_EXPERT_PROFILE` if it is stored elsewhere. The runner fails with the missing path
+instead of silently using an older binary or another worktree's files:
+
+```sh
+export STRATA_PACK="$PWD/build/pack/ud-q4-k-xl"
+export STRATA_NATIVE="$HOME/projects/Strata-data/models/UD-Q4_K_XL/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00001-of-00004.gguf"
+export STRATA_MTP="$HOME/projects/Strata-data/mtp/rt"
+export STRATA_EXPERT_PROFILE="$PWD/data/expert-profile.bin"
+./run-170hx-3090.sh build
+./run-170hx-3090.sh check
+./run-170hx-3090.sh start
+curl http://127.0.0.1:8080/health
+./run-170hx-3090.sh status
+./run-170hx-3090.sh stop
+```
+
+`build` compiles `strata`, `strata_kq`, and `strata-split-memory` into the
+ignored `build/cuda-170hx-3090/` directory from the current source, with
+`STRATA_MMQ_TAB=OFF`. `check` runs the source ledger with the same Cyrillic
+draft-vocabulary file passed to inference, requires at least 6 GiB host
+`MemAvailable`, verifies physical GPU order, and checks each K36 stage against
+its free VRAM plus the mandatory 512 MiB prompt-init headroom. The ledger
+initializes CUDA and allocates bounded metadata/pinned staging memory; it
+does not load model weights or start inference. Check and startup refuse to
+overlap an existing NVIDIA compute process. `start` repeats admission using
+a fresh snapshot. Runtime config, ledger output, PID and logs stay under the
+ignored build directory.
+
+The runner keeps discretionary CUDA reserves at 0 MiB, adds no external
+free-VRAM abort, binds only to `127.0.0.1:8080`, and refuses startup below
+6 GiB host availability; its supervisor asks the API to stop below 5 GiB.
+Engine-side CUDA allocation/admission checks remain on. The RTX 3090 had only
+245 MiB free at the low point of the pre-merge bounded K36 run, and upstream
+changes have not been validated with inference on this machine. The ledger
+must pass on the actual machine before starting; a pass is not a guarantee
+against later memory pressure. Start with short prompts. Near-limit, 128K and
+262K prompt handling are not validated. The merged-source runner has not yet
+been smoke-tested, so use `check` and review its report before `start`.
+
+On the measured machine snapshot (2026-10-18), the current-source ledger
+including the 58,963-token Cyrillic subset passed with 254,568,116 B of RTX
+margin after mandatory prompt-init headroom; CMP margin was 1,733,296,128 B.
+The RTX margin is only about 243 MiB. This is an offline estimate, not a
+loaded-engine measurement, so do not treat the pass as a guarantee that
+startup or inference will fit.
+
 Host RAM is a separate constraint. `--resident-budget-gib` caps only the resident expert copy. This model's
 PLE file is 28,800,138,240 bytes: use `--ple-io direct` to avoid loading it into RAM. The mapped token embedding
 is 675,430,400 bytes; its accessed pages can become resident. Expert assembly normally retains about 257
