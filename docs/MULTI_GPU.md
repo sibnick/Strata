@@ -155,6 +155,14 @@ The OpenAI base URL is `http://127.0.0.1:8080/v1` and the listed model ID is
 below 5 GiB. The engine's mandatory CUDA allocation/admission checks remain
 active with zero discretionary reserves.
 
+The first real API smoke test passed: `/health` reported the model loaded,
+`/v1/models` listed the expected ID, and a short OpenAI-compatible completion
+returned `API_READY`. After full engine startup it reported 330 MiB free on
+the RTX 3090 with a low-free-memory warning; a later snapshot was 317 MiB.
+The smoke request passed, but this leaves little room for competing GPU work.
+The supervisor and API server PIDs and sanitized smoke result are recorded
+in the evidence directory.
+
 The server loads the model and may allocate its full 262,144-cell KV cache
 at startup. Runtime validation so far covered only short prompts and one
 32,788-token prompt; near-limit, 128K and 262K input handling remains

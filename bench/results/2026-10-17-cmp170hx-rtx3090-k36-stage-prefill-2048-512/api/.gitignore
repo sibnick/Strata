@@ -1,3 +1,6 @@
 server.log
 engine.log
 server.pid
+health.json
+models.json
+smoke.json
