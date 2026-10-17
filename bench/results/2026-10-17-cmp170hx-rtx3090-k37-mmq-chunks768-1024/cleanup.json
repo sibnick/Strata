@@ -1,0 +1,15 @@
+{
+  "compute_processes": "",
+  "own_pids_alive": {
+    "768": {
+      "855669": false,
+      "855667": false
+    },
+    "1024": {
+      "867257": false,
+      "867255": false
+    }
+  },
+  "runtime_diff": "",
+  "gpu_state": "0, GPU-01f295eb-2ee0-838a-ba5b-db97f075a5f7, 24096 MiB, 300.00 W\n1, GPU-79d96de3-4783-ba96-d95c-fe5e0364528e, 64897 MiB, 250.00 W\n"
+}

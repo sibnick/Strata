@@ -1,0 +1,13 @@
+{
+  "authorization_scope_held": true,
+  "host_guard_held": true,
+  "no_unrelated_compute": true,
+  "unchanged_runtime_binary_dso_artifacts": true,
+  "bounded_schedule": true,
+  "no_gpu_free_abort_threshold": true,
+  "no_compute_after": true,
+  "arm_statuses": {
+    "768": "passed",
+    "1024": "passed"
+  }
+}
