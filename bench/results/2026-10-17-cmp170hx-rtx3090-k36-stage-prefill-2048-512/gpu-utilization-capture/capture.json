@@ -1,0 +1,79 @@
+{
+  "admission": {
+    "0": {
+      "free_bytes": 68049436672,
+      "margin_bytes": 1733296128,
+      "physical_gpu": 1,
+      "required_including_mandatory_512_mib_headroom_bytes": 66316140544
+    },
+    "1": {
+      "free_bytes": 25265438720,
+      "margin_bytes": 220824340,
+      "physical_gpu": 0,
+      "required_including_mandatory_512_mib_headroom_bytes": 25044614380
+    }
+  },
+  "dmon_return_code": 0,
+  "engine_pid": 324145,
+  "engine_return_code": 0,
+  "environment": {
+    "STRATA_FILL_AHEAD": "0",
+    "STRATA_IO_PREFETCH": "0",
+    "STRATA_MMQ_KQ": "1",
+    "STRATA_PIN_RESERVE_GIB": "4",
+    "STRATA_PREFILL_BATCH_GATHER": "1",
+    "STRATA_REFILL_BLOCKING": "1",
+    "STRATA_RESIDENT_HEADROOM_GIB": "4",
+    "STRATA_SPLIT_RING": "96",
+    "STRATA_STAGE_PIN": "0",
+    "STRATA_UNBUFFERED_LOAD": "1"
+  },
+  "finished_utc": "2026-10-17T19:39:31.481+00:00",
+  "generation_cap": 32,
+  "initial_gpu_memory": {
+    "0": {
+      "free_bytes": 25265438720,
+      "name": "NVIDIA GeForce RTX 3090"
+    },
+    "1": {
+      "free_bytes": 68049436672,
+      "name": "NVIDIA CMP 170HX"
+    }
+  },
+  "initial_mem_available_bytes": 21016907776,
+  "instrumentation": {
+    "STRATA_PREFILL_TIMING": "1"
+  },
+  "min_gpu_free_bytes": {
+    "0": 290455552,
+    "1": 1716518912
+  },
+  "min_host_available_bytes": 16299675648,
+  "other_compute_after": "",
+  "phase_lines": [
+    "strata prefill timing: 1976 tokens, GPU timeline 3676 ms, wall 3771 ms, host staging 0 ms: embed+steps 8 (0.2%) hc read 123 (3.3%) gdn 138 (3.8%) qsa proj 20 (0.6%) qsa indexer 0 (0.0%) qsa select 3 (0.1%) qsa attn 25 (0.7%) router+shared 12 (0.3%) host grouping 15 (0.4%) gather 7 (0.2%) dequant 98 (2.7%) gemm gate/up 235 (6.4%) gemm down 152 (4.1%) combine 2756 (75.0%) ple 3 (0.1%) gdn conv+gates 6 (0.2%) gdn recurrence 56 (1.5%) gdn out proj 18 (0.5%)",
+    "strata prefill timing: host: chunk setup (PLE rows, the expert stream plan) 0 ms, waiting for each chunk 0 ms, after each chunk (the draft layer, progress) 0 ms, PLE 2737 ms",
+    "strata prefill timing: 1976 tokens, GPU timeline 362 ms, wall 377 ms, host staging 0 ms: embed+steps 56 (15.5%) hc read 24 (6.6%) gdn 32 (8.7%) qsa proj 15 (4.1%) qsa indexer 0 (0.0%) qsa select 1 (0.2%) qsa attn 9 (2.6%) router+shared 9 (2.5%) host grouping 2 (0.4%) gather 2 (0.5%) dequant 61 (17.0%) gemm gate/up 70 (19.2%) gemm down 44 (12.2%) combine 9 (2.4%) gdn conv+gates 3 (0.8%) gdn recurrence 12 (3.4%) gdn out proj 14 (4.0%)",
+    "strata prefill timing: host: chunk setup (PLE rows, the expert stream plan) 0 ms, waiting for each chunk 13 ms, after each chunk (the draft layer, progress) 68 ms, PLE 0 ms",
+    "DONE 2 1977 4152.0 69.2 stop 0 1 0 0 0 0 0 0.0 1977 0"
+  ],
+  "prompt_tokens": 1977,
+  "request_finished_utc": "2026-10-17T19:39:29.744+00:00",
+  "request_result": "DONE 2 1977 4152.0 69.2 stop 0 1 0 0 0 0 0 0.0 1977 0",
+  "request_started_utc": "2026-10-17T19:39:25.520+00:00",
+  "runtime": {
+    "gpu": "1,0",
+    "kv": "int8",
+    "layer_split": 36,
+    "max_context": 262144,
+    "speculative_generation": "unchanged",
+    "stage_chunks": [
+      2048,
+      512
+    ]
+  },
+  "sample_count": 145,
+  "started_utc": "2026-10-17T19:36:58.320+00:00",
+  "synthetic_prompt_ids_sha256": "f8be31f244c3b12a4456cac0764727a28b42258b24b9001127fb23dacfc540e4",
+  "synthetic_prompt_seed": 1792265818
+}
