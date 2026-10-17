@@ -18,7 +18,7 @@ from urllib.request import urlopen
 OUT = Path(__file__).resolve().parent
 ROOT = OUT.parents[2]
 CONFIG = OUT / "api/strata-api.json"
-CAPTURE = OUT / "gpu-utilization-capture-ncu-cmp-sm80-1gib"
+CAPTURE = OUT / "gpu-utilization-capture-ncu-cmp-sm80-512mib"
 PRIOR_CAPTURE = OUT / "gpu-utilization-capture-cuda-timeline-cmp-sm80/capture.json"
 PROXY = OUT / "nsys_engine_proxy.py"
 SHORT_RUN = OUT.parent / "2026-10-17-cmp170hx-rtx3090-k37-mmq-batched-gather/run.py"
@@ -27,7 +27,7 @@ TOKEN_COUNT = 1977
 OUTPUT_CAP = 32
 GIB = 1 << 30
 MIB = 1 << 20
-HOST_LIMIT_BYTES = GIB
+HOST_LIMIT_BYTES = 512 * MIB
 METRICS = (
     "gpu__time_duration.avg,"
     "sm__throughput.avg.pct_of_peak_sustained_elapsed,"
@@ -203,7 +203,7 @@ def main():
     if api_is_listening():
         raise RuntimeError("port 8080 is active; this capture never stops or restarts the API")
     if mem_available() < HOST_LIMIT_BYTES:
-        raise RuntimeError("host MemAvailable is below the 1 GiB startup threshold")
+        raise RuntimeError("host MemAvailable is below the 512 MiB startup threshold")
     active = compute_processes()
     if active:
         raise RuntimeError(f"GPU compute process exists; refusing to overlap: {active}")
@@ -313,7 +313,7 @@ def main():
         },
         "memory_policy": {
             "engine_reserves_mib": [0, 0], "external_gpu_free_abort": False,
-            "host_start_gib": 1, "host_stop_gib": 1,
+            "host_start_mib": 512, "host_stop_mib": 512,
             "mandatory_cuda_admission": True, "mandatory_prompt_init_headroom_mib": 512,
             "cache_flush": False,
         },
@@ -331,6 +331,7 @@ def main():
     messages = queue.Queue()
     start = time.monotonic()
     last_sample = 0.0
+    last_guard_check = 0.0
     phase = "model-startup"
 
     def read_output():
@@ -340,8 +341,12 @@ def main():
         messages.put(None)
 
     def sample():
-        nonlocal last_sample
+        nonlocal last_sample, last_guard_check
         now = time.monotonic()
+        if now - last_guard_check >= 0.1:
+            last_guard_check = now
+            if mem_available() < HOST_LIMIT_BYTES:
+                raise RuntimeError("host MemAvailable fell below the 512 MiB stop threshold")
         if now - last_sample < 1:
             return
         last_sample = now
@@ -354,8 +359,6 @@ def main():
             "process_memory": process_memory_snapshot(os.getpid()),
         }
         monitor.append(row)
-        if row["host_memory"]["mem_available_bytes"] < HOST_LIMIT_BYTES:
-            raise RuntimeError("host MemAvailable fell below the 1 GiB stop threshold")
 
     try:
         with log_path.open("w", buffering=1) as log:

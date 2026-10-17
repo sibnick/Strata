@@ -307,8 +307,10 @@ previous 6/5 GiB host start/stop thresholds and stopped during the request.
 After the user explicitly authorized replacing both thresholds with 1 GiB, a
 second attempt added per-process RSS/PSS and host-memory telemetry; its 1 GiB
 stop guard also interrupted the request before any kernel metrics or
-exact-output check were available. No optimization is supported by either
-incomplete attempt. Do not tune the RTX, change PLE, or claim 100% simultaneous
+exact-output check were available. A subsequent user-authorized 512 MiB
+startup/stop threshold with a 100 ms guard check was also reached and
+interrupted the request. No optimization is supported by these incomplete
+attempts. Do not tune the RTX, change PLE, or claim 100% simultaneous
 utilization from these captures.
 
 ### Bounded Nsight Compute attempt
@@ -359,9 +361,43 @@ and sanitized profiler log are retained in
 `gpu-utilization-capture-ncu-cmp-sm80/` and
 `gpu-utilization-capture-ncu-cmp-sm80-1gib/`; no prompt or response text was
 saved.
-The retry added per-process RSS/PSS and host counters. Before another model
-load, the remaining investigation is to identify the target process mappings
-that grow during request execution, using existing source/log evidence or a
-separate non-inference memory probe. Keep the 1 GiB user-authorized floor; do
-not retry kernel replay unchanged or switch to full-application replay without
-a separate memory plan.
+The 1 GiB retry added per-process RSS/PSS and host counters. Before another
+model load, the remaining investigation is to identify the target process
+mappings that grow during request execution, using existing source/log
+evidence or a separate non-inference memory probe. Do not retry kernel replay
+unchanged or switch to full-application replay without a separate memory plan.
+
+### User-authorized 512 MiB host-threshold attempt
+
+The user then explicitly requested one attempt with both host startup and stop
+thresholds set to 512 MiB. The harness retained mandatory CUDA admission and
+the 512 MiB prompt-init headroom, used the exact tested binary, and checked
+the stop floor every 100 ms while sampling process PSS once per second. The
+API remained stopped. It used the same single 1,977-token historical fixture
+with generation cap 32; no additional workload ran.
+
+The engine reached `READY` and the fixture was sent, but the 512 MiB host
+guard terminated the profiler before a `DONE` response. The saved one-second
+samples show a minimum `MemAvailable` of 3.26 GiB; the guard's faster
+sub-second check observed a value below 512 MiB between those samples. Thus
+the sampled minimum is not the instantaneous minimum. The request did not
+complete, generated IDs were unavailable, and no NCU report or kernel metrics
+were produced. Minimum sampled free VRAM was 257 MiB on the RTX 3090 and
+255 MiB on the CMP 170HX.
+
+The engine process PSS rose from about 1.8 GiB early in model startup to
+5.5 GiB near `READY`, then 20.5 GiB in the final one-second sample before
+the guard stopped it. The NCU process PSS remained about 0.2 GiB. During the
+same request window, system `Cached` rose from about 7.9 to 19.7 GiB. These
+samples show that the engine's charged mappings grew rapidly alongside
+file-cache growth, but cannot distinguish model/expert file mappings,
+profiler-managed mappings in the target process, or cache effects. This
+attempt therefore still does not establish that the n-gram table was loaded
+into memory or identify the responsible engine mapping.
+
+Cleanup completed: no engine, NCU process, or API listener remained, and
+host memory recovered. The sanitized metadata, per-process samples, and NCU
+log are in `gpu-utilization-capture-ncu-cmp-sm80-512mib/`. No prompt or
+response text was saved. Do not lower the host threshold further or repeat
+kernel replay unchanged; identify the growing mappings before another model
+load.

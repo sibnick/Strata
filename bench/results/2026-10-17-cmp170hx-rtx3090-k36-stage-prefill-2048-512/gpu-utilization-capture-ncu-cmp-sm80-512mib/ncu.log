@@ -1,0 +1,4 @@
+ENGINE_PID 892179
+==WARNING== Note: Running with uncontrolled GPU caches. Profiling results may be inconsistent.
+==PROF== Connected to process 892179 (/home/nikolay/projects/copilot-worktrees/170hx-3090/sibnick-expert-system/build/cuda-per-stage/strata)
+READY 262144 stop
