@@ -1,0 +1,11 @@
+{
+  "checksums": "recorded in SHA256SUMS",
+  "cuda_build_targets_strata_strata_kq_and_split_memory": "passed",
+  "gpu_correctness_handoff_and_expert_read_tests": "not_run",
+  "hip_and_sycl": "not_tested",
+  "k36_mandatory_prompt_init_admission": "blocked_on_rtx3090",
+  "k37_mandatory_prompt_init_admission": "passed_offline_only",
+  "per_stage_cpu_contract_tests": "passed",
+  "source_ledger_k36_raw_free_memory_fit": "passed",
+  "split_memory_self_test": "passed"
+}

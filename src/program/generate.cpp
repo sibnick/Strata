@@ -535,6 +535,8 @@ struct Options {
     int vram_reserve_later_mib = -1;
     /// Plan v0.3 P5: batched prompt processing in chunks of this many tokens (0 = the token path).
     int64_t prefill_chunk = 0;
+    std::string prefill_stage_chunks;
+    bool prefill_stage_chunks_given = false;
     /// `--prefill auto`: the largest chunk (up to 8192) whose buffers the expert cache can lend.  Every expert a chunk
     /// routes to is streamed once per chunk, so a bigger chunk streams fewer bytes per token (the "ubatch" effect).
     bool prefill_auto = false;
@@ -849,6 +851,8 @@ void usage() {
                  "  --prefill CHUNK      batched prompt processing in chunks of CHUNK tokens (needs --native); auto =\n"
                  "                       the largest chunk up to 8192 whose buffers the expert cache can lend;\n"
                  "                       auto:16384 / auto:32768 (or STRATA_PREFILL_AUTO_MAX) allow bigger ones\n"
+                 "  --prefill-stage-chunks N[,N...]  --serve, fully owned layer split: per-stage chunk sizes in GPU order;\n"
+                 "                       stage 0 must match --prefill (default: the same chunk on every stage)\n"
                  "  --no-pool            skip the CPU expert pool (the GPU-only floor)\n"
                  "  --sync-every-layer   debug: synchronise after every layer\n"
                  "  --ple-gguf PATH      the n-gram/PLE shard.  WITHOUT IT LAYER 1's PLE IS SILENTLY SKIPPED,\n"
@@ -2072,6 +2076,10 @@ int main(int argc, char** argv) {
                                  v.c_str(), (long long) strata::platform::host_limits::kWinHipAutoChunkCap);
             }
         }
+        else if (a == "--prefill-stage-chunks") {
+            o.prefill_stage_chunks = next("--prefill-stage-chunks");
+            o.prefill_stage_chunks_given = true;
+        }
         else if (a == "--no-split-rows") o.no_split_rows = true;
         else if (a == "--no-prefill-borrow") o.no_prefill_borrow = true;
         else if (a == "--vram-elastic") o.vram_elastic = true;
@@ -2413,6 +2421,48 @@ int main(int argc, char** argv) {
         }
     }
     bool multi_gpu = !split_devs.empty() && !split_same;   // cleared by --split-skip-if-fits before any stage loads
+    std::vector<int64_t> prefill_stage_chunks;
+    if (o.prefill_stage_chunks_given) {
+        if (!multi_gpu || split_auto || !o.gpu_owned_experts || o.prefill_auto_requested || o.prefill_chunk <= 0) {
+            std::fprintf(stderr, "strata generate: --prefill-stage-chunks requires an explicit multi-GPU "
+                                 "--layer-split, --gpu-owned-experts, and an explicit --prefill chunk\n");
+            return 2;
+        }
+        size_t start = 0;
+        while (start < o.prefill_stage_chunks.size()) {
+            const size_t end = o.prefill_stage_chunks.find(',', start);
+            const std::string value = o.prefill_stage_chunks.substr(
+                start, end == std::string::npos ? std::string::npos : end - start);
+            long long chunk = 0;
+            const char* first = value.data();
+            const char* last = first + value.size();
+            const auto parsed = std::from_chars(first, last, chunk);
+            if (value.empty() || parsed.ec != std::errc() || parsed.ptr != last || chunk <= 0 ||
+                chunk > o.max_context) {
+                std::fprintf(stderr, "strata generate: --prefill-stage-chunks expects positive chunk sizes no "
+                                     "larger than --max-context\n");
+                return 2;
+            }
+            prefill_stage_chunks.push_back((int64_t) chunk);
+            if (end == std::string::npos) break;
+            start = end + 1;
+        }
+        if (o.prefill_stage_chunks.empty() || o.prefill_stage_chunks.back() == ',' ||
+            prefill_stage_chunks.size() != split_at.size() + 1 ||
+            prefill_stage_chunks.front() != o.prefill_chunk) {
+            std::fprintf(stderr, "strata generate: --prefill-stage-chunks needs one size per split stage, and its "
+                                 "first size must equal --prefill\n");
+            return 2;
+        }
+        std::fprintf(stderr, "strata generate: per-stage prefill chunks:");
+        for (size_t i = 0; i < prefill_stage_chunks.size(); ++i)
+            std::fprintf(stderr, " CUDA%d=%lld", i == 0 ? 0 : split_devs[i - 1],
+                         (long long) prefill_stage_chunks[i]);
+        std::fprintf(stderr, "\n");
+    }
+    auto prefill_stage_chunk = [&](size_t stage) {
+        return prefill_stage_chunks.empty() ? o.prefill_chunk : prefill_stage_chunks[stage];
+    };
     bool split_own_auto = false;   // #340: the split keeps own prompt buffers by its rule (not --no-prefill-borrow)
     if (o.gpu_owned_experts) {
         const bool remote_requested = o.expert_cache_remote[0] > 0 || o.expert_cache_remote[1] > 0 ||
@@ -3769,13 +3819,25 @@ int main(int argc, char** argv) {
     // (#340: the estimate predates the streamed ring: from 1024-token chunks the prompt path also holds a ring of
     // whole expert blobs, which a split without borrowing sizes at 96 (Prefill::set_ring_override below) and books
     // here - without it a `--no-prefill-borrow` split filled the cards and the draft head no longer fit)
+    const bool split_ring_enabled =
+        multi_gpu && !pf_borrow &&
+        (prefill_stage_chunks.empty()
+             ? o.prefill_chunk >= 1024
+             : *std::max_element(prefill_stage_chunks.begin(), prefill_stage_chunks.end()) >= 1024);
     const int64_t split_ring_mib =
-        (multi_gpu && !pf_borrow && o.prefill_chunk >= 1024)
+        split_ring_enabled
             ? (int64_t) ((96ull * (uint64_t) strata::kernels::cpu::expert_layout().max_blob + (1ull << 20) - 1) >> 20)
             : 0;
     if (split_ring_mib > 0) strata::prefill::Prefill::set_ring_override(96);
     const int64_t split_pf_mib =
         (o.prefill_chunk > 0 && !pf_borrow) ? 160 + (o.prefill_chunk * 680) / 1024 + split_ring_mib : 0;
+    auto split_pf_mib_for_stage = [&](size_t stage) {
+        if (prefill_stage_chunks.empty()) return split_pf_mib;
+        const int64_t chunk = prefill_stage_chunk(stage);
+        const int64_t ring_mib = split_ring_mib > 0 && strata::prefill::Prefill::ring_slots_for(chunk) > 0
+                                     ? split_ring_mib : 0;
+        return chunk > 0 && !pf_borrow ? 160 + (chunk * 680) / 1024 + ring_mib : 0;
+    };
     // ---- WHAT A STAGE RESERVES, AND ON WHICH STAGE.  The flat 1 GiB this used to withhold from EVERY stage
     // after the first was booked "for its windows and the drafter", but the windows measure 75 MiB ("window up
     // to 6 tokens, 74.1 MiB of device buffers", on every boot) and the drafter is loaded on ONE stage - the
@@ -3835,13 +3897,13 @@ int main(int argc, char** argv) {
         const char* v = std::getenv("STRATA_SPLIT_OWN_PLACE");
         return v != nullptr && std::string(v) == "reserve";
     }();
-    auto stage_room = [&](int dev, bool later, bool drafter, bool search = false) -> int64_t {
+    auto stage_room = [&](size_t stage, int dev, bool later, bool drafter, bool search = false) -> int64_t {
         const strata::core::OnDevice on(dev);
         size_t fb = 0, tb = 0;
         if (const cudaError_t e = cudaMemGetInfo(&fb, &tb); e != cudaSuccess)
             std::fprintf(stderr, "strata generate: layer split: CUDA%d free memory: %s\n", dev < 0 ? 0 : dev,
                          cudaGetErrorString(e));
-        const int64_t pf = search && split_own_auto && !place_with_reserve ? 0 : split_pf_mib;
+        const int64_t pf = search && split_own_auto && !place_with_reserve ? 0 : split_pf_mib_for_stage(stage);
         const int64_t base_reserve =
             later && o.vram_reserve_later_mib >= 0 ? o.vram_reserve_later_mib : o.vram_reserve_mib;
         const int64_t reserve = (base_reserve + pf + (later ? kWindowMib : kPipeSnapMib) +
@@ -3860,7 +3922,8 @@ int main(int argc, char** argv) {
         std::vector<double> layer_ms((size_t) ns);
         for (int i = 0; i < ns; ++i) {
             const int dev = i == 0 ? 0 : stages[(size_t) i - 1]->dev;
-            cap[(size_t) i] = stage_room(i == 0 ? -1 : dev, i > 0, mtp_first ? i == 0 : i + 1 == ns, true);
+            cap[(size_t) i] = stage_room((size_t) i, i == 0 ? -1 : dev, i > 0,
+                                         mtp_first ? i == 0 : i + 1 == ns, true);
             int sms = 0, khz = 0;
             cudaDeviceGetAttribute(&sms, cudaDevAttrMultiProcessorCount, dev);
             if (cudaDeviceGetAttribute(&khz, cudaDevAttrClockRate, dev) != cudaSuccess || khz <= 0) khz = 1800000;
@@ -5157,15 +5220,15 @@ int main(int argc, char** argv) {
     // 160 + chunk * 680 / 1024 (~16 GiB at 24576 against ~2.4 GiB really allocated); STRATA_OWNED_PRICE=exact prices the
     // real allocation instead (Prefill::bytes_needed_owned: 2 MiB pages, the ring in one piece, as PR #796 measured)
     // and gives that cache the difference.  A recommendation to try, so it is not the default.
-    auto owned_prefill_mib = [&]() -> int64_t {
-        if (!(o.prefill_chunk > 0 && !pf_borrow)) return 0;
+    auto owned_prefill_mib = [&](int64_t chunk) -> int64_t {
+        if (!(chunk > 0 && !pf_borrow)) return 0;
         const char* price = std::getenv("STRATA_OWNED_PRICE");
         const bool exact = o.gpu_owned_experts || (price != nullptr && std::string(price) == "exact");
-        if (!exact) return 160 + (o.prefill_chunk * 680) / 1024;
-        const int64_t mib = ((int64_t) strata::prefill::Prefill::bytes_needed_owned(g, ss, o.prefill_chunk, srcp != nullptr) + (1 << 20) - 1) >> 20;
+        if (!exact) return 160 + (chunk * 680) / 1024;
+        const int64_t mib = ((int64_t) strata::prefill::Prefill::bytes_needed_owned(g, ss, chunk, srcp != nullptr) + (1 << 20) - 1) >> 20;
         std::fprintf(stderr, "strata generate: %s: the prompt path's own buffers for a %lld-token chunk: %lld MiB (the 0.1.39 rule: %lld MiB)\n",
                      o.gpu_owned_experts ? "--gpu-owned-experts exact prefill pricing" : "STRATA_OWNED_PRICE=exact",
-                     (long long) o.prefill_chunk, (long long) mib, (long long) (160 + (o.prefill_chunk * 680) / 1024));
+                     (long long) chunk, (long long) mib, (long long) (160 + (chunk * 680) / 1024));
         return mib + 64;   // a margin for the allocator
     };
     std::vector<uint64_t> ownership_layer_bytes;
@@ -5223,7 +5286,7 @@ int main(int argc, char** argv) {
             }
 #endif
         }
-        const int64_t prefill_mib = owned_prefill_mib();
+        const int64_t prefill_mib = owned_prefill_mib(prefill_stage_chunk(0));
         // the draft layer's head and logits are allocated when it binds, after this: 0.1.27's CJK subset made them
         // ~110-180 MiB larger, and out of the reserve they left 16 GB cards below the stall line (#199)
         int64_t mtp_bind = (!o.mtp.empty() && native_head.loaded())
@@ -5317,7 +5380,7 @@ int main(int argc, char** argv) {
         // slots instead and `prefill_mib` is 0, so only the reserve is checked)
         size_t free_b = 0, total_b = 0;
         free_b = strata::core::device_free_bytes(); (void) total_b;
-        const int64_t prefill_mib = owned_prefill_mib();
+        const int64_t prefill_mib = owned_prefill_mib(prefill_stage_chunk(0));
         const int64_t reserve = (((int64_t) o.vram_reserve_mib + prefill_mib) << 20) + pipe_first;
         const int64_t fit = std::max<int64_t>(((int64_t) free_b - reserve) / (int64_t) strata::kernels::cpu::expert_layout().max_blob, 0);
         if (o.expert_cache > fit) {
@@ -5467,7 +5530,7 @@ int main(int argc, char** argv) {
                                      "its assigned layer range\n");
                 return 1;
             }
-            const int64_t prefill_mib = owned_prefill_mib();
+            const int64_t prefill_mib = owned_prefill_mib(prefill_stage_chunk(0));
             const int64_t mtp_bind = (!o.mtp.empty() && native_head.loaded())
                                          ? (int64_t) mtp.bind_bytes(native_head.row_bytes(), n_vocab)
                                      : (mtp_first && last_st->head.loaded())
@@ -5749,24 +5812,32 @@ int main(int argc, char** argv) {
         }
     }
 
-    for (auto& stp : stages) {
+    for (size_t stage_index = 0; stage_index < stages.size(); ++stage_index) {
+        auto& stp = stages[stage_index];
         GpuStage& st = *stp;
         const auto& lay = strata::kernels::cpu::expert_layout();
         // the drafter and the head are already allocated by now (they load above, before this), so what is left
         // to hold back is the windows - and `free_b` has already lost the drafter.
-        int64_t room = stage_room(st.dev, true, false);
+        int64_t room = stage_room(stage_index + 1, st.dev, true, false);
         const strata::core::OnDevice on(st.dev);
         uint64_t required = 0, required_slots = 0;
         if (o.gpu_owned_experts) {
             uint64_t extra_reserve = 0;
             uint64_t exact_prefill_extra = 0;
             uint64_t mtp_bind_reserve = 0;
-            if (o.prefill_chunk > 0 && !pf_borrow) {
+            const int64_t stage_chunk = prefill_stage_chunk(stage_index + 1);
+            if (stage_chunk > 0 && !pf_borrow) {
                 const uint64_t owned_bytes = strata::prefill::Prefill::bytes_needed_owned(
-                    g, st.ss, o.prefill_chunk, srcp != nullptr);
+                    g, st.ss, stage_chunk, srcp != nullptr);
                 const uint64_t exact_prefill_reserve =
                     ((owned_bytes + (1ull << 20) - 1) >> 20) + 64;
-                const uint64_t estimated_prefill_reserve = (uint64_t) std::max<int64_t>(0, split_pf_mib);
+                const uint64_t estimated_prefill_reserve =
+                    (uint64_t) std::max<int64_t>(0, split_pf_mib_for_stage(stage_index + 1));
+                if (!prefill_stage_chunks.empty())
+                    std::fprintf(stderr, "strata generate: --prefill-stage-chunks: CUDA%d chunk %lld exact scratch "
+                                         "%llu bytes; conservative reserve %llu MiB\n",
+                                 st.dev, (long long) stage_chunk, (unsigned long long) owned_bytes,
+                                 (unsigned long long) estimated_prefill_reserve);
                 if (exact_prefill_reserve > estimated_prefill_reserve)
                     exact_prefill_extra = (exact_prefill_reserve - estimated_prefill_reserve) << 20;
                 extra_reserve += exact_prefill_extra;
@@ -7912,7 +7983,8 @@ int main(int argc, char** argv) {
                     sbb = part_bytes(pf_parts[i + 1], pf_parts[i + 1].first);
                 }
                 if (share_pool) st.sp.set_cpu_pool(&pool);   // one stage at a time takes it for a chunk (prefill.cpp)
-                if (!st.sp.init(st.wt, g, st.ss, srcp, &st.cache, host_res.data(), o.prefill_chunk, (void*) st.stream,
+                if (!st.sp.init(st.wt, g, st.ss, srcp, &st.cache, host_res.data(), prefill_stage_chunk(i + 1),
+                                (void*) st.stream,
                                 err, sb, sbb)) {
                     err = "layer split, CUDA" + std::to_string(st.dev) + " prompt path: " + err;
                     return err.find("do not fit") != std::string::npos ? 2 : 1;
@@ -7920,13 +7992,13 @@ int main(int argc, char** argv) {
             }
             if (multi_gpu) sp.set_stage(0, split_at[0], &stages[0]->sp);
             if (share_pool) sp.set_cpu_pool(&pool);
-            if (!sp.init(wt, g, ss, prefill_src, &xcache, host_res.data(), o.prefill_chunk, main_cs, err, borrow, borrow_bytes,
+            if (!sp.init(wt, g, ss, prefill_src, &xcache, host_res.data(), prefill_stage_chunk(0), main_cs, err, borrow, borrow_bytes,
                          o.prefill_head_alias))
                 return err.find("do not fit") != std::string::npos ? 2 : 1;
             return 0;
         };
         static constexpr int64_t kStepChunks[] = {6144, 4096, 3072, 2048, 1536, 1024, 512};
-        {
+        if (prefill_stage_chunks.empty()) {
             // First by arithmetic: a prompt path without a loan allocates its buffers, so the chunk must leave
             // headroom on that device (a chunk that fits to the last MiB left hipBLAS nothing: its GEMMs then
             // failed to launch on gfx1201 and the prompt hung).  `bytes_needed` is the same count `init` makes.
@@ -7963,6 +8035,32 @@ int main(int argc, char** argv) {
                     o.prefill_chunk = c;
                 }
             }
+        } else {
+            if (borrow != nullptr || any_loan) {
+                std::fprintf(stderr, "strata serve: --prefill-stage-chunks requires owned prompt buffers on every stage\n");
+                return 1;
+            }
+            for (size_t i = 0; i <= stages.size(); ++i) {
+                const int dev = i == 0 ? -1 : stages[i - 1]->dev;
+                const strata::core::SessionState& session = i == 0 ? ss : stages[i - 1]->ss;
+                const int64_t chunk = prefill_stage_chunk(i);
+                const strata::core::OnDevice on(dev);
+                size_t free_b = 0, total_b = 0;
+                if (cudaMemGetInfo(&free_b, &total_b) != cudaSuccess) {
+                    const cudaError_t e = cudaGetLastError();
+                    std::fprintf(stderr, "strata serve: cannot check CUDA%d capacity for its %lld-token prompt chunk (%s)\n",
+                                 dev < 0 ? 0 : dev, (long long) chunk, cudaGetErrorString(e));
+                    return 1;
+                }
+                const uint64_t need =
+                    strata::prefill::Prefill::bytes_needed_owned(g, session, chunk, srcp != nullptr);
+                if (need + (512ull << 20) > free_b) {
+                    std::fprintf(stderr, "strata serve: CUDA%d needs %llu bytes plus 512 MiB headroom for its "
+                                         "%lld-token prompt chunk, but only %zu bytes are free\n",
+                                 dev < 0 ? 0 : dev, (unsigned long long) need, (long long) chunk, free_b);
+                    return 1;
+                }
+            }
         }
         mem_mark("before the prompt path init");
         for (;;) {
@@ -7971,7 +8069,7 @@ int main(int argc, char** argv) {
             int64_t next = 0;
             for (const int64_t c : kStepChunks)
                 if (c < o.prefill_chunk) { next = c; break; }
-            if (r == 2 && next > 0) {
+            if (r == 2 && next > 0 && prefill_stage_chunks.empty()) {
                 std::fprintf(stderr, "strata serve: %s: trying a %lld-token chunk\n", err.c_str(), (long long) next);
                 // start the prompt paths over (a failed init may hold buffers), and consume the failed allocation's
                 // error: it is sticky, and the next launch check would report "out of memory" for a kernel

@@ -1,0 +1,46 @@
+{
+  "branch": "sibnick-per-stage-prefill-chunk",
+  "engine_sha256": "c13681c5d778f6aff1a9fca0cb7507b53f8d3c22ae4b444c59e9b56b9c38879f",
+  "environment_overrides": {
+    "STRATA_FILL_AHEAD": "0",
+    "STRATA_IO_PREFETCH": "0",
+    "STRATA_MMQ_KQ": "1",
+    "STRATA_PIN_RESERVE_GIB": "4",
+    "STRATA_PREFILL_BATCH_GATHER": "1",
+    "STRATA_REFILL_BLOCKING": "1",
+    "STRATA_RESIDENT_HEADROOM_GIB": "4",
+    "STRATA_SPLIT_RING": "96",
+    "STRATA_STAGE_PIN": "0",
+    "STRATA_UNBUFFERED_LOAD": "1"
+  },
+  "kquant_library_sha256": "0a93ccd8f52a329da586a36e76cf5865a4c3ce0256b80e3da4b28ce937bdf27d",
+  "model_artifact_paths": {
+    "mtp": "/home/nikolay/projects/Strata-data/mtp/rt",
+    "native": "/home/nikolay/projects/Strata-data/models/UD-Q4_K_XL/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00001-of-00004.gguf",
+    "pack": "/home/nikolay/projects/copilot-worktrees/170hx-3090/sibnick-upgraded-succotash/build/pack/ud-q4-k-xl"
+  },
+  "offline_command": [
+    "/home/nikolay/projects/copilot-worktrees/170hx-3090/sibnick-expert-system/build/cuda-per-stage/strata-split-memory",
+    "--pack",
+    "/home/nikolay/projects/copilot-worktrees/170hx-3090/sibnick-upgraded-succotash/build/pack/ud-q4-k-xl",
+    "--native",
+    "/home/nikolay/projects/Strata-data/models/UD-Q4_K_XL/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00001-of-00004.gguf",
+    "--mtp",
+    "/home/nikolay/projects/Strata-data/mtp/rt",
+    "--context",
+    "262144",
+    "--chunk",
+    "2048",
+    "--prefill-stage-chunks",
+    "2048,1024",
+    "--additional-reserve-mib",
+    "0"
+  ],
+  "preflight_runner": "run.py; stopped before engine/PCIe process creation",
+  "source_commit": "44ec3b0becf50aaabd683d35e2389de9bd2ec78a",
+  "source_sha256": {
+    "src/prefill/prefill.cpp": "ff29a2fc2e795a28dda72fc7b187b59d1364c375a063e3a9a21667515a12dbc9",
+    "src/program/generate.cpp": "c9b09e41b00888b45f1993ae29097cc7e0a11b0351fc7a7240b05b6ed607cd07",
+    "src/program/split_memory_ledger.cpp": "76d1035805b137da795b1bb0cab015a902ead2d2b33d50e5cbdee1855df68551"
+  }
+}

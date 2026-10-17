@@ -1,0 +1,5 @@
+INT8 KV; context=262144 chunk=2048; owned prefill, not borrowed expert slots.
+Verify/MTP-runtime/additional CUDA allowances are reserves, not measured allocations.
+Sizing only: this command neither loads the model nor enforces a host-RAM floor.
+Per-stage prefill chunks: stage0=2048 stage1=1024; additional CUDA reserve=0 MiB.
+strata: K-quant prompt kernels from /home/nikolay/projects/copilot-worktrees/170hx-3090/sibnick-expert-system/build/cuda-per-stage/libstrata_kq.so (STRATA_MMQ_KQ=1)

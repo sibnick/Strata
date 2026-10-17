@@ -1,0 +1,23 @@
+{
+  "compute_processes": [],
+  "engine_pid": null,
+  "engine_return_code": null,
+  "free_memory_after_preflight": {
+    "0": {
+      "free_bytes": 25265438720,
+      "name": "NVIDIA GeForce RTX 3090",
+      "total_bytes": 25769803776,
+      "uuid": "GPU-01f295eb-2ee0-838a-ba5b-db97f075a5f7"
+    },
+    "1": {
+      "free_bytes": 68049436672,
+      "name": "NVIDIA CMP 170HX",
+      "total_bytes": 68719476736,
+      "uuid": "GPU-79d96de3-4783-ba96-d95c-fe5e0364528e"
+    }
+  },
+  "gpu_workload_started": false,
+  "host_memavailable_bytes_at_preflight": 46558724096,
+  "no_compute_processes_after_preflight": true,
+  "pcie_helper_pid": null
+}

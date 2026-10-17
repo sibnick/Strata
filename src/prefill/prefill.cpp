@@ -2092,6 +2092,12 @@ bool Prefill::run_impl(const int64_t* tokens, int64_t n, int64_t pos0, std::stri
     core::SessionState& ss = *m.ss;
     const auto t_start = Clock::now();
     const int64_t LB = stage_lb_, LE = stage_le_;
+    static std::atomic<bool> reported_split_handoff{false};
+    if (hand_in_ != nullptr && n > m.T && !reported_split_handoff.exchange(true)) {
+        std::fprintf(stderr, "strata prefill: layer handoff CUDA%d: %lld rows consumed in %lld sub-chunks "
+                             "(%lld-token stage chunks)\n",
+                     m.device, (long long) n, (long long) ((n + m.T - 1) / m.T), (long long) m.T);
+    }
     // The direct successor's future lives on the Prefill object. Intermediate
     // stages therefore do not drain the complete remaining GPU chain here.
     double host_sync_ms = 0, host_chunk_ms = 0, host_setup_ms = 0;   // STRATA_PREFILL_TIMING: the host's share
@@ -4207,7 +4213,7 @@ bool Prefill::run_impl(const int64_t* tokens, int64_t n, int64_t pos0, std::stri
             if (next_run_.valid() && !next_run_.get()) { err = next_err_; return false; }
             next_err_.clear();
             next_->hand_in_ = h;
-            next_->single_chunk_ = single_chunk;
+            next_->single_chunk_ = single_chunk && T <= next_->impl_->T;
             next_run_ = std::async(std::launch::async, [this, tokens, c0, T, p0] {
                 strata::aux_cpus::pin_current_thread();
                 return next_->run_impl(tokens + c0, T, p0, next_err_);

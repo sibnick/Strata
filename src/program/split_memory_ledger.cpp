@@ -6,6 +6,7 @@
 #include "strata/prefill/prefill.hpp"
 
 #include <cstdio>
+#include <charconv>
 #include <filesystem>
 #include <fstream>
 #include <limits>
@@ -76,7 +77,8 @@ void self_test() {
 int main(int argc, char** argv) {
     try {
         std::string pack, native, mtp;
-        int64_t context = 262144, chunk = 256;
+        std::vector<int64_t> stage_chunks;
+        int64_t context = 262144, chunk = 256, additional_reserve_mib = 1024;
         for (int i = 1; i < argc; ++i) {
             const std::string option = argv[i];
             if (option == "--self-test") {
@@ -85,7 +87,8 @@ int main(int argc, char** argv) {
             }
             if (option == "--help") {
                 std::printf("usage: strata-split-memory --pack DIR --native SHARD1 --mtp DIR "
-                            "[--context N] [--chunk N]\n"
+                            "[--context N] [--chunk N] [--prefill-stage-chunks N,N] "
+                            "[--additional-reserve-mib N]\n"
                             "UD-Q4_K_XL, INT8 KV, K36/K37/K38, owned prefill buffers (96-blob ring),\n"
                             "MTP spec=2 with its default 32768-cell window; no batch, KV streaming or vision.\n"
                             "CSV byte estimates, not a speed prediction or a fit guarantee. Reads headers/index only;\n"
@@ -99,6 +102,30 @@ int main(int argc, char** argv) {
             if (option == "--pack") pack = value;
             else if (option == "--native") native = value;
             else if (option == "--mtp") mtp = value;
+            else if (option == "--prefill-stage-chunks") {
+                size_t start = 0;
+                while (start < value.size()) {
+                    const size_t end = value.find(',', start);
+                    const std::string token = value.substr(
+                        start, end == std::string::npos ? std::string::npos : end - start);
+                    int64_t n = 0;
+                    const auto parsed = std::from_chars(token.data(), token.data() + token.size(), n);
+                    if (token.empty() || parsed.ec != std::errc() || parsed.ptr != token.data() + token.size() ||
+                        n <= 0 || n > 262144)
+                        throw std::runtime_error("--prefill-stage-chunks expects positive integer sizes");
+                    stage_chunks.push_back(n);
+                    if (end == std::string::npos) break;
+                    start = end + 1;
+                }
+                if (value.empty() || value.back() == ',')
+                    throw std::runtime_error("--prefill-stage-chunks has an empty size");
+            }
+            else if (option == "--additional-reserve-mib") {
+                size_t end = 0;
+                additional_reserve_mib = std::stoll(value, &end);
+                if (end != value.size() || additional_reserve_mib < 0)
+                    throw std::runtime_error("--additional-reserve-mib must be a non-negative integer");
+            }
             else if (option == "--context" || option == "--chunk") {
                 size_t end = 0;
                 const int64_t n = std::stoll(value, &end);
@@ -107,7 +134,10 @@ int main(int argc, char** argv) {
                 (option == "--context" ? context : chunk) = n;
             } else throw std::runtime_error("unknown option: " + option);
         }
-        if (pack.empty() || native.empty() || mtp.empty() || chunk > context)
+        if (pack.empty() || native.empty() || mtp.empty() || chunk > context ||
+            (!stage_chunks.empty() &&
+             (stage_chunks.size() != 2 || stage_chunks.front() != chunk ||
+              stage_chunks[0] > context || stage_chunks[1] > context)))
             throw std::runtime_error("--pack, --native, --mtp and chunk <= context are required");
 
         const auto shards = strata::gguf_split_paths(native);
@@ -181,11 +211,15 @@ int main(int argc, char** argv) {
         const uint64_t verify_reserve = 96 * MiB;
         const uint64_t mtp_runtime_reserve = 384 * MiB;
         const uint64_t projection_padding_reserve = 64 * MiB;
-        const uint64_t cuda_reserve = GiB;
+        const uint64_t cuda_reserve = (uint64_t) additional_reserve_mib * MiB;
         std::fprintf(stderr, "INT8 KV; context=%lld chunk=%lld; owned prefill, not borrowed expert slots.\n"
-                             "Verify/MTP-runtime/CUDA allowances are reserves, not measured allocations.\n"
+                             "Verify/MTP-runtime/additional CUDA allowances are reserves, not measured allocations.\n"
                              "Sizing only: this command neither loads the model nor enforces a host-RAM floor.\n",
                      (long long) context, (long long) chunk);
+        if (!stage_chunks.empty())
+            std::fprintf(stderr, "Per-stage prefill chunks: stage0=%lld stage1=%lld; additional CUDA reserve=%lld MiB.\n",
+                         (long long) stage_chunks[0], (long long) stage_chunks[1],
+                         (long long) additional_reserve_mib);
         std::printf("split,stage,component,bytes\n");
         emit(0, -1, "gguf_payload", payload);
         emit(0, -1, "ple_direct_file_not_resident_ram", ple);
@@ -215,7 +249,9 @@ int main(int argc, char** argv) {
                 session.qsa_states = qsa.data();
                 for (auto& state : qsa) state.max_cells = context;
                 const uint64_t state = strata::core::session_bytes(geometry, context, geometry.n_expert_used, lo, hi);
-                const uint64_t prefill = strata::prefill::Prefill::bytes_needed_owned(geometry, session, chunk);
+                const int64_t stage_chunk = stage_chunks.empty() ? chunk : stage_chunks[(size_t) stage];
+                const uint64_t prefill =
+                    strata::prefill::Prefill::bytes_needed_owned(geometry, session, stage_chunk, true);
                 const uint64_t output = stage == 1 ? allocation_bytes(head) : 0;
                 const uint64_t draft = stage == 1 ? allocation_bytes(mtp_dense) + allocation_bytes(mtp_experts) + draft_head +
                                                      allocation_bytes(vocab_bytes) + mtp_runtime_reserve : 0;

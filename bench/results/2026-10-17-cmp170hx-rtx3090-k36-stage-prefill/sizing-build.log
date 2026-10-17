@@ -1,0 +1,31 @@
+$ cmake --build build/cuda-per-stage --parallel 8 --target strata strata_kq strata-split-memory
+[  3%] Built target strata_spec
+[  9%] Built target ggml-base
+[ 15%] Built target strata_core
+[ 17%] Built target strata_mmq_w4a4
+[ 21%] Built target strata_kq
+[ 33%] Built target ggml-cpu
+[ 43%] Built target strata_kernels_cpu
+[ 52%] Built target strata_mmq
+[ 84%] Built target strata_kernels
+[ 94%] Built target strata_engine
+[ 94%] Building CXX object CMakeFiles/strata_prefill.dir/src/prefill/prefill.cpp.o
+[ 94%] Linking CXX static library libstrata_prefill.a
+[ 96%] Built target strata_prefill
+[ 98%] Built target strata_qwen35
+[100%] Linking CXX executable strata
+[100%] Built target strata
+[ 60%] Built target ggml-base
+[100%] Built target strata_kq
+[ 12%] Built target strata_core
+[ 12%] Built target ggml-base
+[ 14%] Built target strata_mmq_w4a4
+[ 19%] Built target strata_kq
+[ 31%] Built target ggml-cpu
+[ 42%] Built target strata_mmq
+[ 53%] Built target strata_kernels_cpu
+[ 87%] Built target strata_kernels
+[ 97%] Built target strata_engine
+[100%] Built target strata_prefill
+[100%] Linking CXX executable strata-split-memory
+[100%] Built target strata-split-memory

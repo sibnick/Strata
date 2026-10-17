@@ -58,10 +58,53 @@ measurements, **not full-model under-load measurements**.
 The selection rule is to reject a boundary if either card's requirement exceeds its measured free memory;
 never reduce the safety allowances merely to make it fit. Against that free-memory snapshot only K37 with
 chunk 256 passes; its remaining margins after the listed allowances are 270,925,824 bytes on CMP and
-926,778,132 bytes on RTX. All three boundaries fail with chunk 2048. K37/256 was therefore selected for a
+926,778,132 bytes on RTX. All three boundaries fail with a uniform chunk 2048. K37/256 was therefore selected for a
 guarded test, **not as a measured best split**. Its accounting assumes
 `--trim-stage-weights --kv int8 --max-context 262144 --spec 2 --prefill 256 --no-prefill-borrow`,
 `STRATA_SPLIT_RING=96`, the default 32,768-cell MTP window, and no batch, vision or KV streaming.
+
+### Different prefill chunks per stage
+
+For an explicit, fully owned multi-GPU `--serve` layer split, the opt-in
+`--prefill-stage-chunks N[,N...]` sets one chunk per GPU stage, in GPU order.
+Its first value must equal `--prefill`. For example,
+`--prefill 2048 --prefill-stage-chunks 2048,1024` keeps a 2,048-token chunk on stage 0 and
+uses 1,024-token chunks on stage 1. Each stage's device scratch and host
+handoff buffers are sized for its own chunk, and startup admission prices each
+stage separately. If a producer hands off more rows than the next stage's
+chunk, the consumer processes that handoff in its own sub-chunks. The option
+does not apply to borrowed prompt buffers; omitting it retains the existing
+uniform `--prefill` behavior.
+
+This changes prompt-prefill scheduling and the cadence of the last-stage MTP
+prompt-KV updates. It does not change session/KV capacity, model ownership or
+decode settings. Verify the handoff subdivision, fresh-input accounting and
+historical output IDs on the exact workload before relying on the mixed
+configuration; a sizing pass is not a runtime or memory-safety guarantee.
+
+**K36/K37 source sizing (2026-10-17).** With a 262,144-cell INT8 session,
+2,048/1,024 stage chunks, zero discretionary CUDA reserve and the sampled
+idle free memory below, the source ledger reports:
+
+| Split | Stage / GPU | Chunk | Owned prefill estimate | Required before model load | Margin after mandatory 512 MiB prompt-init headroom |
+|---|---|---:|---:|---:|---:|
+| K36 | CMP 170HX | 2,048 | 1,430,257,664 B | 65,779,269,632 B | 1,733,296,128 B |
+| K36 | RTX 3090 | 1,024 | 1,025,507,328 B | 25,025,740,012 B | -297,172,204 B |
+| K37 | CMP 170HX | 2,048 | 1,430,257,664 B | 67,450,699,776 B | 61,865,984 B |
+| K37 | RTX 3090 | 1,024 | 1,025,507,328 B | 23,350,115,564 B | 1,378,452,244 B |
+
+The free-memory snapshot was 68,049,436,672 B on the CMP and 25,265,438,720 B
+on the RTX. Although both K36 raw ledger totals are below that snapshot, the
+RTX does not meet the unchanged mandatory 512 MiB prompt-initialization
+headroom check. The bounded K36 GPU run was therefore not started. K37 passes
+this offline check but was not run with mixed chunks. These are source-based
+estimates, not measured peaks; no mixed-chunk speed, output or under-load
+memory result is established here.
+
+The requested test policy is zero reserves on both GPUs and no external
+free-VRAM abort, while retaining the host start-at-6/stop-below-5 GiB guards
+and mandatory CUDA/allocation admission. Removing the discretionary reserves
+does not override the failed prompt-init check above.
 
 Host RAM is a separate constraint. `--resident-budget-gib` caps only the resident expert copy. This model's
 PLE file is 28,800,138,240 bytes: use `--ple-io direct` to avoid loading it into RAM. The mapped token embedding
