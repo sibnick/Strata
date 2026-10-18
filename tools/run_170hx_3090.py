@@ -205,7 +205,6 @@ def build_config():
         "--vram-reserve-later-mib", "0",
         "--pool-workers", "1",
         "--serve",
-        "--prompt-cache", "0",
         "--conversation-cache-min-free-mib", "4096",
         "--gpu-owned-experts",
     ]

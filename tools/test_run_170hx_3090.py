@@ -37,6 +37,9 @@ class RunnerRecipeTests(unittest.TestCase):
         self.assertIn("--no-prefill-borrow", args)
         self.assertNotIn("--api-key", args)
 
+    def test_conversation_checkpoints_use_engine_default(self):
+        self.assertNotIn("--prompt-cache", runner.build_config()["args"])
+
     def test_cyrillic_subset_is_not_an_ngram_switch(self):
         self.assertTrue(runner.DRAFT_VOCAB.is_file())
         self.assertIn("--mtp-draft-vocab", runner.build_config()["args"])

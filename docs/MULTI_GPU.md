@@ -212,7 +212,13 @@ draft-vocabulary file passed to inference, requires at least 6 GiB host
 `MemAvailable`, verifies physical GPU order, and checks each K36 stage against
 its free VRAM plus the mandatory 512 MiB prompt-init headroom. The ledger
 initializes CUDA and allocates bounded metadata/pinned staging memory; it
-does not load model weights or start inference. Check and startup refuse to
+does not load model weights or start inference. The API keeps the engine's
+default 6 conversation checkpoints (`--prompt-cache` is not overridden; each
+takes about 118 MB of RAM), so a follow-up turn reads only its new tokens.
+Benchmark recipes use `--prompt-cache 0` for fresh prefill. That setting also
+showed zero reuse on the dashboard, so the runner does not use it. Parking
+several conversations in RAM (`--conversation-cache-mib`) stays off; with this
+recipe only about 13 GiB of RAM was free while the API ran. Check and startup refuse to
 overlap an existing NVIDIA compute process. The runner also rejects an engine
 binary missing the recipe's required flags, with an instruction to rebuild it.
 `start` repeats admission using a fresh snapshot. It reports the API ready only after `/health` returns
