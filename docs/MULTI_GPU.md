@@ -217,8 +217,12 @@ default 6 conversation checkpoints (`--prompt-cache` is not overridden; each
 takes about 118 MB of RAM), so a follow-up turn reads only its new tokens.
 Benchmark recipes use `--prompt-cache 0` for fresh prefill. That setting also
 showed zero reuse on the dashboard, so the runner does not use it. Parking
-several conversations in RAM (`--conversation-cache-mib`) stays off; with this
-recipe only about 13 GiB of RAM was free while the API ran. Check and startup refuse to
+several conversations in RAM is opt-in: `STRATA_CONVERSATION_CACHE_MIB=16384`
+(and optionally `STRATA_CONVERSATION_CACHE_SLOTS`, default 4). On the measured
+machine `MemAvailable` was 13.4 GiB with the API running, because the ZFS ARC
+held 31 GiB that `MemAvailable` does not count. The supervisor stops the API
+below 5 GiB, so cap the ARC (for example `zfs_arc_max` = 8 GiB) before
+enabling a 16 GiB budget. Check and startup refuse to
 overlap an existing NVIDIA compute process. The runner also rejects an engine
 binary missing the recipe's required flags, with an instruction to rebuild it.
 `start` repeats admission using a fresh snapshot. It reports the API ready only after `/health` returns

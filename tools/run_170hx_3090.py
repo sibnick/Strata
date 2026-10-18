@@ -25,6 +25,8 @@ NATIVE = Path(os.environ.get(
 )).resolve()
 MTP = Path(os.environ.get("STRATA_MTP", DATA / "mtp/rt")).resolve()
 PROFILE = Path(os.environ.get("STRATA_EXPERT_PROFILE", ROOT / "data/expert-profile.bin")).resolve()
+CONVERSATION_CACHE_MIB = int(os.environ.get("STRATA_CONVERSATION_CACHE_MIB", "0"))
+CONVERSATION_CACHE_SLOTS = int(os.environ.get("STRATA_CONVERSATION_CACHE_SLOTS", "4"))
 DRAFT_VOCAB = ROOT / "data/draft_vocab_cyrillic.bin"
 HOST = "127.0.0.1"
 PORT = 8080
@@ -208,6 +210,9 @@ def build_config():
         "--conversation-cache-min-free-mib", "4096",
         "--gpu-owned-experts",
     ]
+    if CONVERSATION_CACHE_MIB > 0:
+        args += ["--conversation-cache-mib", str(CONVERSATION_CACHE_MIB),
+                 "--conversation-cache-slots", str(CONVERSATION_CACHE_SLOTS)]
     return {
         "exe": str(engine_path()),
         "args": args,

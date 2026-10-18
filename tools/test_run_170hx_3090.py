@@ -40,6 +40,13 @@ class RunnerRecipeTests(unittest.TestCase):
     def test_conversation_checkpoints_use_engine_default(self):
         self.assertNotIn("--prompt-cache", runner.build_config()["args"])
 
+    def test_conversation_parking_is_opt_in(self):
+        self.assertNotIn("--conversation-cache-mib", runner.build_config()["args"])
+        with patch.object(runner, "CONVERSATION_CACHE_MIB", 16384):
+            args = runner.build_config()["args"]
+        self.assertEqual(args[args.index("--conversation-cache-mib") + 1], "16384")
+        self.assertEqual(args[args.index("--conversation-cache-slots") + 1], "4")
+
     def test_cyrillic_subset_is_not_an_ngram_switch(self):
         self.assertTrue(runner.DRAFT_VOCAB.is_file())
         self.assertIn("--mtp-draft-vocab", runner.build_config()["args"])
