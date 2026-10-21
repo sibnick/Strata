@@ -2332,6 +2332,16 @@ the original launch/service deadlock and the test fails.
 
 ## RTX 30 series (sm_86) and Tesla P100 (sm_60): bitwise decode switches on by default
 
+The custom CMP 170HX + RTX 3090 runner (`tools/run_170hx_3090.py`, started by
+`./run-170hx-3090.sh`) explicitly sets `STRATA_SIDE_MIXER=2`, `STRATA_ATTN_DAILY=1`,
+`STRATA_GR_UP75=1`, `STRATA_QSA_ROWS=1` and `STRATA_B6_MMVQ_ROWS=1`. It also enables
+`STRATA_KQ_SPLIT=1`, which needs a rebuilt engine and has not yet been measured on this
+mixed-card setup. Its supervisor clears
+inherited `STRATA_*` settings, so change its `ENVIRONMENT` mapping rather than exporting
+these switches in the shell. Restart the runner to apply a change. This recipe needs the
+custom engine's `--gpu-owned-experts` and `--prefill-stage-chunks` support; it is not a
+stock engine configuration. The general engine defaults below are unchanged.
+
 The 0.1.45 switch set that is bit-exact on every card was measured switch by switch on a 12 GB RTX 3060, a 16 GB RTX A4000 (one card)
 and a 16 GB Tesla P100, IQ3_XXS, default flags (adaptive tier on), fresh engine per run, 8 interleaved pairs, equal expert-cache slots,
 with a noise arm: the whole 16-switch set gave +9.6% (3060), +14.6% (A4000) and +17.8% (P100) decode, 8/8 pairs each, and the identity
