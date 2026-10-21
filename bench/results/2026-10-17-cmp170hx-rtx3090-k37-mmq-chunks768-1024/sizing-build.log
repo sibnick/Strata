@@ -1,0 +1,21 @@
+In file included from /home/nikolay/projects/copilot-worktrees/170hx-3090/sibnick-curly-tribble/include/strata/artifact/gguf_reader.hpp:36,
+                 from /home/nikolay/projects/copilot-worktrees/170hx-3090/sibnick-curly-tribble/src/program/split_memory_ledger.cpp:1:
+/home/nikolay/projects/copilot-worktrees/170hx-3090/sibnick-curly-tribble/include/strata/artifact/gguf_split.hpp: In function ‘std::vector<std::__cxx11::basic_string<char> > strata::gguf_split_paths(const std::string&)’:
+/home/nikolay/projects/copilot-worktrees/170hx-3090/sibnick-curly-tribble/include/strata/artifact/gguf_split.hpp:41:41: warning: ‘%05d’ directive output may be truncated writing between 5 and 10 bytes into a region of size 8 [-Wformat-truncation=]
+   41 |         std::snprintf(num, sizeof num, "%05d", i);
+      |                                         ^~~~
+/home/nikolay/projects/copilot-worktrees/170hx-3090/sibnick-curly-tribble/include/strata/artifact/gguf_split.hpp:41:40: note: directive argument in the range [1, 2147483647]
+   41 |         std::snprintf(num, sizeof num, "%05d", i);
+      |                                        ^~~~~~
+In file included from /usr/include/stdio.h:980,
+                 from /usr/include/c++/13/cstdio:42,
+                 from /home/nikolay/projects/copilot-worktrees/170hx-3090/sibnick-curly-tribble/include/strata/artifact/gguf_reader.hpp:25:
+In function ‘int snprintf(char*, size_t, const char*, ...)’,
+    inlined from ‘std::vector<std::__cxx11::basic_string<char> > strata::gguf_split_paths(const std::string&)’ at /home/nikolay/projects/copilot-worktrees/170hx-3090/sibnick-curly-tribble/include/strata/artifact/gguf_split.hpp:41:22:
+/usr/include/x86_64-linux-gnu/bits/stdio2.h:54:35: note: ‘__builtin___snprintf_chk’ output between 6 and 11 bytes into a destination of size 8
+   54 |   return __builtin___snprintf_chk (__s, __n, __USE_FORTIFY_LEVEL - 1,
+      |          ~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   55 |                                    __glibc_objsize (__s), __fmt,
+      |                                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   56 |                                    __va_arg_pack ());
+      |                                    ~~~~~~~~~~~~~~~~~

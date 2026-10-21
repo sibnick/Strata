@@ -308,6 +308,10 @@ if(STRATA_BUILD_TESTS)
   add_executable(prefill_plan_test tests/program/prefill_plan_test.cpp)
   target_include_directories(prefill_plan_test PRIVATE include)
   add_test(NAME prefill_plan_test COMMAND prefill_plan_test)
+  # static whole-layer GPU ownership: full profile coverage, exact mixed-size capacity and slot ownership (no GPU)
+  add_executable(gpu_ownership_test tests/program/gpu_ownership_test.cpp)
+  target_include_directories(gpu_ownership_test PRIVATE include)
+  add_test(NAME gpu_ownership_test COMMAND gpu_ownership_test)
 
   # the default CPU prefill share is not armed when every expert is resident (#1595): header-only rule, no GPU
   add_executable(share_rules_test tests/prefill/share_rules_test.cpp)
@@ -742,6 +746,11 @@ if(STRATA_ENABLE_CUDA OR STRATA_ENABLE_HIP)
     # C++ runtime sit beside the exe (tools/hip/package_windows.py) and stay normal imports.
     target_link_libraries(strata PRIVATE delayimp)
     target_link_options(strata PRIVATE "LINKER:/DELAYLOAD:hipblas.dll" "LINKER:/DELAYLOAD:libhipblaslt.dll" "LINKER:/DELAYLOAD:rocblas.dll")
+  endif()
+
+  if(STRATA_ENABLE_CUDA AND NOT STRATA_HIP_GFX906)
+    add_executable(strata-split-memory src/program/split_memory_ledger.cpp)
+    target_link_libraries(strata-split-memory PRIVATE strata_engine strata_prefill)
   endif()
 
   # NEW-MODELS-PLAN.md T1: Qwen3.6-35B-A3B's reference path (one GPU, the model resident, plain kernels), checked
@@ -1839,6 +1848,10 @@ if(STRATA_NATIVE_EXPERTS)
     target_link_libraries(strata_prefill PUBLIC strata_mmq)
     target_compile_definitions(strata_prefill PUBLIC STRATA_PREFILL_MMQ=1 STRATA_PREFILL_FUSED=1)
     if(STRATA_BUILD_TESTS)
+      add_executable(prefill_gather_test tests/cuda/prefill_gather_test.cpp)
+      target_link_libraries(prefill_gather_test PRIVATE strata_mmq ${_strata_gpu_runtime_target})
+      add_test(NAME prefill_gather_test COMMAND prefill_gather_test)
+      set_tests_properties(prefill_gather_test PROPERTIES SKIP_RETURN_CODE 77 TIMEOUT 120)
       # #136: the fused int8 experts against a double-precision reference and the MMQ path (exit 77 below sm_80)
       add_executable(prefill_fused_moe_test tests/cuda/prefill_fused_moe_test.cpp)
       target_link_libraries(prefill_fused_moe_test PRIVATE strata_mmq ggml-base ${_strata_gpu_runtime_target})

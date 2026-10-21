@@ -1,0 +1,10 @@
+test_exact_output_and_freshness (test_long.LongTests.test_exact_output_and_freshness) ... ok
+test_immutable_original_fixtures (test_long.LongTests.test_immutable_original_fixtures) ... ok
+test_off_admission_gate (test_long.LongTests.test_off_admission_gate) ... ok
+test_pressure_and_timeout (test_long.LongTests.test_pressure_and_timeout) ... ok
+test_unchanged_build (test_long.LongTests.test_unchanged_build) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.421s
+
+OK

@@ -1,0 +1,45 @@
+{
+  "files": [
+    {
+      "bytes": 151339,
+      "path_relative_to_results": "2026-10-16-cmp170hx-rtx3090-gpu-owned-long-context/prompts/32k.txt",
+      "sha256": "bccff648b9ba7d921cce44468f43377e02b6ed683ed1cd5e63c1b9fa2643085a"
+    },
+    {
+      "bytes": 146173,
+      "path_relative_to_results": "2026-10-16-cmp170hx-rtx3090-gpu-owned-long-context/prompts/32k.ids",
+      "sha256": "48619c77cba7b5b9aff070dd990675453a327c4bf25a8637bfae195ecfc454a7"
+    },
+    {
+      "bytes": 612,
+      "path_relative_to_results": "2026-10-16-cmp170hx-rtx3090-gpu-owned-long-context/prompts/32k.json",
+      "sha256": "1809c2e36d8b16afccc7d9bb172c305034a846ef39c7cfbef52ddf4375e19eb6"
+    },
+    {
+      "bytes": 1211942,
+      "path_relative_to_results": "2026-10-16-cmp170hx-rtx3090-gpu-owned-long-context/prompts/near-max.txt",
+      "sha256": "8db9a83cb46c0210d696a34cba7d962a5fd2249918dab72a148515598ef69505"
+    },
+    {
+      "bytes": 1166616,
+      "path_relative_to_results": "2026-10-16-cmp170hx-rtx3090-gpu-owned-long-context/prompts/near-max.ids",
+      "sha256": "67a876781b4fde7323b1b340a5e55700acb3f6741dc19d953d32229c42cf55ed"
+    },
+    {
+      "bytes": 623,
+      "path_relative_to_results": "2026-10-16-cmp170hx-rtx3090-gpu-owned-long-context/prompts/near-max.json",
+      "sha256": "791c43b0a60ef52479b063cd98d93e90cbd958751ffd38312555235c8567ff97"
+    }
+  ],
+  "historical_results": {
+    "path_relative_to_results": "2026-10-16-cmp170hx-rtx3090-gpu-owned-long-context/main-results.json",
+    "sha256": "d483378ee93660e444ab4a862f246779b85506efb3056c3edc7d09818270fb53"
+  },
+  "note": "Original committed prompt files reused read-only, not regenerated; exact actual-tokenizer IDs verified before execution.",
+  "original_evidence_commit": "9c3c0c25c88a0fe0a403d00a03956989540ffa0c",
+  "sequential_k37_mmq_results": {
+    "commit": "deec4d5c2363888d31f6af211e3c33037b88886f",
+    "path_relative_to_results": "2026-10-16-cmp170hx-rtx3090-k37-mmq-long-context/mmq/results.json",
+    "sha256": "f681169a7dc0db5c0ad18d455e69a9377602ddd176604a7c4ed2f5f6ce2f15de"
+  }
+}

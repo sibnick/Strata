@@ -1,0 +1,139 @@
+{
+  "admission": {
+    "0": {
+      "free_bytes": 68049436672,
+      "margin_bytes": 1733296128,
+      "physical_gpu": 1,
+      "required_including_mandatory_512_mib_prompt_init_headroom_bytes": 66316140544
+    },
+    "1": {
+      "free_bytes": 25265438720,
+      "margin_bytes": 220824340,
+      "physical_gpu": 0,
+      "required_including_mandatory_512_mib_prompt_init_headroom_bytes": 25044614380
+    }
+  },
+  "capture_stopped": true,
+  "capture_error": "TimeoutError: Nsight did not exit after the profiled child stopped",
+  "compute_processes_after": "",
+  "engine_pid": 456037,
+  "environment": {
+    "STRATA_FILL_AHEAD": "0",
+    "STRATA_IO_PREFETCH": "0",
+    "STRATA_MMQ_KQ": "1",
+    "STRATA_PIN_RESERVE_GIB": "4",
+    "STRATA_PREFILL_BATCH_GATHER": "1",
+    "STRATA_REFILL_BLOCKING": "1",
+    "STRATA_RESIDENT_HEADROOM_GIB": "4",
+    "STRATA_SPLIT_RING": "96",
+    "STRATA_STAGE_PIN": "0",
+    "STRATA_UNBUFFERED_LOAD": "1"
+  },
+  "finished_utc": "2026-10-17T20:24:40.368+00:00",
+  "min_host_available_bytes": 13432557568,
+  "min_gpu_free_bytes": {
+    "0": 277872640,
+    "1": 1685061632
+  },
+  "api_restore": {
+    "method": "existing api/start-api.sh launcher, started after capture cleanup",
+    "supervisor_pid": 481936,
+    "health": {
+      "status": "ok",
+      "max_context": 262144,
+      "model": "qwen3.8-flash-next-unsloth-ud-q4_k_xl",
+      "images": false,
+      "api_key": false,
+      "image_generation": false,
+      "loaded": true,
+      "service": "strata"
+    }
+  },
+  "initial_gpu_memory": {
+    "0": {
+      "free_bytes": 25265438720,
+      "name": "NVIDIA GeForce RTX 3090",
+      "uuid": "GPU-01f295eb-2ee0-838a-ba5b-db97f075a5f7"
+    },
+    "1": {
+      "free_bytes": 68049436672,
+      "name": "NVIDIA CMP 170HX",
+      "uuid": "GPU-79d96de3-4783-ba96-d95c-fe5e0364528e"
+    }
+  },
+  "initial_mem_available_bytes": 20920664064,
+  "memory_policy": {
+    "cache_flush": false,
+    "engine_reserves_mib": [
+      0,
+      0
+    ],
+    "external_gpu_free_abort": false,
+    "host_start_bytes": 6442450944,
+    "host_stop_bytes": 5368709120,
+    "mandatory_cuda_admission": true,
+    "mandatory_prompt_init_headroom_mib": 512
+  },
+  "profile_cli_pid": 455959,
+  "profiler": {
+    "collection_starts_after_model_ready": true,
+    "collection_stops_after_done": true,
+    "cpu_sampling": "process-tree",
+    "cpu_thread_scheduling": "process-tree",
+    "cuda_event_trace": false,
+    "name": "Nsight Systems",
+    "osrt_threshold_ns": 10000,
+    "stats_enabled": true,
+    "report_file": null,
+    "report_finalization": "Nsight stop returned, but report generation did not finish within the 120-second wait; no .nsys-rep or SQLite export was created.",
+    "session_cleared": true,
+    "agent_pids_stopped": [
+      455975
+    ],
+    "trace": [
+      "cuda",
+      "cublas",
+      "osrt"
+    ],
+    "version": "NVIDIA Nsight Systems version 2026.3.2.476-263238834031v0"
+  },
+  "request": {
+    "decode_ms": 250.2,
+    "expected_output_token_count": 22,
+    "fixture": "historical-large",
+    "generation_cap": 32,
+    "input_fresh": true,
+    "input_fresh_tokens": 1977,
+    "generated_count": 22,
+    "mtp_accepted_offered": [
+      9,
+      12
+    ],
+    "output_ids_match_historical": true,
+    "prefill_ms": 1673.1,
+    "prompt_ids_sha256": "953be64023898d51c4e513b40fefb66721ed2c643a7c18713c15edc81d4c014f",
+    "prompt_tokens": 1977
+  },
+  "request_result": "DONE 22 1977 1673.1 250.2 stop 9 12 0 0 0 0 0 0.0 1977 0",
+  "runtime": {
+    "gpu": "1,0",
+    "kv": "int8",
+    "layer_split": 36,
+    "max_context": 262144,
+    "mtp_spec": "unchanged",
+    "stage_chunks": [
+      2048,
+      512
+    ]
+  },
+  "started_utc": "2026-10-17T20:19:17.459+00:00",
+  "timestamps": {
+    "done_elapsed_ns": 1926482943,
+    "done_seen_utc": "2026-10-17T20:21:38.713+00:00",
+    "first_token_elapsed_ns": 1700292479,
+    "first_token_seen_utc": "2026-10-17T20:21:38.487+00:00",
+    "gen_sent_elapsed_ns": 16881,
+    "gen_sent_utc": "2026-10-17T20:21:36.787+00:00",
+    "nsys_start_command_completed_utc": "2026-10-17T20:21:36.786+00:00"
+  }
+}

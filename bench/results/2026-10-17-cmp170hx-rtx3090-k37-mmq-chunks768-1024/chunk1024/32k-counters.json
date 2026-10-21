@@ -1,0 +1,5 @@
+[
+  "strata serve: prompt 32788 tokens = 0 reused + 32788 read in 20237 ms (1620.2 tok/s), 37 generated in 388 ms (95.3 tok/s), drafts accepted 18 of 23, 0 checkpoints",
+  "strata serve: expert tiers: GPU 0 hits this request; since the start RAM 0 blobs, files 0 blobs 77024.6 MB read (the GGUF in place)",
+  "strata serve: file tier I/O this request: the OS read 791.9 MB from storage (0 major faults) for 0.0 MB of expert reads"
+]

@@ -1,0 +1,124 @@
+{
+  "chat_template": "user wrapper plus assistant <think> closed, identical to prior 256-token comparison",
+  "parse_special": true,
+  "stages": [
+    {
+      "actual_input_tokens": 8202,
+      "context_tokens": 262144,
+      "expected": {
+        "CENTER": "CEDAR-8M2-QUARRY",
+        "FINAL": "ORBIT-6V9-KETTLE",
+        "ORIGIN": "IRIS-4Q7-LANTERN"
+      },
+      "filler_paragraphs": 97,
+      "generation_cap": 192,
+      "input_plus_generation_cap": 8394,
+      "name": "8k",
+      "needle_offsets_token": {
+        "CENTER": 4121,
+        "FINAL": 8079,
+        "ORIGIN": 60
+      },
+      "prompt_ids_sha256": "b8ae12324e2e49bbfb5955b21f52c0c977001067721a7dbcb8503b2113b74c6c",
+      "prompt_text_sha256": "0f616e2681e86bb38fbaf7b1d321937b4a0a0ffdd7547ea474f1fd4778c87a74",
+      "seed": 11,
+      "target_input_tokens": 8192
+    },
+    {
+      "actual_input_tokens": 32788,
+      "context_tokens": 262144,
+      "expected": {
+        "CENTER": "CEDAR-8M2-QUARRY",
+        "FINAL": "ORBIT-6V9-KETTLE",
+        "ORIGIN": "IRIS-4Q7-LANTERN"
+      },
+      "filler_paragraphs": 397,
+      "generation_cap": 192,
+      "input_plus_generation_cap": 32980,
+      "name": "32k",
+      "needle_offsets_token": {
+        "CENTER": 16440,
+        "FINAL": 32665,
+        "ORIGIN": 61
+      },
+      "prompt_ids_sha256": "48619c77cba7b5b9aff070dd990675453a327c4bf25a8637bfae195ecfc454a7",
+      "prompt_text_sha256": "9fcf47f685588c81046a7ad7a6c1d7ccce6aa24151b9236e40723b48445b800d",
+      "seed": 23,
+      "target_input_tokens": 32768
+    },
+    {
+      "actual_input_tokens": 131094,
+      "context_tokens": 262144,
+      "expected": {
+        "CENTER": "CEDAR-8M2-QUARRY",
+        "FINAL": "ORBIT-6V9-KETTLE",
+        "ORIGIN": "IRIS-4Q7-LANTERN"
+      },
+      "filler_paragraphs": 1597,
+      "generation_cap": 192,
+      "input_plus_generation_cap": 131286,
+      "name": "128k",
+      "needle_offsets_token": {
+        "CENTER": 65545,
+        "FINAL": 130971,
+        "ORIGIN": 62
+      },
+      "prompt_ids_sha256": "0019c888a70f075563147e706378e554e31857e5d626d3badc5a595f05fac78b",
+      "prompt_text_sha256": "e5332d2238ed4e0a73dca7c6414cb5d59bb7840282e6d5283f9924a5471c8361",
+      "seed": 37,
+      "target_input_tokens": 131072
+    },
+    {
+      "actual_input_tokens": 261682,
+      "context_tokens": 262144,
+      "expected": {
+        "CENTER": "CEDAR-8M2-QUARRY",
+        "FINAL": "ORBIT-6V9-KETTLE",
+        "ORIGIN": "IRIS-4Q7-LANTERN"
+      },
+      "filler_paragraphs": 3194,
+      "generation_cap": 192,
+      "input_plus_generation_cap": 261874,
+      "name": "near-max",
+      "needle_offsets_token": {
+        "CENTER": 130846,
+        "FINAL": 261559,
+        "ORIGIN": 59
+      },
+      "prompt_ids_sha256": "67a876781b4fde7323b1b340a5e55700acb3f6741dc19d953d32229c42cf55ed",
+      "prompt_text_sha256": "10c7eb3f6a8a385458ecbaee8d71e00f2bae6995b6d1664ba57f3d0d5ea6ecbc",
+      "seed": 53,
+      "target_input_tokens": 261632
+    },
+    {
+      "actual_input_tokens": 261687,
+      "context_tokens": 262144,
+      "expected": {
+        "CENTER": "CEDAR-8M2-QUARRY",
+        "FINAL": "ORBIT-6V9-KETTLE",
+        "ORIGIN": "IRIS-4Q7-LANTERN"
+      },
+      "filler_paragraphs": 3193,
+      "generation_cap": 192,
+      "input_plus_generation_cap": 261879,
+      "name": "near-max-repeat",
+      "needle_offsets_token": {
+        "CENTER": 130866,
+        "FINAL": 261564,
+        "ORIGIN": 60
+      },
+      "prompt_ids_sha256": "d330f2eca591783a82d1259f40dbba6ae448447ff2f94b7401c0d9946c353d82",
+      "prompt_text_sha256": "768190cd0c26d286565e773a8a19c52b556a1759aacfc1e9cc967aa47721a568",
+      "seed": 71,
+      "target_input_tokens": 261632
+    }
+  ],
+  "tokenizer_pack": "/home/nikolay/projects/copilot-worktrees/170hx-3090/sibnick-upgraded-succotash/build/pack/ud-q4-k-xl/tokenizer",
+  "tokenizer_sha256": {
+    "chat_template.jinja": "12827f24b742ea4e80cdc12dbcf9622227056b9f797252a3149263d4f9aaadce",
+    "merges.txt": "4ba698529766c7a2f5052083ea10cdf2485577f5237a332ee291054eb11e3332",
+    "token_type.json": "5088c8c298fc06af8382ddb3b76c888703ac2634e82263b97eedcc2ad202738b",
+    "tokenizer.json": "c0bd435efbc6c3b28964b47999afe16c4ad268c7c7c4e8cb3af410796a6f30bf",
+    "vocab.json": "4ba64f0332abcfb0b600b7df1537d1e836e68009d5fb7cdb77339738dc6365c4"
+  }
+}

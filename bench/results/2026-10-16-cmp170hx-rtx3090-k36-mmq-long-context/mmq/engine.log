@@ -1,0 +1,3744 @@
+strata generate: memory guard: limit 62.3 GiB (source: meminfo), current 45.1 GiB, reclaimable cache credited 0.0 GiB; available 17.2 GiB (MemAvailable 17.2 GiB), floor 4096 MiB
+strata generate: layer split across 2 GPUs: CUDA0, then CUDA1 (split 36)
+strata: K-quant prompt kernels from /home/nikolay/projects/copilot-worktrees/170hx-3090/sibnick-fuzzy-spoon/build/cuda-short-profile/libstrata_kq.so (STRATA_MMQ_KQ=1)
+strata generate: PCIe probe: 0.8 GB/s host->device (best of 0.8 0.8 0.8 0.8) -> pcie_frac 0.02 (default 0.55)
+strata generate: this CPU has no AVX-512: the expert kernels run on AVX-2 (multi-token for the i-quant gate/up rows)
+strata generate: native pack: /home/nikolay/projects/copilot-worktrees/170hx-3090/sibnick-upgraded-succotash/build/pack/ud-q4-k-xl experts (largest blob 3.99 MB), token embedding Q8_0 in mapped host memory (644 MiB, 0.3 s)
+strata generate: layer split: CUDA0 loads the dense weights of layers 0-35 only
+strata trace: 63412 MiB free after the CUDA context and the weight arena
+strata generate: 1098 MiB of weights loaded from /home/nikolay/projects/copilot-worktrees/170hx-3090/sibnick-upgraded-succotash/build/pack/ud-q4-k-xl in 1.9 s (483 canonical tensors skipped: served natively)
+strata trace: 63412 MiB free after the pack weights
+strata generate: 226 native projection matrices, 2237.89 MiB of weights, in 3.1 s
+strata generate: WARNING: --ple-io direct measures slow here (12340 rows/s, about 51 MB/s of random 4 KiB reads): a prompt can spend minutes reading layer 1 and trip the stall watchdog (#1425, #1629). --ple-io mmap was 40-100x faster on some DRAM-less NVMe drives but 7x slower on a SATA SSD (#2040), so it is not chosen for you; --ple-io ram needs the RAM for the table
+strata generate: the SSD is kept awake while rows are read: one page of the table after 100 ms without a read, until 60 s after the last request (STRATA_SSD_KEEPALIVE=0 turns it off)
+strata generate: layer split: CUDA1 loads the dense weights of layers 36-47 only
+strata generate: layer split: CUDA1 PCIe probe 25.3 GB/s (best of 25.3 25.2 25.3 25.2) -> pcie_frac 0.55
+strata generate: layer split: CUDA1 holds its weights; 22.06 GiB free (its session follows the split search)
+strata generate: profile /home/nikolay/projects/copilot-worktrees/170hx-3090/sibnick-upgraded-succotash/data/expert-profile.bin: 24576 ranked pairs, built for 24576 slots
+strata generate: PLE on, table 320001536 rows of /home/nikolay/projects/Strata-data/models/UD-Q4_K_XL/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00002-of-00004.gguf
+strata trace: 58254 MiB free after the session (KV, GDN state, PLE history)
+strata generate: layer split: CUDA1 holds its weights, session [36, 48) and the head; 20.46 GiB free
+strata mtp: draft layer loaded, 1097 MiB of VRAM (experts 675, dense 111), files read in 0.70 s (1116 MiB/s)
+strata trace: 58254 MiB free after the native head
+strata generate: GPU 0: NVIDIA CMP 170HX, compute capability 8.0
+strata generate: experts via mmap (--mmap-experts; the GGUF shards in place, no experts.bin)
+strata generate: the file tier reads unbuffered (STRATA_UNBUFFERED_LOAD=1)
+strata generate: GPU host-callback thread started before host-core pinning
+strata generate: CPU pool tasks/phase: 6 (automatic), participating threads: 2
+strata generate: 1 pool workers on logical processors 1, the host thread on 0 (draining too) (--host-core first)
+strata aux cpus: threads that are neither pool workers nor the host go to CPUs 2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19 (off at start; a request's aux_cpus=1 turns it on)
+strata trace: 58252 MiB free after the weights, the session and the drafter
+strata generate: --gpu-owned-experts exact prefill pricing: the prompt path's own buffers for a 256-token chunk: 414 MiB (the 0.1.39 rule: 330 MiB)
+strata generate: expert cache 18432 slots, 53.66 GiB of VRAM; policy is
+strata trace: 3300 MiB free after opening the expert cache
+strata generate: the GPU computes the experts in the cache; it rounds differently from the CPU,
+                 so a reply can differ slightly from a run without the cache (same quality:
+                 bench/results/2026-09-27-cache-parity).
+                 PROFILE, ranked by routing frequency, no eviction.
+strata generate: --gpu-owned-experts: using one 3993600-byte reusable host staging buffer; profile fills use synchronous copies
+strata generate: --gpu-owned-experts: CUDA0 owns layers [0,36), 18432 experts, 57619251200 resident bytes
+strata trace: 3300 MiB free after the profile fill
+strata generate: pre-filled 18432 of 18432 slots from the profile in 125.3 s (460 MB/s); slot 0 verified
+strata generate: --gpu-owned-experts: CUDA1 adds 155189248 bytes for exact owned-prefill scratch and 293531596 bytes for the MTP bind; the stage reserve already includes 96 MiB for the verifier
+strata generate: layer split, CUDA1: 19.38 GiB free of 23.56, room for experts 18.30 GiB
+strata generate: --gpu-owned-experts: CUDA1 owns layers [36,48), 6144 experts, 19398656000 resident bytes
+strata generate: layer split: CUDA1 runs layers 36-47, expert cache 6144 slots (18.07 GiB), 6144 of its 6144 profiled pairs; slot 0 verified
+strata generate: --gpu-owned-experts: all 24576 experts are resident in their owning GPU caches; prompt cache loans and the CPU complement are disabled; startup file-tier reads accounted for 77024563200 bytes; no file fallback is expected after startup
+strata generate: layer split: CUDA0 runs layers 0-35
+strata trace: 3300 MiB free after the R4 hit path
+strata generate: R4 hit path ON - resident experts are computed on the GPU
+strata generate: 1 expert-pool workers + the host thread
+strata trace: 3300 MiB free after the expert cache and the graphs
+strata generate: session is up (engine 0.1.44.1)
+strata generate: token graph hit path: 24576 resident experts, decided on the device
+strata generate: the mapped view of the experts stays open (not Windows)
+strata serve: layer split: 100% of the experts resident, the prompt path's streamed ring 96 slots
+strata serve: the prompt path allocates its own buffers (too few cache slots to borrow)
+strata trace: 3300 MiB free after before the prompt path init
+strata trace: 2718 MiB free after the head and the prompt path
+strata hc: CUDA1: the hyper-connection read runs as staged (the norm per token and stream, the down projection's activations staged ahead by cp.async); checked bit for bit against the plain read on this card (STRATA_HC_SPLIT=1 or 0 for the earlier ones)
+strata verify: window up to 4 tokens, 84.4 MiB of device buffers (100% VRAM resident: zero-doorbell graph)
+strata serve: layer split: layers 0-35 (CUDA0), 36-47 (CUDA1), one hand-off per window
+strata hc: CUDA0: the hyper-connection read runs as staged (the norm per token and stream, the down projection's activations staged ahead by cp.async); checked bit for bit against the plain read on this card (STRATA_HC_SPLIT=1 or 0 for the earlier ones)
+strata verify: window up to 4 tokens, 84.4 MiB of device buffers (100% VRAM resident: zero-doorbell graph)
+strata mtp: draft head over 106299 tokens (275.7 MiB)
+strata trace: 2632 MiB free after the verifier and the drafter's binding
+strata serve: adaptive overlap: off: not on a layer split
+strata serve: 2632 MiB of VRAM free with everything loaded
+strata serve: CUDA1: 401 MiB of VRAM free with everything loaded - LOW: its window graphs are captured on first use and need room too, and a full card can stall a request; add --vram-reserve-later-mib 623 to the config's args (or lower --max-context)
+INFO logit_bias=1 context=262144 kv=int8 kv_resident=0 expert_slots=24576 expert_cache_mib=73450 expert_slots_primary=18432 expert_cache_primary_mib=54950 spec=4 mtp_max=2 lookup=3 vram_free_mib=2632 cvec=0 arena_mib=0 pool_workers=1 pcie_frac=0.02 spec_min_p=0.00 conversation_cache_mib=0 conversation_cache_slots=4 conversation_cache_min_free_mib=4096 conversation_cache_min_tokens=0 tail_role_token=-1 vram_elastic=0 engine=0.1.44.1
+READY 262144 stop
+strata trace: request 1977 0
+RESUME 0
+strata trace: prompt start 1976 -1
+strata trace: prompt chunk 0 of 1976
+strata trace: prompt chunk 256 of 1976
+strata trace: prompt chunk 0 of 256
+PP 256 1977 611 419.1
+strata trace: prompt chunk 512 of 1976
+strata trace: prompt chunk 0 of 256
+PP 512 1977 889 576.2
+strata trace: prompt chunk 768 of 1976
+strata trace: prompt chunk 0 of 256
+PP 768 1977 1176 653.1
+strata trace: prompt chunk 1024 of 1976
+strata trace: prompt chunk 0 of 256
+PP 1024 1977 1478 693.0
+strata trace: prompt chunk 1280 of 1976
+strata trace: prompt chunk 0 of 256
+PP 1280 1977 1775 721.2
+strata trace: prompt chunk 1536 of 1976
+strata trace: prompt chunk 0 of 256
+PP 1536 1977 2066 743.5
+strata trace: prompt chunk 1792 of 1976
+strata trace: prompt chunk 0 of 256
+PP 1792 1977 2361 759.2
+strata trace: prompt chunk 0 of 184
+PP 1976 1977 2608 757.6
+strata trace: read 1976 tokens (batched) in 2604.8 ms
+strata trace: prompt done (slots refilled) -1 -1
+REUSED 0
+strata trace: window 1976 1
+strata verify: capturing the 1-token window (2564 MiB of VRAM free)
+strata verify: captured the 1-token window (upload no error, sync no error)
+strata verify: capturing the 1-token window (351 MiB of VRAM free)
+strata verify: captured the 1-token window (upload no error, sync no error)
+T 842
+strata trace: window 1977 2
+strata verify: capturing the 2-token window (2556 MiB of VRAM free)
+strata verify: captured the 2-token window (upload no error, sync no error)
+strata verify: capturing the 2-token window (347 MiB of VRAM free)
+strata verify: captured the 2-token window (upload no error, sync no error)
+T 53665
+T 25
+strata trace: window 1979 2
+T 220
+T 22
+strata trace: window 1981 2
+T 16
+T 19
+strata trace: window 1983 2
+T 198
+T 75761
+strata trace: window 1985 2
+T 25
+T 220
+strata trace: window 1987 2
+T 24
+T 17
+strata trace: window 1989 2
+T 23
+T 198
+strata trace: window 1991 2
+T 95429
+strata trace: window 1992 2
+T 25
+T 220
+strata trace: window 1994 2
+T 18
+T 21
+strata trace: window 1996 2
+T 20
+T 248046
+DONE 22 1977 2608.5 225.9 stop 10 11 0 0 0 0 0 0.0 1977 0
+strata serve: prompt 1977 tokens = 0 reused + 1977 read in 2608 ms (757.9 tok/s), 22 generated in 226 ms (97.4 tok/s), drafts accepted 10 of 11, 0 checkpoints
+strata serve: expert tiers: GPU 0 hits this request; since the start RAM 0 blobs, files 0 blobs 77024.6 MB read (the GGUF in place)
+strata serve: file tier I/O this request: the OS read 144293.0 MB from storage (0 major faults) for 77024.6 MB of expert reads
+strata trace: request 32788 0
+RESUME 0
+strata trace: prompt start 32787 -1
+strata trace: prompt chunk 0 of 32787
+strata trace: prompt chunk 256 of 32787
+strata trace: prompt chunk 0 of 256
+PP 256 32788 399 640.8
+strata trace: prompt chunk 512 of 32787
+strata trace: prompt chunk 0 of 256
+PP 512 32788 684 748.8
+strata trace: prompt chunk 768 of 32787
+strata trace: prompt chunk 0 of 256
+PP 768 32788 966 795.2
+strata trace: prompt chunk 1024 of 32787
+strata trace: prompt chunk 0 of 256
+PP 1024 32788 1263 810.9
+strata trace: prompt chunk 1280 of 32787
+strata trace: prompt chunk 0 of 256
+PP 1280 32788 1556 822.7
+strata trace: prompt chunk 1536 of 32787
+strata trace: prompt chunk 0 of 256
+PP 1536 32788 1855 828.1
+strata trace: prompt chunk 1792 of 32787
+strata trace: prompt chunk 0 of 256
+PP 1792 32788 2161 829.1
+strata trace: prompt chunk 2048 of 32787
+strata trace: prompt chunk 0 of 256
+PP 2048 32788 2457 833.7
+strata trace: prompt chunk 2304 of 32787
+strata trace: prompt chunk 0 of 256
+PP 2304 32788 2750 837.9
+strata trace: prompt chunk 2560 of 32787
+strata trace: prompt chunk 0 of 256
+PP 2560 32788 3056 837.6
+strata trace: prompt chunk 2816 of 32787
+strata trace: prompt chunk 0 of 256
+PP 2816 32788 3354 839.5
+strata trace: prompt chunk 3072 of 32787
+strata trace: prompt chunk 0 of 256
+PP 3072 32788 3648 842.2
+strata trace: prompt chunk 3328 of 32787
+strata trace: prompt chunk 0 of 256
+PP 3328 32788 3958 840.9
+strata trace: prompt chunk 3584 of 32787
+strata trace: prompt chunk 0 of 256
+PP 3584 32788 4254 842.6
+strata trace: prompt chunk 3840 of 32787
+strata trace: prompt chunk 0 of 256
+PP 3840 32788 4543 845.2
+strata trace: prompt chunk 4096 of 32787
+strata trace: prompt chunk 0 of 256
+PP 4096 32788 4835 847.1
+strata trace: prompt chunk 4352 of 32787
+strata trace: prompt chunk 0 of 256
+PP 4352 32788 5130 848.4
+strata trace: prompt chunk 4608 of 32787
+strata trace: prompt chunk 0 of 256
+PP 4608 32788 5424 849.6
+strata trace: prompt chunk 4864 of 32787
+strata trace: prompt chunk 0 of 256
+PP 4864 32788 5726 849.5
+strata trace: prompt chunk 5120 of 32787
+strata trace: prompt chunk 0 of 256
+PP 5120 32788 6028 849.3
+strata trace: prompt chunk 5376 of 32787
+strata trace: prompt chunk 0 of 256
+PP 5376 32788 6325 849.9
+strata trace: prompt chunk 5632 of 32787
+strata trace: prompt chunk 0 of 256
+PP 5632 32788 6624 850.2
+strata trace: prompt chunk 5888 of 32787
+strata trace: prompt chunk 0 of 256
+PP 5888 32788 6915 851.5
+strata trace: prompt chunk 6144 of 32787
+strata trace: prompt chunk 0 of 256
+PP 6144 32788 7216 851.4
+strata trace: prompt chunk 6400 of 32787
+strata trace: prompt chunk 0 of 256
+PP 6400 32788 7512 851.9
+strata trace: prompt chunk 6656 of 32787
+strata trace: prompt chunk 0 of 256
+PP 6656 32788 7817 851.4
+strata trace: prompt chunk 6912 of 32787
+strata trace: prompt chunk 0 of 256
+PP 6912 32788 8117 851.6
+strata trace: prompt chunk 7168 of 32787
+strata trace: prompt chunk 0 of 256
+PP 7168 32788 8422 851.1
+strata trace: prompt chunk 0 of 256
+strata trace: prompt chunk 7424 of 32787
+PP 7424 32788 8716 851.7
+strata trace: prompt chunk 7680 of 32787
+strata trace: prompt chunk 0 of 256
+PP 7680 32788 9015 851.9
+strata trace: prompt chunk 7936 of 32787
+strata trace: prompt chunk 0 of 256
+PP 7936 32788 9311 852.3
+strata trace: prompt chunk 8192 of 32787
+strata trace: prompt chunk 0 of 256
+PP 8192 32788 9610 852.4
+strata trace: prompt chunk 8448 of 32787
+strata trace: prompt chunk 0 of 256
+PP 8448 32788 9908 852.7
+strata trace: prompt chunk 8704 of 32787
+strata trace: prompt chunk 0 of 256
+PP 8704 32788 10217 851.9
+strata trace: prompt chunk 8960 of 32787
+strata trace: prompt chunk 0 of 256
+PP 8960 32788 10516 852.0
+strata trace: prompt chunk 9216 of 32787
+strata trace: prompt chunk 0 of 256
+PP 9216 32788 10827 851.2
+strata trace: prompt chunk 9472 of 32787
+strata trace: prompt chunk 0 of 256
+PP 9472 32788 11124 851.5
+strata trace: prompt chunk 9728 of 32787
+strata trace: prompt chunk 0 of 256
+PP 9728 32788 11435 850.7
+strata trace: prompt chunk 9984 of 32787
+strata trace: prompt chunk 0 of 256
+PP 9984 32788 11738 850.6
+strata trace: prompt chunk 10240 of 32787
+strata trace: prompt chunk 0 of 256
+PP 10240 32788 12042 850.4
+strata trace: prompt chunk 10496 of 32787
+strata trace: prompt chunk 0 of 256
+PP 10496 32788 12343 850.3
+strata trace: prompt chunk 10752 of 32787
+strata trace: prompt chunk 0 of 256
+PP 10752 32788 12651 849.9
+strata trace: prompt chunk 11008 of 32787
+strata trace: prompt chunk 0 of 256
+PP 11008 32788 12962 849.2
+strata trace: prompt chunk 11264 of 32787
+strata trace: prompt chunk 0 of 256
+PP 11264 32788 13270 848.8
+strata trace: prompt chunk 11520 of 32787
+strata trace: prompt chunk 0 of 256
+PP 11520 32788 13575 848.6
+strata trace: prompt chunk 11776 of 32787
+strata trace: prompt chunk 0 of 256
+PP 11776 32788 13880 848.4
+strata trace: prompt chunk 12032 of 32787
+strata trace: prompt chunk 0 of 256
+PP 12032 32788 14191 847.9
+strata trace: prompt chunk 12288 of 32787
+strata trace: prompt chunk 0 of 256
+PP 12288 32788 14496 847.7
+strata trace: prompt chunk 12544 of 32787
+strata trace: prompt chunk 0 of 256
+PP 12544 32788 14800 847.5
+strata trace: prompt chunk 12800 of 32787
+strata trace: prompt chunk 0 of 256
+PP 12800 32788 15109 847.2
+strata trace: prompt chunk 13056 of 32787
+strata trace: prompt chunk 0 of 256
+PP 13056 32788 15408 847.3
+strata trace: prompt chunk 13312 of 32787
+strata trace: prompt chunk 0 of 256
+PP 13312 32788 15708 847.5
+strata trace: prompt chunk 13568 of 32787
+strata trace: prompt chunk 0 of 256
+PP 13568 32788 16016 847.1
+strata trace: prompt chunk 13824 of 32787
+strata trace: prompt chunk 0 of 256
+PP 13824 32788 16321 847.0
+strata trace: prompt chunk 14080 of 32787
+strata trace: prompt chunk 0 of 256
+PP 14080 32788 16624 847.0
+strata trace: prompt chunk 14336 of 32787
+strata trace: prompt chunk 0 of 256
+PP 14336 32788 16936 846.5
+strata trace: prompt chunk 14592 of 32787
+strata trace: prompt chunk 0 of 256
+PP 14592 32788 17248 846.0
+strata trace: prompt chunk 14848 of 32787
+strata trace: prompt chunk 0 of 256
+PP 14848 32788 17550 846.1
+strata trace: prompt chunk 15104 of 32787
+strata trace: prompt chunk 0 of 256
+PP 15104 32788 17860 845.7
+strata trace: prompt chunk 15360 of 32787
+strata trace: prompt chunk 0 of 256
+PP 15360 32788 18163 845.7
+strata trace: prompt chunk 15616 of 32787
+strata trace: prompt chunk 0 of 256
+PP 15616 32788 18471 845.4
+strata trace: prompt chunk 15872 of 32787
+strata trace: prompt chunk 0 of 256
+PP 15872 32788 18782 845.0
+strata trace: prompt chunk 16128 of 32787
+strata trace: prompt chunk 0 of 256
+PP 16128 32788 19091 844.8
+strata trace: prompt chunk 16384 of 32787
+strata trace: prompt chunk 0 of 256
+PP 16384 32788 19401 844.5
+strata trace: prompt chunk 16640 of 32787
+strata trace: prompt chunk 0 of 256
+PP 16640 32788 19719 843.8
+strata trace: prompt chunk 16896 of 32787
+strata trace: prompt chunk 0 of 256
+PP 16896 32788 20026 843.7
+strata trace: prompt chunk 17152 of 32787
+strata trace: prompt chunk 0 of 256
+PP 17152 32788 20331 843.6
+strata trace: prompt chunk 17408 of 32787
+strata trace: prompt chunk 0 of 256
+PP 17408 32788 20648 843.1
+strata trace: prompt chunk 17664 of 32787
+strata trace: prompt chunk 0 of 256
+PP 17664 32788 20956 842.9
+strata trace: prompt chunk 17920 of 32787
+strata trace: prompt chunk 0 of 256
+PP 17920 32788 21275 842.3
+strata trace: prompt chunk 18176 of 32787
+strata trace: prompt chunk 0 of 256
+PP 18176 32788 21586 842.0
+strata trace: prompt chunk 18432 of 32787
+strata trace: prompt chunk 0 of 256
+PP 18432 32788 21910 841.2
+strata trace: prompt chunk 18688 of 32787
+strata trace: prompt chunk 0 of 256
+PP 18688 32788 22219 841.1
+strata trace: prompt chunk 18944 of 32787
+strata trace: prompt chunk 0 of 256
+PP 18944 32788 22542 840.4
+strata trace: prompt chunk 19200 of 32787
+strata trace: prompt chunk 0 of 256
+PP 19200 32788 22862 839.8
+strata trace: prompt chunk 19456 of 32787
+strata trace: prompt chunk 0 of 256
+PP 19456 32788 23170 839.7
+strata trace: prompt chunk 19712 of 32787
+strata trace: prompt chunk 0 of 256
+PP 19712 32788 23485 839.3
+strata trace: prompt chunk 19968 of 32787
+strata trace: prompt chunk 0 of 256
+PP 19968 32788 23803 838.9
+strata trace: prompt chunk 20224 of 32787
+strata trace: prompt chunk 0 of 256
+PP 20224 32788 24115 838.7
+strata trace: prompt chunk 20480 of 32787
+strata trace: prompt chunk 0 of 256
+PP 20480 32788 24431 838.3
+strata trace: prompt chunk 20736 of 32787
+strata trace: prompt chunk 0 of 256
+PP 20736 32788 24751 837.8
+strata trace: prompt chunk 20992 of 32787
+strata trace: prompt chunk 0 of 256
+PP 20992 32788 25074 837.2
+strata trace: prompt chunk 21248 of 32787
+strata trace: prompt chunk 0 of 256
+PP 21248 32788 25391 836.8
+strata trace: prompt chunk 21504 of 32787
+strata trace: prompt chunk 0 of 256
+PP 21504 32788 25706 836.5
+strata trace: prompt chunk 21760 of 32787
+strata trace: prompt chunk 0 of 256
+PP 21760 32788 26012 836.5
+strata trace: prompt chunk 22016 of 32787
+strata trace: prompt chunk 0 of 256
+PP 22016 32788 26328 836.2
+strata trace: prompt chunk 22272 of 32787
+strata trace: prompt chunk 0 of 256
+PP 22272 32788 26645 835.9
+strata trace: prompt chunk 22528 of 32787
+strata trace: prompt chunk 0 of 256
+PP 22528 32788 26956 835.7
+strata trace: prompt chunk 22784 of 32787
+strata trace: prompt chunk 0 of 256
+PP 22784 32788 27264 835.7
+strata trace: prompt chunk 23040 of 32787
+strata trace: prompt chunk 0 of 256
+PP 23040 32788 27580 835.4
+strata trace: prompt chunk 23296 of 32787
+strata trace: prompt chunk 0 of 256
+PP 23296 32788 27890 835.3
+strata trace: prompt chunk 23552 of 32787
+strata trace: prompt chunk 0 of 256
+PP 23552 32788 28212 834.8
+strata trace: prompt chunk 23808 of 32787
+strata trace: prompt chunk 0 of 256
+PP 23808 32788 28520 834.8
+strata trace: prompt chunk 24064 of 32787
+strata trace: prompt chunk 0 of 256
+PP 24064 32788 28838 834.4
+strata trace: prompt chunk 24320 of 32787
+strata trace: prompt chunk 0 of 256
+PP 24320 32788 29152 834.2
+strata trace: prompt chunk 24576 of 32787
+strata trace: prompt chunk 0 of 256
+PP 24576 32788 29466 834.0
+strata trace: prompt chunk 24832 of 32787
+strata trace: prompt chunk 0 of 256
+PP 24832 32788 29784 833.7
+strata trace: prompt chunk 25088 of 32787
+strata trace: prompt chunk 0 of 256
+PP 25088 32788 30101 833.5
+strata trace: prompt chunk 25344 of 32787
+strata trace: prompt chunk 0 of 256
+PP 25344 32788 30405 833.5
+strata trace: prompt chunk 25600 of 32787
+strata trace: prompt chunk 0 of 256
+PP 25600 32788 30725 833.2
+strata trace: prompt chunk 25856 of 32787
+strata trace: prompt chunk 0 of 256
+PP 25856 32788 31027 833.3
+strata trace: prompt chunk 26112 of 32787
+strata trace: prompt chunk 0 of 256
+PP 26112 32788 31353 832.8
+strata trace: prompt chunk 26368 of 32787
+strata trace: prompt chunk 0 of 256
+PP 26368 32788 31664 832.7
+strata trace: prompt chunk 26624 of 32787
+strata trace: prompt chunk 0 of 256
+PP 26624 32788 31988 832.3
+strata trace: prompt chunk 26880 of 32787
+strata trace: prompt chunk 0 of 256
+PP 26880 32788 32298 832.2
+strata trace: prompt chunk 27136 of 32787
+strata trace: prompt chunk 0 of 256
+PP 27136 32788 32615 832.0
+strata trace: prompt chunk 27392 of 32787
+strata trace: prompt chunk 0 of 256
+PP 27392 32788 32932 831.8
+strata trace: prompt chunk 27648 of 32787
+strata trace: prompt chunk 0 of 256
+PP 27648 32788 33246 831.6
+strata trace: prompt chunk 27904 of 32787
+strata trace: prompt chunk 0 of 256
+PP 27904 32788 33567 831.3
+strata trace: prompt chunk 28160 of 32787
+strata trace: prompt chunk 0 of 256
+PP 28160 32788 33872 831.4
+strata trace: prompt chunk 28416 of 32787
+strata trace: prompt chunk 0 of 256
+PP 28416 32788 34196 831.0
+strata trace: prompt chunk 28672 of 32787
+strata trace: prompt chunk 0 of 256
+PP 28672 32788 34510 830.8
+strata trace: prompt chunk 28928 of 32787
+strata trace: prompt chunk 0 of 256
+PP 28928 32788 34826 830.6
+strata trace: prompt chunk 29184 of 32787
+strata trace: prompt chunk 0 of 256
+PP 29184 32788 35148 830.3
+strata trace: prompt chunk 29440 of 32787
+strata trace: prompt chunk 0 of 256
+PP 29440 32788 35459 830.2
+strata trace: prompt chunk 29696 of 32787
+strata trace: prompt chunk 0 of 256
+PP 29696 32788 35776 830.0
+strata trace: prompt chunk 29952 of 32787
+strata trace: prompt chunk 0 of 256
+PP 29952 32788 36093 829.8
+strata trace: prompt chunk 30208 of 32787
+strata trace: prompt chunk 0 of 256
+PP 30208 32788 36413 829.6
+strata trace: prompt chunk 30464 of 32787
+strata trace: prompt chunk 0 of 256
+PP 30464 32788 36722 829.6
+strata trace: prompt chunk 30720 of 32787
+strata trace: prompt chunk 0 of 256
+PP 30720 32788 37042 829.3
+strata trace: prompt chunk 30976 of 32787
+strata trace: prompt chunk 0 of 256
+PP 30976 32788 37359 829.1
+strata trace: prompt chunk 31232 of 32787
+strata trace: prompt chunk 0 of 256
+PP 31232 32788 37674 829.0
+strata trace: prompt chunk 31488 of 32787
+strata trace: prompt chunk 0 of 256
+PP 31488 32788 37984 829.0
+strata trace: prompt chunk 31744 of 32787
+strata trace: prompt chunk 0 of 256
+PP 31744 32788 38292 829.0
+strata trace: prompt chunk 32000 of 32787
+strata trace: prompt chunk 0 of 256
+PP 32000 32788 38604 828.9
+strata trace: prompt chunk 32256 of 32787
+strata trace: prompt chunk 0 of 256
+PP 32256 32788 38919 828.8
+strata trace: prompt chunk 32512 of 32787
+strata trace: prompt chunk 0 of 256
+PP 32512 32788 39235 828.7
+strata trace: prompt chunk 32768 of 32787
+strata trace: prompt chunk 0 of 256
+PP 32768 32788 39566 828.2
+strata trace: prompt chunk 0 of 19
+PP 32787 32788 39590 828.2
+strata trace: read 32787 tokens (batched) in 39586.8 ms
+strata trace: prompt done (slots refilled) -1 -1
+REUSED 0
+strata trace: window 32787 1
+T 842
+strata trace: window 32788 2
+T 53665
+T 25
+strata trace: window 32790 2
+T 15769
+T 1580
+strata trace: window 32792 2
+T 12
+T 19
+strata trace: window 32794 2
+T 48
+T 22
+strata trace: window 32796 4
+strata verify: capturing the 4-token window (2540 MiB of VRAM free)
+strata verify: captured the 4-token window (upload no error, sync no error)
+strata verify: capturing the 4-token window (327 MiB of VRAM free)
+strata verify: captured the 4-token window (upload no error, sync no error)
+T 7869
+T 2731
+T 13267
+T 198
+strata trace: window 32800 2
+T 75761
+strata trace: window 32801 2
+T 25
+T 225505
+strata trace: window 32803 2
+T 905
+T 12
+strata trace: window 32805 2
+T 23
+T 44
+strata trace: window 32807 2
+T 17
+T 12
+strata trace: window 32809 3
+strata verify: capturing the 3-token window (2530 MiB of VRAM free)
+strata verify: captured the 3-token window (upload no error, sync no error)
+strata verify: capturing the 3-token window (323 MiB of VRAM free)
+strata verify: captured the 3-token window (upload no error, sync no error)
+T 5579
+T 74236
+T 198
+strata trace: window 32812 2
+T 95429
+strata trace: window 32813 2
+T 25
+T 2639
+strata trace: window 32815 2
+T 20279
+T 12
+strata trace: window 32817 2
+T 21
+T 53
+strata trace: window 32819 2
+T 24
+T 15377
+strata trace: window 32821 2
+T 177164
+strata trace: window 32822 4
+T 841
+T 248046
+DONE 37 32788 39590.0 391.2 stop 18 23 0 0 0 0 0 0.0 32788 0
+strata serve: prompt 32788 tokens = 0 reused + 32788 read in 39590 ms (828.2 tok/s), 37 generated in 391 ms (94.6 tok/s), drafts accepted 18 of 23, 0 checkpoints
+strata serve: expert tiers: GPU 0 hits this request; since the start RAM 0 blobs, files 0 blobs 77024.6 MB read (the GGUF in place)
+strata serve: file tier I/O this request: the OS read 1307.1 MB from storage (0 major faults) for 0.0 MB of expert reads
+strata serve: suffix drafts: 3 windows, 6 of 8 drafts accepted
+strata trace: request 261682 0
+RESUME 0
+strata trace: prompt start 261681 -1
+strata trace: prompt chunk 0 of 261681
+strata trace: prompt chunk 256 of 261681
+strata trace: prompt chunk 0 of 256
+PP 256 261682 395 647.7
+strata trace: prompt chunk 512 of 261681
+strata trace: prompt chunk 0 of 256
+PP 512 261682 674 759.5
+strata trace: prompt chunk 768 of 261681
+strata trace: prompt chunk 0 of 256
+PP 768 261682 959 800.9
+strata trace: prompt chunk 1024 of 261681
+strata trace: prompt chunk 0 of 256
+PP 1024 261682 1244 822.8
+strata trace: prompt chunk 1280 of 261681
+strata trace: prompt chunk 0 of 256
+PP 1280 261682 1535 833.6
+strata trace: prompt chunk 1536 of 261681
+strata trace: prompt chunk 0 of 256
+PP 1536 261682 1824 842.3
+strata trace: prompt chunk 1792 of 261681
+strata trace: prompt chunk 0 of 256
+PP 1792 261682 2110 849.4
+strata trace: prompt chunk 2048 of 261681
+strata trace: prompt chunk 0 of 256
+PP 2048 261682 2402 852.4
+strata trace: prompt chunk 2304 of 261681
+strata trace: prompt chunk 0 of 256
+PP 2304 261682 2700 853.3
+strata trace: prompt chunk 2560 of 261681
+strata trace: prompt chunk 0 of 256
+PP 2560 261682 2995 854.6
+strata trace: prompt chunk 2816 of 261681
+strata trace: prompt chunk 0 of 256
+PP 2816 261682 3287 856.8
+strata trace: prompt chunk 3072 of 261681
+strata trace: prompt chunk 0 of 256
+PP 3072 261682 3587 856.5
+strata trace: prompt chunk 3328 of 261681
+strata trace: prompt chunk 0 of 256
+PP 3328 261682 3879 858.0
+strata trace: prompt chunk 3584 of 261681
+strata trace: prompt chunk 0 of 256
+PP 3584 261682 4181 857.1
+strata trace: prompt chunk 3840 of 261681
+strata trace: prompt chunk 0 of 256
+PP 3840 261682 4473 858.5
+strata trace: prompt chunk 4096 of 261681
+strata trace: prompt chunk 0 of 256
+PP 4096 261682 4769 858.8
+strata trace: prompt chunk 4352 of 261681
+strata trace: prompt chunk 0 of 256
+PP 4352 261682 5063 859.6
+strata trace: prompt chunk 4608 of 261681
+strata trace: prompt chunk 0 of 256
+PP 4608 261682 5362 859.3
+strata trace: prompt chunk 4864 of 261681
+strata trace: prompt chunk 0 of 256
+PP 4864 261682 5659 859.4
+strata trace: prompt chunk 5120 of 261681
+strata trace: prompt chunk 0 of 256
+PP 5120 261682 5963 858.7
+strata trace: prompt chunk 5376 of 261681
+strata trace: prompt chunk 0 of 256
+PP 5376 261682 6259 858.9
+strata trace: prompt chunk 5632 of 261681
+strata trace: prompt chunk 0 of 256
+PP 5632 261682 6551 859.7
+strata trace: prompt chunk 5888 of 261681
+strata trace: prompt chunk 0 of 256
+PP 5888 261682 6852 859.2
+strata trace: prompt chunk 6144 of 261681
+strata trace: prompt chunk 0 of 256
+PP 6144 261682 7154 858.8
+strata trace: prompt chunk 6400 of 261681
+strata trace: prompt chunk 0 of 256
+PP 6400 261682 7451 858.9
+strata trace: prompt chunk 6656 of 261681
+strata trace: prompt chunk 0 of 256
+PP 6656 261682 7759 857.8
+strata trace: prompt chunk 6912 of 261681
+strata trace: prompt chunk 0 of 256
+PP 6912 261682 8050 858.6
+strata trace: prompt chunk 7168 of 261681
+strata trace: prompt chunk 0 of 256
+PP 7168 261682 8352 858.2
+strata trace: prompt chunk 7424 of 261681
+strata trace: prompt chunk 0 of 256
+PP 7424 261682 8649 858.3
+strata trace: prompt chunk 7680 of 261681
+strata trace: prompt chunk 0 of 256
+PP 7680 261682 8947 858.4
+strata trace: prompt chunk 7936 of 261681
+strata trace: prompt chunk 0 of 256
+PP 7936 261682 9252 857.7
+strata trace: prompt chunk 8192 of 261681
+strata trace: prompt chunk 0 of 256
+PP 8192 261682 9557 857.2
+strata trace: prompt chunk 8448 of 261681
+strata trace: prompt chunk 0 of 256
+PP 8448 261682 9859 856.8
+strata trace: prompt chunk 8704 of 261681
+strata trace: prompt chunk 0 of 256
+PP 8704 261682 10157 856.9
+strata trace: prompt chunk 8960 of 261681
+strata trace: prompt chunk 0 of 256
+PP 8960 261682 10461 856.5
+strata trace: prompt chunk 9216 of 261681
+strata trace: prompt chunk 0 of 256
+PP 9216 261682 10761 856.5
+strata trace: prompt chunk 9472 of 261681
+strata trace: prompt chunk 0 of 256
+PP 9472 261682 11077 855.1
+strata trace: prompt chunk 9728 of 261681
+strata trace: prompt chunk 0 of 256
+PP 9728 261682 11376 855.1
+strata trace: prompt chunk 9984 of 261681
+strata trace: prompt chunk 0 of 256
+PP 9984 261682 11686 854.4
+strata trace: prompt chunk 10240 of 261681
+strata trace: prompt chunk 0 of 256
+PP 10240 261682 11986 854.3
+strata trace: prompt chunk 10496 of 261681
+strata trace: prompt chunk 0 of 256
+PP 10496 261682 12300 853.3
+strata trace: prompt chunk 10752 of 261681
+strata trace: prompt chunk 0 of 256
+PP 10752 261682 12604 853.1
+strata trace: prompt chunk 11008 of 261681
+strata trace: prompt chunk 0 of 256
+PP 11008 261682 12914 852.4
+strata trace: prompt chunk 11264 of 261681
+strata trace: prompt chunk 0 of 256
+PP 11264 261682 13214 852.5
+strata trace: prompt chunk 11520 of 261681
+strata trace: prompt chunk 0 of 256
+PP 11520 261682 13527 851.6
+strata trace: prompt chunk 11776 of 261681
+strata trace: prompt chunk 0 of 256
+PP 11776 261682 13823 851.9
+strata trace: prompt chunk 12032 of 261681
+strata trace: prompt chunk 0 of 256
+PP 12032 261682 14126 851.7
+strata trace: prompt chunk 12288 of 261681
+strata trace: prompt chunk 0 of 256
+PP 12288 261682 14428 851.6
+strata trace: prompt chunk 12544 of 261681
+strata trace: prompt chunk 0 of 256
+PP 12544 261682 14732 851.5
+strata trace: prompt chunk 12800 of 261681
+strata trace: prompt chunk 0 of 256
+PP 12800 261682 15043 850.9
+strata trace: prompt chunk 13056 of 261681
+strata trace: prompt chunk 0 of 256
+PP 13056 261682 15349 850.6
+strata trace: prompt chunk 13312 of 261681
+strata trace: prompt chunk 0 of 256
+PP 13312 261682 15657 850.2
+strata trace: prompt chunk 13568 of 261681
+strata trace: prompt chunk 0 of 256
+PP 13568 261682 15956 850.3
+strata trace: prompt chunk 13824 of 261681
+strata trace: prompt chunk 0 of 256
+PP 13824 261682 16264 850.0
+strata trace: prompt chunk 14080 of 261681
+strata trace: prompt chunk 0 of 256
+PP 14080 261682 16563 850.1
+strata trace: prompt chunk 14336 of 261681
+strata trace: prompt chunk 0 of 256
+PP 14336 261682 16873 849.7
+strata trace: prompt chunk 14592 of 261681
+strata trace: prompt chunk 0 of 256
+PP 14592 261682 17180 849.3
+strata trace: prompt chunk 14848 of 261681
+strata trace: prompt chunk 0 of 256
+PP 14848 261682 17485 849.2
+strata trace: prompt chunk 15104 of 261681
+strata trace: prompt chunk 0 of 256
+PP 15104 261682 17801 848.5
+strata trace: prompt chunk 15360 of 261681
+strata trace: prompt chunk 0 of 256
+PP 15360 261682 18101 848.6
+strata trace: prompt chunk 15616 of 261681
+strata trace: prompt chunk 0 of 256
+PP 15616 261682 18407 848.4
+strata trace: prompt chunk 15872 of 261681
+strata trace: prompt chunk 0 of 256
+PP 15872 261682 18719 847.9
+strata trace: prompt chunk 16128 of 261681
+strata trace: prompt chunk 0 of 256
+PP 16128 261682 19035 847.3
+strata trace: prompt chunk 16384 of 261681
+strata trace: prompt chunk 0 of 256
+PP 16384 261682 19340 847.1
+strata trace: prompt chunk 16640 of 261681
+strata trace: prompt chunk 0 of 256
+PP 16640 261682 19655 846.6
+strata trace: prompt chunk 16896 of 261681
+strata trace: prompt chunk 0 of 256
+PP 16896 261682 19961 846.5
+strata trace: prompt chunk 17152 of 261681
+strata trace: prompt chunk 0 of 256
+PP 17152 261682 20268 846.2
+strata trace: prompt chunk 17408 of 261681
+strata trace: prompt chunk 0 of 256
+PP 17408 261682 20578 846.0
+strata trace: prompt chunk 17664 of 261681
+strata trace: prompt chunk 0 of 256
+PP 17664 261682 20899 845.2
+strata trace: prompt chunk 17920 of 261681
+strata trace: prompt chunk 0 of 256
+PP 17920 261682 21196 845.4
+strata trace: prompt chunk 18176 of 261681
+strata trace: prompt chunk 0 of 256
+PP 18176 261682 21503 845.3
+strata trace: prompt chunk 18432 of 261681
+strata trace: prompt chunk 0 of 256
+PP 18432 261682 21812 845.0
+strata trace: prompt chunk 18688 of 261681
+strata trace: prompt chunk 0 of 256
+PP 18688 261682 22123 844.7
+strata trace: prompt chunk 18944 of 261681
+strata trace: prompt chunk 0 of 256
+PP 18944 261682 22433 844.5
+strata trace: prompt chunk 19200 of 261681
+strata trace: prompt chunk 0 of 256
+PP 19200 261682 22745 844.1
+strata trace: prompt chunk 19456 of 261681
+strata trace: prompt chunk 0 of 256
+PP 19456 261682 23047 844.2
+strata trace: prompt chunk 19712 of 261681
+strata trace: prompt chunk 0 of 256
+PP 19712 261682 23364 843.7
+strata trace: prompt chunk 19968 of 261681
+strata trace: prompt chunk 0 of 256
+PP 19968 261682 23676 843.4
+strata trace: prompt chunk 20224 of 261681
+strata trace: prompt chunk 0 of 256
+PP 20224 261682 23973 843.6
+strata trace: prompt chunk 20480 of 261681
+strata trace: prompt chunk 0 of 256
+PP 20480 261682 24290 843.1
+strata trace: prompt chunk 20736 of 261681
+strata trace: prompt chunk 0 of 256
+PP 20736 261682 24596 843.1
+strata trace: prompt chunk 20992 of 261681
+strata trace: prompt chunk 0 of 256
+PP 20992 261682 24907 842.8
+strata trace: prompt chunk 21248 of 261681
+strata trace: prompt chunk 0 of 256
+PP 21248 261682 25217 842.6
+strata trace: prompt chunk 21504 of 261681
+strata trace: prompt chunk 0 of 256
+PP 21504 261682 25528 842.4
+strata trace: prompt chunk 21760 of 261681
+strata trace: prompt chunk 0 of 256
+PP 21760 261682 25834 842.3
+strata trace: prompt chunk 22016 of 261681
+strata trace: prompt chunk 0 of 256
+PP 22016 261682 26145 842.1
+strata trace: prompt chunk 22272 of 261681
+strata trace: prompt chunk 0 of 256
+PP 22272 261682 26460 841.7
+strata trace: prompt chunk 22528 of 261681
+strata trace: prompt chunk 0 of 256
+PP 22528 261682 26761 841.8
+strata trace: prompt chunk 22784 of 261681
+strata trace: prompt chunk 0 of 256
+PP 22784 261682 27071 841.6
+strata trace: prompt chunk 23040 of 261681
+strata trace: prompt chunk 0 of 256
+PP 23040 261682 27383 841.4
+strata trace: prompt chunk 23296 of 261681
+strata trace: prompt chunk 0 of 256
+PP 23296 261682 27699 841.1
+strata trace: prompt chunk 23552 of 261681
+strata trace: prompt chunk 0 of 256
+PP 23552 261682 28012 840.8
+strata trace: prompt chunk 23808 of 261681
+strata trace: prompt chunk 0 of 256
+PP 23808 261682 28316 840.8
+strata trace: prompt chunk 24064 of 261681
+strata trace: prompt chunk 0 of 256
+PP 24064 261682 28634 840.4
+strata trace: prompt chunk 24320 of 261681
+strata trace: prompt chunk 0 of 256
+PP 24320 261682 28940 840.4
+strata trace: prompt chunk 24576 of 261681
+strata trace: prompt chunk 0 of 256
+PP 24576 261682 29254 840.1
+strata trace: prompt chunk 24832 of 261681
+strata trace: prompt chunk 0 of 256
+PP 24832 261682 29562 840.0
+strata trace: prompt chunk 25088 of 261681
+strata trace: prompt chunk 0 of 256
+PP 25088 261682 29882 839.6
+strata trace: prompt chunk 25344 of 261681
+strata trace: prompt chunk 0 of 256
+PP 25344 261682 30185 839.6
+strata trace: prompt chunk 25600 of 261681
+strata trace: prompt chunk 0 of 256
+PP 25600 261682 30494 839.5
+strata trace: prompt chunk 25856 of 261681
+strata trace: prompt chunk 0 of 256
+PP 25856 261682 30797 839.6
+strata trace: prompt chunk 26112 of 261681
+strata trace: prompt chunk 0 of 256
+PP 26112 261682 31109 839.4
+strata trace: prompt chunk 26368 of 261681
+strata trace: prompt chunk 0 of 256
+PP 26368 261682 31425 839.1
+strata trace: prompt chunk 26624 of 261681
+strata trace: prompt chunk 0 of 256
+PP 26624 261682 31734 839.0
+strata trace: prompt chunk 26880 of 261681
+strata trace: prompt chunk 0 of 256
+PP 26880 261682 32047 838.8
+strata trace: prompt chunk 27136 of 261681
+strata trace: prompt chunk 0 of 256
+PP 27136 261682 32349 838.8
+strata trace: prompt chunk 27392 of 261681
+strata trace: prompt chunk 0 of 256
+PP 27392 261682 32658 838.7
+strata trace: prompt chunk 27648 of 261681
+strata trace: prompt chunk 0 of 256
+PP 27648 261682 32970 838.6
+strata trace: prompt chunk 27904 of 261681
+strata trace: prompt chunk 0 of 256
+PP 27904 261682 33288 838.3
+strata trace: prompt chunk 28160 of 261681
+strata trace: prompt chunk 0 of 256
+PP 28160 261682 33600 838.1
+strata trace: prompt chunk 28416 of 261681
+strata trace: prompt chunk 0 of 256
+PP 28416 261682 33913 837.9
+strata trace: prompt chunk 28672 of 261681
+strata trace: prompt chunk 0 of 256
+PP 28672 261682 34230 837.6
+strata trace: prompt chunk 28928 of 261681
+strata trace: prompt chunk 0 of 256
+PP 28928 261682 34538 837.6
+strata trace: prompt chunk 29184 of 261681
+strata trace: prompt chunk 0 of 256
+PP 29184 261682 34853 837.3
+strata trace: prompt chunk 29440 of 261681
+strata trace: prompt chunk 0 of 256
+PP 29440 261682 35170 837.1
+strata trace: prompt chunk 29696 of 261681
+strata trace: prompt chunk 0 of 256
+PP 29696 261682 35478 837.0
+strata trace: prompt chunk 29952 of 261681
+strata trace: prompt chunk 0 of 256
+PP 29952 261682 35798 836.7
+strata trace: prompt chunk 30208 of 261681
+strata trace: prompt chunk 0 of 256
+PP 30208 261682 36094 836.9
+strata trace: prompt chunk 30464 of 261681
+strata trace: prompt chunk 0 of 256
+PP 30464 261682 36405 836.8
+strata trace: prompt chunk 30720 of 261681
+strata trace: prompt chunk 0 of 256
+PP 30720 261682 36719 836.6
+strata trace: prompt chunk 30976 of 261681
+strata trace: prompt chunk 0 of 256
+PP 30976 261682 37030 836.5
+strata trace: prompt chunk 31232 of 261681
+strata trace: prompt chunk 0 of 256
+PP 31232 261682 37338 836.5
+strata trace: prompt chunk 31488 of 261681
+strata trace: prompt chunk 0 of 256
+PP 31488 261682 37649 836.3
+strata trace: prompt chunk 31744 of 261681
+strata trace: prompt chunk 0 of 256
+PP 31744 261682 37962 836.2
+strata trace: prompt chunk 32000 of 261681
+strata trace: prompt chunk 0 of 256
+PP 32000 261682 38275 836.1
+strata trace: prompt chunk 32256 of 261681
+strata trace: prompt chunk 0 of 256
+PP 32256 261682 38595 835.7
+strata trace: prompt chunk 32512 of 261681
+strata trace: prompt chunk 0 of 256
+PP 32512 261682 38900 835.8
+strata trace: prompt chunk 32768 of 261681
+strata trace: prompt chunk 0 of 256
+PP 32768 261682 39223 835.4
+strata trace: prompt chunk 33024 of 261681
+strata trace: prompt chunk 0 of 256
+PP 33024 261682 39533 835.3
+strata trace: prompt chunk 33280 of 261681
+strata trace: prompt chunk 0 of 256
+PP 33280 261682 39847 835.2
+strata trace: prompt chunk 33536 of 261681
+strata trace: prompt chunk 0 of 256
+PP 33536 261682 40165 834.9
+strata trace: prompt chunk 33792 of 261681
+strata trace: prompt chunk 0 of 256
+PP 33792 261682 40473 834.9
+strata trace: prompt chunk 34048 of 261681
+strata trace: prompt chunk 0 of 256
+PP 34048 261682 40795 834.6
+strata trace: prompt chunk 34304 of 261681
+strata trace: prompt chunk 0 of 256
+PP 34304 261682 41114 834.4
+strata trace: prompt chunk 34560 of 261681
+strata trace: prompt chunk 0 of 256
+PP 34560 261682 41426 834.3
+strata trace: prompt chunk 34816 of 261681
+strata trace: prompt chunk 0 of 256
+PP 34816 261682 41742 834.1
+strata trace: prompt chunk 35072 of 261681
+strata trace: prompt chunk 0 of 256
+PP 35072 261682 42056 833.9
+strata trace: prompt chunk 35328 of 261681
+strata trace: prompt chunk 0 of 256
+PP 35328 261682 42361 834.0
+strata trace: prompt chunk 35584 of 261681
+strata trace: prompt chunk 0 of 256
+PP 35584 261682 42684 833.7
+strata trace: prompt chunk 35840 of 261681
+strata trace: prompt chunk 0 of 256
+PP 35840 261682 42993 833.6
+strata trace: prompt chunk 36096 of 261681
+strata trace: prompt chunk 0 of 256
+PP 36096 261682 43313 833.4
+strata trace: prompt chunk 36352 of 261681
+strata trace: prompt chunk 0 of 256
+PP 36352 261682 43628 833.2
+strata trace: prompt chunk 36608 of 261681
+strata trace: prompt chunk 0 of 256
+PP 36608 261682 43941 833.1
+strata trace: prompt chunk 36864 of 261681
+strata trace: prompt chunk 0 of 256
+PP 36864 261682 44262 832.8
+strata trace: prompt chunk 37120 of 261681
+strata trace: prompt chunk 0 of 256
+PP 37120 261682 44571 832.8
+strata trace: prompt chunk 37376 of 261681
+strata trace: prompt chunk 0 of 256
+PP 37376 261682 44882 832.8
+strata trace: prompt chunk 37632 of 261681
+strata trace: prompt chunk 0 of 256
+PP 37632 261682 45196 832.6
+strata trace: prompt chunk 37888 of 261681
+strata trace: prompt chunk 0 of 256
+PP 37888 261682 45513 832.5
+strata trace: prompt chunk 38144 of 261681
+strata trace: prompt chunk 0 of 256
+PP 38144 261682 45829 832.3
+strata trace: prompt chunk 38400 of 261681
+strata trace: prompt chunk 0 of 256
+PP 38400 261682 46139 832.3
+strata trace: prompt chunk 38656 of 261681
+strata trace: prompt chunk 0 of 256
+PP 38656 261682 46453 832.1
+strata trace: prompt chunk 38912 of 261681
+strata trace: prompt chunk 0 of 256
+PP 38912 261682 46761 832.1
+strata trace: prompt chunk 39168 of 261681
+strata trace: prompt chunk 0 of 256
+PP 39168 261682 47079 832.0
+strata trace: prompt chunk 39424 of 261681
+strata trace: prompt chunk 0 of 256
+PP 39424 261682 47384 832.0
+strata trace: prompt chunk 39680 of 261681
+strata trace: prompt chunk 0 of 256
+PP 39680 261682 47698 831.9
+strata trace: prompt chunk 39936 of 261681
+strata trace: prompt chunk 0 of 256
+PP 39936 261682 48026 831.5
+strata trace: prompt chunk 40192 of 261681
+strata trace: prompt chunk 0 of 256
+PP 40192 261682 48337 831.5
+strata trace: prompt chunk 40448 of 261681
+strata trace: prompt chunk 0 of 256
+PP 40448 261682 48658 831.3
+strata trace: prompt chunk 40704 of 261681
+strata trace: prompt chunk 0 of 256
+PP 40704 261682 48964 831.3
+strata trace: prompt chunk 40960 of 261681
+strata trace: prompt chunk 0 of 256
+PP 40960 261682 49277 831.2
+strata trace: prompt chunk 41216 of 261681
+strata trace: prompt chunk 0 of 256
+PP 41216 261682 49593 831.1
+strata trace: prompt chunk 41472 of 261681
+strata trace: prompt chunk 0 of 256
+PP 41472 261682 49913 830.9
+strata trace: prompt chunk 41728 of 261681
+strata trace: prompt chunk 0 of 256
+PP 41728 261682 50221 830.9
+strata trace: prompt chunk 41984 of 261681
+strata trace: prompt chunk 0 of 256
+PP 41984 261682 50539 830.7
+strata trace: prompt chunk 42240 of 261681
+strata trace: prompt chunk 0 of 256
+PP 42240 261682 50861 830.5
+strata trace: prompt chunk 42496 of 261681
+strata trace: prompt chunk 0 of 256
+PP 42496 261682 51175 830.4
+strata trace: prompt chunk 42752 of 261681
+strata trace: prompt chunk 0 of 256
+PP 42752 261682 51491 830.3
+strata trace: prompt chunk 43008 of 261681
+strata trace: prompt chunk 0 of 256
+PP 43008 261682 51811 830.1
+strata trace: prompt chunk 43264 of 261681
+strata trace: prompt chunk 0 of 256
+PP 43264 261682 52120 830.1
+strata trace: prompt chunk 43520 of 261681
+strata trace: prompt chunk 0 of 256
+PP 43520 261682 52437 830.0
+strata trace: prompt chunk 43776 of 261681
+strata trace: prompt chunk 0 of 256
+PP 43776 261682 52751 829.9
+strata trace: prompt chunk 44032 of 261681
+strata trace: prompt chunk 0 of 256
+PP 44032 261682 53066 829.8
+strata trace: prompt chunk 44288 of 261681
+strata trace: prompt chunk 0 of 256
+PP 44288 261682 53385 829.6
+strata trace: prompt chunk 44544 of 261681
+strata trace: prompt chunk 0 of 256
+PP 44544 261682 53695 829.6
+strata trace: prompt chunk 44800 of 261681
+strata trace: prompt chunk 0 of 256
+PP 44800 261682 54015 829.4
+strata trace: prompt chunk 45056 of 261681
+strata trace: prompt chunk 0 of 256
+PP 45056 261682 54331 829.3
+strata trace: prompt chunk 45312 of 261681
+strata trace: prompt chunk 0 of 256
+PP 45312 261682 54651 829.1
+strata trace: prompt chunk 45568 of 261681
+strata trace: prompt chunk 0 of 256
+PP 45568 261682 54969 829.0
+strata trace: prompt chunk 45824 of 261681
+strata trace: prompt chunk 0 of 256
+PP 45824 261682 55278 829.0
+strata trace: prompt chunk 46080 of 261681
+strata trace: prompt chunk 0 of 256
+PP 46080 261682 55596 828.8
+strata trace: prompt chunk 46336 of 261681
+strata trace: prompt chunk 0 of 256
+PP 46336 261682 55908 828.8
+strata trace: prompt chunk 46592 of 261681
+strata trace: prompt chunk 0 of 256
+PP 46592 261682 56232 828.6
+strata trace: prompt chunk 46848 of 261681
+strata trace: prompt chunk 0 of 256
+PP 46848 261682 56546 828.5
+strata trace: prompt chunk 47104 of 261681
+strata trace: prompt chunk 0 of 256
+PP 47104 261682 56862 828.4
+strata trace: prompt chunk 47360 of 261681
+strata trace: prompt chunk 0 of 256
+PP 47360 261682 57173 828.4
+strata trace: prompt chunk 47616 of 261681
+strata trace: prompt chunk 0 of 256
+PP 47616 261682 57490 828.2
+strata trace: prompt chunk 47872 of 261681
+strata trace: prompt chunk 0 of 256
+PP 47872 261682 57814 828.0
+strata trace: prompt chunk 48128 of 261681
+strata trace: prompt chunk 0 of 256
+PP 48128 261682 58129 827.9
+strata trace: prompt chunk 48384 of 261681
+strata trace: prompt chunk 0 of 256
+PP 48384 261682 58446 827.8
+strata trace: prompt chunk 48640 of 261681
+strata trace: prompt chunk 0 of 256
+PP 48640 261682 58769 827.6
+strata trace: prompt chunk 48896 of 261681
+strata trace: prompt chunk 0 of 256
+PP 48896 261682 59088 827.5
+strata trace: prompt chunk 49152 of 261681
+strata trace: prompt chunk 0 of 256
+PP 49152 261682 59403 827.4
+strata trace: prompt chunk 49408 of 261681
+strata trace: prompt chunk 0 of 256
+PP 49408 261682 59717 827.4
+strata trace: prompt chunk 49664 of 261681
+strata trace: prompt chunk 0 of 256
+PP 49664 261682 60049 827.1
+strata trace: prompt chunk 49920 of 261681
+strata trace: prompt chunk 0 of 256
+PP 49920 261682 60363 827.0
+strata trace: prompt chunk 50176 of 261681
+strata trace: prompt chunk 0 of 256
+PP 50176 261682 60681 826.9
+strata trace: prompt chunk 50432 of 261681
+strata trace: prompt chunk 0 of 256
+PP 50432 261682 61002 826.7
+strata trace: prompt chunk 50688 of 261681
+strata trace: prompt chunk 0 of 256
+PP 50688 261682 61316 826.7
+strata trace: prompt chunk 50944 of 261681
+strata trace: prompt chunk 0 of 256
+PP 50944 261682 61626 826.7
+strata trace: prompt chunk 51200 of 261681
+strata trace: prompt chunk 0 of 256
+PP 51200 261682 61947 826.5
+strata trace: prompt chunk 51456 of 261681
+strata trace: prompt chunk 0 of 256
+PP 51456 261682 62264 826.4
+strata trace: prompt chunk 51712 of 261681
+strata trace: prompt chunk 0 of 256
+PP 51712 261682 62578 826.4
+strata trace: prompt chunk 51968 of 261681
+strata trace: prompt chunk 0 of 256
+PP 51968 261682 62898 826.2
+strata trace: prompt chunk 52224 of 261681
+strata trace: prompt chunk 0 of 256
+PP 52224 261682 63218 826.1
+strata trace: prompt chunk 52480 of 261681
+strata trace: prompt chunk 0 of 256
+PP 52480 261682 63529 826.1
+strata trace: prompt chunk 52736 of 261681
+strata trace: prompt chunk 0 of 256
+PP 52736 261682 63845 826.0
+strata trace: prompt chunk 52992 of 261681
+strata trace: prompt chunk 0 of 256
+PP 52992 261682 64167 825.8
+strata trace: prompt chunk 53248 of 261681
+strata trace: prompt chunk 0 of 256
+PP 53248 261682 64472 825.9
+strata trace: prompt chunk 53504 of 261681
+strata trace: prompt chunk 0 of 256
+PP 53504 261682 64795 825.7
+strata trace: prompt chunk 53760 of 261681
+strata trace: prompt chunk 0 of 256
+PP 53760 261682 65114 825.6
+strata trace: prompt chunk 54016 of 261681
+strata trace: prompt chunk 0 of 256
+PP 54016 261682 65428 825.6
+strata trace: prompt chunk 54272 of 261681
+strata trace: prompt chunk 0 of 256
+PP 54272 261682 65746 825.5
+strata trace: prompt chunk 54528 of 261681
+strata trace: prompt chunk 0 of 256
+PP 54528 261682 66073 825.3
+strata trace: prompt chunk 54784 of 261681
+strata trace: prompt chunk 0 of 256
+PP 54784 261682 66391 825.2
+strata trace: prompt chunk 55040 of 261681
+strata trace: prompt chunk 0 of 256
+PP 55040 261682 66710 825.1
+strata trace: prompt chunk 55296 of 261681
+strata trace: prompt chunk 0 of 256
+PP 55296 261682 67029 825.0
+strata trace: prompt chunk 55552 of 261681
+strata trace: prompt chunk 0 of 256
+PP 55552 261682 67346 824.9
+strata trace: prompt chunk 55808 of 261681
+strata trace: prompt chunk 0 of 256
+PP 55808 261682 67661 824.8
+strata trace: prompt chunk 56064 of 261681
+strata trace: prompt chunk 0 of 256
+PP 56064 261682 67987 824.6
+strata trace: prompt chunk 56320 of 261681
+strata trace: prompt chunk 0 of 256
+PP 56320 261682 68309 824.5
+strata trace: prompt chunk 56576 of 261681
+strata trace: prompt chunk 0 of 256
+PP 56576 261682 68624 824.4
+strata trace: prompt chunk 56832 of 261681
+strata trace: prompt chunk 0 of 256
+PP 56832 261682 68950 824.2
+strata trace: prompt chunk 57088 of 261681
+strata trace: prompt chunk 0 of 256
+PP 57088 261682 69271 824.1
+strata trace: prompt chunk 57344 of 261681
+strata trace: prompt chunk 0 of 256
+PP 57344 261682 69594 824.0
+strata trace: prompt chunk 57600 of 261681
+strata trace: prompt chunk 0 of 256
+PP 57600 261682 69908 823.9
+strata trace: prompt chunk 57856 of 261681
+strata trace: prompt chunk 0 of 256
+PP 57856 261682 70228 823.8
+strata trace: prompt chunk 58112 of 261681
+strata trace: prompt chunk 0 of 256
+PP 58112 261682 70552 823.7
+strata trace: prompt chunk 58368 of 261681
+strata trace: prompt chunk 0 of 256
+PP 58368 261682 70878 823.5
+strata trace: prompt chunk 58624 of 261681
+strata trace: prompt chunk 0 of 256
+PP 58624 261682 71190 823.5
+strata trace: prompt chunk 58880 of 261681
+strata trace: prompt chunk 0 of 256
+PP 58880 261682 71516 823.3
+strata trace: prompt chunk 59136 of 261681
+strata trace: prompt chunk 0 of 256
+PP 59136 261682 71838 823.2
+strata trace: prompt chunk 59392 of 261681
+strata trace: prompt chunk 0 of 256
+PP 59392 261682 72158 823.1
+strata trace: prompt chunk 59648 of 261681
+strata trace: prompt chunk 0 of 256
+PP 59648 261682 72474 823.0
+strata trace: prompt chunk 59904 of 261681
+strata trace: prompt chunk 0 of 256
+PP 59904 261682 72807 822.8
+strata trace: prompt chunk 60160 of 261681
+strata trace: prompt chunk 0 of 256
+PP 60160 261682 73134 822.6
+strata trace: prompt chunk 60416 of 261681
+strata trace: prompt chunk 0 of 256
+PP 60416 261682 73447 822.6
+strata trace: prompt chunk 60672 of 261681
+strata trace: prompt chunk 0 of 256
+PP 60672 261682 73764 822.5
+strata trace: prompt chunk 60928 of 261681
+strata trace: prompt chunk 0 of 256
+PP 60928 261682 74079 822.5
+strata trace: prompt chunk 61184 of 261681
+strata trace: prompt chunk 0 of 256
+PP 61184 261682 74396 822.4
+strata trace: prompt chunk 61440 of 261681
+strata trace: prompt chunk 0 of 256
+PP 61440 261682 74731 822.1
+strata trace: prompt chunk 61696 of 261681
+strata trace: prompt chunk 0 of 256
+PP 61696 261682 75039 822.2
+strata trace: prompt chunk 61952 of 261681
+strata trace: prompt chunk 0 of 256
+PP 61952 261682 75356 822.1
+strata trace: prompt chunk 62208 of 261681
+strata trace: prompt chunk 0 of 256
+PP 62208 261682 75670 822.1
+strata trace: prompt chunk 62464 of 261681
+strata trace: prompt chunk 0 of 256
+PP 62464 261682 75994 822.0
+strata trace: prompt chunk 62720 of 261681
+strata trace: prompt chunk 0 of 256
+PP 62720 261682 76313 821.9
+strata trace: prompt chunk 62976 of 261681
+strata trace: prompt chunk 0 of 256
+PP 62976 261682 76625 821.9
+strata trace: prompt chunk 63232 of 261681
+strata trace: prompt chunk 0 of 256
+PP 63232 261682 76943 821.8
+strata trace: prompt chunk 63488 of 261681
+strata trace: prompt chunk 0 of 256
+PP 63488 261682 77263 821.7
+strata trace: prompt chunk 63744 of 261681
+strata trace: prompt chunk 0 of 256
+PP 63744 261682 77589 821.6
+strata trace: prompt chunk 64000 of 261681
+strata trace: prompt chunk 0 of 256
+PP 64000 261682 77908 821.5
+strata trace: prompt chunk 64256 of 261681
+strata trace: prompt chunk 0 of 256
+PP 64256 261682 78229 821.4
+strata trace: prompt chunk 64512 of 261681
+strata trace: prompt chunk 0 of 256
+PP 64512 261682 78550 821.3
+strata trace: prompt chunk 64768 of 261681
+strata trace: prompt chunk 0 of 256
+PP 64768 261682 78862 821.3
+strata trace: prompt chunk 65024 of 261681
+strata trace: prompt chunk 0 of 256
+PP 65024 261682 79182 821.2
+strata trace: prompt chunk 65280 of 261681
+strata trace: prompt chunk 0 of 256
+PP 65280 261682 79508 821.0
+strata trace: prompt chunk 65536 of 261681
+strata trace: prompt chunk 0 of 256
+PP 65536 261682 79828 821.0
+strata trace: prompt chunk 65792 of 261681
+strata trace: prompt chunk 0 of 256
+PP 65792 261682 80145 820.9
+strata trace: prompt chunk 66048 of 261681
+strata trace: prompt chunk 0 of 256
+PP 66048 261682 80463 820.9
+strata trace: prompt chunk 66304 of 261681
+strata trace: prompt chunk 0 of 256
+PP 66304 261682 80784 820.8
+strata trace: prompt chunk 66560 of 261681
+strata trace: prompt chunk 0 of 256
+PP 66560 261682 81103 820.7
+strata trace: prompt chunk 66816 of 261681
+strata trace: prompt chunk 0 of 256
+PP 66816 261682 81423 820.6
+strata trace: prompt chunk 67072 of 261681
+strata trace: prompt chunk 0 of 256
+PP 67072 261682 81742 820.5
+strata trace: prompt chunk 67328 of 261681
+strata trace: prompt chunk 0 of 256
+PP 67328 261682 82062 820.4
+strata trace: prompt chunk 67584 of 261681
+strata trace: prompt chunk 0 of 256
+PP 67584 261682 82387 820.3
+strata trace: prompt chunk 67840 of 261681
+strata trace: prompt chunk 0 of 256
+PP 67840 261682 82700 820.3
+strata trace: prompt chunk 68096 of 261681
+strata trace: prompt chunk 0 of 256
+PP 68096 261682 83015 820.3
+strata trace: prompt chunk 68352 of 261681
+strata trace: prompt chunk 0 of 256
+PP 68352 261682 83333 820.2
+strata trace: prompt chunk 68608 of 261681
+strata trace: prompt chunk 0 of 256
+PP 68608 261682 83663 820.0
+strata trace: prompt chunk 68864 of 261681
+strata trace: prompt chunk 0 of 256
+PP 68864 261682 83980 820.0
+strata trace: prompt chunk 69120 of 261681
+strata trace: prompt chunk 0 of 256
+PP 69120 261682 84303 819.9
+strata trace: prompt chunk 69376 of 261681
+strata trace: prompt chunk 0 of 256
+PP 69376 261682 84627 819.8
+strata trace: prompt chunk 69632 of 261681
+strata trace: prompt chunk 0 of 256
+PP 69632 261682 84941 819.8
+strata trace: prompt chunk 69888 of 261681
+strata trace: prompt chunk 0 of 256
+PP 69888 261682 85267 819.6
+strata trace: prompt chunk 70144 of 261681
+strata trace: prompt chunk 0 of 256
+PP 70144 261682 85586 819.6
+strata trace: prompt chunk 70400 of 261681
+strata trace: prompt chunk 0 of 256
+PP 70400 261682 85910 819.5
+strata trace: prompt chunk 70656 of 261681
+strata trace: prompt chunk 0 of 256
+PP 70656 261682 86235 819.3
+strata trace: prompt chunk 70912 of 261681
+strata trace: prompt chunk 0 of 256
+PP 70912 261682 86558 819.2
+strata trace: prompt chunk 71168 of 261681
+strata trace: prompt chunk 0 of 256
+PP 71168 261682 86878 819.2
+strata trace: prompt chunk 71424 of 261681
+strata trace: prompt chunk 0 of 256
+PP 71424 261682 87196 819.1
+strata trace: prompt chunk 71680 of 261681
+strata trace: prompt chunk 0 of 256
+PP 71680 261682 87519 819.0
+strata trace: prompt chunk 71936 of 261681
+strata trace: prompt chunk 0 of 256
+PP 71936 261682 87843 818.9
+strata trace: prompt chunk 72192 of 261681
+strata trace: prompt chunk 0 of 256
+PP 72192 261682 88164 818.8
+strata trace: prompt chunk 72448 of 261681
+strata trace: prompt chunk 0 of 256
+PP 72448 261682 88476 818.8
+strata trace: prompt chunk 72704 of 261681
+strata trace: prompt chunk 0 of 256
+PP 72704 261682 88803 818.7
+strata trace: prompt chunk 72960 of 261681
+strata trace: prompt chunk 0 of 256
+PP 72960 261682 89122 818.6
+strata trace: prompt chunk 73216 of 261681
+strata trace: prompt chunk 0 of 256
+PP 73216 261682 89452 818.5
+strata trace: prompt chunk 73472 of 261681
+strata trace: prompt chunk 0 of 256
+PP 73472 261682 89774 818.4
+strata trace: prompt chunk 73728 of 261681
+strata trace: prompt chunk 0 of 256
+PP 73728 261682 90092 818.4
+strata trace: prompt chunk 73984 of 261681
+strata trace: prompt chunk 0 of 256
+PP 73984 261682 90414 818.3
+strata trace: prompt chunk 74240 of 261681
+strata trace: prompt chunk 0 of 256
+PP 74240 261682 90736 818.2
+strata trace: prompt chunk 74496 of 261681
+strata trace: prompt chunk 0 of 256
+PP 74496 261682 91055 818.1
+strata trace: prompt chunk 74752 of 261681
+strata trace: prompt chunk 0 of 256
+PP 74752 261682 91379 818.0
+strata trace: prompt chunk 75008 of 261681
+strata trace: prompt chunk 0 of 256
+PP 75008 261682 91702 817.9
+strata trace: prompt chunk 75264 of 261681
+strata trace: prompt chunk 0 of 256
+PP 75264 261682 92021 817.9
+strata trace: prompt chunk 75520 of 261681
+strata trace: prompt chunk 0 of 256
+PP 75520 261682 92341 817.8
+strata trace: prompt chunk 75776 of 261681
+strata trace: prompt chunk 0 of 256
+PP 75776 261682 92659 817.8
+strata trace: prompt chunk 76032 of 261681
+strata trace: prompt chunk 0 of 256
+PP 76032 261682 92982 817.7
+strata trace: prompt chunk 76288 of 261681
+strata trace: prompt chunk 0 of 256
+PP 76288 261682 93303 817.6
+strata trace: prompt chunk 76544 of 261681
+strata trace: prompt chunk 0 of 256
+PP 76544 261682 93624 817.6
+strata trace: prompt chunk 76800 of 261681
+strata trace: prompt chunk 0 of 256
+PP 76800 261682 93941 817.5
+strata trace: prompt chunk 77056 of 261681
+strata trace: prompt chunk 0 of 256
+PP 77056 261682 94261 817.5
+strata trace: prompt chunk 77312 of 261681
+strata trace: prompt chunk 0 of 256
+PP 77312 261682 94583 817.4
+strata trace: prompt chunk 77568 of 261681
+strata trace: prompt chunk 0 of 256
+PP 77568 261682 94910 817.3
+strata trace: prompt chunk 77824 of 261681
+strata trace: prompt chunk 0 of 256
+PP 77824 261682 95231 817.2
+strata trace: prompt chunk 78080 of 261681
+strata trace: prompt chunk 0 of 256
+PP 78080 261682 95560 817.1
+strata trace: prompt chunk 78336 of 261681
+strata trace: prompt chunk 0 of 256
+PP 78336 261682 95879 817.0
+strata trace: prompt chunk 78592 of 261681
+strata trace: prompt chunk 0 of 256
+PP 78592 261682 96202 816.9
+strata trace: prompt chunk 78848 of 261681
+strata trace: prompt chunk 0 of 256
+PP 78848 261682 96525 816.9
+strata trace: prompt chunk 79104 of 261681
+strata trace: prompt chunk 0 of 256
+PP 79104 261682 96846 816.8
+strata trace: prompt chunk 79360 of 261681
+strata trace: prompt chunk 0 of 256
+PP 79360 261682 97169 816.7
+strata trace: prompt chunk 79616 of 261681
+strata trace: prompt chunk 0 of 256
+PP 79616 261682 97489 816.7
+strata trace: prompt chunk 79872 of 261681
+strata trace: prompt chunk 0 of 256
+PP 79872 261682 97807 816.6
+strata trace: prompt chunk 80128 of 261681
+strata trace: prompt chunk 0 of 256
+PP 80128 261682 98130 816.5
+strata trace: prompt chunk 80384 of 261681
+strata trace: prompt chunk 0 of 256
+PP 80384 261682 98450 816.5
+strata trace: prompt chunk 80640 of 261681
+strata trace: prompt chunk 0 of 256
+PP 80640 261682 98768 816.5
+strata trace: prompt chunk 80896 of 261681
+strata trace: prompt chunk 0 of 256
+PP 80896 261682 99092 816.4
+strata trace: prompt chunk 81152 of 261681
+strata trace: prompt chunk 0 of 256
+PP 81152 261682 99410 816.3
+strata trace: prompt chunk 81408 of 261681
+strata trace: prompt chunk 0 of 256
+PP 81408 261682 99742 816.2
+strata trace: prompt chunk 81664 of 261681
+strata trace: prompt chunk 0 of 256
+PP 81664 261682 100072 816.1
+strata trace: prompt chunk 81920 of 261681
+strata trace: prompt chunk 0 of 256
+PP 81920 261682 100394 816.0
+strata trace: prompt chunk 82176 of 261681
+strata trace: prompt chunk 0 of 256
+PP 82176 261682 100702 816.0
+strata trace: prompt chunk 82432 of 261681
+strata trace: prompt chunk 0 of 256
+PP 82432 261682 101028 815.9
+strata trace: prompt chunk 82688 of 261681
+strata trace: prompt chunk 0 of 256
+PP 82688 261682 101346 815.9
+strata trace: prompt chunk 82944 of 261681
+strata trace: prompt chunk 0 of 256
+PP 82944 261682 101674 815.8
+strata trace: prompt chunk 83200 of 261681
+strata trace: prompt chunk 0 of 256
+PP 83200 261682 101997 815.7
+strata trace: prompt chunk 83456 of 261681
+strata trace: prompt chunk 0 of 256
+PP 83456 261682 102315 815.7
+strata trace: prompt chunk 83712 of 261681
+strata trace: prompt chunk 0 of 256
+PP 83712 261682 102637 815.6
+strata trace: prompt chunk 83968 of 261681
+strata trace: prompt chunk 0 of 256
+PP 83968 261682 102967 815.5
+strata trace: prompt chunk 84224 of 261681
+strata trace: prompt chunk 0 of 256
+PP 84224 261682 103300 815.3
+strata trace: prompt chunk 84480 of 261681
+strata trace: prompt chunk 0 of 256
+PP 84480 261682 103629 815.2
+strata trace: prompt chunk 84736 of 261681
+strata trace: prompt chunk 0 of 256
+PP 84736 261682 103952 815.1
+strata trace: prompt chunk 84992 of 261681
+strata trace: prompt chunk 0 of 256
+PP 84992 261682 104276 815.1
+strata trace: prompt chunk 85248 of 261681
+strata trace: prompt chunk 0 of 256
+PP 85248 261682 104600 815.0
+strata trace: prompt chunk 85504 of 261681
+strata trace: prompt chunk 0 of 256
+PP 85504 261682 104920 814.9
+strata trace: prompt chunk 85760 of 261681
+strata trace: prompt chunk 0 of 256
+PP 85760 261682 105242 814.9
+strata trace: prompt chunk 86016 of 261681
+strata trace: prompt chunk 0 of 256
+PP 86016 261682 105566 814.8
+strata trace: prompt chunk 86272 of 261681
+strata trace: prompt chunk 0 of 256
+PP 86272 261682 105884 814.8
+strata trace: prompt chunk 86528 of 261681
+strata trace: prompt chunk 0 of 256
+PP 86528 261682 106214 814.7
+strata trace: prompt chunk 86784 of 261681
+strata trace: prompt chunk 0 of 256
+PP 86784 261682 106535 814.6
+strata trace: prompt chunk 87040 of 261681
+strata trace: prompt chunk 0 of 256
+PP 87040 261682 106864 814.5
+strata trace: prompt chunk 87296 of 261681
+strata trace: prompt chunk 0 of 256
+PP 87296 261682 107192 814.4
+strata trace: prompt chunk 87552 of 261681
+strata trace: prompt chunk 0 of 256
+PP 87552 261682 107515 814.3
+strata trace: prompt chunk 87808 of 261681
+strata trace: prompt chunk 0 of 256
+PP 87808 261682 107843 814.2
+strata trace: prompt chunk 88064 of 261681
+strata trace: prompt chunk 0 of 256
+PP 88064 261682 108166 814.2
+strata trace: prompt chunk 88320 of 261681
+strata trace: prompt chunk 0 of 256
+PP 88320 261682 108490 814.1
+strata trace: prompt chunk 88576 of 261681
+strata trace: prompt chunk 0 of 256
+PP 88576 261682 108813 814.0
+strata trace: prompt chunk 88832 of 261681
+strata trace: prompt chunk 0 of 256
+PP 88832 261682 109136 814.0
+strata trace: prompt chunk 89088 of 261681
+strata trace: prompt chunk 0 of 256
+PP 89088 261682 109466 813.8
+strata trace: prompt chunk 89344 of 261681
+strata trace: prompt chunk 0 of 256
+PP 89344 261682 109790 813.8
+strata trace: prompt chunk 89600 of 261681
+strata trace: prompt chunk 0 of 256
+PP 89600 261682 110110 813.7
+strata trace: prompt chunk 89856 of 261681
+strata trace: prompt chunk 0 of 256
+PP 89856 261682 110430 813.7
+strata trace: prompt chunk 90112 of 261681
+strata trace: prompt chunk 0 of 256
+PP 90112 261682 110762 813.6
+strata trace: prompt chunk 90368 of 261681
+strata trace: prompt chunk 0 of 256
+PP 90368 261682 111085 813.5
+strata trace: prompt chunk 90624 of 261681
+strata trace: prompt chunk 0 of 256
+PP 90624 261682 111414 813.4
+strata trace: prompt chunk 90880 of 261681
+strata trace: prompt chunk 0 of 256
+PP 90880 261682 111741 813.3
+strata trace: prompt chunk 91136 of 261681
+strata trace: prompt chunk 0 of 256
+PP 91136 261682 112066 813.2
+strata trace: prompt chunk 91392 of 261681
+strata trace: prompt chunk 0 of 256
+PP 91392 261682 112394 813.1
+strata trace: prompt chunk 91648 of 261681
+strata trace: prompt chunk 0 of 256
+PP 91648 261682 112721 813.0
+strata trace: prompt chunk 91904 of 261681
+strata trace: prompt chunk 0 of 256
+PP 91904 261682 113057 812.9
+strata trace: prompt chunk 92160 of 261681
+strata trace: prompt chunk 0 of 256
+PP 92160 261682 113386 812.8
+strata trace: prompt chunk 92416 of 261681
+strata trace: prompt chunk 0 of 256
+PP 92416 261682 113711 812.7
+strata trace: prompt chunk 92672 of 261681
+strata trace: prompt chunk 0 of 256
+PP 92672 261682 114040 812.6
+strata trace: prompt chunk 92928 of 261681
+strata trace: prompt chunk 0 of 256
+PP 92928 261682 114373 812.5
+strata trace: prompt chunk 93184 of 261681
+strata trace: prompt chunk 0 of 256
+PP 93184 261682 114702 812.4
+strata trace: prompt chunk 93440 of 261681
+strata trace: prompt chunk 0 of 256
+PP 93440 261682 115021 812.4
+strata trace: prompt chunk 93696 of 261681
+strata trace: prompt chunk 0 of 256
+PP 93696 261682 115350 812.3
+strata trace: prompt chunk 93952 of 261681
+strata trace: prompt chunk 0 of 256
+PP 93952 261682 115681 812.2
+strata trace: prompt chunk 94208 of 261681
+strata trace: prompt chunk 0 of 256
+PP 94208 261682 116011 812.1
+strata trace: prompt chunk 94464 of 261681
+strata trace: prompt chunk 0 of 256
+PP 94464 261682 116336 812.0
+strata trace: prompt chunk 94720 of 261681
+strata trace: prompt chunk 0 of 256
+PP 94720 261682 116665 811.9
+strata trace: prompt chunk 94976 of 261681
+strata trace: prompt chunk 0 of 256
+PP 94976 261682 117001 811.8
+strata trace: prompt chunk 95232 of 261681
+strata trace: prompt chunk 0 of 256
+PP 95232 261682 117324 811.7
+strata trace: prompt chunk 95488 of 261681
+strata trace: prompt chunk 0 of 256
+PP 95488 261682 117648 811.6
+strata trace: prompt chunk 95744 of 261681
+strata trace: prompt chunk 0 of 256
+PP 95744 261682 117969 811.6
+strata trace: prompt chunk 96000 of 261681
+strata trace: prompt chunk 0 of 256
+PP 96000 261682 118296 811.5
+strata trace: prompt chunk 96256 of 261681
+strata trace: prompt chunk 0 of 256
+PP 96256 261682 118624 811.4
+strata trace: prompt chunk 96512 of 261681
+strata trace: prompt chunk 0 of 256
+PP 96512 261682 118950 811.4
+strata trace: prompt chunk 96768 of 261681
+strata trace: prompt chunk 0 of 256
+PP 96768 261682 119279 811.3
+strata trace: prompt chunk 97024 of 261681
+strata trace: prompt chunk 0 of 256
+PP 97024 261682 119608 811.2
+strata trace: prompt chunk 97280 of 261681
+strata trace: prompt chunk 0 of 256
+PP 97280 261682 119939 811.1
+strata trace: prompt chunk 97536 of 261681
+strata trace: prompt chunk 0 of 256
+PP 97536 261682 120268 811.0
+strata trace: prompt chunk 97792 of 261681
+strata trace: prompt chunk 0 of 256
+PP 97792 261682 120592 810.9
+strata trace: prompt chunk 98048 of 261681
+strata trace: prompt chunk 0 of 256
+PP 98048 261682 120919 810.9
+strata trace: prompt chunk 98304 of 261681
+strata trace: prompt chunk 0 of 256
+PP 98304 261682 121251 810.7
+strata trace: prompt chunk 98560 of 261681
+strata trace: prompt chunk 0 of 256
+PP 98560 261682 121566 810.7
+strata trace: prompt chunk 98816 of 261681
+strata trace: prompt chunk 0 of 256
+PP 98816 261682 121893 810.7
+strata trace: prompt chunk 99072 of 261681
+strata trace: prompt chunk 0 of 256
+PP 99072 261682 122219 810.6
+strata trace: prompt chunk 99328 of 261681
+strata trace: prompt chunk 0 of 256
+PP 99328 261682 122549 810.5
+strata trace: prompt chunk 99584 of 261681
+strata trace: prompt chunk 0 of 256
+PP 99584 261682 122872 810.5
+strata trace: prompt chunk 99840 of 261681
+strata trace: prompt chunk 0 of 256
+PP 99840 261682 123201 810.4
+strata trace: prompt chunk 100096 of 261681
+strata trace: prompt chunk 0 of 256
+PP 100096 261682 123539 810.2
+strata trace: prompt chunk 100352 of 261681
+strata trace: prompt chunk 0 of 256
+PP 100352 261682 123857 810.2
+strata trace: prompt chunk 100608 of 261681
+strata trace: prompt chunk 0 of 256
+PP 100608 261682 124181 810.2
+strata trace: prompt chunk 100864 of 261681
+strata trace: prompt chunk 0 of 256
+PP 100864 261682 124511 810.1
+strata trace: prompt chunk 101120 of 261681
+strata trace: prompt chunk 0 of 256
+PP 101120 261682 124840 810.0
+strata trace: prompt chunk 101376 of 261681
+strata trace: prompt chunk 0 of 256
+PP 101376 261682 125172 809.9
+strata trace: prompt chunk 101632 of 261681
+strata trace: prompt chunk 0 of 256
+PP 101632 261682 125492 809.9
+strata trace: prompt chunk 101888 of 261681
+strata trace: prompt chunk 0 of 256
+PP 101888 261682 125820 809.8
+strata trace: prompt chunk 102144 of 261681
+strata trace: prompt chunk 0 of 256
+PP 102144 261682 126143 809.7
+strata trace: prompt chunk 102400 of 261681
+strata trace: prompt chunk 0 of 256
+PP 102400 261682 126476 809.6
+strata trace: prompt chunk 102656 of 261681
+strata trace: prompt chunk 0 of 256
+PP 102656 261682 126797 809.6
+strata trace: prompt chunk 102912 of 261681
+strata trace: prompt chunk 0 of 256
+PP 102912 261682 127123 809.5
+strata trace: prompt chunk 103168 of 261681
+strata trace: prompt chunk 0 of 256
+PP 103168 261682 127443 809.5
+strata trace: prompt chunk 103424 of 261681
+strata trace: prompt chunk 0 of 256
+PP 103424 261682 127770 809.5
+strata trace: prompt chunk 103680 of 261681
+strata trace: prompt chunk 0 of 256
+PP 103680 261682 128094 809.4
+strata trace: prompt chunk 103936 of 261681
+strata trace: prompt chunk 0 of 256
+PP 103936 261682 128430 809.3
+strata trace: prompt chunk 104192 of 261681
+strata trace: prompt chunk 0 of 256
+PP 104192 261682 128763 809.2
+strata trace: prompt chunk 104448 of 261681
+strata trace: prompt chunk 0 of 256
+PP 104448 261682 129091 809.1
+strata trace: prompt chunk 104704 of 261681
+strata trace: prompt chunk 0 of 256
+PP 104704 261682 129420 809.0
+strata trace: prompt chunk 104960 of 261681
+strata trace: prompt chunk 0 of 256
+PP 104960 261682 129744 809.0
+strata trace: prompt chunk 105216 of 261681
+strata trace: prompt chunk 0 of 256
+PP 105216 261682 130083 808.8
+strata trace: prompt chunk 105472 of 261681
+strata trace: prompt chunk 0 of 256
+PP 105472 261682 130403 808.8
+strata trace: prompt chunk 105728 of 261681
+strata trace: prompt chunk 0 of 256
+PP 105728 261682 130733 808.7
+strata trace: prompt chunk 105984 of 261681
+strata trace: prompt chunk 0 of 256
+PP 105984 261682 131063 808.6
+strata trace: prompt chunk 106240 of 261681
+strata trace: prompt chunk 0 of 256
+PP 106240 261682 131392 808.6
+strata trace: prompt chunk 106496 of 261681
+strata trace: prompt chunk 0 of 256
+PP 106496 261682 131719 808.5
+strata trace: prompt chunk 106752 of 261681
+strata trace: prompt chunk 0 of 256
+PP 106752 261682 132048 808.4
+strata trace: prompt chunk 107008 of 261681
+strata trace: prompt chunk 0 of 256
+PP 107008 261682 132369 808.4
+strata trace: prompt chunk 107264 of 261681
+strata trace: prompt chunk 0 of 256
+PP 107264 261682 132706 808.3
+strata trace: prompt chunk 107520 of 261681
+strata trace: prompt chunk 0 of 256
+PP 107520 261682 133021 808.3
+strata trace: prompt chunk 107776 of 261681
+strata trace: prompt chunk 0 of 256
+PP 107776 261682 133353 808.2
+strata trace: prompt chunk 108032 of 261681
+strata trace: prompt chunk 0 of 256
+PP 108032 261682 133681 808.1
+strata trace: prompt chunk 108288 of 261681
+strata trace: prompt chunk 0 of 256
+PP 108288 261682 134017 808.0
+strata trace: prompt chunk 108544 of 261681
+strata trace: prompt chunk 0 of 256
+PP 108544 261682 134344 808.0
+strata trace: prompt chunk 108800 of 261681
+strata trace: prompt chunk 0 of 256
+PP 108800 261682 134667 807.9
+strata trace: prompt chunk 109056 of 261681
+strata trace: prompt chunk 0 of 256
+PP 109056 261682 134991 807.9
+strata trace: prompt chunk 109312 of 261681
+strata trace: prompt chunk 0 of 256
+PP 109312 261682 135321 807.8
+strata trace: prompt chunk 109568 of 261681
+strata trace: prompt chunk 0 of 256
+PP 109568 261682 135645 807.8
+strata trace: prompt chunk 109824 of 261681
+strata trace: prompt chunk 0 of 256
+PP 109824 261682 135975 807.7
+strata trace: prompt chunk 110080 of 261681
+strata trace: prompt chunk 0 of 256
+PP 110080 261682 136309 807.6
+strata trace: prompt chunk 110336 of 261681
+strata trace: prompt chunk 0 of 256
+PP 110336 261682 136635 807.5
+strata trace: prompt chunk 110592 of 261681
+strata trace: prompt chunk 0 of 256
+PP 110592 261682 136965 807.4
+strata trace: prompt chunk 110848 of 261681
+strata trace: prompt chunk 0 of 256
+PP 110848 261682 137298 807.4
+strata trace: prompt chunk 111104 of 261681
+strata trace: prompt chunk 0 of 256
+PP 111104 261682 137636 807.2
+strata trace: prompt chunk 111360 of 261681
+strata trace: prompt chunk 0 of 256
+PP 111360 261682 137963 807.2
+strata trace: prompt chunk 111616 of 261681
+strata trace: prompt chunk 0 of 256
+PP 111616 261682 138292 807.1
+strata trace: prompt chunk 111872 of 261681
+strata trace: prompt chunk 0 of 256
+PP 111872 261682 138621 807.0
+strata trace: prompt chunk 112128 of 261681
+strata trace: prompt chunk 0 of 256
+PP 112128 261682 138950 807.0
+strata trace: prompt chunk 112384 of 261681
+strata trace: prompt chunk 0 of 256
+PP 112384 261682 139282 806.9
+strata trace: prompt chunk 112640 of 261681
+strata trace: prompt chunk 0 of 256
+PP 112640 261682 139613 806.8
+strata trace: prompt chunk 112896 of 261681
+strata trace: prompt chunk 0 of 256
+PP 112896 261682 139940 806.7
+strata trace: prompt chunk 113152 of 261681
+strata trace: prompt chunk 0 of 256
+PP 113152 261682 140272 806.7
+strata trace: prompt chunk 113408 of 261681
+strata trace: prompt chunk 0 of 256
+PP 113408 261682 140601 806.6
+strata trace: prompt chunk 113664 of 261681
+strata trace: prompt chunk 0 of 256
+PP 113664 261682 140921 806.6
+strata trace: prompt chunk 113920 of 261681
+strata trace: prompt chunk 0 of 256
+PP 113920 261682 141247 806.5
+strata trace: prompt chunk 114176 of 261681
+strata trace: prompt chunk 0 of 256
+PP 114176 261682 141577 806.5
+strata trace: prompt chunk 114432 of 261681
+strata trace: prompt chunk 0 of 256
+PP 114432 261682 141908 806.4
+strata trace: prompt chunk 114688 of 261681
+strata trace: prompt chunk 0 of 256
+PP 114688 261682 142237 806.3
+strata trace: prompt chunk 114944 of 261681
+strata trace: prompt chunk 0 of 256
+PP 114944 261682 142569 806.2
+strata trace: prompt chunk 115200 of 261681
+strata trace: prompt chunk 0 of 256
+PP 115200 261682 142903 806.1
+strata trace: prompt chunk 115456 of 261681
+strata trace: prompt chunk 0 of 256
+PP 115456 261682 143226 806.1
+strata trace: prompt chunk 115712 of 261681
+strata trace: prompt chunk 0 of 256
+PP 115712 261682 143559 806.0
+strata trace: prompt chunk 115968 of 261681
+strata trace: prompt chunk 0 of 256
+PP 115968 261682 143882 806.0
+strata trace: prompt chunk 116224 of 261681
+strata trace: prompt chunk 0 of 256
+PP 116224 261682 144205 806.0
+strata trace: prompt chunk 116480 of 261681
+strata trace: prompt chunk 0 of 256
+PP 116480 261682 144549 805.8
+strata trace: prompt chunk 116736 of 261681
+strata trace: prompt chunk 0 of 256
+PP 116736 261682 144875 805.8
+strata trace: prompt chunk 116992 of 261681
+strata trace: prompt chunk 0 of 256
+PP 116992 261682 145213 805.7
+strata trace: prompt chunk 117248 of 261681
+strata trace: prompt chunk 0 of 256
+PP 117248 261682 145536 805.6
+strata trace: prompt chunk 117504 of 261681
+strata trace: prompt chunk 0 of 256
+PP 117504 261682 145864 805.6
+strata trace: prompt chunk 117760 of 261681
+strata trace: prompt chunk 0 of 256
+PP 117760 261682 146191 805.5
+strata trace: prompt chunk 118016 of 261681
+strata trace: prompt chunk 0 of 256
+PP 118016 261682 146522 805.4
+strata trace: prompt chunk 118272 of 261681
+strata trace: prompt chunk 0 of 256
+PP 118272 261682 146842 805.4
+strata trace: prompt chunk 118528 of 261681
+strata trace: prompt chunk 0 of 256
+PP 118528 261682 147183 805.3
+strata trace: prompt chunk 118784 of 261681
+strata trace: prompt chunk 0 of 256
+PP 118784 261682 147509 805.3
+strata trace: prompt chunk 119040 of 261681
+strata trace: prompt chunk 0 of 256
+PP 119040 261682 147841 805.2
+strata trace: prompt chunk 119296 of 261681
+strata trace: prompt chunk 0 of 256
+PP 119296 261682 148169 805.1
+strata trace: prompt chunk 119552 of 261681
+strata trace: prompt chunk 0 of 256
+PP 119552 261682 148500 805.1
+strata trace: prompt chunk 119808 of 261681
+strata trace: prompt chunk 0 of 256
+PP 119808 261682 148834 805.0
+strata trace: prompt chunk 120064 of 261681
+strata trace: prompt chunk 0 of 256
+PP 120064 261682 149154 805.0
+strata trace: prompt chunk 120320 of 261681
+strata trace: prompt chunk 0 of 256
+PP 120320 261682 149481 804.9
+strata trace: prompt chunk 120576 of 261681
+strata trace: prompt chunk 0 of 256
+PP 120576 261682 149814 804.8
+strata trace: prompt chunk 120832 of 261681
+strata trace: prompt chunk 0 of 256
+PP 120832 261682 150142 804.8
+strata trace: prompt chunk 121088 of 261681
+strata trace: prompt chunk 0 of 256
+PP 121088 261682 150475 804.7
+strata trace: prompt chunk 121344 of 261681
+strata trace: prompt chunk 0 of 256
+PP 121344 261682 150801 804.7
+strata trace: prompt chunk 121600 of 261681
+strata trace: prompt chunk 0 of 256
+PP 121600 261682 151123 804.6
+strata trace: prompt chunk 121856 of 261681
+strata trace: prompt chunk 0 of 256
+PP 121856 261682 151450 804.6
+strata trace: prompt chunk 122112 of 261681
+strata trace: prompt chunk 0 of 256
+PP 122112 261682 151781 804.5
+strata trace: prompt chunk 122368 of 261681
+strata trace: prompt chunk 0 of 256
+PP 122368 261682 152107 804.5
+strata trace: prompt chunk 122624 of 261681
+strata trace: prompt chunk 0 of 256
+PP 122624 261682 152437 804.4
+strata trace: prompt chunk 122880 of 261681
+strata trace: prompt chunk 0 of 256
+PP 122880 261682 152763 804.4
+strata trace: prompt chunk 123136 of 261681
+strata trace: prompt chunk 0 of 256
+PP 123136 261682 153090 804.3
+strata trace: prompt chunk 123392 of 261681
+strata trace: prompt chunk 0 of 256
+PP 123392 261682 153415 804.3
+strata trace: prompt chunk 123648 of 261681
+strata trace: prompt chunk 0 of 256
+PP 123648 261682 153738 804.3
+strata trace: prompt chunk 123904 of 261681
+strata trace: prompt chunk 0 of 256
+PP 123904 261682 154067 804.2
+strata trace: prompt chunk 124160 of 261681
+strata trace: prompt chunk 0 of 256
+PP 124160 261682 154392 804.2
+strata trace: prompt chunk 124416 of 261681
+strata trace: prompt chunk 0 of 256
+PP 124416 261682 154721 804.1
+strata trace: prompt chunk 124672 of 261681
+strata trace: prompt chunk 0 of 256
+PP 124672 261682 155061 804.0
+strata trace: prompt chunk 124928 of 261681
+strata trace: prompt chunk 0 of 256
+PP 124928 261682 155386 804.0
+strata trace: prompt chunk 125184 of 261681
+strata trace: prompt chunk 0 of 256
+PP 125184 261682 155717 803.9
+strata trace: prompt chunk 125440 of 261681
+strata trace: prompt chunk 0 of 256
+PP 125440 261682 156049 803.8
+strata trace: prompt chunk 125696 of 261681
+strata trace: prompt chunk 0 of 256
+PP 125696 261682 156369 803.8
+strata trace: prompt chunk 125952 of 261681
+strata trace: prompt chunk 0 of 256
+PP 125952 261682 156694 803.8
+strata trace: prompt chunk 126208 of 261681
+strata trace: prompt chunk 0 of 256
+PP 126208 261682 157032 803.7
+strata trace: prompt chunk 126464 of 261681
+strata trace: prompt chunk 0 of 256
+PP 126464 261682 157356 803.7
+strata trace: prompt chunk 126720 of 261681
+strata trace: prompt chunk 0 of 256
+PP 126720 261682 157690 803.6
+strata trace: prompt chunk 126976 of 261681
+strata trace: prompt chunk 0 of 256
+PP 126976 261682 158019 803.5
+strata trace: prompt chunk 127232 of 261681
+strata trace: prompt chunk 0 of 256
+PP 127232 261682 158343 803.5
+strata trace: prompt chunk 127488 of 261681
+strata trace: prompt chunk 0 of 256
+PP 127488 261682 158678 803.4
+strata trace: prompt chunk 127744 of 261681
+strata trace: prompt chunk 0 of 256
+PP 127744 261682 159013 803.4
+strata trace: prompt chunk 128000 of 261681
+strata trace: prompt chunk 0 of 256
+PP 128000 261682 159334 803.3
+strata trace: prompt chunk 128256 of 261681
+strata trace: prompt chunk 0 of 256
+PP 128256 261682 159675 803.2
+strata trace: prompt chunk 128512 of 261681
+strata trace: prompt chunk 0 of 256
+PP 128512 261682 159996 803.2
+strata trace: prompt chunk 128768 of 261681
+strata trace: prompt chunk 0 of 256
+PP 128768 261682 160334 803.1
+strata trace: prompt chunk 129024 of 261681
+strata trace: prompt chunk 0 of 256
+PP 129024 261682 160653 803.1
+strata trace: prompt chunk 129280 of 261681
+strata trace: prompt chunk 0 of 256
+PP 129280 261682 160984 803.1
+strata trace: prompt chunk 129536 of 261681
+strata trace: prompt chunk 0 of 256
+PP 129536 261682 161305 803.0
+strata trace: prompt chunk 129792 of 261681
+strata trace: prompt chunk 0 of 256
+PP 129792 261682 161636 803.0
+strata trace: prompt chunk 130048 of 261681
+strata trace: prompt chunk 0 of 256
+PP 130048 261682 161960 803.0
+strata trace: prompt chunk 130304 of 261681
+strata trace: prompt chunk 0 of 256
+PP 130304 261682 162294 802.9
+strata trace: prompt chunk 130560 of 261681
+strata trace: prompt chunk 0 of 256
+PP 130560 261682 162629 802.8
+strata trace: prompt chunk 130816 of 261681
+strata trace: prompt chunk 0 of 256
+PP 130816 261682 162957 802.8
+strata trace: prompt chunk 131072 of 261681
+strata trace: prompt chunk 0 of 256
+PP 131072 261682 163294 802.7
+strata trace: prompt chunk 131328 of 261681
+strata trace: prompt chunk 0 of 256
+PP 131328 261682 163608 802.7
+strata trace: prompt chunk 131584 of 261681
+strata trace: prompt chunk 0 of 256
+PP 131584 261682 163930 802.7
+strata trace: prompt chunk 131840 of 261681
+strata trace: prompt chunk 0 of 256
+PP 131840 261682 164270 802.6
+strata trace: prompt chunk 132096 of 261681
+strata trace: prompt chunk 0 of 256
+PP 132096 261682 164601 802.5
+strata trace: prompt chunk 132352 of 261681
+strata trace: prompt chunk 0 of 256
+PP 132352 261682 164929 802.5
+strata trace: prompt chunk 132608 of 261681
+strata trace: prompt chunk 0 of 256
+PP 132608 261682 165264 802.4
+strata trace: prompt chunk 132864 of 261681
+strata trace: prompt chunk 0 of 256
+PP 132864 261682 165593 802.4
+strata trace: prompt chunk 133120 of 261681
+strata trace: prompt chunk 0 of 256
+PP 133120 261682 165931 802.3
+strata trace: prompt chunk 133376 of 261681
+strata trace: prompt chunk 0 of 256
+PP 133376 261682 166266 802.2
+strata trace: prompt chunk 133632 of 261681
+strata trace: prompt chunk 0 of 256
+PP 133632 261682 166604 802.1
+strata trace: prompt chunk 133888 of 261681
+strata trace: prompt chunk 0 of 256
+PP 133888 261682 166934 802.0
+strata trace: prompt chunk 134144 of 261681
+strata trace: prompt chunk 0 of 256
+PP 134144 261682 167263 802.0
+strata trace: prompt chunk 134400 of 261681
+strata trace: prompt chunk 0 of 256
+PP 134400 261682 167595 801.9
+strata trace: prompt chunk 134656 of 261681
+strata trace: prompt chunk 0 of 256
+PP 134656 261682 167926 801.9
+strata trace: prompt chunk 134912 of 261681
+strata trace: prompt chunk 0 of 256
+PP 134912 261682 168254 801.8
+strata trace: prompt chunk 135168 of 261681
+strata trace: prompt chunk 0 of 256
+PP 135168 261682 168591 801.8
+strata trace: prompt chunk 135424 of 261681
+strata trace: prompt chunk 0 of 256
+PP 135424 261682 168922 801.7
+strata trace: prompt chunk 135680 of 261681
+strata trace: prompt chunk 0 of 256
+PP 135680 261682 169260 801.6
+strata trace: prompt chunk 135936 of 261681
+strata trace: prompt chunk 0 of 256
+PP 135936 261682 169590 801.6
+strata trace: prompt chunk 136192 of 261681
+strata trace: prompt chunk 0 of 256
+PP 136192 261682 169919 801.5
+strata trace: prompt chunk 136448 of 261681
+strata trace: prompt chunk 0 of 256
+PP 136448 261682 170259 801.4
+strata trace: prompt chunk 136704 of 261681
+strata trace: prompt chunk 0 of 256
+PP 136704 261682 170592 801.4
+strata trace: prompt chunk 136960 of 261681
+strata trace: prompt chunk 0 of 256
+PP 136960 261682 170920 801.3
+strata trace: prompt chunk 137216 of 261681
+strata trace: prompt chunk 0 of 256
+PP 137216 261682 171256 801.2
+strata trace: prompt chunk 137472 of 261681
+strata trace: prompt chunk 0 of 256
+PP 137472 261682 171587 801.2
+strata trace: prompt chunk 137728 of 261681
+strata trace: prompt chunk 0 of 256
+PP 137728 261682 171918 801.1
+strata trace: prompt chunk 137984 of 261681
+strata trace: prompt chunk 0 of 256
+PP 137984 261682 172245 801.1
+strata trace: prompt chunk 138240 of 261681
+strata trace: prompt chunk 0 of 256
+PP 138240 261682 172580 801.0
+strata trace: prompt chunk 138496 of 261681
+strata trace: prompt chunk 0 of 256
+PP 138496 261682 172910 801.0
+strata trace: prompt chunk 138752 of 261681
+strata trace: prompt chunk 0 of 256
+PP 138752 261682 173241 800.9
+strata trace: prompt chunk 139008 of 261681
+strata trace: prompt chunk 0 of 256
+PP 139008 261682 173576 800.8
+strata trace: prompt chunk 139264 of 261681
+strata trace: prompt chunk 0 of 256
+PP 139264 261682 173911 800.8
+strata trace: prompt chunk 139520 of 261681
+strata trace: prompt chunk 0 of 256
+PP 139520 261682 174247 800.7
+strata trace: prompt chunk 139776 of 261681
+strata trace: prompt chunk 0 of 256
+PP 139776 261682 174588 800.6
+strata trace: prompt chunk 140032 of 261681
+strata trace: prompt chunk 0 of 256
+PP 140032 261682 174911 800.6
+strata trace: prompt chunk 140288 of 261681
+strata trace: prompt chunk 0 of 256
+PP 140288 261682 175243 800.5
+strata trace: prompt chunk 140544 of 261681
+strata trace: prompt chunk 0 of 256
+PP 140544 261682 175582 800.4
+strata trace: prompt chunk 140800 of 261681
+strata trace: prompt chunk 0 of 256
+PP 140800 261682 175913 800.4
+strata trace: prompt chunk 141056 of 261681
+strata trace: prompt chunk 0 of 256
+PP 141056 261682 176253 800.3
+strata trace: prompt chunk 141312 of 261681
+strata trace: prompt chunk 0 of 256
+PP 141312 261682 176569 800.3
+strata trace: prompt chunk 141568 of 261681
+strata trace: prompt chunk 0 of 256
+PP 141568 261682 176906 800.2
+strata trace: prompt chunk 141824 of 261681
+strata trace: prompt chunk 0 of 256
+PP 141824 261682 177231 800.2
+strata trace: prompt chunk 142080 of 261681
+strata trace: prompt chunk 0 of 256
+PP 142080 261682 177566 800.2
+strata trace: prompt chunk 142336 of 261681
+strata trace: prompt chunk 0 of 256
+PP 142336 261682 177892 800.1
+strata trace: prompt chunk 142592 of 261681
+strata trace: prompt chunk 0 of 256
+PP 142592 261682 178228 800.1
+strata trace: prompt chunk 142848 of 261681
+strata trace: prompt chunk 0 of 256
+PP 142848 261682 178562 800.0
+strata trace: prompt chunk 143104 of 261681
+strata trace: prompt chunk 0 of 256
+PP 143104 261682 178896 799.9
+strata trace: prompt chunk 143360 of 261681
+strata trace: prompt chunk 0 of 256
+PP 143360 261682 179217 799.9
+strata trace: prompt chunk 143616 of 261681
+strata trace: prompt chunk 0 of 256
+PP 143616 261682 179549 799.9
+strata trace: prompt chunk 143872 of 261681
+strata trace: prompt chunk 0 of 256
+PP 143872 261682 179883 799.8
+strata trace: prompt chunk 144128 of 261681
+strata trace: prompt chunk 0 of 256
+PP 144128 261682 180221 799.7
+strata trace: prompt chunk 144384 of 261681
+strata trace: prompt chunk 0 of 256
+PP 144384 261682 180547 799.7
+strata trace: prompt chunk 144640 of 261681
+strata trace: prompt chunk 0 of 256
+PP 144640 261682 180882 799.6
+strata trace: prompt chunk 144896 of 261681
+strata trace: prompt chunk 0 of 256
+PP 144896 261682 181218 799.6
+strata trace: prompt chunk 145152 of 261681
+strata trace: prompt chunk 0 of 256
+PP 145152 261682 181542 799.5
+strata trace: prompt chunk 145408 of 261681
+strata trace: prompt chunk 0 of 256
+PP 145408 261682 181883 799.5
+strata trace: prompt chunk 145664 of 261681
+strata trace: prompt chunk 0 of 256
+PP 145664 261682 182208 799.4
+strata trace: prompt chunk 145920 of 261681
+strata trace: prompt chunk 0 of 256
+PP 145920 261682 182544 799.4
+strata trace: prompt chunk 146176 of 261681
+strata trace: prompt chunk 0 of 256
+PP 146176 261682 182881 799.3
+strata trace: prompt chunk 146432 of 261681
+strata trace: prompt chunk 0 of 256
+PP 146432 261682 183210 799.3
+strata trace: prompt chunk 146688 of 261681
+strata trace: prompt chunk 0 of 256
+PP 146688 261682 183541 799.2
+strata trace: prompt chunk 146944 of 261681
+strata trace: prompt chunk 0 of 256
+PP 146944 261682 183870 799.2
+strata trace: prompt chunk 147200 of 261681
+strata trace: prompt chunk 0 of 256
+PP 147200 261682 184195 799.2
+strata trace: prompt chunk 147456 of 261681
+strata trace: prompt chunk 0 of 256
+PP 147456 261682 184527 799.1
+strata trace: prompt chunk 147712 of 261681
+strata trace: prompt chunk 0 of 256
+PP 147712 261682 184860 799.0
+strata trace: prompt chunk 147968 of 261681
+strata trace: prompt chunk 0 of 256
+PP 147968 261682 185189 799.0
+strata trace: prompt chunk 148224 of 261681
+strata trace: prompt chunk 0 of 256
+PP 148224 261682 185519 799.0
+strata trace: prompt chunk 148480 of 261681
+strata trace: prompt chunk 0 of 256
+PP 148480 261682 185853 798.9
+strata trace: prompt chunk 148736 of 261681
+strata trace: prompt chunk 0 of 256
+PP 148736 261682 186181 798.9
+strata trace: prompt chunk 148992 of 261681
+strata trace: prompt chunk 0 of 256
+PP 148992 261682 186516 798.8
+strata trace: prompt chunk 149248 of 261681
+strata trace: prompt chunk 0 of 256
+PP 149248 261682 186849 798.8
+strata trace: prompt chunk 149504 of 261681
+strata trace: prompt chunk 0 of 256
+PP 149504 261682 187182 798.7
+strata trace: prompt chunk 149760 of 261681
+strata trace: prompt chunk 0 of 256
+PP 149760 261682 187514 798.7
+strata trace: prompt chunk 150016 of 261681
+strata trace: prompt chunk 0 of 256
+PP 150016 261682 187848 798.6
+strata trace: prompt chunk 150272 of 261681
+strata trace: prompt chunk 0 of 256
+PP 150272 261682 188175 798.6
+strata trace: prompt chunk 150528 of 261681
+strata trace: prompt chunk 0 of 256
+PP 150528 261682 188515 798.5
+strata trace: prompt chunk 150784 of 261681
+strata trace: prompt chunk 0 of 256
+PP 150784 261682 188854 798.4
+strata trace: prompt chunk 151040 of 261681
+strata trace: prompt chunk 0 of 256
+PP 151040 261682 189186 798.4
+strata trace: prompt chunk 151296 of 261681
+strata trace: prompt chunk 0 of 256
+PP 151296 261682 189519 798.3
+strata trace: prompt chunk 151552 of 261681
+strata trace: prompt chunk 0 of 256
+PP 151552 261682 189856 798.2
+strata trace: prompt chunk 151808 of 261681
+strata trace: prompt chunk 0 of 256
+PP 151808 261682 190190 798.2
+strata trace: prompt chunk 152064 of 261681
+strata trace: prompt chunk 0 of 256
+PP 152064 261682 190521 798.1
+strata trace: prompt chunk 152320 of 261681
+strata trace: prompt chunk 0 of 256
+PP 152320 261682 190857 798.1
+strata trace: prompt chunk 152576 of 261681
+strata trace: prompt chunk 0 of 256
+PP 152576 261682 191201 798.0
+strata trace: prompt chunk 152832 of 261681
+strata trace: prompt chunk 0 of 256
+PP 152832 261682 191533 797.9
+strata trace: prompt chunk 153088 of 261681
+strata trace: prompt chunk 0 of 256
+PP 153088 261682 191871 797.9
+strata trace: prompt chunk 153344 of 261681
+strata trace: prompt chunk 0 of 256
+PP 153344 261682 192204 797.8
+strata trace: prompt chunk 153600 of 261681
+strata trace: prompt chunk 0 of 256
+PP 153600 261682 192536 797.8
+strata trace: prompt chunk 153856 of 261681
+strata trace: prompt chunk 0 of 256
+PP 153856 261682 192863 797.7
+strata trace: prompt chunk 154112 of 261681
+strata trace: prompt chunk 0 of 256
+PP 154112 261682 193205 797.7
+strata trace: prompt chunk 154368 of 261681
+strata trace: prompt chunk 0 of 256
+PP 154368 261682 193537 797.6
+strata trace: prompt chunk 154624 of 261681
+strata trace: prompt chunk 0 of 256
+PP 154624 261682 193861 797.6
+strata trace: prompt chunk 154880 of 261681
+strata trace: prompt chunk 0 of 256
+PP 154880 261682 194210 797.5
+strata trace: prompt chunk 155136 of 261681
+strata trace: prompt chunk 0 of 256
+PP 155136 261682 194553 797.4
+strata trace: prompt chunk 155392 of 261681
+strata trace: prompt chunk 0 of 256
+PP 155392 261682 194879 797.4
+strata trace: prompt chunk 155648 of 261681
+strata trace: prompt chunk 0 of 256
+PP 155648 261682 195226 797.3
+strata trace: prompt chunk 155904 of 261681
+strata trace: prompt chunk 0 of 256
+PP 155904 261682 195570 797.2
+strata trace: prompt chunk 156160 of 261681
+strata trace: prompt chunk 0 of 256
+PP 156160 261682 195903 797.1
+strata trace: prompt chunk 156416 of 261681
+strata trace: prompt chunk 0 of 256
+PP 156416 261682 196243 797.1
+strata trace: prompt chunk 156672 of 261681
+strata trace: prompt chunk 0 of 256
+PP 156672 261682 196575 797.0
+strata trace: prompt chunk 156928 of 261681
+strata trace: prompt chunk 0 of 256
+PP 156928 261682 196919 796.9
+strata trace: prompt chunk 157184 of 261681
+strata trace: prompt chunk 0 of 256
+PP 157184 261682 197251 796.9
+strata trace: prompt chunk 157440 of 261681
+strata trace: prompt chunk 0 of 256
+PP 157440 261682 197587 796.8
+strata trace: prompt chunk 157696 of 261681
+strata trace: prompt chunk 0 of 256
+PP 157696 261682 197930 796.7
+strata trace: prompt chunk 157952 of 261681
+strata trace: prompt chunk 0 of 256
+PP 157952 261682 198266 796.7
+strata trace: prompt chunk 158208 of 261681
+strata trace: prompt chunk 0 of 256
+PP 158208 261682 198597 796.6
+strata trace: prompt chunk 158464 of 261681
+strata trace: prompt chunk 0 of 256
+PP 158464 261682 198933 796.6
+strata trace: prompt chunk 158720 of 261681
+strata trace: prompt chunk 0 of 256
+PP 158720 261682 199256 796.6
+strata trace: prompt chunk 158976 of 261681
+strata trace: prompt chunk 0 of 256
+PP 158976 261682 199600 796.5
+strata trace: prompt chunk 159232 of 261681
+strata trace: prompt chunk 0 of 256
+PP 159232 261682 199935 796.4
+strata trace: prompt chunk 159488 of 261681
+strata trace: prompt chunk 0 of 256
+PP 159488 261682 200264 796.4
+strata trace: prompt chunk 159744 of 261681
+strata trace: prompt chunk 0 of 256
+PP 159744 261682 200598 796.3
+strata trace: prompt chunk 160000 of 261681
+strata trace: prompt chunk 0 of 256
+PP 160000 261682 200938 796.3
+strata trace: prompt chunk 160256 of 261681
+strata trace: prompt chunk 0 of 256
+PP 160256 261682 201271 796.2
+strata trace: prompt chunk 160512 of 261681
+strata trace: prompt chunk 0 of 256
+PP 160512 261682 201596 796.2
+strata trace: prompt chunk 160768 of 261681
+strata trace: prompt chunk 0 of 256
+PP 160768 261682 201946 796.1
+strata trace: prompt chunk 161024 of 261681
+strata trace: prompt chunk 0 of 256
+PP 161024 261682 202278 796.1
+strata trace: prompt chunk 161280 of 261681
+strata trace: prompt chunk 0 of 256
+PP 161280 261682 202622 796.0
+strata trace: prompt chunk 161536 of 261681
+strata trace: prompt chunk 0 of 256
+PP 161536 261682 202951 795.9
+strata trace: prompt chunk 161792 of 261681
+strata trace: prompt chunk 0 of 256
+PP 161792 261682 203289 795.9
+strata trace: prompt chunk 162048 of 261681
+strata trace: prompt chunk 0 of 256
+PP 162048 261682 203620 795.8
+strata trace: prompt chunk 162304 of 261681
+strata trace: prompt chunk 0 of 256
+PP 162304 261682 203964 795.7
+strata trace: prompt chunk 162560 of 261681
+strata trace: prompt chunk 0 of 256
+PP 162560 261682 204299 795.7
+strata trace: prompt chunk 162816 of 261681
+strata trace: prompt chunk 0 of 256
+PP 162816 261682 204640 795.6
+strata trace: prompt chunk 163072 of 261681
+strata trace: prompt chunk 0 of 256
+PP 163072 261682 204971 795.6
+strata trace: prompt chunk 163328 of 261681
+strata trace: prompt chunk 0 of 256
+PP 163328 261682 205310 795.5
+strata trace: prompt chunk 163584 of 261681
+strata trace: prompt chunk 0 of 256
+PP 163584 261682 205642 795.5
+strata trace: prompt chunk 163840 of 261681
+strata trace: prompt chunk 0 of 256
+PP 163840 261682 205983 795.4
+strata trace: prompt chunk 164096 of 261681
+strata trace: prompt chunk 0 of 256
+PP 164096 261682 206309 795.4
+strata trace: prompt chunk 164352 of 261681
+strata trace: prompt chunk 0 of 256
+PP 164352 261682 206646 795.3
+strata trace: prompt chunk 164608 of 261681
+strata trace: prompt chunk 0 of 256
+PP 164608 261682 206987 795.3
+strata trace: prompt chunk 164864 of 261681
+strata trace: prompt chunk 0 of 256
+PP 164864 261682 207316 795.2
+strata trace: prompt chunk 165120 of 261681
+strata trace: prompt chunk 0 of 256
+PP 165120 261682 207655 795.2
+strata trace: prompt chunk 165376 of 261681
+strata trace: prompt chunk 0 of 256
+PP 165376 261682 207998 795.1
+strata trace: prompt chunk 165632 of 261681
+strata trace: prompt chunk 0 of 256
+PP 165632 261682 208326 795.1
+strata trace: prompt chunk 165888 of 261681
+strata trace: prompt chunk 0 of 256
+PP 165888 261682 208665 795.0
+strata trace: prompt chunk 166144 of 261681
+strata trace: prompt chunk 0 of 256
+PP 166144 261682 208996 795.0
+strata trace: prompt chunk 166400 of 261681
+strata trace: prompt chunk 0 of 256
+PP 166400 261682 209328 794.9
+strata trace: prompt chunk 166656 of 261681
+strata trace: prompt chunk 0 of 256
+PP 166656 261682 209670 794.8
+strata trace: prompt chunk 166912 of 261681
+strata trace: prompt chunk 0 of 256
+PP 166912 261682 210003 794.8
+strata trace: prompt chunk 167168 of 261681
+strata trace: prompt chunk 0 of 256
+PP 167168 261682 210335 794.8
+strata trace: prompt chunk 167424 of 261681
+strata trace: prompt chunk 0 of 256
+PP 167424 261682 210679 794.7
+strata trace: prompt chunk 167680 of 261681
+strata trace: prompt chunk 0 of 256
+PP 167680 261682 211011 794.6
+strata trace: prompt chunk 167936 of 261681
+strata trace: prompt chunk 0 of 256
+PP 167936 261682 211343 794.6
+strata trace: prompt chunk 168192 of 261681
+strata trace: prompt chunk 0 of 256
+PP 168192 261682 211687 794.5
+strata trace: prompt chunk 168448 of 261681
+strata trace: prompt chunk 0 of 256
+PP 168448 261682 212022 794.5
+strata trace: prompt chunk 168704 of 261681
+strata trace: prompt chunk 0 of 256
+PP 168704 261682 212354 794.4
+strata trace: prompt chunk 168960 of 261681
+strata trace: prompt chunk 0 of 256
+PP 168960 261682 212687 794.4
+strata trace: prompt chunk 169216 of 261681
+strata trace: prompt chunk 0 of 256
+PP 169216 261682 213031 794.3
+strata trace: prompt chunk 169472 of 261681
+strata trace: prompt chunk 0 of 256
+PP 169472 261682 213363 794.3
+strata trace: prompt chunk 169728 of 261681
+strata trace: prompt chunk 0 of 256
+PP 169728 261682 213706 794.2
+strata trace: prompt chunk 169984 of 261681
+strata trace: prompt chunk 0 of 256
+PP 169984 261682 214037 794.2
+strata trace: prompt chunk 170240 of 261681
+strata trace: prompt chunk 0 of 256
+PP 170240 261682 214372 794.1
+strata trace: prompt chunk 170496 of 261681
+strata trace: prompt chunk 0 of 256
+PP 170496 261682 214715 794.1
+strata trace: prompt chunk 170752 of 261681
+strata trace: prompt chunk 0 of 256
+PP 170752 261682 215046 794.0
+strata trace: prompt chunk 171008 of 261681
+strata trace: prompt chunk 0 of 256
+PP 171008 261682 215378 794.0
+strata trace: prompt chunk 171264 of 261681
+strata trace: prompt chunk 0 of 256
+PP 171264 261682 215715 793.9
+strata trace: prompt chunk 171520 of 261681
+strata trace: prompt chunk 0 of 256
+PP 171520 261682 216052 793.9
+strata trace: prompt chunk 171776 of 261681
+strata trace: prompt chunk 0 of 256
+PP 171776 261682 216388 793.8
+strata trace: prompt chunk 172032 of 261681
+strata trace: prompt chunk 0 of 256
+PP 172032 261682 216727 793.8
+strata trace: prompt chunk 172288 of 261681
+strata trace: prompt chunk 0 of 256
+PP 172288 261682 217059 793.7
+strata trace: prompt chunk 172544 of 261681
+strata trace: prompt chunk 0 of 256
+PP 172544 261682 217403 793.7
+strata trace: prompt chunk 172800 of 261681
+strata trace: prompt chunk 0 of 256
+PP 172800 261682 217742 793.6
+strata trace: prompt chunk 173056 of 261681
+strata trace: prompt chunk 0 of 256
+PP 173056 261682 218086 793.5
+strata trace: prompt chunk 173312 of 261681
+strata trace: prompt chunk 0 of 256
+PP 173312 261682 218420 793.5
+strata trace: prompt chunk 173568 of 261681
+strata trace: prompt chunk 0 of 256
+PP 173568 261682 218758 793.4
+strata trace: prompt chunk 173824 of 261681
+strata trace: prompt chunk 0 of 256
+PP 173824 261682 219097 793.4
+strata trace: prompt chunk 174080 of 261681
+strata trace: prompt chunk 0 of 256
+PP 174080 261682 219444 793.3
+strata trace: prompt chunk 174336 of 261681
+strata trace: prompt chunk 0 of 256
+PP 174336 261682 219769 793.3
+strata trace: prompt chunk 174592 of 261681
+strata trace: prompt chunk 0 of 256
+PP 174592 261682 220117 793.2
+strata trace: prompt chunk 174848 of 261681
+strata trace: prompt chunk 0 of 256
+PP 174848 261682 220457 793.1
+strata trace: prompt chunk 175104 of 261681
+strata trace: prompt chunk 0 of 256
+PP 175104 261682 220787 793.1
+strata trace: prompt chunk 175360 of 261681
+strata trace: prompt chunk 0 of 256
+PP 175360 261682 221125 793.0
+strata trace: prompt chunk 175616 of 261681
+strata trace: prompt chunk 0 of 256
+PP 175616 261682 221472 792.9
+strata trace: prompt chunk 175872 of 261681
+strata trace: prompt chunk 0 of 256
+PP 175872 261682 221798 792.9
+strata trace: prompt chunk 176128 of 261681
+strata trace: prompt chunk 0 of 256
+PP 176128 261682 222139 792.9
+strata trace: prompt chunk 176384 of 261681
+strata trace: prompt chunk 0 of 256
+PP 176384 261682 222472 792.8
+strata trace: prompt chunk 176640 of 261681
+strata trace: prompt chunk 0 of 256
+PP 176640 261682 222813 792.8
+strata trace: prompt chunk 176896 of 261681
+strata trace: prompt chunk 0 of 256
+PP 176896 261682 223145 792.7
+strata trace: prompt chunk 177152 of 261681
+strata trace: prompt chunk 0 of 256
+PP 177152 261682 223481 792.7
+strata trace: prompt chunk 177408 of 261681
+strata trace: prompt chunk 0 of 256
+PP 177408 261682 223833 792.6
+strata trace: prompt chunk 177664 of 261681
+strata trace: prompt chunk 0 of 256
+PP 177664 261682 224166 792.6
+strata trace: prompt chunk 177920 of 261681
+strata trace: prompt chunk 0 of 256
+PP 177920 261682 224503 792.5
+strata trace: prompt chunk 178176 of 261681
+strata trace: prompt chunk 0 of 256
+PP 178176 261682 224850 792.4
+strata trace: prompt chunk 178432 of 261681
+strata trace: prompt chunk 0 of 256
+PP 178432 261682 225180 792.4
+strata trace: prompt chunk 178688 of 261681
+strata trace: prompt chunk 0 of 256
+PP 178688 261682 225533 792.3
+strata trace: prompt chunk 178944 of 261681
+strata trace: prompt chunk 0 of 256
+PP 178944 261682 225871 792.2
+strata trace: prompt chunk 179200 of 261681
+strata trace: prompt chunk 0 of 256
+PP 179200 261682 226211 792.2
+strata trace: prompt chunk 179456 of 261681
+strata trace: prompt chunk 0 of 256
+PP 179456 261682 226555 792.1
+strata trace: prompt chunk 179712 of 261681
+strata trace: prompt chunk 0 of 256
+PP 179712 261682 226890 792.1
+strata trace: prompt chunk 179968 of 261681
+strata trace: prompt chunk 0 of 256
+PP 179968 261682 227241 792.0
+strata trace: prompt chunk 180224 of 261681
+strata trace: prompt chunk 0 of 256
+PP 180224 261682 227577 791.9
+strata trace: prompt chunk 180480 of 261681
+strata trace: prompt chunk 0 of 256
+PP 180480 261682 227907 791.9
+strata trace: prompt chunk 180736 of 261681
+strata trace: prompt chunk 0 of 256
+PP 180736 261682 228245 791.9
+strata trace: prompt chunk 180992 of 261681
+strata trace: prompt chunk 0 of 256
+PP 180992 261682 228586 791.8
+strata trace: prompt chunk 181248 of 261681
+strata trace: prompt chunk 0 of 256
+PP 181248 261682 228917 791.8
+strata trace: prompt chunk 181504 of 261681
+strata trace: prompt chunk 0 of 256
+PP 181504 261682 229258 791.7
+strata trace: prompt chunk 181760 of 261681
+strata trace: prompt chunk 0 of 256
+PP 181760 261682 229600 791.6
+strata trace: prompt chunk 182016 of 261681
+strata trace: prompt chunk 0 of 256
+PP 182016 261682 229937 791.6
+strata trace: prompt chunk 182272 of 261681
+strata trace: prompt chunk 0 of 256
+PP 182272 261682 230278 791.5
+strata trace: prompt chunk 182528 of 261681
+strata trace: prompt chunk 0 of 256
+PP 182528 261682 230619 791.5
+strata trace: prompt chunk 182784 of 261681
+strata trace: prompt chunk 0 of 256
+PP 182784 261682 230954 791.4
+strata trace: prompt chunk 183040 of 261681
+strata trace: prompt chunk 0 of 256
+PP 183040 261682 231285 791.4
+strata trace: prompt chunk 183296 of 261681
+strata trace: prompt chunk 0 of 256
+PP 183296 261682 231620 791.4
+strata trace: prompt chunk 183552 of 261681
+strata trace: prompt chunk 0 of 256
+PP 183552 261682 231955 791.3
+strata trace: prompt chunk 183808 of 261681
+strata trace: prompt chunk 0 of 256
+PP 183808 261682 232302 791.2
+strata trace: prompt chunk 184064 of 261681
+strata trace: prompt chunk 0 of 256
+PP 184064 261682 232639 791.2
+strata trace: prompt chunk 184320 of 261681
+strata trace: prompt chunk 0 of 256
+PP 184320 261682 232984 791.1
+strata trace: prompt chunk 184576 of 261681
+strata trace: prompt chunk 0 of 256
+PP 184576 261682 233312 791.1
+strata trace: prompt chunk 184832 of 261681
+strata trace: prompt chunk 0 of 256
+PP 184832 261682 233639 791.1
+strata trace: prompt chunk 185088 of 261681
+strata trace: prompt chunk 0 of 256
+PP 185088 261682 233977 791.1
+strata trace: prompt chunk 185344 of 261681
+strata trace: prompt chunk 0 of 256
+PP 185344 261682 234315 791.0
+strata trace: prompt chunk 185600 of 261681
+strata trace: prompt chunk 0 of 256
+PP 185600 261682 234653 791.0
+strata trace: prompt chunk 185856 of 261681
+strata trace: prompt chunk 0 of 256
+PP 185856 261682 235000 790.9
+strata trace: prompt chunk 186112 of 261681
+strata trace: prompt chunk 0 of 256
+PP 186112 261682 235335 790.8
+strata trace: prompt chunk 186368 of 261681
+strata trace: prompt chunk 0 of 256
+PP 186368 261682 235671 790.8
+strata trace: prompt chunk 186624 of 261681
+strata trace: prompt chunk 0 of 256
+PP 186624 261682 236012 790.7
+strata trace: prompt chunk 186880 of 261681
+strata trace: prompt chunk 0 of 256
+PP 186880 261682 236354 790.7
+strata trace: prompt chunk 187136 of 261681
+strata trace: prompt chunk 0 of 256
+PP 187136 261682 236689 790.6
+strata trace: prompt chunk 187392 of 261681
+strata trace: prompt chunk 0 of 256
+PP 187392 261682 237032 790.6
+strata trace: prompt chunk 187648 of 261681
+strata trace: prompt chunk 0 of 256
+PP 187648 261682 237369 790.5
+strata trace: prompt chunk 187904 of 261681
+strata trace: prompt chunk 0 of 256
+PP 187904 261682 237710 790.5
+strata trace: prompt chunk 188160 of 261681
+strata trace: prompt chunk 0 of 256
+PP 188160 261682 238048 790.4
+strata trace: prompt chunk 188416 of 261681
+strata trace: prompt chunk 0 of 256
+PP 188416 261682 238383 790.4
+strata trace: prompt chunk 188672 of 261681
+strata trace: prompt chunk 0 of 256
+PP 188672 261682 238731 790.3
+strata trace: prompt chunk 188928 of 261681
+strata trace: prompt chunk 0 of 256
+PP 188928 261682 239066 790.3
+strata trace: prompt chunk 189184 of 261681
+strata trace: prompt chunk 0 of 256
+PP 189184 261682 239409 790.2
+strata trace: prompt chunk 189440 of 261681
+strata trace: prompt chunk 0 of 256
+PP 189440 261682 239754 790.1
+strata trace: prompt chunk 189696 of 261681
+strata trace: prompt chunk 0 of 256
+PP 189696 261682 240083 790.1
+strata trace: prompt chunk 189952 of 261681
+strata trace: prompt chunk 0 of 256
+PP 189952 261682 240424 790.1
+strata trace: prompt chunk 190208 of 261681
+strata trace: prompt chunk 0 of 256
+PP 190208 261682 240766 790.0
+strata trace: prompt chunk 190464 of 261681
+strata trace: prompt chunk 0 of 256
+PP 190464 261682 241101 790.0
+strata trace: prompt chunk 190720 of 261681
+strata trace: prompt chunk 0 of 256
+PP 190720 261682 241431 790.0
+strata trace: prompt chunk 190976 of 261681
+strata trace: prompt chunk 0 of 256
+PP 190976 261682 241773 789.9
+strata trace: prompt chunk 191232 of 261681
+strata trace: prompt chunk 0 of 256
+PP 191232 261682 242112 789.8
+strata trace: prompt chunk 191488 of 261681
+strata trace: prompt chunk 0 of 256
+PP 191488 261682 242445 789.8
+strata trace: prompt chunk 191744 of 261681
+strata trace: prompt chunk 0 of 256
+PP 191744 261682 242773 789.8
+strata trace: prompt chunk 192000 of 261681
+strata trace: prompt chunk 0 of 256
+PP 192000 261682 243120 789.7
+strata trace: prompt chunk 192256 of 261681
+strata trace: prompt chunk 0 of 256
+PP 192256 261682 243461 789.7
+strata trace: prompt chunk 192512 of 261681
+strata trace: prompt chunk 0 of 256
+PP 192512 261682 243796 789.6
+strata trace: prompt chunk 192768 of 261681
+strata trace: prompt chunk 0 of 256
+PP 192768 261682 244137 789.6
+strata trace: prompt chunk 193024 of 261681
+strata trace: prompt chunk 0 of 256
+PP 193024 261682 244484 789.5
+strata trace: prompt chunk 193280 of 261681
+strata trace: prompt chunk 0 of 256
+PP 193280 261682 244819 789.5
+strata trace: prompt chunk 193536 of 261681
+strata trace: prompt chunk 0 of 256
+PP 193536 261682 245154 789.4
+strata trace: prompt chunk 193792 of 261681
+strata trace: prompt chunk 0 of 256
+PP 193792 261682 245498 789.4
+strata trace: prompt chunk 194048 of 261681
+strata trace: prompt chunk 0 of 256
+PP 194048 261682 245839 789.3
+strata trace: prompt chunk 194304 of 261681
+strata trace: prompt chunk 0 of 256
+PP 194304 261682 246180 789.3
+strata trace: prompt chunk 194560 of 261681
+strata trace: prompt chunk 0 of 256
+PP 194560 261682 246527 789.2
+strata trace: prompt chunk 194816 of 261681
+strata trace: prompt chunk 0 of 256
+PP 194816 261682 246868 789.1
+strata trace: prompt chunk 195072 of 261681
+strata trace: prompt chunk 0 of 256
+PP 195072 261682 247211 789.1
+strata trace: prompt chunk 195328 of 261681
+strata trace: prompt chunk 0 of 256
+PP 195328 261682 247543 789.1
+strata trace: prompt chunk 195584 of 261681
+strata trace: prompt chunk 0 of 256
+PP 195584 261682 247884 789.0
+strata trace: prompt chunk 195840 of 261681
+strata trace: prompt chunk 0 of 256
+PP 195840 261682 248224 789.0
+strata trace: prompt chunk 196096 of 261681
+strata trace: prompt chunk 0 of 256
+PP 196096 261682 248571 788.9
+strata trace: prompt chunk 196352 of 261681
+strata trace: prompt chunk 0 of 256
+PP 196352 261682 248920 788.8
+strata trace: prompt chunk 196608 of 261681
+strata trace: prompt chunk 0 of 256
+PP 196608 261682 249258 788.8
+strata trace: prompt chunk 196864 of 261681
+strata trace: prompt chunk 0 of 256
+PP 196864 261682 249598 788.7
+strata trace: prompt chunk 197120 of 261681
+strata trace: prompt chunk 0 of 256
+PP 197120 261682 249947 788.6
+strata trace: prompt chunk 197376 of 261681
+strata trace: prompt chunk 0 of 256
+PP 197376 261682 250284 788.6
+strata trace: prompt chunk 197632 of 261681
+strata trace: prompt chunk 0 of 256
+PP 197632 261682 250601 788.6
+strata trace: prompt chunk 197888 of 261681
+strata trace: prompt chunk 0 of 256
+PP 197888 261682 250945 788.6
+strata trace: prompt chunk 198144 of 261681
+strata trace: prompt chunk 0 of 256
+PP 198144 261682 251286 788.5
+strata trace: prompt chunk 198400 of 261681
+strata trace: prompt chunk 0 of 256
+PP 198400 261682 251626 788.5
+strata trace: prompt chunk 198656 of 261681
+strata trace: prompt chunk 0 of 256
+PP 198656 261682 251970 788.4
+strata trace: prompt chunk 198912 of 261681
+strata trace: prompt chunk 0 of 256
+PP 198912 261682 252299 788.4
+strata trace: prompt chunk 199168 of 261681
+strata trace: prompt chunk 0 of 256
+PP 199168 261682 252637 788.4
+strata trace: prompt chunk 199424 of 261681
+strata trace: prompt chunk 0 of 256
+PP 199424 261682 252989 788.3
+strata trace: prompt chunk 199680 of 261681
+strata trace: prompt chunk 0 of 256
+PP 199680 261682 253318 788.3
+strata trace: prompt chunk 199936 of 261681
+strata trace: prompt chunk 0 of 256
+PP 199936 261682 253667 788.2
+strata trace: prompt chunk 200192 of 261681
+strata trace: prompt chunk 0 of 256
+PP 200192 261682 254017 788.1
+strata trace: prompt chunk 200448 of 261681
+strata trace: prompt chunk 0 of 256
+PP 200448 261682 254346 788.1
+strata trace: prompt chunk 200704 of 261681
+strata trace: prompt chunk 0 of 256
+PP 200704 261682 254681 788.1
+strata trace: prompt chunk 200960 of 261681
+strata trace: prompt chunk 0 of 256
+PP 200960 261682 255016 788.0
+strata trace: prompt chunk 201216 of 261681
+strata trace: prompt chunk 0 of 256
+PP 201216 261682 255360 788.0
+strata trace: prompt chunk 201472 of 261681
+strata trace: prompt chunk 0 of 256
+PP 201472 261682 255698 787.9
+strata trace: prompt chunk 201728 of 261681
+strata trace: prompt chunk 0 of 256
+PP 201728 261682 256037 787.9
+strata trace: prompt chunk 201984 of 261681
+strata trace: prompt chunk 0 of 256
+PP 201984 261682 256374 787.8
+strata trace: prompt chunk 202240 of 261681
+strata trace: prompt chunk 0 of 256
+PP 202240 261682 256715 787.8
+strata trace: prompt chunk 202496 of 261681
+strata trace: prompt chunk 0 of 256
+PP 202496 261682 257049 787.8
+strata trace: prompt chunk 202752 of 261681
+strata trace: prompt chunk 0 of 256
+PP 202752 261682 257390 787.7
+strata trace: prompt chunk 203008 of 261681
+strata trace: prompt chunk 0 of 256
+PP 203008 261682 257732 787.7
+strata trace: prompt chunk 203264 of 261681
+strata trace: prompt chunk 0 of 256
+PP 203264 261682 258079 787.6
+strata trace: prompt chunk 203520 of 261681
+strata trace: prompt chunk 0 of 256
+PP 203520 261682 258426 787.5
+strata trace: prompt chunk 203776 of 261681
+strata trace: prompt chunk 0 of 256
+PP 203776 261682 258755 787.5
+strata trace: prompt chunk 204032 of 261681
+strata trace: prompt chunk 0 of 256
+PP 204032 261682 259088 787.5
+strata trace: prompt chunk 204288 of 261681
+strata trace: prompt chunk 0 of 256
+PP 204288 261682 259431 787.4
+strata trace: prompt chunk 204544 of 261681
+strata trace: prompt chunk 0 of 256
+PP 204544 261682 259775 787.4
+strata trace: prompt chunk 204800 of 261681
+strata trace: prompt chunk 0 of 256
+PP 204800 261682 260116 787.3
+strata trace: prompt chunk 205056 of 261681
+strata trace: prompt chunk 0 of 256
+PP 205056 261682 260444 787.3
+strata trace: prompt chunk 205312 of 261681
+strata trace: prompt chunk 0 of 256
+PP 205312 261682 260790 787.3
+strata trace: prompt chunk 205568 of 261681
+strata trace: prompt chunk 0 of 256
+PP 205568 261682 261135 787.2
+strata trace: prompt chunk 205824 of 261681
+strata trace: prompt chunk 0 of 256
+PP 205824 261682 261466 787.2
+strata trace: prompt chunk 206080 of 261681
+strata trace: prompt chunk 0 of 256
+PP 206080 261682 261810 787.1
+strata trace: prompt chunk 206336 of 261681
+strata trace: prompt chunk 0 of 256
+PP 206336 261682 262143 787.1
+strata trace: prompt chunk 206592 of 261681
+strata trace: prompt chunk 0 of 256
+PP 206592 261682 262489 787.0
+strata trace: prompt chunk 206848 of 261681
+strata trace: prompt chunk 0 of 256
+PP 206848 261682 262830 787.0
+strata trace: prompt chunk 207104 of 261681
+strata trace: prompt chunk 0 of 256
+PP 207104 261682 263171 787.0
+strata trace: prompt chunk 207360 of 261681
+strata trace: prompt chunk 0 of 256
+PP 207360 261682 263515 786.9
+strata trace: prompt chunk 207616 of 261681
+strata trace: prompt chunk 0 of 256
+PP 207616 261682 263859 786.8
+strata trace: prompt chunk 207872 of 261681
+strata trace: prompt chunk 0 of 256
+PP 207872 261682 264194 786.8
+strata trace: prompt chunk 208128 of 261681
+strata trace: prompt chunk 0 of 256
+PP 208128 261682 264539 786.8
+strata trace: prompt chunk 208384 of 261681
+strata trace: prompt chunk 0 of 256
+PP 208384 261682 264878 786.7
+strata trace: prompt chunk 208640 of 261681
+strata trace: prompt chunk 0 of 256
+PP 208640 261682 265213 786.7
+strata trace: prompt chunk 208896 of 261681
+strata trace: prompt chunk 0 of 256
+PP 208896 261682 265563 786.6
+strata trace: prompt chunk 209152 of 261681
+strata trace: prompt chunk 0 of 256
+PP 209152 261682 265907 786.6
+strata trace: prompt chunk 209408 of 261681
+strata trace: prompt chunk 0 of 256
+PP 209408 261682 266257 786.5
+strata trace: prompt chunk 209664 of 261681
+strata trace: prompt chunk 0 of 256
+PP 209664 261682 266589 786.5
+strata trace: prompt chunk 209920 of 261681
+strata trace: prompt chunk 0 of 256
+PP 209920 261682 266933 786.4
+strata trace: prompt chunk 210176 of 261681
+strata trace: prompt chunk 0 of 256
+PP 210176 261682 267271 786.4
+strata trace: prompt chunk 210432 of 261681
+strata trace: prompt chunk 0 of 256
+PP 210432 261682 267599 786.4
+strata trace: prompt chunk 210688 of 261681
+strata trace: prompt chunk 0 of 256
+PP 210688 261682 267937 786.3
+strata trace: prompt chunk 210944 of 261681
+strata trace: prompt chunk 0 of 256
+PP 210944 261682 268279 786.3
+strata trace: prompt chunk 211200 of 261681
+strata trace: prompt chunk 0 of 256
+PP 211200 261682 268623 786.2
+strata trace: prompt chunk 211456 of 261681
+strata trace: prompt chunk 0 of 256
+PP 211456 261682 268961 786.2
+strata trace: prompt chunk 211712 of 261681
+strata trace: prompt chunk 0 of 256
+PP 211712 261682 269305 786.1
+strata trace: prompt chunk 211968 of 261681
+strata trace: prompt chunk 0 of 256
+PP 211968 261682 269639 786.1
+strata trace: prompt chunk 212224 of 261681
+strata trace: prompt chunk 0 of 256
+PP 212224 261682 269981 786.1
+strata trace: prompt chunk 212480 of 261681
+strata trace: prompt chunk 0 of 256
+PP 212480 261682 270325 786.0
+strata trace: prompt chunk 212736 of 261681
+strata trace: prompt chunk 0 of 256
+PP 212736 261682 270672 786.0
+strata trace: prompt chunk 212992 of 261681
+strata trace: prompt chunk 0 of 256
+PP 212992 261682 271007 785.9
+strata trace: prompt chunk 213248 of 261681
+strata trace: prompt chunk 0 of 256
+PP 213248 261682 271353 785.9
+strata trace: prompt chunk 213504 of 261681
+strata trace: prompt chunk 0 of 256
+PP 213504 261682 271698 785.8
+strata trace: prompt chunk 213760 of 261681
+strata trace: prompt chunk 0 of 256
+PP 213760 261682 272030 785.8
+strata trace: prompt chunk 214016 of 261681
+strata trace: prompt chunk 0 of 256
+PP 214016 261682 272371 785.8
+strata trace: prompt chunk 214272 of 261681
+strata trace: prompt chunk 0 of 256
+PP 214272 261682 272706 785.7
+strata trace: prompt chunk 214528 of 261681
+strata trace: prompt chunk 0 of 256
+PP 214528 261682 273048 785.7
+strata trace: prompt chunk 214784 of 261681
+strata trace: prompt chunk 0 of 256
+PP 214784 261682 273381 785.7
+strata trace: prompt chunk 215040 of 261681
+strata trace: prompt chunk 0 of 256
+PP 215040 261682 273721 785.6
+strata trace: prompt chunk 215296 of 261681
+strata trace: prompt chunk 0 of 256
+PP 215296 261682 274065 785.6
+strata trace: prompt chunk 215552 of 261681
+strata trace: prompt chunk 0 of 256
+PP 215552 261682 274407 785.5
+strata trace: prompt chunk 215808 of 261681
+strata trace: prompt chunk 0 of 256
+PP 215808 261682 274751 785.5
+strata trace: prompt chunk 216064 of 261681
+strata trace: prompt chunk 0 of 256
+PP 216064 261682 275095 785.4
+strata trace: prompt chunk 216320 of 261681
+strata trace: prompt chunk 0 of 256
+PP 216320 261682 275442 785.4
+strata trace: prompt chunk 216576 of 261681
+strata trace: prompt chunk 0 of 256
+PP 216576 261682 275786 785.3
+strata trace: prompt chunk 216832 of 261681
+strata trace: prompt chunk 0 of 256
+PP 216832 261682 276121 785.3
+strata trace: prompt chunk 217088 of 261681
+strata trace: prompt chunk 0 of 256
+PP 217088 261682 276471 785.2
+strata trace: prompt chunk 217344 of 261681
+strata trace: prompt chunk 0 of 256
+PP 217344 261682 276812 785.2
+strata trace: prompt chunk 217600 of 261681
+strata trace: prompt chunk 0 of 256
+PP 217600 261682 277151 785.1
+strata trace: prompt chunk 217856 of 261681
+strata trace: prompt chunk 0 of 256
+PP 217856 261682 277486 785.1
+strata trace: prompt chunk 218112 of 261681
+strata trace: prompt chunk 0 of 256
+PP 218112 261682 277831 785.1
+strata trace: prompt chunk 218368 of 261681
+strata trace: prompt chunk 0 of 256
+PP 218368 261682 278181 785.0
+strata trace: prompt chunk 218624 of 261681
+strata trace: prompt chunk 0 of 256
+PP 218624 261682 278519 785.0
+strata trace: prompt chunk 218880 of 261681
+strata trace: prompt chunk 0 of 256
+PP 218880 261682 278860 784.9
+strata trace: prompt chunk 219136 of 261681
+strata trace: prompt chunk 0 of 256
+PP 219136 261682 279205 784.9
+strata trace: prompt chunk 219392 of 261681
+strata trace: prompt chunk 0 of 256
+PP 219392 261682 279550 784.8
+strata trace: prompt chunk 219648 of 261681
+strata trace: prompt chunk 0 of 256
+PP 219648 261682 279894 784.8
+strata trace: prompt chunk 219904 of 261681
+strata trace: prompt chunk 0 of 256
+PP 219904 261682 280239 784.7
+strata trace: prompt chunk 220160 of 261681
+strata trace: prompt chunk 0 of 256
+PP 220160 261682 280588 784.6
+strata trace: prompt chunk 220416 of 261681
+strata trace: prompt chunk 0 of 256
+PP 220416 261682 280917 784.6
+strata trace: prompt chunk 220672 of 261681
+strata trace: prompt chunk 0 of 256
+PP 220672 261682 281267 784.6
+strata trace: prompt chunk 220928 of 261681
+strata trace: prompt chunk 0 of 256
+PP 220928 261682 281611 784.5
+strata trace: prompt chunk 221184 of 261681
+strata trace: prompt chunk 0 of 256
+PP 221184 261682 281950 784.5
+strata trace: prompt chunk 221440 of 261681
+strata trace: prompt chunk 0 of 256
+PP 221440 261682 282287 784.4
+strata trace: prompt chunk 221696 of 261681
+strata trace: prompt chunk 0 of 256
+PP 221696 261682 282631 784.4
+strata trace: prompt chunk 221952 of 261681
+strata trace: prompt chunk 0 of 256
+PP 221952 261682 282966 784.4
+strata trace: prompt chunk 222208 of 261681
+strata trace: prompt chunk 0 of 256
+PP 222208 261682 283307 784.3
+strata trace: prompt chunk 222464 of 261681
+strata trace: prompt chunk 0 of 256
+PP 222464 261682 283645 784.3
+strata trace: prompt chunk 222720 of 261681
+strata trace: prompt chunk 0 of 256
+PP 222720 261682 283992 784.2
+strata trace: prompt chunk 222976 of 261681
+strata trace: prompt chunk 0 of 256
+PP 222976 261682 284335 784.2
+strata trace: prompt chunk 223232 of 261681
+strata trace: prompt chunk 0 of 256
+PP 223232 261682 284673 784.2
+strata trace: prompt chunk 223488 of 261681
+strata trace: prompt chunk 0 of 256
+PP 223488 261682 285024 784.1
+strata trace: prompt chunk 223744 of 261681
+strata trace: prompt chunk 0 of 256
+PP 223744 261682 285366 784.1
+strata trace: prompt chunk 224000 of 261681
+strata trace: prompt chunk 0 of 256
+PP 224000 261682 285710 784.0
+strata trace: prompt chunk 224256 of 261681
+strata trace: prompt chunk 0 of 256
+PP 224256 261682 286052 784.0
+strata trace: prompt chunk 224512 of 261681
+strata trace: prompt chunk 0 of 256
+PP 224512 261682 286393 783.9
+strata trace: prompt chunk 224768 of 261681
+strata trace: prompt chunk 0 of 256
+PP 224768 261682 286741 783.9
+strata trace: prompt chunk 225024 of 261681
+strata trace: prompt chunk 0 of 256
+PP 225024 261682 287079 783.8
+strata trace: prompt chunk 225280 of 261681
+strata trace: prompt chunk 0 of 256
+PP 225280 261682 287420 783.8
+strata trace: prompt chunk 225536 of 261681
+strata trace: prompt chunk 0 of 256
+PP 225536 261682 287757 783.8
+strata trace: prompt chunk 225792 of 261681
+strata trace: prompt chunk 0 of 256
+PP 225792 261682 288095 783.7
+strata trace: prompt chunk 226048 of 261681
+strata trace: prompt chunk 0 of 256
+PP 226048 261682 288436 783.7
+strata trace: prompt chunk 226304 of 261681
+strata trace: prompt chunk 0 of 256
+PP 226304 261682 288774 783.7
+strata trace: prompt chunk 226560 of 261681
+strata trace: prompt chunk 0 of 256
+PP 226560 261682 289118 783.6
+strata trace: prompt chunk 226816 of 261681
+strata trace: prompt chunk 0 of 256
+PP 226816 261682 289468 783.6
+strata trace: prompt chunk 227072 of 261681
+strata trace: prompt chunk 0 of 256
+PP 227072 261682 289808 783.5
+strata trace: prompt chunk 227328 of 261681
+strata trace: prompt chunk 0 of 256
+PP 227328 261682 290147 783.5
+strata trace: prompt chunk 227584 of 261681
+strata trace: prompt chunk 0 of 256
+PP 227584 261682 290503 783.4
+strata trace: prompt chunk 227840 of 261681
+strata trace: prompt chunk 0 of 256
+PP 227840 261682 290835 783.4
+strata trace: prompt chunk 228096 of 261681
+strata trace: prompt chunk 0 of 256
+PP 228096 261682 291179 783.4
+strata trace: prompt chunk 228352 of 261681
+strata trace: prompt chunk 0 of 256
+PP 228352 261682 291528 783.3
+strata trace: prompt chunk 228608 of 261681
+strata trace: prompt chunk 0 of 256
+PP 228608 261682 291872 783.2
+strata trace: prompt chunk 228864 of 261681
+strata trace: prompt chunk 0 of 256
+PP 228864 261682 292216 783.2
+strata trace: prompt chunk 229120 of 261681
+strata trace: prompt chunk 0 of 256
+PP 229120 261682 292561 783.2
+strata trace: prompt chunk 229376 of 261681
+strata trace: prompt chunk 0 of 256
+PP 229376 261682 292904 783.1
+strata trace: prompt chunk 229632 of 261681
+strata trace: prompt chunk 0 of 256
+PP 229632 261682 293246 783.1
+strata trace: prompt chunk 229888 of 261681
+strata trace: prompt chunk 0 of 256
+PP 229888 261682 293587 783.0
+strata trace: prompt chunk 230144 of 261681
+strata trace: prompt chunk 0 of 256
+PP 230144 261682 293924 783.0
+strata trace: prompt chunk 230400 of 261681
+strata trace: prompt chunk 0 of 256
+PP 230400 261682 294274 782.9
+strata trace: prompt chunk 230656 of 261681
+strata trace: prompt chunk 0 of 256
+PP 230656 261682 294621 782.9
+strata trace: prompt chunk 230912 of 261681
+strata trace: prompt chunk 0 of 256
+PP 230912 261682 294962 782.9
+strata trace: prompt chunk 231168 of 261681
+strata trace: prompt chunk 0 of 256
+PP 231168 261682 295300 782.8
+strata trace: prompt chunk 231424 of 261681
+strata trace: prompt chunk 0 of 256
+PP 231424 261682 295644 782.8
+strata trace: prompt chunk 231680 of 261681
+strata trace: prompt chunk 0 of 256
+PP 231680 261682 295988 782.7
+strata trace: prompt chunk 231936 of 261681
+strata trace: prompt chunk 0 of 256
+PP 231936 261682 296326 782.7
+strata trace: prompt chunk 232192 of 261681
+strata trace: prompt chunk 0 of 256
+PP 232192 261682 296683 782.6
+strata trace: prompt chunk 232448 of 261681
+strata trace: prompt chunk 0 of 256
+PP 232448 261682 297022 782.6
+strata trace: prompt chunk 232704 of 261681
+strata trace: prompt chunk 0 of 256
+PP 232704 261682 297360 782.6
+strata trace: prompt chunk 232960 of 261681
+strata trace: prompt chunk 0 of 256
+PP 232960 261682 297709 782.5
+strata trace: prompt chunk 233216 of 261681
+strata trace: prompt chunk 0 of 256
+PP 233216 261682 298043 782.5
+strata trace: prompt chunk 233472 of 261681
+strata trace: prompt chunk 0 of 256
+PP 233472 261682 298387 782.4
+strata trace: prompt chunk 233728 of 261681
+strata trace: prompt chunk 0 of 256
+PP 233728 261682 298731 782.4
+strata trace: prompt chunk 233984 of 261681
+strata trace: prompt chunk 0 of 256
+PP 233984 261682 299071 782.4
+strata trace: prompt chunk 234240 of 261681
+strata trace: prompt chunk 0 of 256
+PP 234240 261682 299410 782.3
+strata trace: prompt chunk 234496 of 261681
+strata trace: prompt chunk 0 of 256
+PP 234496 261682 299766 782.3
+strata trace: prompt chunk 234752 of 261681
+strata trace: prompt chunk 0 of 256
+PP 234752 261682 300111 782.2
+strata trace: prompt chunk 235008 of 261681
+strata trace: prompt chunk 0 of 256
+PP 235008 261682 300455 782.2
+strata trace: prompt chunk 235264 of 261681
+strata trace: prompt chunk 0 of 256
+PP 235264 261682 300790 782.2
+strata trace: prompt chunk 235520 of 261681
+strata trace: prompt chunk 0 of 256
+PP 235520 261682 301128 782.1
+strata trace: prompt chunk 235776 of 261681
+strata trace: prompt chunk 0 of 256
+PP 235776 261682 301472 782.1
+strata trace: prompt chunk 236032 of 261681
+strata trace: prompt chunk 0 of 256
+PP 236032 261682 301814 782.0
+strata trace: prompt chunk 236288 of 261681
+strata trace: prompt chunk 0 of 256
+PP 236288 261682 302158 782.0
+strata trace: prompt chunk 236544 of 261681
+strata trace: prompt chunk 0 of 256
+PP 236544 261682 302505 782.0
+strata trace: prompt chunk 236800 of 261681
+strata trace: prompt chunk 0 of 256
+PP 236800 261682 302849 781.9
+strata trace: prompt chunk 237056 of 261681
+strata trace: prompt chunk 0 of 256
+PP 237056 261682 303195 781.9
+strata trace: prompt chunk 237312 of 261681
+strata trace: prompt chunk 0 of 256
+PP 237312 261682 303542 781.8
+strata trace: prompt chunk 237568 of 261681
+strata trace: prompt chunk 0 of 256
+PP 237568 261682 303886 781.8
+strata trace: prompt chunk 237824 of 261681
+strata trace: prompt chunk 0 of 256
+PP 237824 261682 304239 781.7
+strata trace: prompt chunk 238080 of 261681
+strata trace: prompt chunk 0 of 256
+PP 238080 261682 304577 781.7
+strata trace: prompt chunk 238336 of 261681
+strata trace: prompt chunk 0 of 256
+PP 238336 261682 304931 781.6
+strata trace: prompt chunk 238592 of 261681
+strata trace: prompt chunk 0 of 256
+PP 238592 261682 305272 781.6
+strata trace: prompt chunk 238848 of 261681
+strata trace: prompt chunk 0 of 256
+PP 238848 261682 305613 781.5
+strata trace: prompt chunk 239104 of 261681
+strata trace: prompt chunk 0 of 256
+PP 239104 261682 305962 781.5
+strata trace: prompt chunk 239360 of 261681
+strata trace: prompt chunk 0 of 256
+PP 239360 261682 306309 781.4
+strata trace: prompt chunk 239616 of 261681
+strata trace: prompt chunk 0 of 256
+PP 239616 261682 306644 781.4
+strata trace: prompt chunk 239872 of 261681
+strata trace: prompt chunk 0 of 256
+PP 239872 261682 306988 781.4
+strata trace: prompt chunk 240128 of 261681
+strata trace: prompt chunk 0 of 256
+PP 240128 261682 307331 781.3
+strata trace: prompt chunk 240384 of 261681
+strata trace: prompt chunk 0 of 256
+PP 240384 261682 307669 781.3
+strata trace: prompt chunk 240640 of 261681
+strata trace: prompt chunk 0 of 256
+PP 240640 261682 308012 781.3
+strata trace: prompt chunk 240896 of 261681
+strata trace: prompt chunk 0 of 256
+PP 240896 261682 308353 781.2
+strata trace: prompt chunk 241152 of 261681
+strata trace: prompt chunk 0 of 256
+PP 241152 261682 308715 781.1
+strata trace: prompt chunk 241408 of 261681
+strata trace: prompt chunk 0 of 256
+PP 241408 261682 309050 781.1
+strata trace: prompt chunk 241664 of 261681
+strata trace: prompt chunk 0 of 256
+PP 241664 261682 309406 781.1
+strata trace: prompt chunk 241920 of 261681
+strata trace: prompt chunk 0 of 256
+PP 241920 261682 309741 781.0
+strata trace: prompt chunk 242176 of 261681
+strata trace: prompt chunk 0 of 256
+PP 242176 261682 310089 781.0
+strata trace: prompt chunk 242432 of 261681
+strata trace: prompt chunk 0 of 256
+PP 242432 261682 310434 780.9
+strata trace: prompt chunk 242688 of 261681
+strata trace: prompt chunk 0 of 256
+PP 242688 261682 310781 780.9
+strata trace: prompt chunk 242944 of 261681
+strata trace: prompt chunk 0 of 256
+PP 242944 261682 311122 780.9
+strata trace: prompt chunk 243200 of 261681
+strata trace: prompt chunk 0 of 256
+PP 243200 261682 311459 780.8
+strata trace: prompt chunk 243456 of 261681
+strata trace: prompt chunk 0 of 256
+PP 243456 261682 311810 780.8
+strata trace: prompt chunk 243712 of 261681
+strata trace: prompt chunk 0 of 256
+PP 243712 261682 312145 780.8
+strata trace: prompt chunk 243968 of 261681
+strata trace: prompt chunk 0 of 256
+PP 243968 261682 312498 780.7
+strata trace: prompt chunk 244224 of 261681
+strata trace: prompt chunk 0 of 256
+PP 244224 261682 312836 780.7
+strata trace: prompt chunk 244480 of 261681
+strata trace: prompt chunk 0 of 256
+PP 244480 261682 313186 780.6
+strata trace: prompt chunk 244736 of 261681
+strata trace: prompt chunk 0 of 256
+PP 244736 261682 313530 780.6
+strata trace: prompt chunk 244992 of 261681
+strata trace: prompt chunk 0 of 256
+PP 244992 261682 313883 780.5
+strata trace: prompt chunk 245248 of 261681
+strata trace: prompt chunk 0 of 256
+PP 245248 261682 314226 780.5
+strata trace: prompt chunk 245504 of 261681
+strata trace: prompt chunk 0 of 256
+PP 245504 261682 314572 780.4
+strata trace: prompt chunk 245760 of 261681
+strata trace: prompt chunk 0 of 256
+PP 245760 261682 314914 780.4
+strata trace: prompt chunk 246016 of 261681
+strata trace: prompt chunk 0 of 256
+PP 246016 261682 315246 780.4
+strata trace: prompt chunk 246272 of 261681
+strata trace: prompt chunk 0 of 256
+PP 246272 261682 315596 780.3
+strata trace: prompt chunk 246528 of 261681
+strata trace: prompt chunk 0 of 256
+PP 246528 261682 315937 780.3
+strata trace: prompt chunk 246784 of 261681
+strata trace: prompt chunk 0 of 256
+PP 246784 261682 316284 780.3
+strata trace: prompt chunk 247040 of 261681
+strata trace: prompt chunk 0 of 256
+PP 247040 261682 316637 780.2
+strata trace: prompt chunk 247296 of 261681
+strata trace: prompt chunk 0 of 256
+PP 247296 261682 316980 780.2
+strata trace: prompt chunk 247552 of 261681
+strata trace: prompt chunk 0 of 256
+PP 247552 261682 317321 780.1
+strata trace: prompt chunk 247808 of 261681
+strata trace: prompt chunk 0 of 256
+PP 247808 261682 317673 780.1
+strata trace: prompt chunk 248064 of 261681
+strata trace: prompt chunk 0 of 256
+PP 248064 261682 318013 780.0
+strata trace: prompt chunk 248320 of 261681
+strata trace: prompt chunk 0 of 256
+PP 248320 261682 318354 780.0
+strata trace: prompt chunk 248576 of 261681
+strata trace: prompt chunk 0 of 256
+PP 248576 261682 318707 780.0
+strata trace: prompt chunk 248832 of 261681
+strata trace: prompt chunk 0 of 256
+PP 248832 261682 319047 779.9
+strata trace: prompt chunk 249088 of 261681
+strata trace: prompt chunk 0 of 256
+PP 249088 261682 319385 779.9
+strata trace: prompt chunk 249344 of 261681
+strata trace: prompt chunk 0 of 256
+PP 249344 261682 319735 779.8
+strata trace: prompt chunk 249600 of 261681
+strata trace: prompt chunk 0 of 256
+PP 249600 261682 320071 779.8
+strata trace: prompt chunk 249856 of 261681
+strata trace: prompt chunk 0 of 256
+PP 249856 261682 320422 779.8
+strata trace: prompt chunk 250112 of 261681
+strata trace: prompt chunk 0 of 256
+PP 250112 261682 320766 779.7
+strata trace: prompt chunk 250368 of 261681
+strata trace: prompt chunk 0 of 256
+PP 250368 261682 321110 779.7
+strata trace: prompt chunk 250624 of 261681
+strata trace: prompt chunk 0 of 256
+PP 250624 261682 321456 779.7
+strata trace: prompt chunk 250880 of 261681
+strata trace: prompt chunk 0 of 256
+PP 250880 261682 321797 779.6
+strata trace: prompt chunk 251136 of 261681
+strata trace: prompt chunk 0 of 256
+PP 251136 261682 322147 779.6
+strata trace: prompt chunk 251392 of 261681
+strata trace: prompt chunk 0 of 256
+PP 251392 261682 322488 779.5
+strata trace: prompt chunk 251648 of 261681
+strata trace: prompt chunk 0 of 256
+PP 251648 261682 322835 779.5
+strata trace: prompt chunk 251904 of 261681
+strata trace: prompt chunk 0 of 256
+PP 251904 261682 323182 779.4
+strata trace: prompt chunk 252160 of 261681
+strata trace: prompt chunk 0 of 256
+PP 252160 261682 323522 779.4
+strata trace: prompt chunk 252416 of 261681
+strata trace: prompt chunk 0 of 256
+PP 252416 261682 323878 779.4
+strata trace: prompt chunk 252672 of 261681
+strata trace: prompt chunk 0 of 256
+PP 252672 261682 324210 779.3
+strata trace: prompt chunk 252928 of 261681
+strata trace: prompt chunk 0 of 256
+PP 252928 261682 324563 779.3
+strata trace: prompt chunk 253184 of 261681
+strata trace: prompt chunk 0 of 256
+PP 253184 261682 324905 779.3
+strata trace: prompt chunk 253440 of 261681
+strata trace: prompt chunk 0 of 256
+PP 253440 261682 325256 779.2
+strata trace: prompt chunk 253696 of 261681
+strata trace: prompt chunk 0 of 256
+PP 253696 261682 325597 779.2
+strata trace: prompt chunk 253952 of 261681
+strata trace: prompt chunk 0 of 256
+PP 253952 261682 325943 779.1
+strata trace: prompt chunk 254208 of 261681
+strata trace: prompt chunk 0 of 256
+PP 254208 261682 326285 779.1
+strata trace: prompt chunk 254464 of 261681
+strata trace: prompt chunk 0 of 256
+PP 254464 261682 326627 779.1
+strata trace: prompt chunk 254720 of 261681
+strata trace: prompt chunk 0 of 256
+PP 254720 261682 326976 779.0
+strata trace: prompt chunk 254976 of 261681
+strata trace: prompt chunk 0 of 256
+PP 254976 261682 327324 779.0
+strata trace: prompt chunk 255232 of 261681
+strata trace: prompt chunk 0 of 256
+PP 255232 261682 327665 778.9
+strata trace: prompt chunk 255488 of 261681
+strata trace: prompt chunk 0 of 256
+PP 255488 261682 328005 778.9
+strata trace: prompt chunk 255744 of 261681
+strata trace: prompt chunk 0 of 256
+PP 255744 261682 328349 778.9
+strata trace: prompt chunk 256000 of 261681
+strata trace: prompt chunk 0 of 256
+PP 256000 261682 328701 778.8
+strata trace: prompt chunk 256256 of 261681
+strata trace: prompt chunk 0 of 256
+PP 256256 261682 329042 778.8
+strata trace: prompt chunk 256512 of 261681
+strata trace: prompt chunk 0 of 256
+PP 256512 261682 329386 778.8
+strata trace: prompt chunk 256768 of 261681
+strata trace: prompt chunk 0 of 256
+PP 256768 261682 329730 778.7
+strata trace: prompt chunk 257024 of 261681
+strata trace: prompt chunk 0 of 256
+PP 257024 261682 330077 778.7
+strata trace: prompt chunk 257280 of 261681
+strata trace: prompt chunk 0 of 256
+PP 257280 261682 330424 778.6
+strata trace: prompt chunk 257536 of 261681
+strata trace: prompt chunk 0 of 256
+PP 257536 261682 330765 778.6
+strata trace: prompt chunk 257792 of 261681
+strata trace: prompt chunk 0 of 256
+PP 257792 261682 331107 778.6
+strata trace: prompt chunk 258048 of 261681
+strata trace: prompt chunk 0 of 256
+PP 258048 261682 331458 778.5
+strata trace: prompt chunk 258304 of 261681
+strata trace: prompt chunk 0 of 256
+PP 258304 261682 331803 778.5
+strata trace: prompt chunk 258560 of 261681
+strata trace: prompt chunk 0 of 256
+PP 258560 261682 332149 778.4
+strata trace: prompt chunk 258816 of 261681
+strata trace: prompt chunk 0 of 256
+PP 258816 261682 332483 778.4
+strata trace: prompt chunk 259072 of 261681
+strata trace: prompt chunk 0 of 256
+PP 259072 261682 332835 778.4
+strata trace: prompt chunk 259328 of 261681
+strata trace: prompt chunk 0 of 256
+PP 259328 261682 333181 778.3
+strata trace: prompt chunk 259584 of 261681
+strata trace: prompt chunk 0 of 256
+PP 259584 261682 333516 778.3
+strata trace: prompt chunk 259840 of 261681
+strata trace: prompt chunk 0 of 256
+PP 259840 261682 333863 778.3
+strata trace: prompt chunk 260096 of 261681
+strata trace: prompt chunk 0 of 256
+PP 260096 261682 334217 778.2
+strata trace: prompt chunk 260352 of 261681
+strata trace: prompt chunk 0 of 256
+PP 260352 261682 334558 778.2
+strata trace: prompt chunk 260608 of 261681
+strata trace: prompt chunk 0 of 256
+PP 260608 261682 334905 778.2
+strata trace: prompt chunk 260864 of 261681
+strata trace: prompt chunk 0 of 256
+PP 260864 261682 335249 778.1
+strata trace: prompt chunk 261120 of 261681
+strata trace: prompt chunk 0 of 256
+PP 261120 261682 335587 778.1
+strata trace: prompt chunk 261376 of 261681
+strata trace: prompt chunk 0 of 256
+PP 261376 261682 335936 778.1
+strata trace: prompt chunk 261632 of 261681
+strata trace: prompt chunk 0 of 256
+PP 261632 261682 336299 778.0
+strata trace: prompt chunk 0 of 49
+PP 261681 261682 336361 778.0
+strata trace: read 261681 tokens (batched) in 336357.7 ms
+strata trace: prompt done (slots refilled) -1 -1
+REUSED 0
+strata trace: window 261681 1
+T 842
+strata trace: window 261682 2
+T 53665
+T 25
+strata trace: window 261684 2
+T 15769
+T 1580
+strata trace: window 261686 2
+T 12
+T 19
+strata trace: window 261688 2
+T 48
+T 22
+strata trace: window 261690 4
+T 7869
+T 2731
+T 13267
+T 198
+strata trace: window 261694 2
+T 75761
+strata trace: window 261695 2
+T 25
+T 225505
+strata trace: window 261697 2
+T 905
+T 12
+strata trace: window 261699 2
+T 23
+T 44
+strata trace: window 261701 2
+T 17
+T 12
+strata trace: window 261703 4
+T 5579
+T 74236
+T 198
+strata trace: window 261706 2
+T 95429
+strata trace: window 261707 2
+T 25
+T 2639
+strata trace: window 261709 2
+T 20279
+T 12
+strata trace: window 261711 2
+T 21
+T 53
+strata trace: window 261713 2
+T 24
+T 15377
+strata trace: window 261715 2
+T 177164
+strata trace: window 261716 4
+T 841
+T 248046
+DONE 37 261682 336360.8 424.4 stop 18 24 0 0 0 0 0 0.0 261682 0
+strata serve: prompt 261682 tokens = 0 reused + 261682 read in 336361 ms (778.0 tok/s), 37 generated in 424 ms (87.2 tok/s), drafts accepted 18 of 24, 0 checkpoints
+strata serve: expert tiers: GPU 0 hits this request; since the start RAM 0 blobs, files 0 blobs 77024.6 MB read (the GGUF in place)
+strata serve: file tier I/O this request: the OS read 10336.2 MB from storage (0 major faults) for 0.0 MB of expert reads
+strata serve: suffix drafts: 3 windows, 6 of 9 drafts accepted

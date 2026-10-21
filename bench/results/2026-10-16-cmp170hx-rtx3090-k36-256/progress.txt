@@ -1,0 +1,22 @@
+2026-10-16T20:20:37.393+00:00 START mmq pid=244643
+Traceback (most recent call last):
+  File "/home/nikolay/projects/copilot-worktrees/170hx-3090/sibnick-fuzzy-spoon/bench/results/2026-10-16-cmp170hx-rtx3090-k36-256/run-short.py", line 235, in <module>
+    run(parser.parse_args().mode)
+  File "/home/nikolay/projects/copilot-worktrees/170hx-3090/sibnick-fuzzy-spoon/bench/results/2026-10-16-cmp170hx-rtx3090-k36-256/run-short.py", line 158, in run
+    startup = read_until(lambda s: s == "READY 262144 stop", 1200)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/nikolay/projects/copilot-worktrees/170hx-3090/sibnick-fuzzy-spoon/bench/results/2026-10-16-cmp170hx-rtx3090-k36-256/run-short.py", line 130, in read_until
+    sample()
+  File "/home/nikolay/projects/copilot-worktrees/170hx-3090/sibnick-fuzzy-spoon/bench/results/2026-10-16-cmp170hx-rtx3090-k36-256/run-short.py", line 122, in sample
+    "process": base.process_state(process.pid), "other_compute": others,
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/nikolay/projects/copilot-worktrees/170hx-3090/sibnick-fuzzy-spoon/bench/results/2026-10-16-cmp170hx-rtx3090-gpu-owned-long-context/run-long-context.py", line 92, in process_state
+    for line in Path(f"/proc/{pid}/io").read_text().splitlines():
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/pathlib.py", line 1029, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/pathlib.py", line 1015, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: '/proc/244643/io'

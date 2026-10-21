@@ -1,0 +1,958 @@
+{
+  "arguments": [
+    "/tmp/strata-gpu-owned-cuda/strata",
+    "--pack",
+    "/home/nikolay/projects/copilot-worktrees/170hx-3090/sibnick-upgraded-succotash/build/pack/ud-q4-k-xl",
+    "--native",
+    "/home/nikolay/projects/Strata-data/models/UD-Q4_K_XL/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00001-of-00004.gguf",
+    "--gpu",
+    "1,0",
+    "--layer-split",
+    "37",
+    "--trim-stage-weights",
+    "--max-context",
+    "262144",
+    "--kv",
+    "int8",
+    "--mtp",
+    "/home/nikolay/projects/Strata-data/mtp/rt",
+    "--spec",
+    "2",
+    "--prefill",
+    "256",
+    "--no-prefill-borrow",
+    "--mmap-experts",
+    "--resident-budget-gib",
+    "0.001",
+    "--expert-profile",
+    "/home/nikolay/projects/copilot-worktrees/170hx-3090/sibnick-upgraded-succotash/data/expert-profile.bin",
+    "--ple-io",
+    "direct",
+    "--ple-row-cache",
+    "1024",
+    "--vram-reserve-mib",
+    "1024",
+    "--vram-reserve-later-mib",
+    "1024",
+    "--pool-workers",
+    "1",
+    "--serve",
+    "--prompt-cache",
+    "0",
+    "--conversation-cache-min-free-mib",
+    "4096",
+    "--gpu-owned-experts"
+  ],
+  "elapsed_seconds": 1684.043,
+  "environment_policy": {
+    "CUDA_VISIBLE_DEVICES": "unset",
+    "STRATA_*": "clear inherited values, then set exactly as in the prior comparison manifest",
+    "STRATA_overrides": {
+      "STRATA_FILL_AHEAD": "0",
+      "STRATA_IO_PREFETCH": "0",
+      "STRATA_PIN_RESERVE_GIB": "4",
+      "STRATA_REFILL_BLOCKING": "1",
+      "STRATA_RESIDENT_HEADROOM_GIB": "4",
+      "STRATA_SPLIT_RING": "96",
+      "STRATA_STAGE_PIN": "0",
+      "STRATA_TRACE": "1",
+      "STRATA_UNBUFFERED_LOAD": "1"
+    },
+    "other_inherited_environment": "retained; not serialized"
+  },
+  "evidence_finalized_utc": "2026-10-16T07:13:07.753+00:00",
+  "guards": {
+    "gpu_free_reaction_threshold_mib": 1024,
+    "host_reaction_threshold_bytes": 5368709120,
+    "host_start_floor_bytes": 6442450944,
+    "memory_monitoring_is_sampled_not_a_hard_limit": true,
+    "monitor_interval_seconds": 1.0,
+    "request_timeout_policy": "max(1800 s, 4 * stage_token_count / preceding_measured_prefill_tokens_per_s + 300 s); no disk-progress timeout",
+    "startup_timeout_seconds": 1200
+  },
+  "identity": {
+    "artifact_identity": {
+      "artifacts": [
+        {
+          "bytes": 10946624,
+          "fresh_sha256": "4448186216b3af4cc558bbce2c3213f01608f8f8b2e5267a9767971dd3ec8082",
+          "manifest_path": "/home/nikolay/projects/Strata-data/models/UD-Q4_K_XL/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00001-of-00004.gguf",
+          "mtime_ns": 1792101427946182652,
+          "recorded_sha256": "4448186216b3af4cc558bbce2c3213f01608f8f8b2e5267a9767971dd3ec8082",
+          "resolved_path": "/home/nikolay/projects/Strata-data/models/UD-Q4_K_XL/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00001-of-00004.gguf"
+        },
+        {
+          "bytes": 49859583136,
+          "fresh_sha256": null,
+          "manifest_path": "/home/nikolay/projects/Strata-data/models/UD-Q4_K_XL/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00002-of-00004.gguf",
+          "mtime_ns": 1792103763302372363,
+          "recorded_sha256": "3f342f1c1580473f1ee94ddd5b28206e8c07a70fa1a366f59d1d6c922919a6c9",
+          "resolved_path": "/home/nikolay/projects/Strata-data/models/UD-Q4_K_XL/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00002-of-00004.gguf"
+        },
+        {
+          "bytes": 49376141504,
+          "fresh_sha256": null,
+          "manifest_path": "/home/nikolay/projects/Strata-data/models/UD-Q4_K_XL/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00003-of-00004.gguf",
+          "mtime_ns": 1792104235117659810,
+          "recorded_sha256": "56758f40269cad5cd9b0d3d6fbae0f40f6d5be6de49e4ab392dbe83157d9cbd3",
+          "resolved_path": "/home/nikolay/projects/Strata-data/models/UD-Q4_K_XL/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00003-of-00004.gguf"
+        },
+        {
+          "bytes": 12087983520,
+          "fresh_sha256": null,
+          "manifest_path": "/home/nikolay/projects/Strata-data/models/UD-Q4_K_XL/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00004-of-00004.gguf",
+          "mtime_ns": 1792102239596707698,
+          "recorded_sha256": "753bda48b98ba4f1636134a90a967de1b2d3908a236c026e464777342e53510a",
+          "resolved_path": "/home/nikolay/projects/Strata-data/models/UD-Q4_K_XL/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00004-of-00004.gguf"
+        },
+        {
+          "bytes": 21093,
+          "fresh_sha256": "74ce6fb95d8e9836f842401ae761cc1d4846a7696fb7d5275cc3f40b950b6f4f",
+          "manifest_path": "build/pack/ud-q4-k-xl/compat-bf16.json",
+          "mtime_ns": 1792104773041507596,
+          "recorded_sha256": "74ce6fb95d8e9836f842401ae761cc1d4846a7696fb7d5275cc3f40b950b6f4f",
+          "resolved_path": "/home/nikolay/projects/copilot-worktrees/170hx-3090/sibnick-upgraded-succotash/build/pack/ud-q4-k-xl/compat-bf16.json"
+        },
+        {
+          "bytes": 167871,
+          "fresh_sha256": "722a102cb500b9097d1890cffebf142904fa6534c209ac44c6445f0aec3d0cc4",
+          "manifest_path": "build/pack/ud-q4-k-xl/conversions.json",
+          "mtime_ns": 1792104773040507542,
+          "recorded_sha256": "722a102cb500b9097d1890cffebf142904fa6534c209ac44c6445f0aec3d0cc4",
+          "resolved_path": "/home/nikolay/projects/copilot-worktrees/170hx-3090/sibnick-upgraded-succotash/build/pack/ud-q4-k-xl/conversions.json"
+        },
+        {
+          "bytes": 1485688320,
+          "fresh_sha256": null,
+          "manifest_path": "build/pack/ud-q4-k-xl/dense.bin",
+          "mtime_ns": 1792104773038507435,
+          "recorded_sha256": "f53174059b262ed342b82e143af62056081948ef5e5f1903a1a70eeb73fa4a23",
+          "resolved_path": "/home/nikolay/projects/copilot-worktrees/170hx-3090/sibnick-upgraded-succotash/build/pack/ud-q4-k-xl/dense.bin"
+        },
+        {
+          "bytes": 93560,
+          "fresh_sha256": "cfc07e91c4d9b8e8c999fd1f70fa364e584748e70fa377b30e0fc85426f52711",
+          "manifest_path": "build/pack/ud-q4-k-xl/index.txt",
+          "mtime_ns": 1792104773039507489,
+          "recorded_sha256": "cfc07e91c4d9b8e8c999fd1f70fa364e584748e70fa377b30e0fc85426f52711",
+          "resolved_path": "/home/nikolay/projects/copilot-worktrees/170hx-3090/sibnick-upgraded-succotash/build/pack/ud-q4-k-xl/index.txt"
+        },
+        {
+          "bytes": 5795,
+          "fresh_sha256": "5ed2c4a55910616db1efe16f0c989e9bec80cc8b9e95bf1c42f886aadfffd2d6",
+          "manifest_path": "build/pack/ud-q4-k-xl/native_experts.txt",
+          "mtime_ns": 1792104773591537104,
+          "recorded_sha256": "5ed2c4a55910616db1efe16f0c989e9bec80cc8b9e95bf1c42f886aadfffd2d6",
+          "resolved_path": "/home/nikolay/projects/copilot-worktrees/170hx-3090/sibnick-upgraded-succotash/build/pack/ud-q4-k-xl/native_experts.txt"
+        },
+        {
+          "bytes": 9993,
+          "fresh_sha256": "12827f24b742ea4e80cdc12dbcf9622227056b9f797252a3149263d4f9aaadce",
+          "manifest_path": "build/pack/ud-q4-k-xl/tokenizer/chat_template.jinja",
+          "mtime_ns": 1792104773570535978,
+          "recorded_sha256": "12827f24b742ea4e80cdc12dbcf9622227056b9f797252a3149263d4f9aaadce",
+          "resolved_path": "/home/nikolay/projects/copilot-worktrees/170hx-3090/sibnick-upgraded-succotash/build/pack/ud-q4-k-xl/tokenizer/chat_template.jinja"
+        },
+        {
+          "bytes": 3353258,
+          "fresh_sha256": "4ba698529766c7a2f5052083ea10cdf2485577f5237a332ee291054eb11e3332",
+          "manifest_path": "build/pack/ud-q4-k-xl/tokenizer/merges.txt",
+          "mtime_ns": 1792104773476530935,
+          "recorded_sha256": "4ba698529766c7a2f5052083ea10cdf2485577f5237a332ee291054eb11e3332",
+          "resolved_path": "/home/nikolay/projects/copilot-worktrees/170hx-3090/sibnick-upgraded-succotash/build/pack/ud-q4-k-xl/tokenizer/merges.txt"
+        },
+        {
+          "bytes": 744960,
+          "fresh_sha256": "5088c8c298fc06af8382ddb3b76c888703ac2634e82263b97eedcc2ad202738b",
+          "manifest_path": "build/pack/ud-q4-k-xl/tokenizer/token_type.json",
+          "mtime_ns": 1792104773482531256,
+          "recorded_sha256": "5088c8c298fc06af8382ddb3b76c888703ac2634e82263b97eedcc2ad202738b",
+          "resolved_path": "/home/nikolay/projects/copilot-worktrees/170hx-3090/sibnick-upgraded-succotash/build/pack/ud-q4-k-xl/tokenizer/token_type.json"
+        },
+        {
+          "bytes": 541,
+          "fresh_sha256": "c0bd435efbc6c3b28964b47999afe16c4ad268c7c7c4e8cb3af410796a6f30bf",
+          "manifest_path": "build/pack/ud-q4-k-xl/tokenizer/tokenizer.json",
+          "mtime_ns": 1792104773482531256,
+          "recorded_sha256": "c0bd435efbc6c3b28964b47999afe16c4ad268c7c7c4e8cb3af410796a6f30bf",
+          "resolved_path": "/home/nikolay/projects/copilot-worktrees/170hx-3090/sibnick-upgraded-succotash/build/pack/ud-q4-k-xl/tokenizer/tokenizer.json"
+        },
+        {
+          "bytes": 5737005,
+          "fresh_sha256": "4ba64f0332abcfb0b600b7df1537d1e836e68009d5fb7cdb77339738dc6365c4",
+          "manifest_path": "build/pack/ud-q4-k-xl/tokenizer/vocab.json",
+          "mtime_ns": 1792104773405527126,
+          "recorded_sha256": "4ba64f0332abcfb0b600b7df1537d1e836e68009d5fb7cdb77339738dc6365c4",
+          "resolved_path": "/home/nikolay/projects/copilot-worktrees/170hx-3090/sibnick-upgraded-succotash/build/pack/ud-q4-k-xl/tokenizer/vocab.json"
+        },
+        {
+          "bytes": 116099072,
+          "fresh_sha256": null,
+          "manifest_path": "/home/nikolay/projects/Strata-data/mtp/rt/dense.bin",
+          "mtime_ns": 1790797511564081072,
+          "recorded_sha256": "c724dc0b0822ada5d2977bf5bde821605feabaa64ea2e0045b67ca656329070a",
+          "resolved_path": "/home/nikolay/projects/Strata-data/mtp/rt/dense.bin"
+        },
+        {
+          "bytes": 1851,
+          "fresh_sha256": "991456cf4eb266eb8a888c349e548d11bc640f5dbd9149439aa9786af0f732fd",
+          "manifest_path": "/home/nikolay/projects/Strata-data/mtp/rt/dense.txt",
+          "mtime_ns": 1790797511564081072,
+          "recorded_sha256": "991456cf4eb266eb8a888c349e548d11bc640f5dbd9149439aa9786af0f732fd",
+          "resolved_path": "/home/nikolay/projects/Strata-data/mtp/rt/dense.txt"
+        },
+        {
+          "bytes": 425196,
+          "fresh_sha256": "b1e1d3a7a9e4bf862dcd5923ce661fb59bbd07907e594df5cf86a62ac235cb91",
+          "manifest_path": "/home/nikolay/projects/Strata-data/mtp/rt/draft_vocab.bin",
+          "mtime_ns": 1791844028315873667,
+          "recorded_sha256": "b1e1d3a7a9e4bf862dcd5923ce661fb59bbd07907e594df5cf86a62ac235cb91",
+          "resolved_path": "/home/nikolay/projects/Strata-data/mtp/rt/draft_vocab.bin"
+        },
+        {
+          "bytes": 707788800,
+          "fresh_sha256": null,
+          "manifest_path": "/home/nikolay/projects/Strata-data/mtp/rt/experts.bin",
+          "mtime_ns": 1790797510882044188,
+          "recorded_sha256": "09398406be61f1f54c93861f449e48b8df0bfccbc9ec9b2b7636775a6ea9244f",
+          "resolved_path": "/home/nikolay/projects/Strata-data/mtp/rt/experts.bin"
+        },
+        {
+          "bytes": 196632,
+          "fresh_sha256": "8f59b4aa8873209dff11c11e37bcda9529a1335b724a1afeea37bf6388975baf",
+          "manifest_path": "data/expert-profile.bin",
+          "mtime_ns": 1792110084727076813,
+          "recorded_sha256": "8f59b4aa8873209dff11c11e37bcda9529a1335b724a1afeea37bf6388975baf",
+          "resolved_path": "/home/nikolay/projects/copilot-worktrees/170hx-3090/sibnick-upgraded-succotash/data/expert-profile.bin"
+        }
+      ],
+      "gguf_revision": "38bb39ee97821de2c9009abb7e93950eec396e66",
+      "hash_method": "bounded 8 MiB O_DIRECT reads; captured after run, not during it",
+      "large_artifact_hashing": "not freshly repeated for files over 16 MiB; size/mtime recorded and original manifest SHA-256 retained",
+      "manifest_path": "/home/nikolay/projects/copilot-worktrees/170hx-3090/sibnick-fuzzy-spoon/bench/results/2026-10-16-cmp170hx-rtx3090-k37/artifacts.json",
+      "manifest_sha256": "de3b5214d60af2709d19baf8deed4f1c89e35006e26023882794437011d2ddd6"
+    },
+    "build_directory": "/tmp/strata-gpu-owned-cuda",
+    "build_type": "Release",
+    "candidate_build_source_commit": "0327ba279ba50a34894f6aac16e5fe3c21106611",
+    "cmake_cache_sha256": "fee6be1a4eefc5da96c3b06f9adceb2f88e1f4b21485ec213c47aac95bce86c7",
+    "compute_processes_before_start": "none",
+    "cuda_architectures": "sm_80;sm_86",
+    "cuda_compiler": "/usr/local/cuda-13.4/bin/nvcc",
+    "cuda_compiler_version": "13.4.92",
+    "driver_version": [
+      "610.43.03",
+      "610.43.03"
+    ],
+    "engine_sha256": "06a89cd0a9e8725ead0da3b55cc85c4cc11e8d33e4864d2e97b3aeec354ad1eb",
+    "gpu_initial": [
+      {
+        "graphics_clock_mhz": 930,
+        "index": 0,
+        "memory_free_mib": 23699,
+        "memory_used_mib": 425,
+        "name": "NVIDIA GeForce RTX 3090",
+        "power_w": 35.52,
+        "sm_clock_mhz": 930,
+        "temperature_c": 27,
+        "utilization_gpu_percent": 36
+      },
+      {
+        "graphics_clock_mhz": 210,
+        "index": 1,
+        "memory_free_mib": 64897,
+        "memory_used_mib": 16,
+        "name": "NVIDIA CMP 170HX",
+        "power_w": 31.86,
+        "sm_clock_mhz": 210,
+        "temperature_c": 27,
+        "utilization_gpu_percent": 0
+      }
+    ],
+    "run_mode": "main",
+    "source_commit": "e5a06131a4bb3455de69786b6ce6dcf50c1d3aeb"
+  },
+  "mode": "main",
+  "monitoring": {
+    "last_sample_utc": "2026-10-16T07:10:20.398+00:00",
+    "maximum_engine_rss_bytes": 5045956608,
+    "maximum_engine_swap_bytes": 0,
+    "maximum_system_swap_used_bytes": 1002700800,
+    "minimum_gpu_free_mib_by_nvidia_smi_index": {
+      "0": 1507,
+      "1": 1043
+    },
+    "minimum_host_available_bytes": 17801887744,
+    "sample_count": 1550,
+    "sample_interval_seconds": 1,
+    "sampled_polling_is_not_a_hard_oom_guarantee": true
+  },
+  "mtp_enabled": true,
+  "pcie_start_error": null,
+  "requests": [
+    {
+      "answer": "ORIGIN: IRIS-4Q7-LANTERN\nCENTER: CEDAR-8M2-QUARRY\nFINAL: ORBIT-6V9-KETTLE",
+      "context_cells_reserved": 8394,
+      "decode_ms": 600.8,
+      "decode_tokens_per_second": 61.58455392809587,
+      "done_line": "DONE 37 8202 23583.6 600.8 stop 20 26 0 0 0 0 0 0.0 8202 0",
+      "elapsed_seconds": 24.19,
+      "engine_reported_request_expert_io": [
+        "strata serve: expert tiers: GPU 0 hits this request; since the start RAM 0 blobs, files 0 blobs 77024.6 MB read (the GGUF in place)",
+        "strata serve: file tier I/O this request: the OS read 153462.9 MB from storage (5 major faults) for 77024.6 MB of expert reads"
+      ],
+      "expected_answers": {
+        "CENTER": "CEDAR-8M2-QUARRY",
+        "FINAL": "ORBIT-6V9-KETTLE",
+        "ORIGIN": "IRIS-4Q7-LANTERN"
+      },
+      "finished_utc": "2026-10-16T06:47:39.799+00:00",
+      "generated_token_count": 37,
+      "generated_token_ids": [
+        842,
+        53665,
+        25,
+        15769,
+        1580,
+        12,
+        19,
+        48,
+        22,
+        7869,
+        2731,
+        13267,
+        198,
+        75761,
+        25,
+        225505,
+        905,
+        12,
+        23,
+        44,
+        17,
+        12,
+        5579,
+        74236,
+        198,
+        95429,
+        25,
+        2639,
+        20279,
+        12,
+        21,
+        53,
+        24,
+        15377,
+        177164,
+        841,
+        248046
+      ],
+      "generated_token_ids_sha256": "5635a210cae1ee1c26a3fcc705a1c23c1659782d4799209c772b37e0fd65f04e",
+      "generation_cap": 192,
+      "input_tokens": 8202,
+      "maximum_process_rss_bytes": 5000650752,
+      "minimum_gpu_free_mib": {
+        "0": 1634,
+        "1": 1075
+      },
+      "minimum_host_available_bytes": 18364071936,
+      "mtp_acceptance_rate": 0.7692307692307693,
+      "mtp_drafts_accepted": 20,
+      "mtp_drafts_offered": 26,
+      "name": "8k",
+      "needle_offsets_token": {
+        "CENTER": 4121,
+        "FINAL": 8079,
+        "ORIGIN": 60
+      },
+      "pcie": {
+        "available": true,
+        "per_gpu": {
+          "0": {
+            "rx_mib_s": {
+              "max": 198.0,
+              "mean": 56.77272727272727,
+              "min": 22.0,
+              "sample_count": 22
+            },
+            "tx_mib_s": {
+              "max": 3017.0,
+              "mean": 2413.6363636363635,
+              "min": 1973.0,
+              "sample_count": 22
+            }
+          },
+          "1": {
+            "rx_mib_s": {
+              "max": 240.0,
+              "mean": 116.0,
+              "min": 0.0,
+              "sample_count": 22
+            },
+            "tx_mib_s": {
+              "max": 179.0,
+              "mean": 29.09090909090909,
+              "min": 0.0,
+              "sample_count": 22
+            }
+          }
+        },
+        "reason": null,
+        "scope": "whole-device throughput; other graphics processes may contribute",
+        "units": "MB/s as printed by nvidia-smi dmon"
+      },
+      "preceding_stage_prefill_tokens_per_second": 131.6,
+      "prefill_tokens_per_second": 347.78405332519213,
+      "prefix_reuse_expected": 0,
+      "process_io_after": {
+        "VmHWM": 5030510592,
+        "VmRSS": 5030510592,
+        "VmSwap": 0,
+        "io_cancelled_write_bytes": 0,
+        "io_rchar": 2706085876,
+        "io_read_bytes": 153464129506,
+        "io_syscr": 83050,
+        "io_write_bytes": 0
+      },
+      "process_io_before": {
+        "VmHWM": 4748062720,
+        "VmRSS": 4748062720,
+        "VmSwap": 0,
+        "io_cancelled_write_bytes": 0,
+        "io_rchar": 2383223475,
+        "io_read_bytes": 151237421026,
+        "io_syscr": 5736,
+        "io_write_bytes": 0
+      },
+      "process_io_delta": {
+        "io_cancelled_write_bytes": 0,
+        "io_rchar": 322862401,
+        "io_read_bytes": 2226708480,
+        "io_syscr": 77314,
+        "io_write_bytes": 0
+      },
+      "prompt_ids_sha256": "b8ae12324e2e49bbfb5955b21f52c0c977001067721a7dbcb8503b2113b74c6c",
+      "prompt_ms": 23583.6,
+      "prompt_text_sha256": "0f616e2681e86bb38fbaf7b1d321937b4a0a0ffdd7547ea474f1fd4778c87a74",
+      "prompt_tokens_read": 8202,
+      "prompt_tokens_reused": 0,
+      "started_utc": "2026-10-16T06:47:14.504+00:00",
+      "status": "passed",
+      "timeout_seconds": 1800.0,
+      "ttft_seconds": 23.621
+    },
+    {
+      "answer": "ORIGIN: IRIS-4Q7-LANTERN\nCENTER: CEDAR-8M2-QUARRY\nFINAL: ORBIT-6V9-KETTLE",
+      "context_cells_reserved": 32980,
+      "decode_ms": 395.7,
+      "decode_tokens_per_second": 93.50518069244377,
+      "done_line": "DONE 37 32788 94747.1 395.7 stop 20 28 0 0 0 0 0 0.0 32788 0",
+      "elapsed_seconds": 95.15,
+      "engine_reported_request_expert_io": [
+        "strata serve: expert tiers: GPU 0 hits this request; since the start RAM 0 blobs, files 0 blobs 77024.6 MB read (the GGUF in place)",
+        "strata serve: file tier I/O this request: the OS read 1728.0 MB from storage (0 major faults) for 0.0 MB of expert reads"
+      ],
+      "expected_answers": {
+        "CENTER": "CEDAR-8M2-QUARRY",
+        "FINAL": "ORBIT-6V9-KETTLE",
+        "ORIGIN": "IRIS-4Q7-LANTERN"
+      },
+      "finished_utc": "2026-10-16T06:49:16.046+00:00",
+      "generated_token_count": 37,
+      "generated_token_ids": [
+        842,
+        53665,
+        25,
+        15769,
+        1580,
+        12,
+        19,
+        48,
+        22,
+        7869,
+        2731,
+        13267,
+        198,
+        75761,
+        25,
+        225505,
+        905,
+        12,
+        23,
+        44,
+        17,
+        12,
+        5579,
+        74236,
+        198,
+        95429,
+        25,
+        2639,
+        20279,
+        12,
+        21,
+        53,
+        24,
+        15377,
+        177164,
+        841,
+        248046
+      ],
+      "generated_token_ids_sha256": "5635a210cae1ee1c26a3fcc705a1c23c1659782d4799209c772b37e0fd65f04e",
+      "generation_cap": 192,
+      "input_tokens": 32788,
+      "maximum_process_rss_bytes": 5032374272,
+      "minimum_gpu_free_mib": {
+        "0": 1601,
+        "1": 1043
+      },
+      "minimum_host_available_bytes": 18281738240,
+      "mtp_acceptance_rate": 0.7142857142857143,
+      "mtp_drafts_accepted": 20,
+      "mtp_drafts_offered": 28,
+      "name": "32k",
+      "needle_offsets_token": {
+        "CENTER": 16440,
+        "FINAL": 32665,
+        "ORIGIN": 61
+      },
+      "pcie": {
+        "available": true,
+        "per_gpu": {
+          "0": {
+            "rx_mib_s": {
+              "max": 698.0,
+              "mean": 102.40229885057471,
+              "min": 20.0,
+              "sample_count": 87
+            },
+            "tx_mib_s": {
+              "max": 3210.0,
+              "mean": 2326.4367816091954,
+              "min": 1040.0,
+              "sample_count": 87
+            }
+          },
+          "1": {
+            "rx_mib_s": {
+              "max": 252.0,
+              "mean": 117.63218390804597,
+              "min": 48.0,
+              "sample_count": 87
+            },
+            "tx_mib_s": {
+              "max": 584.0,
+              "mean": 54.06896551724138,
+              "min": 20.0,
+              "sample_count": 87
+            }
+          }
+        },
+        "reason": null,
+        "scope": "whole-device throughput; other graphics processes may contribute",
+        "units": "MB/s as printed by nvidia-smi dmon"
+      },
+      "preceding_stage_prefill_tokens_per_second": 347.78405332519213,
+      "prefill_tokens_per_second": 346.0580851551129,
+      "prefix_reuse_expected": 0,
+      "process_io_after": {
+        "VmHWM": 5032353792,
+        "VmRSS": 5032353792,
+        "VmSwap": 0,
+        "io_cancelled_write_bytes": 0,
+        "io_rchar": 3971375102,
+        "io_read_bytes": 155192305634,
+        "io_syscr": 386151,
+        "io_write_bytes": 0
+      },
+      "process_io_before": {
+        "VmHWM": 5030510592,
+        "VmRSS": 5030510592,
+        "VmSwap": 0,
+        "io_cancelled_write_bytes": 0,
+        "io_rchar": 2706085876,
+        "io_read_bytes": 153464129506,
+        "io_syscr": 83050,
+        "io_write_bytes": 0
+      },
+      "process_io_delta": {
+        "io_cancelled_write_bytes": 0,
+        "io_rchar": 1265289226,
+        "io_read_bytes": 1728176128,
+        "io_syscr": 303101,
+        "io_write_bytes": 0
+      },
+      "prompt_ids_sha256": "48619c77cba7b5b9aff070dd990675453a327c4bf25a8637bfae195ecfc454a7",
+      "prompt_ms": 94747.1,
+      "prompt_text_sha256": "9fcf47f685588c81046a7ad7a6c1d7ccce6aa24151b9236e40723b48445b800d",
+      "prompt_tokens_read": 32788,
+      "prompt_tokens_reused": 0,
+      "started_utc": "2026-10-16T06:47:39.829+00:00",
+      "status": "passed",
+      "timeout_seconds": 1800.0,
+      "ttft_seconds": 94.773
+    },
+    {
+      "answer": "ORIGIN: IRIS-4Q7-LANTERN\nCENTER: CEDAR-8M2-QUARRY\nFINAL: ORBIT-6V9-KETTLE",
+      "context_cells_reserved": 131286,
+      "decode_ms": 390.6,
+      "decode_tokens_per_second": 94.72606246799795,
+      "done_line": "DONE 37 131094 399446.5 390.6 stop 20 28 0 0 0 0 0 0.0 131094 0",
+      "elapsed_seconds": 399.854,
+      "engine_reported_request_expert_io": [
+        "strata serve: expert tiers: GPU 0 hits this request; since the start RAM 0 blobs, files 0 blobs 77024.6 MB read (the GGUF in place)",
+        "strata serve: file tier I/O this request: the OS read 5967.3 MB from storage (0 major faults) for 0.0 MB of expert reads"
+      ],
+      "expected_answers": {
+        "CENTER": "CEDAR-8M2-QUARRY",
+        "FINAL": "ORBIT-6V9-KETTLE",
+        "ORIGIN": "IRIS-4Q7-LANTERN"
+      },
+      "finished_utc": "2026-10-16T06:55:56.984+00:00",
+      "generated_token_count": 37,
+      "generated_token_ids": [
+        842,
+        53665,
+        25,
+        15769,
+        1580,
+        12,
+        19,
+        48,
+        22,
+        7869,
+        2731,
+        13267,
+        198,
+        75761,
+        25,
+        225505,
+        905,
+        12,
+        23,
+        44,
+        17,
+        12,
+        5579,
+        74236,
+        198,
+        95429,
+        25,
+        2639,
+        20279,
+        12,
+        21,
+        53,
+        24,
+        15377,
+        177164,
+        841,
+        248046
+      ],
+      "generated_token_ids_sha256": "5635a210cae1ee1c26a3fcc705a1c23c1659782d4799209c772b37e0fd65f04e",
+      "generation_cap": 192,
+      "input_tokens": 131094,
+      "maximum_process_rss_bytes": 5038145536,
+      "minimum_gpu_free_mib": {
+        "0": 1548,
+        "1": 1043
+      },
+      "minimum_host_available_bytes": 18013872128,
+      "mtp_acceptance_rate": 0.7142857142857143,
+      "mtp_drafts_accepted": 20,
+      "mtp_drafts_offered": 28,
+      "name": "128k",
+      "needle_offsets_token": {
+        "CENTER": 65545,
+        "FINAL": 130971,
+        "ORIGIN": 62
+      },
+      "pcie": {
+        "available": true,
+        "per_gpu": {
+          "0": {
+            "rx_mib_s": {
+              "max": 1108.0,
+              "mean": 93.64850136239782,
+              "min": 0.0,
+              "sample_count": 367
+            },
+            "tx_mib_s": {
+              "max": 3058.0,
+              "mean": 2128.3542234332426,
+              "min": 0.0,
+              "sample_count": 367
+            }
+          },
+          "1": {
+            "rx_mib_s": {
+              "max": 243.0,
+              "mean": 121.35967302452316,
+              "min": 68.0,
+              "sample_count": 367
+            },
+            "tx_mib_s": {
+              "max": 579.0,
+              "mean": 39.54768392370572,
+              "min": 18.0,
+              "sample_count": 367
+            }
+          }
+        },
+        "reason": null,
+        "scope": "whole-device throughput; other graphics processes may contribute",
+        "units": "MB/s as printed by nvidia-smi dmon"
+      },
+      "preceding_stage_prefill_tokens_per_second": 346.0580851551129,
+      "prefill_tokens_per_second": 328.1891317110051,
+      "prefix_reuse_expected": 0,
+      "process_io_after": {
+        "VmHWM": 5038092288,
+        "VmRSS": 5038092288,
+        "VmSwap": 0,
+        "io_cancelled_write_bytes": 0,
+        "io_rchar": 8981326530,
+        "io_read_bytes": 161159493602,
+        "io_syscr": 1586156,
+        "io_write_bytes": 0
+      },
+      "process_io_before": {
+        "VmHWM": 5032353792,
+        "VmRSS": 5032353792,
+        "VmSwap": 0,
+        "io_cancelled_write_bytes": 0,
+        "io_rchar": 3971379198,
+        "io_read_bytes": 155192309730,
+        "io_syscr": 386152,
+        "io_write_bytes": 0
+      },
+      "process_io_delta": {
+        "io_cancelled_write_bytes": 0,
+        "io_rchar": 5009947332,
+        "io_read_bytes": 5967183872,
+        "io_syscr": 1200004,
+        "io_write_bytes": 0
+      },
+      "prompt_ids_sha256": "0019c888a70f075563147e706378e554e31857e5d626d3badc5a595f05fac78b",
+      "prompt_ms": 399446.5,
+      "prompt_text_sha256": "e5332d2238ed4e0a73dca7c6414cb5d59bb7840282e6d5283f9924a5471c8361",
+      "prompt_tokens_read": 131094,
+      "prompt_tokens_reused": 0,
+      "started_utc": "2026-10-16T06:49:16.086+00:00",
+      "status": "passed",
+      "timeout_seconds": 1815.283,
+      "ttft_seconds": 399.479
+    },
+    {
+      "answer": "ORIGIN: IRIS-4Q7-LANTERN\nCENTER: CEDAR-8M2-QUARRY\nFINAL: ORBIT-6V9-KETTLE",
+      "context_cells_reserved": 261874,
+      "decode_ms": 389.3,
+      "decode_tokens_per_second": 95.04238376573336,
+      "done_line": "DONE 37 261682 821160.0 389.3 stop 20 22 0 0 0 0 0 0.0 261682 0",
+      "elapsed_seconds": 821.58,
+      "engine_reported_request_expert_io": [
+        "strata serve: expert tiers: GPU 0 hits this request; since the start RAM 0 blobs, files 0 blobs 77024.6 MB read (the GGUF in place)",
+        "strata serve: file tier I/O this request: the OS read 10877.0 MB from storage (0 major faults) for 0.0 MB of expert reads"
+      ],
+      "expected_answers": {
+        "CENTER": "CEDAR-8M2-QUARRY",
+        "FINAL": "ORBIT-6V9-KETTLE",
+        "ORIGIN": "IRIS-4Q7-LANTERN"
+      },
+      "finished_utc": "2026-10-16T07:09:39.697+00:00",
+      "generated_token_count": 37,
+      "generated_token_ids": [
+        842,
+        53665,
+        25,
+        15769,
+        1580,
+        12,
+        19,
+        48,
+        22,
+        7869,
+        2731,
+        13267,
+        198,
+        75761,
+        25,
+        225505,
+        905,
+        12,
+        23,
+        44,
+        17,
+        12,
+        5579,
+        74236,
+        198,
+        95429,
+        25,
+        2639,
+        20279,
+        12,
+        21,
+        53,
+        24,
+        15377,
+        177164,
+        841,
+        248046
+      ],
+      "generated_token_ids_sha256": "5635a210cae1ee1c26a3fcc705a1c23c1659782d4799209c772b37e0fd65f04e",
+      "generation_cap": 192,
+      "input_tokens": 261682,
+      "maximum_process_rss_bytes": 5043261440,
+      "minimum_gpu_free_mib": {
+        "0": 1507,
+        "1": 1043
+      },
+      "minimum_host_available_bytes": 17801887744,
+      "mtp_acceptance_rate": 0.9090909090909091,
+      "mtp_drafts_accepted": 20,
+      "mtp_drafts_offered": 22,
+      "name": "near-max",
+      "needle_offsets_token": {
+        "CENTER": 130846,
+        "FINAL": 261559,
+        "ORIGIN": 59
+      },
+      "pcie": {
+        "available": true,
+        "per_gpu": {
+          "0": {
+            "rx_mib_s": {
+              "max": 2729.0,
+              "mean": 86.8543046357616,
+              "min": 0.0,
+              "sample_count": 755
+            },
+            "tx_mib_s": {
+              "max": 3133.0,
+              "mean": 1760.594701986755,
+              "min": 0.0,
+              "sample_count": 755
+            }
+          },
+          "1": {
+            "rx_mib_s": {
+              "max": 244.0,
+              "mean": 120.39602649006622,
+              "min": 0.0,
+              "sample_count": 755
+            },
+            "tx_mib_s": {
+              "max": 580.0,
+              "mean": 38.42119205298013,
+              "min": 18.0,
+              "sample_count": 755
+            }
+          }
+        },
+        "reason": null,
+        "scope": "whole-device throughput; other graphics processes may contribute",
+        "units": "MB/s as printed by nvidia-smi dmon"
+      },
+      "preceding_stage_prefill_tokens_per_second": 328.1891317110051,
+      "prefill_tokens_per_second": 318.6735837108481,
+      "prefix_reuse_expected": 0,
+      "process_io_after": {
+        "VmHWM": 5043204096,
+        "VmRSS": 5043204096,
+        "VmSwap": 0,
+        "io_cancelled_write_bytes": 0,
+        "io_rchar": 18984924571,
+        "io_read_bytes": 172036581346,
+        "io_syscr": 3982154,
+        "io_write_bytes": 0
+      },
+      "process_io_before": {
+        "VmHWM": 5038092288,
+        "VmRSS": 5038092288,
+        "VmSwap": 0,
+        "io_cancelled_write_bytes": 0,
+        "io_rchar": 8981330626,
+        "io_read_bytes": 161159628770,
+        "io_syscr": 1586157,
+        "io_write_bytes": 0
+      },
+      "process_io_delta": {
+        "io_cancelled_write_bytes": 0,
+        "io_rchar": 10003593945,
+        "io_read_bytes": 10876952576,
+        "io_syscr": 2395997,
+        "io_write_bytes": 0
+      },
+      "prompt_ids_sha256": "67a876781b4fde7323b1b340a5e55700acb3f6741dc19d953d32229c42cf55ed",
+      "prompt_ms": 821160.0,
+      "prompt_text_sha256": "10c7eb3f6a8a385458ecbaee8d71e00f2bae6995b6d1664ba57f3d0d5ea6ecbc",
+      "prompt_tokens_read": 261682,
+      "prompt_tokens_reused": 0,
+      "started_utc": "2026-10-16T06:55:57.032+00:00",
+      "status": "passed",
+      "timeout_seconds": 3489.405,
+      "ttft_seconds": 821.207
+    },
+    {
+      "context_cells_reserved": 261879,
+      "failure_reason": "User requested stop during prefill; no completed answer or retrieval check was produced.",
+      "generated_tokens": 0,
+      "generation_cap": 192,
+      "input_tokens": 261687,
+      "latest_complete_prefill_checkpoint_elapsed_ms": 41030.0,
+      "latest_complete_prefill_checkpoint_fraction": 0.05673953998479099,
+      "latest_complete_prefill_checkpoint_rate_tokens_per_second": 361.9,
+      "latest_complete_prefill_checkpoint_tokens": 14848,
+      "latest_complete_prefill_checkpoint_total": 261687,
+      "latest_sampled_request_elapsed_seconds": 40.578,
+      "maximum_process_rss_bytes": 5045956608,
+      "minimum_gpu_free_mib_by_nvidia_smi_index": {
+        "0": 1540,
+        "1": 1043
+      },
+      "minimum_host_available_bytes": 18117668864,
+      "name": "near-max-repeat",
+      "pcie_metrics": "Not summarized for the incomplete request; raw whole-device samples remain in main-pcie.log.",
+      "prompt_ids_sha256": "d330f2eca591783a82d1259f40dbba6ae448447ff2f94b7401c0d9946c353d82",
+      "prompt_tokens_reused": 0,
+      "started_utc": "2026-10-16T07:09:39.753+00:00",
+      "status": "interrupted_by_user",
+      "stop_time": "not captured; user stop occurred after the last complete PP checkpoint"
+    }
+  ],
+  "started_utc": "2026-10-16T06:42:16.288+00:00",
+  "startup": {
+    "process_io_at_ready": {
+      "VmHWM": 4748062720,
+      "VmRSS": 4748062720,
+      "VmSwap": 0,
+      "io_cancelled_write_bytes": 0,
+      "io_rchar": 2383223475,
+      "io_read_bytes": 151237421026,
+      "io_syscr": 5736,
+      "io_write_bytes": 0
+    },
+    "process_io_at_spawn": {
+      "VmHWM": 86016,
+      "VmRSS": 86016,
+      "VmSwap": 0,
+      "io_cancelled_write_bytes": 0,
+      "io_rchar": 1748,
+      "io_read_bytes": 0,
+      "io_syscr": 5,
+      "io_write_bytes": 0
+    },
+    "process_io_delta_to_ready": {
+      "io_cancelled_write_bytes": 0,
+      "io_rchar": 2383221727,
+      "io_read_bytes": 151237421026,
+      "io_syscr": 5731,
+      "io_write_bytes": 0
+    },
+    "seconds": 298.212
+  },
+  "status": "stopped_by_user",
+  "stop_reason": "User requested immediate stop during the optional near-max repeat.",
+  "whole_run_exit_code": "not captured; runner process tree was stopped on user request"
+}

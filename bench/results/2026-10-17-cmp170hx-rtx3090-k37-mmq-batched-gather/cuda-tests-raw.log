@@ -1,0 +1,119 @@
+Start testing: Oct 17 01:36 CEST
+----------------------------------------------------------
+99/123 Testing: prefill_gather_test
+99/123 Test: prefill_gather_test
+Command: "/home/nikolay/projects/copilot-worktrees/170hx-3090/sibnick-animated-robot/build/cuda-batched/prefill_gather_test"
+Directory: /home/nikolay/projects/copilot-worktrees/170hx-3090/sibnick-animated-robot/build/cuda-batched
+"prefill_gather_test" start time: Oct 17 01:36 CEST
+Output:
+----------------------------------------------------------
+PASS n=1 tail=0 unaligned=0 mixed=0 launches=1 fallback=0
+PASS n=1 tail=0 unaligned=0 mixed=1 launches=1 fallback=0
+PASS n=1 tail=0 unaligned=1 mixed=0 launches=1 fallback=1
+PASS n=1 tail=0 unaligned=1 mixed=1 launches=1 fallback=1
+PASS n=1 tail=1 unaligned=0 mixed=0 launches=1 fallback=0
+PASS n=1 tail=1 unaligned=0 mixed=1 launches=1 fallback=0
+PASS n=1 tail=1 unaligned=1 mixed=0 launches=1 fallback=1
+PASS n=1 tail=1 unaligned=1 mixed=1 launches=1 fallback=1
+PASS n=5 tail=0 unaligned=0 mixed=0 launches=1 fallback=0
+PASS n=5 tail=0 unaligned=0 mixed=1 launches=4 fallback=0
+PASS n=5 tail=0 unaligned=1 mixed=0 launches=5 fallback=1
+PASS n=5 tail=0 unaligned=1 mixed=1 launches=5 fallback=4
+PASS n=5 tail=1 unaligned=0 mixed=0 launches=1 fallback=0
+PASS n=5 tail=1 unaligned=0 mixed=1 launches=4 fallback=0
+PASS n=5 tail=1 unaligned=1 mixed=0 launches=5 fallback=1
+PASS n=5 tail=1 unaligned=1 mixed=1 launches=5 fallback=4
+PASS n=15 tail=0 unaligned=0 mixed=0 launches=2 fallback=0
+PASS n=15 tail=0 unaligned=0 mixed=1 launches=12 fallback=0
+PASS n=15 tail=0 unaligned=1 mixed=0 launches=15 fallback=2
+PASS n=15 tail=0 unaligned=1 mixed=1 launches=15 fallback=12
+PASS n=15 tail=1 unaligned=0 mixed=0 launches=2 fallback=0
+PASS n=15 tail=1 unaligned=0 mixed=1 launches=12 fallback=0
+PASS n=15 tail=1 unaligned=1 mixed=0 launches=15 fallback=2
+PASS n=15 tail=1 unaligned=1 mixed=1 launches=15 fallback=12
+PASS n=16 tail=0 unaligned=0 mixed=0 launches=2 fallback=0
+PASS n=16 tail=0 unaligned=0 mixed=1 launches=13 fallback=0
+PASS n=16 tail=0 unaligned=1 mixed=0 launches=16 fallback=2
+PASS n=16 tail=0 unaligned=1 mixed=1 launches=16 fallback=13
+PASS n=16 tail=1 unaligned=0 mixed=0 launches=2 fallback=0
+PASS n=16 tail=1 unaligned=0 mixed=1 launches=13 fallback=0
+PASS n=16 tail=1 unaligned=1 mixed=0 launches=16 fallback=2
+PASS n=16 tail=1 unaligned=1 mixed=1 launches=16 fallback=13
+PASS n=1 tail=0 unaligned=0 mixed=0 launches=1 fallback=0
+PASS n=1 tail=0 unaligned=0 mixed=1 launches=1 fallback=0
+PASS n=1 tail=0 unaligned=1 mixed=0 launches=1 fallback=1
+PASS n=1 tail=0 unaligned=1 mixed=1 launches=1 fallback=1
+PASS n=1 tail=1 unaligned=0 mixed=0 launches=1 fallback=0
+PASS n=1 tail=1 unaligned=0 mixed=1 launches=1 fallback=0
+PASS n=1 tail=1 unaligned=1 mixed=0 launches=1 fallback=1
+PASS n=1 tail=1 unaligned=1 mixed=1 launches=1 fallback=1
+PASS n=5 tail=0 unaligned=0 mixed=0 launches=1 fallback=0
+PASS n=5 tail=0 unaligned=0 mixed=1 launches=4 fallback=0
+PASS n=5 tail=0 unaligned=1 mixed=0 launches=5 fallback=1
+PASS n=5 tail=0 unaligned=1 mixed=1 launches=5 fallback=4
+PASS n=5 tail=1 unaligned=0 mixed=0 launches=1 fallback=0
+PASS n=5 tail=1 unaligned=0 mixed=1 launches=4 fallback=0
+PASS n=5 tail=1 unaligned=1 mixed=0 launches=5 fallback=1
+PASS n=5 tail=1 unaligned=1 mixed=1 launches=5 fallback=4
+PASS n=15 tail=0 unaligned=0 mixed=0 launches=2 fallback=0
+PASS n=15 tail=0 unaligned=0 mixed=1 launches=12 fallback=0
+PASS n=15 tail=0 unaligned=1 mixed=0 launches=15 fallback=2
+PASS n=15 tail=0 unaligned=1 mixed=1 launches=15 fallback=12
+PASS n=15 tail=1 unaligned=0 mixed=0 launches=2 fallback=0
+PASS n=15 tail=1 unaligned=0 mixed=1 launches=12 fallback=0
+PASS n=15 tail=1 unaligned=1 mixed=0 launches=15 fallback=2
+PASS n=15 tail=1 unaligned=1 mixed=1 launches=15 fallback=12
+PASS n=16 tail=0 unaligned=0 mixed=0 launches=2 fallback=0
+PASS n=16 tail=0 unaligned=0 mixed=1 launches=13 fallback=0
+PASS n=16 tail=0 unaligned=1 mixed=0 launches=16 fallback=2
+PASS n=16 tail=0 unaligned=1 mixed=1 launches=16 fallback=13
+PASS n=16 tail=1 unaligned=0 mixed=0 launches=2 fallback=0
+PASS n=16 tail=1 unaligned=0 mixed=1 launches=13 fallback=0
+PASS n=16 tail=1 unaligned=1 mixed=0 launches=16 fallback=2
+PASS n=16 tail=1 unaligned=1 mixed=1 launches=16 fallback=13
+<end of output>
+Test time =   0.84 sec
+----------------------------------------------------------
+Test Passed.
+"prefill_gather_test" end time: Oct 17 01:36 CEST
+"prefill_gather_test" time elapsed: 00:00:00
+----------------------------------------------------------
+
+102/123 Testing: prefill_mmq_kquant_test
+102/123 Test: prefill_mmq_kquant_test
+Command: "/home/nikolay/projects/copilot-worktrees/170hx-3090/sibnick-animated-robot/build/cuda-batched/prefill_mmq_kquant_test"
+Directory: /home/nikolay/projects/copilot-worktrees/170hx-3090/sibnick-animated-robot/build/cuda-batched
+"prefill_mmq_kquant_test" start time: Oct 17 01:36 CEST
+Output:
+----------------------------------------------------------
+strata: K-quant prompt kernels from /home/nikolay/projects/copilot-worktrees/170hx-3090/sibnick-animated-robot/build/cuda-batched/libstrata_kq.so (STRATA_MMQ_KQ=1)
+Q4_K gate/up-0         rows  7 experts 3  ref_rms 1.553  rel_l2 0.00300  max/rms 0.0101  zero row 0
+Q5_K gate/up-0         rows  7 experts 3  ref_rms 1.565  rel_l2 0.00269  max/rms 0.0097  zero row 0
+Q6_K gate/up-0         rows  7 experts 3  ref_rms 1.628  rel_l2 0.00112  max/rms 0.0038  zero row 0
+Q5_1 down-0            rows  7 experts 3  ref_rms 1.774  rel_l2 0.00080  max/rms 0.0028  zero row 0
+Q8_0 down-0            rows  7 experts 3  ref_rms 1.835  rel_l2 0.00053  max/rms 0.0018  zero row 0
+Q4_K gate/up-1         rows  7 experts 3  ref_rms 1.556  rel_l2 0.00272  max/rms 0.0093  zero row 0
+Q5_K gate/up-1         rows  7 experts 3  ref_rms 1.568  rel_l2 0.00317  max/rms 0.0111  zero row 0
+Q6_K gate/up-1         rows  7 experts 3  ref_rms 1.635  rel_l2 0.00127  max/rms 0.0043  zero row 0
+Q5_1 down-1            rows  7 experts 3  ref_rms 1.792  rel_l2 0.00149  max/rms 0.0034  zero row 0
+Q8_0 down-1            rows  7 experts 3  ref_rms 1.847  rel_l2 0.00045  max/rms 0.0015  zero row 0
+Q4_K gate/up-2         rows  5 experts 2  ref_rms 1.489  rel_l2 0.00294  max/rms 0.0115  zero row 0
+Q5_K gate/up-2         rows  5 experts 2  ref_rms 1.482  rel_l2 0.00335  max/rms 0.0117  zero row 0
+Q6_K gate/up-2         rows  5 experts 2  ref_rms 1.51  rel_l2 0.00155  max/rms 0.0046  zero row 0
+Q5_1 down-2            rows  5 experts 2  ref_rms 1.706  rel_l2 0.00091  max/rms 0.0026  zero row 0
+Q8_0 down-2            rows  5 experts 2  ref_rms 1.776  rel_l2 0.00045  max/rms 0.0015  zero row 0
+Q4_K gate/up-3         rows 17 experts 1  ref_rms 1.816  rel_l2 0.00213  max/rms 0.0090  zero row 0
+Q5_K gate/up-3         rows 17 experts 1  ref_rms 1.815  rel_l2 0.00257  max/rms 0.0098  zero row 0
+Q6_K gate/up-3         rows 17 experts 1  ref_rms 1.799  rel_l2 0.00105  max/rms 0.0040  zero row 0
+Q5_1 down-3            rows 17 experts 1  ref_rms 1.93  rel_l2 0.00117  max/rms 0.0034  zero row 0
+Q8_0 down-3            rows 17 experts 1  ref_rms 1.943  rel_l2 0.00053  max/rms 0.0017  zero row 0
+prefill MMQ K-quant screen passed
+<end of output>
+Test time =   3.77 sec
+----------------------------------------------------------
+Test Passed.
+"prefill_mmq_kquant_test" end time: Oct 17 01:36 CEST
+"prefill_mmq_kquant_test" time elapsed: 00:00:03
+----------------------------------------------------------
+
+End testing: Oct 17 01:36 CEST

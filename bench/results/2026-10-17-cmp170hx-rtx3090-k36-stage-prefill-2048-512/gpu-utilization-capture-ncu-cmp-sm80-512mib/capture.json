@@ -1,0 +1,138 @@
+{
+  "admission": {
+    "0": {
+      "free_bytes": 68049436672,
+      "margin_bytes": 1733296128,
+      "physical_gpu": 1,
+      "required_with_mandatory_prompt_init_headroom_bytes": 66316140544
+    },
+    "1": {
+      "free_bytes": 25265438720,
+      "margin_bytes": 220824340,
+      "physical_gpu": 0,
+      "required_with_mandatory_prompt_init_headroom_bytes": 25044614380
+    }
+  },
+  "api_listener_after": false,
+  "compute_processes_after": "",
+  "error": "RuntimeError: host MemAvailable fell below the 512 MiB stop threshold",
+  "finished_utc": "2026-10-17T22:11:36.959+00:00",
+  "fixture": {
+    "expected_generated_ids_count": 22,
+    "fresh_input": null,
+    "generation_cap": 32,
+    "name": "historical-large",
+    "output_ids_match_historical": null,
+    "prompt_ids_sha256": "953be64023898d51c4e513b40fefb66721ed2c643a7c18713c15edc81d4c014f",
+    "prompt_tokens": 1977
+  },
+  "initial_gpu_memory": {
+    "0": {
+      "free_bytes": 25265438720,
+      "name": "NVIDIA GeForce RTX 3090",
+      "uuid": "GPU-01f295eb-2ee0-838a-ba5b-db97f075a5f7"
+    },
+    "1": {
+      "free_bytes": 68049436672,
+      "name": "NVIDIA CMP 170HX",
+      "uuid": "GPU-79d96de3-4783-ba96-d95c-fe5e0364528e"
+    }
+  },
+  "initial_host_memory": {
+    "buffers_bytes": 5316608,
+    "cached_bytes": 1945481216,
+    "mem_available_bytes": 27957706752,
+    "mem_free_bytes": 26975518720,
+    "page_tables_bytes": 72175616,
+    "slab_bytes": 3148603392,
+    "sreclaimable_bytes": 215523328,
+    "unevictable_bytes": 171040768
+  },
+  "memory_policy": {
+    "cache_flush": false,
+    "engine_reserves_mib": [
+      0,
+      0
+    ],
+    "external_gpu_free_abort": false,
+    "host_start_mib": 512,
+    "host_stop_mib": 512,
+    "mandatory_cuda_admission": true,
+    "mandatory_prompt_init_headroom_mib": 512
+  },
+  "min_gpu_free_bytes": {
+    "0": 269484032,
+    "1": 267386880
+  },
+  "min_host_memavailable_bytes": 3501195264,
+  "monitor_samples": 135,
+  "ncu_command": [
+    "/opt/nvidia/nsight-compute/2026.3.1/ncu",
+    "--target-processes",
+    "all",
+    "--devices",
+    "0",
+    "--kernel-name-base",
+    "demangled",
+    "--kernel-name",
+    "regex:^void mul_mat_q<\\(ggml_type\\)12, \\(int\\)128, \\(bool\\)0>.*",
+    "--launch-count",
+    "1",
+    "--metrics",
+    "gpu__time_duration.avg,sm__throughput.avg.pct_of_peak_sustained_elapsed,sm__warps_active.avg.pct_of_peak_sustained_active,dram__throughput.avg.pct_of_peak_sustained_elapsed",
+    "--replay-mode",
+    "kernel",
+    "--cache-control",
+    "none",
+    "--clock-control",
+    "base",
+    "--export",
+    "/home/nikolay/projects/copilot-worktrees/170hx-3090/sibnick-expert-system/bench/results/2026-10-17-cmp170hx-rtx3090-k36-stage-prefill-2048-512/gpu-utilization-capture-ncu-cmp-sm80-512mib/cmp-q4k-mmq",
+    "/usr/bin/python3",
+    "/home/nikolay/projects/copilot-worktrees/170hx-3090/sibnick-expert-system/bench/results/2026-10-17-cmp170hx-rtx3090-k36-stage-prefill-2048-512/nsys_engine_proxy.py",
+    "--config",
+    "/home/nikolay/projects/copilot-worktrees/170hx-3090/sibnick-expert-system/bench/results/2026-10-17-cmp170hx-rtx3090-k36-stage-prefill-2048-512/gpu-utilization-capture-ncu-cmp-sm80-512mib/engine-config.json",
+    "--token-ids-output",
+    "/home/nikolay/projects/copilot-worktrees/170hx-3090/sibnick-expert-system/bench/results/2026-10-17-cmp170hx-rtx3090-k36-stage-prefill-2048-512/gpu-utilization-capture-ncu-cmp-sm80-512mib/generated-ids.tmp"
+  ],
+  "ncu_return_code": -15,
+  "profiler": {
+    "cache_control": "none",
+    "clock_control": "base",
+    "device_filter": "CUDA device 0 (CMP 170HX, physical GPU 1)",
+    "kernel_filter": "^void mul_mat_q<\\(ggml_type\\)12, \\(int\\)128, \\(bool\\)0>.*",
+    "launch_count": 1,
+    "metrics": [
+      "gpu__time_duration.avg",
+      "sm__throughput.avg.pct_of_peak_sustained_elapsed",
+      "sm__warps_active.avg.pct_of_peak_sustained_active",
+      "dram__throughput.avg.pct_of_peak_sustained_elapsed"
+    ],
+    "name": "Nsight Compute",
+    "replay_mode": "kernel",
+    "report_file": "cmp-q4k-mmq.ncu-rep",
+    "version": "NVIDIA (R) Nsight Compute Command Line Profiler\nCopyright (c) 2018-2026 NVIDIA Corporation\nVersion 2026.3.1.0 (build 38829034) (public-release)"
+  },
+  "request_result": null,
+  "runtime": {
+    "engine_sha256": "6b4e64e6fee8d6aff5a208d37579f507dd050c81d5d7030b2f0e05a515f2e643",
+    "gpu_order": "1,0",
+    "kquant_library_sha256": "0a93ccd8f52a329da586a36e76cf5865a4c3ce0256b80e3da4b28ce937bdf27d",
+    "kv": "int8",
+    "layer_split": 36,
+    "max_context": 262144,
+    "mtp_spec": "unchanged",
+    "ple_and_cache_settings": "unchanged",
+    "source_revision": "1319480d1683d6f83de78413222a45e1d2058dd3",
+    "stage_chunks": [
+      2048,
+      512
+    ]
+  },
+  "started_utc": "2026-10-17T22:09:09.976+00:00",
+  "status": "failed",
+  "timestamps": {
+    "ready_utc": "2026-10-17T22:11:30.084+00:00",
+    "request_sent_utc": "2026-10-17T22:11:30.084+00:00"
+  }
+}

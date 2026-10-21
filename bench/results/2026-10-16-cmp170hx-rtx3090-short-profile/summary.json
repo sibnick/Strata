@@ -1,0 +1,466 @@
+{
+  "limits": [
+    "CUDA-event phases include stream gaps; not pure kernel compute times.",
+    "Stage wall times overlap and must not be added as request wall time.",
+    "Timing lines rounded to milliseconds; phase sums can differ from reported total.",
+    "Stage attribution uses one >256-token prefix call versus <=256-token suffix calls.",
+    "Host staging counter is cumulative in source and is not summed.",
+    "Warmup excluded; separate serial startups, not randomized trials."
+  ],
+  "runs": {
+    "control": {
+      "engine_file_io_lines": [
+        "strata serve: file tier I/O this request: the OS read 162557.5 MB from storage (25247 major faults) for 77024.6 MB of expert reads",
+        "strata serve: file tier I/O this request: the OS read 47.2 MB from storage (0 major faults) for 0.0 MB of expert reads",
+        "strata serve: file tier I/O this request: the OS read 128.0 MB from storage (0 major faults) for 0.0 MB of expert reads",
+        "strata serve: file tier I/O this request: the OS read 93.3 MB from storage (0 major faults) for 0.0 MB of expert reads",
+        "strata serve: file tier I/O this request: the OS read 29.7 MB from storage (0 major faults) for 0.0 MB of expert reads",
+        "strata serve: file tier I/O this request: the OS read 52.5 MB from storage (0 major faults) for 0.0 MB of expert reads",
+        "strata serve: file tier I/O this request: the OS read 93.4 MB from storage (0 major faults) for 0.0 MB of expert reads",
+        "strata serve: file tier I/O this request: the OS read 29.6 MB from storage (0 major faults) for 0.0 MB of expert reads",
+        "strata serve: file tier I/O this request: the OS read 53.0 MB from storage (0 major faults) for 0.0 MB of expert reads",
+        "strata serve: file tier I/O this request: the OS read 92.7 MB from storage (0 major faults) for 0.0 MB of expert reads"
+      ],
+      "engine_return_code": 0,
+      "error": null,
+      "gpu_min_free_mib_physical": {
+        "0": 1633,
+        "1": 1043
+      },
+      "host_min_available_gib": 17.303142547607422,
+      "last_prefill_checkpoint": "PP 1976 1977 5551 355.9",
+      "max_process_rss_bytes": 5025083392,
+      "max_process_swap_bytes": 0,
+      "max_system_swap_used_bytes": 0,
+      "ownership_lines": [
+        "strata generate: --gpu-owned-experts: CUDA0 owns layers [0,37), 18944 experts, 59192115200 resident bytes",
+        "strata generate: --gpu-owned-experts: CUDA1 owns layers [37,48), 5632 experts, 17825792000 resident bytes",
+        "strata generate: --gpu-owned-experts: all 24576 experts are resident in their owning GPU caches; prompt cache loans and the CPU complement are disabled; startup file-tier reads accounted for 77024563200 bytes; no file fallback is expected after startup"
+      ],
+      "prompts": {
+        "large": {
+          "answers_match": true,
+          "decode_ms": [
+            240.7,
+            236.8,
+            227.5
+          ],
+          "input_tokens": 1977,
+          "median_prefill_ms": 5499.9,
+          "median_wall_seconds_to_done": 5.740825103000134,
+          "mtp_accepted_offered": [
+            [
+              9,
+              13
+            ],
+            [
+              9,
+              13
+            ],
+            [
+              9,
+              12
+            ]
+          ],
+          "no_reuse": true,
+          "prefill_ms": [
+            5483.5,
+            5499.9,
+            5551.5
+          ]
+        },
+        "medium": {
+          "answers_match": true,
+          "decode_ms": [
+            231.3,
+            233.6,
+            232.1
+          ],
+          "input_tokens": 994,
+          "median_prefill_ms": 2881.9,
+          "median_wall_seconds_to_done": 3.1181002499997703,
+          "mtp_accepted_offered": [
+            [
+              9,
+              12
+            ],
+            [
+              9,
+              13
+            ],
+            [
+              9,
+              12
+            ]
+          ],
+          "no_reuse": true,
+          "prefill_ms": [
+            2969.7,
+            2876.0,
+            2881.9
+          ]
+        },
+        "small": {
+          "answers_match": true,
+          "decode_ms": [
+            219.9,
+            210.8,
+            209.8
+          ],
+          "input_tokens": 502,
+          "median_prefill_ms": 1545.8,
+          "median_wall_seconds_to_done": 1.7594359980002992,
+          "mtp_accepted_offered": [
+            [
+              10,
+              11
+            ],
+            [
+              10,
+              11
+            ],
+            [
+              10,
+              11
+            ]
+          ],
+          "no_reuse": true,
+          "prefill_ms": [
+            1599.8,
+            1545.8,
+            1530.6
+          ]
+        }
+      },
+      "sample_interval_seconds": {
+        "max": 1.100797827999486,
+        "min": 1.000027162999686
+      },
+      "startup_seconds": 371.39891381600046,
+      "status": "passed"
+    },
+    "mmq-control": {
+      "engine_file_io_lines": [],
+      "engine_return_code": -15,
+      "error": "RuntimeError: GPU below 1024 MiB stop guard",
+      "gpu_min_free_mib_physical": {
+        "0": 1573,
+        "1": 971
+      },
+      "host_min_available_gib": 16.78524398803711,
+      "incomplete_request": "warmup",
+      "last_prefill_checkpoint": "PP 512 1977 927 552.4",
+      "max_process_rss_bytes": 5059313664,
+      "max_process_swap_bytes": 0,
+      "max_system_swap_used_bytes": 0,
+      "ownership_lines": [
+        "strata generate: --gpu-owned-experts: CUDA0 owns layers [0,37), 18944 experts, 59192115200 resident bytes",
+        "strata generate: --gpu-owned-experts: CUDA1 owns layers [37,48), 5632 experts, 17825792000 resident bytes",
+        "strata generate: --gpu-owned-experts: all 24576 experts are resident in their owning GPU caches; prompt cache loans and the CPU complement are disabled; startup file-tier reads accounted for 77024563200 bytes; no file fallback is expected after startup"
+      ],
+      "prompts": {},
+      "sample_interval_seconds": {
+        "max": 1.0996939070000735,
+        "min": 1.0000257179999608
+      },
+      "startup_seconds": 233.8949940749999,
+      "status": "failed"
+    },
+    "profile": {
+      "engine_file_io_lines": [
+        "strata serve: file tier I/O this request: the OS read 149891.8 MB from storage (0 major faults) for 77024.6 MB of expert reads",
+        "strata serve: file tier I/O this request: the OS read 30.1 MB from storage (0 major faults) for 0.0 MB of expert reads",
+        "strata serve: file tier I/O this request: the OS read 54.2 MB from storage (0 major faults) for 0.0 MB of expert reads",
+        "strata serve: file tier I/O this request: the OS read 95.5 MB from storage (0 major faults) for 0.0 MB of expert reads",
+        "strata serve: file tier I/O this request: the OS read 30.0 MB from storage (0 major faults) for 0.0 MB of expert reads",
+        "strata serve: file tier I/O this request: the OS read 54.1 MB from storage (0 major faults) for 0.0 MB of expert reads",
+        "strata serve: file tier I/O this request: the OS read 95.5 MB from storage (0 major faults) for 0.0 MB of expert reads",
+        "strata serve: file tier I/O this request: the OS read 29.9 MB from storage (0 major faults) for 0.0 MB of expert reads",
+        "strata serve: file tier I/O this request: the OS read 54.0 MB from storage (0 major faults) for 0.0 MB of expert reads",
+        "strata serve: file tier I/O this request: the OS read 95.6 MB from storage (0 major faults) for 0.0 MB of expert reads"
+      ],
+      "engine_return_code": 0,
+      "error": null,
+      "gpu_min_free_mib_physical": {
+        "0": 1604,
+        "1": 1043
+      },
+      "host_min_available_gib": 17.20958709716797,
+      "last_prefill_checkpoint": "PP 1976 1977 7313 270.2",
+      "max_process_rss_bytes": 5030289408,
+      "max_process_swap_bytes": 0,
+      "max_system_swap_used_bytes": 0,
+      "ownership_lines": [
+        "strata generate: --gpu-owned-experts: CUDA0 owns layers [0,37), 18944 experts, 59192115200 resident bytes",
+        "strata generate: --gpu-owned-experts: CUDA1 owns layers [37,48), 5632 experts, 17825792000 resident bytes",
+        "strata generate: --gpu-owned-experts: all 24576 experts are resident in their owning GPU caches; prompt cache loans and the CPU complement are disabled; startup file-tier reads accounted for 77024563200 bytes; no file fallback is expected after startup"
+      ],
+      "prompts": {
+        "large": {
+          "answers_match": true,
+          "decode_ms": [
+            237.5,
+            228.4,
+            225.1
+          ],
+          "input_tokens": 1977,
+          "median_phase_ms": {
+            "CMP_prefix": {
+              "combine": 45.0,
+              "dequant": 3388.0,
+              "embed+steps": 95.0,
+              "gather": 6.0,
+              "gdn": 66.0,
+              "gdn conv+gates": 15.0,
+              "gdn out proj": 32.0,
+              "gdn recurrence": 57.0,
+              "gemm down": 1244.0,
+              "gemm gate/up": 1890.0,
+              "hc read": 64.0,
+              "host grouping": 95.0,
+              "ple": 3.0,
+              "qsa attn": 28.0,
+              "qsa indexer": 1.0,
+              "qsa proj": 34.0,
+              "qsa select": 3.0,
+              "router+shared": 35.0
+            },
+            "RTX_suffix": {
+              "combine": 8.0,
+              "dequant": 586.0,
+              "embed+steps": 0.0,
+              "gather": 0.0,
+              "gdn": 32.0,
+              "gdn conv+gates": 0.0,
+              "gdn out proj": 16.0,
+              "gdn recurrence": 8.0,
+              "gemm down": 257.0,
+              "gemm gate/up": 514.0,
+              "hc read": 23.0,
+              "host grouping": 58.0,
+              "qsa attn": 10.0,
+              "qsa indexer": 0.0,
+              "qsa proj": 23.0,
+              "qsa select": 0.0,
+              "router+shared": 14.0
+            }
+          },
+          "median_prefill_ms": 7314.5,
+          "median_stage_totals": {
+            "CMP_prefix": {
+              "calls": 1,
+              "sum_gpu_timeline_ms": 7105.0,
+              "sum_wall_ms": 7114.0,
+              "tokens": 1976
+            },
+            "RTX_suffix": {
+              "calls": 8,
+              "sum_gpu_timeline_ms": 1556.0,
+              "sum_wall_ms": 1625.0,
+              "tokens": 1976
+            }
+          },
+          "median_wall_seconds_to_done": 7.546221423999668,
+          "mtp_accepted_offered": [
+            [
+              9,
+              13
+            ],
+            [
+              9,
+              13
+            ],
+            [
+              9,
+              12
+            ]
+          ],
+          "no_reuse": true,
+          "prefill_ms": [
+            7315.4,
+            7314.5,
+            7312.9
+          ]
+        },
+        "medium": {
+          "answers_match": true,
+          "decode_ms": [
+            224.9,
+            226.8,
+            222.5
+          ],
+          "input_tokens": 994,
+          "median_phase_ms": {
+            "CMP_prefix": {
+              "combine": 23.0,
+              "dequant": 1718.0,
+              "embed+steps": 41.0,
+              "gather": 3.0,
+              "gdn": 34.0,
+              "gdn conv+gates": 8.0,
+              "gdn out proj": 16.0,
+              "gdn recurrence": 28.0,
+              "gemm down": 633.0,
+              "gemm gate/up": 959.0,
+              "hc read": 33.0,
+              "host grouping": 44.0,
+              "ple": 2.0,
+              "qsa attn": 8.0,
+              "qsa indexer": 1.0,
+              "qsa proj": 17.0,
+              "qsa select": 2.0,
+              "router+shared": 18.0
+            },
+            "RTX_suffix": {
+              "combine": 4.0,
+              "dequant": 301.0,
+              "embed+steps": 0.0,
+              "gather": 3.0,
+              "gdn": 16.0,
+              "gdn conv+gates": 0.0,
+              "gdn out proj": 8.0,
+              "gdn recurrence": 4.0,
+              "gemm down": 130.0,
+              "gemm gate/up": 263.0,
+              "hc read": 12.0,
+              "host grouping": 24.0,
+              "qsa attn": 3.0,
+              "qsa indexer": 0.0,
+              "qsa proj": 12.0,
+              "qsa select": 0.0,
+              "router+shared": 5.0
+            }
+          },
+          "median_prefill_ms": 3803.3,
+          "median_stage_totals": {
+            "CMP_prefix": {
+              "calls": 1,
+              "sum_gpu_timeline_ms": 3584.0,
+              "sum_wall_ms": 3595.0,
+              "tokens": 993
+            },
+            "RTX_suffix": {
+              "calls": 4,
+              "sum_gpu_timeline_ms": 779.0,
+              "sum_wall_ms": 818.0,
+              "tokens": 993
+            }
+          },
+          "median_wall_seconds_to_done": 4.032168475000617,
+          "mtp_accepted_offered": [
+            [
+              9,
+              12
+            ],
+            [
+              9,
+              13
+            ],
+            [
+              9,
+              12
+            ]
+          ],
+          "no_reuse": true,
+          "prefill_ms": [
+            3838.1,
+            3802.8,
+            3803.3
+          ]
+        },
+        "small": {
+          "answers_match": true,
+          "decode_ms": [
+            207.9,
+            204.4,
+            203.8
+          ],
+          "input_tokens": 502,
+          "median_phase_ms": {
+            "CMP_prefix": {
+              "combine": 11.0,
+              "dequant": 862.0,
+              "embed+steps": 14.0,
+              "gather": 2.0,
+              "gdn": 17.0,
+              "gdn conv+gates": 4.0,
+              "gdn out proj": 8.0,
+              "gdn recurrence": 14.0,
+              "gemm down": 316.0,
+              "gemm gate/up": 481.0,
+              "hc read": 16.0,
+              "host grouping": 18.0,
+              "ple": 1.0,
+              "qsa attn": 2.0,
+              "qsa indexer": 0.0,
+              "qsa proj": 9.0,
+              "qsa select": 1.0,
+              "router+shared": 9.0
+            },
+            "RTX_suffix": {
+              "combine": 2.0,
+              "dequant": 152.0,
+              "embed+steps": 0.0,
+              "gather": 0.0,
+              "gdn": 8.0,
+              "gdn conv+gates": 0.0,
+              "gdn out proj": 4.0,
+              "gdn recurrence": 2.0,
+              "gemm down": 65.0,
+              "gemm gate/up": 139.0,
+              "hc read": 6.0,
+              "host grouping": 9.0,
+              "qsa attn": 0.0,
+              "qsa indexer": 0.0,
+              "qsa proj": 6.0,
+              "qsa select": 0.0,
+              "router+shared": 2.0
+            }
+          },
+          "median_prefill_ms": 2007.0,
+          "median_stage_totals": {
+            "CMP_prefix": {
+              "calls": 1,
+              "sum_gpu_timeline_ms": 1786.0,
+              "sum_wall_ms": 1798.0,
+              "tokens": 501
+            },
+            "RTX_suffix": {
+              "calls": 2,
+              "sum_gpu_timeline_ms": 402.0,
+              "sum_wall_ms": 418.0,
+              "tokens": 501
+            }
+          },
+          "median_wall_seconds_to_done": 2.214067048999823,
+          "mtp_accepted_offered": [
+            [
+              10,
+              11
+            ],
+            [
+              10,
+              11
+            ],
+            [
+              10,
+              11
+            ]
+          ],
+          "no_reuse": true,
+          "prefill_ms": [
+            2025.5,
+            2006.7,
+            2007.0
+          ]
+        }
+      },
+      "sample_interval_seconds": {
+        "max": 1.1000673870003084,
+        "min": 1.000633740000012
+      },
+      "startup_seconds": 244.480997785,
+      "status": "passed"
+    }
+  }
+}

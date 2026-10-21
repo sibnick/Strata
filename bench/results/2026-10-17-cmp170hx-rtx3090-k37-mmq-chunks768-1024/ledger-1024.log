@@ -1,0 +1,4 @@
+INT8 KV; context=262144 chunk=1024; owned prefill, not borrowed expert slots.
+Verify/MTP-runtime/CUDA allowances are reserves, not measured allocations.
+Sizing only: this command neither loads the model nor enforces a host-RAM floor.
+strata: K-quant prompt kernels from /home/nikolay/projects/copilot-worktrees/170hx-3090/sibnick-curly-tribble/build/chunk768-sizing/libstrata_kq.so (STRATA_MMQ_KQ=1)

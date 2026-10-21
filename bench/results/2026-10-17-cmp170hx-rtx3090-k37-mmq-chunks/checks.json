@@ -1,0 +1,14 @@
+{
+  "bounded_schedule": true,
+  "guards_held": true,
+  "unchanged_binary_dso": true,
+  "no_runtime_source_changes": true,
+  "no_compute_after": true,
+  "own_engine_and_helpers_exited": true,
+  "arm_statuses": {
+    "256": "passed",
+    "384": "passed",
+    "512": "passed",
+    "256-bracket": "passed"
+  }
+}

@@ -14,6 +14,23 @@ New here? Start with the [README](../README.md); installing step by step is in [
 
 ## Speed (measured)
 
+`STRATA_PREFILL_BATCH_GATHER=1` is an opt-in CUDA experiment for the routed native-MMQ prompt path.
+It copies resident experts into the same contiguous group buffers with the existing grouped gather; MMQ kernels,
+quantization, expert order, chunk size and allocation sizes stay unchanged. A staged expert flushes the open group
+immediately, before its eight-slot staging ring can reuse the source. Partial flushes retain their group offsets,
+and unaligned copies fall back to the existing per-expert gather. `STRATA_PREFILL_GROUP_GATHER=0` disables grouping
+in both walks. Unset or `0` keeps the previous path. Fused, peer/helper, non-native and non-MMQ paths are unchanged;
+HIP rejects this opt-in with a diagnostic; SYCL does not use this CUDA path.
+
+`STRATA_PREFILL_GATHER_COUNTS=1` separately logs actual native gather launches, experts, destination bytes (including
+tails and zero padding) and group alignment fallbacks, per prompt-path invocation/device. It covers the routed
+native-MMQ walk, not peer/helper or fused work. It adds no GPU events or synchronization. Leave it unset for
+performance measurements; default runs do not update or print counters. The bounded K37 experiment and its limits
+are in [the evidence bundle](../bench/results/2026-10-17-cmp170hx-rtx3090-k37-mmq-batched-gather/README.md).
+On that Linux CUDA13.4 SM80+86 CMP170HX + RTX3090 K37 test, original502 /994 /1977-token fixtures
+(chunk256, UD-Q4_K_XL, all experts resident, median of three after warmup) took11.9-13.3% less prefill time.
+This does not measure other splits, models or long prompts; defaults remain unchanged.
+
 RTX 5070 **12 GB**, Ryzen 5 7600 (6 cores), 64 GB DDR5-5200, Windows, engine 0.1.26 with the settings setup writes
 (`--prefill auto`, 8-bit KV above 4K, KV streaming from 64K). One code-agent prompt per length, 256 generated tokens,
 MTP speculative decoding on. "262K" is the model's full context window (a 259,943-token prompt). The IQ2_XS row was

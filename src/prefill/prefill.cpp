@@ -2569,6 +2569,12 @@ bool Prefill::run_impl(const int64_t* tokens, int64_t n, int64_t pos0, std::stri
     core::SessionState& ss = *m.ss;
     const auto t_start = Clock::now();
     const int64_t LB = stage_lb_, LE = stage_le_;
+    static std::atomic<bool> reported_split_handoff{false};
+    if (hand_in_ != nullptr && n > m.T && !reported_split_handoff.exchange(true)) {
+        std::fprintf(stderr, "strata prefill: layer handoff CUDA%d: %lld rows consumed in %lld sub-chunks "
+                             "(%lld-token stage chunks)\n",
+                     m.device, (long long) n, (long long) ((n + m.T - 1) / m.T), (long long) m.T);
+    }
     // The direct successor's future lives on the Prefill object. Intermediate
     // stages therefore do not drain the complete remaining GPU chain here.
     double host_sync_ms = 0, host_chunk_ms = 0, host_setup_ms = 0;   // STRATA_PREFILL_TIMING: the host's share
@@ -2632,6 +2638,24 @@ bool Prefill::run_impl(const int64_t* tokens, int64_t n, int64_t pos0, std::stri
     } help_scope{m, helped};
     PfTimer pt;
     PeTimer pe;
+    const bool prefill_timing = pt.on;
+    static const bool batch_gather = [] {
+        const char* v = std::getenv("STRATA_PREFILL_BATCH_GATHER");
+        if (v == nullptr || std::strcmp(v, "1") != 0) return false;
+#if defined(STRATA_PREFILL_MMQ) && !defined(STRATA_USE_HIP) && !defined(STRATA_HIP_GFX906)
+        std::fprintf(stderr, "strata: batched gather enabled for routed native MMQ experts; staged experts flush "
+                             "immediately; fused, peer/helper and non-native paths unchanged\n");
+        return true;
+#else
+        std::fprintf(stderr, "strata: STRATA_PREFILL_BATCH_GATHER requires CUDA MMQ; keeping the existing gather path\n");
+        return false;
+#endif
+    }();
+    static const bool gather_counts = [] {
+        const char* v = std::getenv("STRATA_PREFILL_GATHER_COUNTS");
+        return v != nullptr && std::strcmp(v, "1") == 0;
+    }();
+    uint64_t gather_launches = 0, gather_experts = 0, gather_bytes = 0, gather_fallbacks = 0;
     if (m.pp) pe.dev = m.pp->dev; else pe.on = false;
     const cudaStream_t cs = (cudaStream_t) m.cs;
     // the MMQ row table lives in the borrowed cache slots, which the refill after a prompt overwrites with experts:
@@ -2651,10 +2675,12 @@ bool Prefill::run_impl(const int64_t* tokens, int64_t n, int64_t pos0, std::stri
                            (ss.ple.w.key_bf16 != nullptr || ss.ple.w.key_native_data != nullptr) &&
                            m.region_bytes / ((uint64_t) (3 * strata::kernels::NG_HC_DIM + N + 4) * 4 + (uint64_t) N * 2 + 4096) >= 64;
     const int32_t prev0[2] = {prev[0], prev[1]};
-    auto ple_gather = [&m, &ss, tokens, n, prev0, C](int64_t c0, int buf, std::string& e) -> bool {
+    auto ple_gather = [&m, &ss, tokens, n, prev0, C, prefill_timing](int64_t c0, int buf, std::string& e) -> bool {
         const int64_t T = std::min(C, n - c0);
         auto at = [&](int64_t i) { return i < 2 ? prev0[i] : (int32_t) tokens[i - 2]; };   // prev0, then the tokens
         int32_t pv[2] = {at(c0), at(c0 + 1)};
+        Clock::time_point keys_start;
+        if (prefill_timing) keys_start = Clock::now();
         for (int64_t t = 0; t < T; ++t) {
             const int32_t tok = (int32_t) tokens[c0 + t];
             strata::kernels::ngram_rows(&tok, pv, 1, ss.ple.consts,
@@ -2662,7 +2688,17 @@ bool Prefill::run_impl(const int64_t* tokens, int64_t n, int64_t pos0, std::stri
             pv[0] = pv[1];
             pv[1] = tok;
         }
-        return ss.ple.table->gather_batch(m.ple_rows[buf].data(), (size_t) T, m.ple_emb_host[buf], e);
+        const double keys_ms = prefill_timing ? ms_since(keys_start) : 0.0;
+        Clock::time_point gather_start;
+        if (prefill_timing) gather_start = Clock::now();
+        const bool ok = ss.ple.table->gather_batch(m.ple_rows[buf].data(), (size_t) T,
+                                                    m.ple_emb_host[buf], e);
+        if (prefill_timing)
+            std::fprintf(stderr, "strata PLE prep timing: chunk %lld, %lld tokens: row keys %.3f ms, "
+                                 "batch gather total %.3f ms%s\n",
+                         (long long) c0, (long long) T, keys_ms, ms_since(gather_start),
+                         ok ? "" : " (failed)");
+        return ok;
     };
     std::string ple_next_err;
     std::future<bool> ple_next;             // declared after everything it reads: an early return waits for it
@@ -2790,11 +2826,16 @@ bool Prefill::run_impl(const int64_t* tokens, int64_t n, int64_t pos0, std::stri
             if (!ple_pending) return true;
             ple_pending = false;
             const auto tp = Clock::now();
+            Clock::time_point gather_wait_start;
+            if (prefill_timing) gather_wait_start = Clock::now();
             if (!ple_next.get()) {
                 err = ple_next_err;
                 return false;
             }
+            const double gather_wait_ms = prefill_timing ? ms_since(gather_wait_start) : 0.0;
             // #1996: the pageable fallback (no RAM to pin) goes up through a pinned slot; the pinned buffers as before
+            Clock::time_point upload_start;
+            if (prefill_timing) upload_start = Clock::now();
             if ((m.ple_pageable[ple_buf].empty()
                      ? cudaMemcpyAsync(m.ple_emb, m.ple_emb_host[ple_buf], (size_t) T * N * 4, cudaMemcpyHostToDevice, m.cs)
                      : m.up_ring.h2d(m.ple_emb, m.ple_emb_host[ple_buf], (size_t) T * N * 4, m.cs)) !=
@@ -2803,12 +2844,17 @@ bool Prefill::run_impl(const int64_t* tokens, int64_t n, int64_t pos0, std::stri
                 err = std::string("prefill: the PLE rows' upload failed: ") + cudaGetErrorString(cudaGetLastError());
                 return false;
             }
+            const double upload_enqueue_ms = prefill_timing ? ms_since(upload_start) : 0.0;
+            double prior_upload_wait_ms = 0.0;
             if (c0 + C < n) {
                 // the other buffer's upload (a chunk ago) is done before the SSD thread refills it
+                Clock::time_point prior_upload_start;
+                if (prefill_timing) prior_upload_start = Clock::now();
                 if (cudaEventSynchronize(m.ple_copied[ple_buf ^ 1]) != cudaSuccess) {
                     err = std::string("prefill: the PLE rows' upload failed: ") + cudaGetErrorString(cudaGetLastError());
                     return false;
                 }
+                if (prefill_timing) prior_upload_wait_ms = ms_since(prior_upload_start);
                 ple_next = std::async(std::launch::async, [&ple_gather, &ple_next_err, c1 = c0 + C, b = ple_buf ^ 1] {
                     strata::aux_cpus::pin_current_thread();
                     return ple_gather(c1, b, ple_next_err);
@@ -2816,6 +2862,11 @@ bool Prefill::run_impl(const int64_t* tokens, int64_t n, int64_t pos0, std::stri
             }
             ple_buf ^= 1;
             stats_.ms_ple += ms_since(tp);
+            if (prefill_timing)
+                std::fprintf(stderr, "strata PLE upload timing: chunk %lld, %lld tokens: gather future wait "
+                                     "%.3f ms, H2D enqueue %.3f ms, previous H2D completion wait %.3f ms\n",
+                             (long long) c0, (long long) T, gather_wait_ms, upload_enqueue_ms,
+                             prior_upload_wait_ms);
             return true;
         };
         for (int64_t t = 0; t < T; ++t) { prev[0] = prev[1]; prev[1] = (int32_t) tokens[c0 + t]; }
@@ -4359,7 +4410,7 @@ bool Prefill::run_impl(const int64_t* tokens, int64_t n, int64_t pos0, std::stri
                             const char* v = std::getenv("STRATA_PREFILL_GROUP_GATHER");
                             return v == nullptr || std::atoi(v) != 0;
                         }();
-                        const bool group_gather = group_env && stream_all && use_mmq && lay.native &&
+                        const bool group_gather = group_env && (stream_all || batch_gather) && use_mmq && lay.native &&
                                                   MMQ_GROUP <= mmq::kGatherGroupMax;
                         // The staged walk (a short prompt) groups too, resident and staged experts alike: its ring is
                         // then STAGE_GRP slots, two groups, and it stages no further ahead than the open group allows,
@@ -4427,7 +4478,6 @@ bool Prefill::run_impl(const int64_t* tokens, int64_t n, int64_t pos0, std::stri
                         // (226 ms of a 32K prompt on an NVFP4 pack).  The same bytes into the same group slots.  A ring
                         // entry the routing skipped inside an open group first gathers what the group holds so far
                         // (`flush`), so no more than a group's entries are ever held back from the issuer.
-                        // STRATA_PREFILL_GROUP_GATHER=0: one gather, one wait and one record per expert.
                         mmq::GatherGroup gg;
                         int gg_slots[MMQ_GROUP];
                         int gg_nslots = 0;   // ring slots gathered by the next flush
@@ -4449,9 +4499,10 @@ bool Prefill::run_impl(const int64_t* tokens, int64_t n, int64_t pos0, std::stri
                                 pt.mark(kPfDequant, cs);
                             }
                             // NVFP4: each expert's scales go next to its group slot in the same launch
-                            if (!mmq::gather_native_group(gg, f.up_off, mmq_gub / 2, f.down_off, mmq_db, m.grp_gu, mmq_gub,
-                                                          m.grp_d, mmq_db, m.cs, f.tail_off,
-                                                          f.tail_off ? m.grp_tail : nullptr, zero)) {
+                            const bool grouped = mmq::gather_native_group(gg, f.up_off, mmq_gub / 2, f.down_off, mmq_db,
+                                                                          m.grp_gu, mmq_gub, m.grp_d, mmq_db, m.cs,
+                                                                          f.tail_off, f.tail_off ? m.grp_tail : nullptr, zero);
+                            if (!grouped) {
                                 for (int i = gg.first; i < gg.n; ++i) {   // not 16-byte aligned: one at a time
                                     const uint8_t* b = gg.blob[i];
                                     mmq::gather_native(b, b + f.up_off, mmq_gub / 2, b + f.down_off, mmq_db,
@@ -4459,6 +4510,13 @@ bool Prefill::run_impl(const int64_t* tokens, int64_t n, int64_t pos0, std::stri
                                                        f.tail_off ? b + f.tail_off : nullptr,
                                                        f.tail_off ? m.grp_tail + i * 4 : nullptr, i + 1 == gg.n ? zero : 0);
                                 }
+                            }
+                            if (gather_counts) {
+                                const uint64_t count = (uint64_t) (gg.n - gg.first);
+                                gather_launches += grouped ? 1 : count;
+                                gather_experts += count;
+                                gather_bytes += count * (mmq_gub + mmq_db + (f.tail_off ? 16 : 0)) + 2 * zero;
+                                gather_fallbacks += !grouped;
                             }
                             if (gg_nslots > 0) {
                                 const int rel = gg_slots[gg_nslots - 1];
@@ -4514,7 +4572,12 @@ bool Prefill::run_impl(const int64_t* tokens, int64_t n, int64_t pos0, std::stri
                                     gg.blob[q] = blob_dev;
                                     gg.n = (int) q + 1;
                                     if (slot >= 0) gg_slots[gg_nslots++] = slot;
-                                    if (!last_of_group) return true;
+                                    if (!last_of_group) {
+                                        // The short walk has only eight staging slots, fewer than an MMQ group.
+                                        // Never hold a staged slot across iterations: stage_one may refill it.
+                                        if (!stream_all && slot >= 0) flush(0);
+                                        return true;
+                                    }
                                     flush(MMQ_TAIL);
                                     gg = mmq::GatherGroup{};
                                 } else if (lay.native) {
@@ -4524,6 +4587,12 @@ bool Prefill::run_impl(const int64_t* tokens, int64_t n, int64_t pos0, std::stri
                                                        mmq_db, m.grp_gu + q * mmq_gub, m.grp_d + q * mmq_db, m.cs,
                                                        f.tail_off ? blob_dev + f.tail_off : nullptr,
                                                        f.tail_off ? m.grp_tail + q * 4 : nullptr, last_of_group ? MMQ_TAIL : 0);
+                                    if (gather_counts) {
+                                        ++gather_launches;
+                                        ++gather_experts;
+                                        gather_bytes += mmq_gub + mmq_db + (f.tail_off ? 16 : 0) +
+                                                        (last_of_group ? 2 * MMQ_TAIL : 0);
+                                    }
                                 } else {
                                     mmq::gather_strata_q2(blob_dev, m.grp_gu + q * mmq_gub, m.grp_d + q * mmq_db, m.cs);
                                     if (last_of_group) {
@@ -4646,7 +4715,7 @@ bool Prefill::run_impl(const int64_t* tokens, int64_t n, int64_t pos0, std::stri
                                     if (!compute(j, m.cache->device_slot(m.host_res[(size_t) l * m.g->n_expert + e]), -1,
                                                  m.host_res[(size_t) l * m.g->n_expert + e])) return false;
                                 } else {
-                                    if (!group_resident) {   // grouped: the flush waits once, on the group's last copy
+                                    if (!gg_now) {
                                         pt.mark(kPfWaitCopy, cs);
                                         cudaStreamWaitEvent(m.cs, m.copied[stage_of[j]], 0);
                                     }
@@ -4869,7 +4938,7 @@ bool Prefill::run_impl(const int64_t* tokens, int64_t n, int64_t pos0, std::stri
             next_->hand_in_ = h;
             next_->hand_ev_ = hp > 0 ? static_cast<const void*>(m.hand_ev[hand_buf_]) : nullptr;
             next_->hand_pieces_ = hp;
-            next_->single_chunk_ = single_chunk;
+            next_->single_chunk_ = single_chunk && T <= next_->impl_->T;
             next_->pipe_chunked_ = pipe_chunked;
             if (handoff_pipe_worker()) {
                 if (!m.hand_worker) m.hand_worker = std::make_unique<HandWorker>();
@@ -4974,6 +5043,12 @@ bool Prefill::run_impl(const int64_t* tokens, int64_t n, int64_t pos0, std::stri
                      (long long) kv_prefetches);
     }
     stats_.ms_total += ms_since(t_start);
+    if (gather_counts)
+        std::fprintf(stderr, "strata gather counts: device=%d layers=%lld:%lld tokens=%lld scope=routed-native "
+                             "launches=%llu experts=%llu bytes=%llu fallbacks=%llu\n",
+                     m.device, (long long) LB, (long long) LE, (long long) n,
+                     (unsigned long long) gather_launches, (unsigned long long) gather_experts,
+                     (unsigned long long) gather_bytes, (unsigned long long) gather_fallbacks);
     {
         static const bool f16_range = std::getenv("STRATA_F16_RANGE") != nullptr;
         float xm = 0.0f, wy[2] = {0.0f, 0.0f}; unsigned long long xo = 0, wyo[2] = {0, 0};

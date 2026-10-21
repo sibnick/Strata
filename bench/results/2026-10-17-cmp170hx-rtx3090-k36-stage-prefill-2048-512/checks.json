@@ -1,0 +1,18 @@
+{
+  "32788_token_historical_output_ids_and_recall": "passed",
+  "checksums": "recorded in SHA256SUMS",
+  "compute_process_cleanup": "passed",
+  "cuda_build_targets_strata_strata_kq_and_split_memory": "passed",
+  "full_fresh_prompt_input_no_reuse": "passed",
+  "hip_and_sycl": "not_tested",
+  "host_start_at_least_6_gib": "passed",
+  "host_stop_below_5_gib": "passed",
+  "larger_handoff_consumed_in_512_token_subchunks": "passed",
+  "mandatory_prompt_init_headroom_k36": "passed",
+  "offline_sizing_k36_k37": "passed",
+  "per_stage_cpu_contract_tests": "passed",
+  "post_warmup_measured_expert_source_reads": "zero",
+  "short_historical_output_ids_and_recall": "passed",
+  "split_memory_self_test": "passed",
+  "startup_configuration_and_allocation_admission": "passed"
+}

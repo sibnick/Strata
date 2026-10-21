@@ -1,0 +1,10 @@
+{
+  "status": "passed",
+  "requests": 5,
+  "controlled_32k_exact_output_parity": true,
+  "near_limit_matches_historical_ids": true,
+  "full_fresh_input_zero_reuse": true,
+  "both_640_guards_and_host_5gib_passed": true,
+  "unchanged_candidate_identity": true,
+  "both_clean_exit_zero": true
+}

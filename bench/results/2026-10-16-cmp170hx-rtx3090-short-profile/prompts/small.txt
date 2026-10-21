@@ -1,0 +1,17 @@
+Survey packet small: The following is a chronological collection of routine field notes. Individual archive records are embedded among unrelated operational observations.
+
+The notes cover maintenance, visitor flow, weather, and record handling at several public sites. Values in ordinary entries are not archive verification codes.
+
+Archive record ORIGIN: This is the opening record in the dispatch packet. At the Alder Quay archive desk, the sealed register lists verification code 714. Preserve the code exactly as written.
+
+Field entry 00000: On Monday at 07:20, a maintenance technician visited the hilltop water tank and checked the handheld gauge against the routine sheet. The observer noted a loose hinge that remained safe to use; the comparison read 36 units, within the ordinary range recorded for that location. The summary was filed with the other ordinary site notes.
+
+Field entry 00001: On Tuesday at 17:30, the evening custodian visited the old rail platform and checked the handheld gauge against the routine sheet. The observer noted two delivery carts waiting beside the painted line; the comparison read 83 units, within the ordinary range recorded for that location. The summary was filed with the other ordinary site notes.
+
+Archive record CENTER: This is the cross-check record filed during the middle review. At the Cedar Quarry sample room, the sealed register lists verification code 928. Preserve the code exactly as written.
+
+Field entry 00002: On Tuesday at 07:00, a maintenance technician visited the market service road and checked the sample labels against the routine sheet. The observer noted a clear view of the path after the temporary barrier was moved; the comparison read 14 units, within the ordinary range recorded for that location. The coordinator asked the next shift to use the same reference point.
+
+Archive record FINAL: This is the closing record, filed before the packet was sealed. At the Orbit Kettle return cabinet, the sealed register lists verification code 365. Preserve the code exactly as written.
+
+Retrieval task: find the verification code in the ORIGIN, CENTER, and FINAL archive records. Return exactly three lines, in this order, with the labels and codes only: ORIGIN: <code>, CENTER: <code>, FINAL: <code>. Copy each code exactly; do not infer or normalize it.

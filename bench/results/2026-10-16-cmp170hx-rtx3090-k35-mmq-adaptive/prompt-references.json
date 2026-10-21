@@ -1,0 +1,67 @@
+{
+  "32k_prompt": {
+    "files": {
+      "32k.ids": {
+        "bytes": 146173,
+        "sha256": "48619c77cba7b5b9aff070dd990675453a327c4bf25a8637bfae195ecfc454a7",
+        "source": "/home/nikolay/projects/copilot-worktrees/170hx-3090/sibnick-super-dollop/bench/results/2026-10-16-cmp170hx-rtx3090-gpu-owned-long-context/prompts/32k.ids"
+      },
+      "32k.json": {
+        "bytes": 612,
+        "sha256": "1809c2e36d8b16afccc7d9bb172c305034a846ef39c7cfbef52ddf4375e19eb6",
+        "source": "/home/nikolay/projects/copilot-worktrees/170hx-3090/sibnick-super-dollop/bench/results/2026-10-16-cmp170hx-rtx3090-gpu-owned-long-context/prompts/32k.json"
+      },
+      "32k.txt": {
+        "bytes": 151339,
+        "sha256": "bccff648b9ba7d921cce44468f43377e02b6ed683ed1cd5e63c1b9fa2643085a",
+        "source": "/home/nikolay/projects/copilot-worktrees/170hx-3090/sibnick-super-dollop/bench/results/2026-10-16-cmp170hx-rtx3090-gpu-owned-long-context/prompts/32k.txt"
+      }
+    },
+    "metadata": {
+      "actual_input_tokens": 32788,
+      "context_tokens": 262144,
+      "expected": {
+        "CENTER": "CEDAR-8M2-QUARRY",
+        "FINAL": "ORBIT-6V9-KETTLE",
+        "ORIGIN": "IRIS-4Q7-LANTERN"
+      },
+      "filler_paragraphs": 397,
+      "generation_cap": 192,
+      "input_plus_generation_cap": 32980,
+      "name": "32k",
+      "needle_offsets_token": {
+        "CENTER": 16440,
+        "FINAL": 32665,
+        "ORIGIN": 61
+      },
+      "prompt_ids_sha256": "48619c77cba7b5b9aff070dd990675453a327c4bf25a8637bfae195ecfc454a7",
+      "prompt_text_sha256": "9fcf47f685588c81046a7ad7a6c1d7ccce6aa24151b9236e40723b48445b800d",
+      "seed": 23,
+      "target_input_tokens": 32768
+    },
+    "source_metadata": "/home/nikolay/projects/copilot-worktrees/170hx-3090/sibnick-super-dollop/bench/results/2026-10-16-cmp170hx-rtx3090-gpu-owned-long-context/prompts/32k.json"
+  },
+  "short_prompts": {
+    "large": {
+      "generation_cap": 32,
+      "input_tokens": 1977,
+      "prompt_ids_sha256": "953be64023898d51c4e513b40fefb66721ed2c643a7c18713c15edc81d4c014f",
+      "prompt_text_sha256": "d57094cd82b2cc9daf4275ef594ab39b6d6179b87b329c90733e0b824e51a9a6",
+      "source_bundle": "/home/nikolay/projects/copilot-worktrees/170hx-3090/sibnick-super-dollop/bench/results/2026-10-16-cmp170hx-rtx3090-mmq-640/prompts"
+    },
+    "medium": {
+      "generation_cap": 32,
+      "input_tokens": 994,
+      "prompt_ids_sha256": "0608e2f93bc83248e39dd644070c1121c3671024cb31497a7bcbf05f0ff77ff6",
+      "prompt_text_sha256": "783c7ea72caf7bfffc671ffb434ae434e1b1192ad6f1346f04ae06029fd6338d",
+      "source_bundle": "/home/nikolay/projects/copilot-worktrees/170hx-3090/sibnick-super-dollop/bench/results/2026-10-16-cmp170hx-rtx3090-mmq-640/prompts"
+    },
+    "small": {
+      "generation_cap": 32,
+      "input_tokens": 502,
+      "prompt_ids_sha256": "92e4898c7878ebc799b5e931e0a697cdf9043d7b2dcd6423c1ebc48646202421",
+      "prompt_text_sha256": "be84c4658d1a0cd095b868e5f59d6482c070675ec308262b03b4b4d26e4618a6",
+      "source_bundle": "/home/nikolay/projects/copilot-worktrees/170hx-3090/sibnick-super-dollop/bench/results/2026-10-16-cmp170hx-rtx3090-mmq-640/prompts"
+    }
+  }
+}

@@ -1,0 +1,5 @@
+2026-10-16T23:30:31.236+00:00 START off-large pid=691459
+2026-10-16T23:32:55.353+00:00 PASS off-large warmup prefill=2641.5ms
+2026-10-16T23:32:58.094+00:00 PASS off-large rep1-large prefill=2437.6ms
+2026-10-16T23:33:00.807+00:00 PASS off-large rep2-large prefill=2410.1ms
+2026-10-16T23:33:03.545+00:00 PASS off-large rep3-large prefill=2426.2ms

@@ -1,0 +1,914 @@
+{
+  "comparison": {
+    "large": {
+      "generated_ids_identical": true,
+      "median_prefill_speedup": 2.2700395586092026,
+      "median_wall_speedup": 2.1585999818702137
+    },
+    "medium": {
+      "generated_ids_identical": true,
+      "median_prefill_speedup": 2.267510347023241,
+      "median_wall_speedup": 2.070357307263086
+    },
+    "small": {
+      "generated_ids_identical": true,
+      "median_prefill_speedup": 2.2515947188844385,
+      "median_wall_speedup": 1.9050570169090733
+    }
+  },
+  "k36": {
+    "against_resident_samples": {
+      "control": {
+        "caveat": "Ledger granule estimates, not an exact physical peak or a K36 run.",
+        "deficit_against_640_mib_bytes": 228917248,
+        "k36_estimated_free_after_increment_bytes": 442171392,
+        "k36_estimated_increment_bytes": 1675624448,
+        "k37_sampled_rtx_free_bytes": 2117795840,
+        "safe_capacity_established": false,
+        "surplus_above_640_mib_bytes": 1446707200
+      },
+      "mmq": {
+        "caveat": "Ledger granule estimates, not an exact physical peak or a K36 run.",
+        "deficit_against_640_mib_bytes": 319094784,
+        "k36_estimated_free_after_increment_bytes": 351993856,
+        "k36_estimated_increment_bytes": 1675624448,
+        "k37_sampled_rtx_free_bytes": 2027618304,
+        "safe_capacity_established": false,
+        "surplus_above_640_mib_bytes": 1356529664
+      }
+    },
+    "component_deltas": {
+      "0": {
+        "additional_cuda_and_safety_reserve": {
+          "delta_bytes": 0,
+          "k36_bytes": 1073741824,
+          "k37_bytes": 1073741824
+        },
+        "canonical_arena": {
+          "delta_bytes": -27121536,
+          "k36_bytes": 1152277120,
+          "k37_bytes": 1179398656
+        },
+        "expert_payload": {
+          "delta_bytes": -1572864000,
+          "k36_bytes": 57619251200,
+          "k37_bytes": 59192115200
+        },
+        "mtp_files_payload": {
+          "delta_bytes": 0,
+          "k36_bytes": 0,
+          "k37_bytes": 0
+        },
+        "mtp_total_with_runtime_reserve": {
+          "delta_bytes": 0,
+          "k36_bytes": 0,
+          "k37_bytes": 0
+        },
+        "native_projection_allocation_estimate": {
+          "delta_bytes": -69206016,
+          "k36_bytes": 2445279232,
+          "k37_bytes": 2514485248
+        },
+        "native_projection_padding_reserve": {
+          "delta_bytes": 0,
+          "k36_bytes": 67108864,
+          "k37_bytes": 67108864
+        },
+        "output_head_allocation_estimate": {
+          "delta_bytes": 0,
+          "k36_bytes": 0,
+          "k37_bytes": 0
+        },
+        "owned_prefill_allocation_estimate": {
+          "delta_bytes": 0,
+          "k36_bytes": 362807296,
+          "k37_bytes": 362807296
+        },
+        "required_free_before_model_load": {
+          "delta_bytes": -1671430144,
+          "k36_bytes": 65785561088,
+          "k37_bytes": 67456991232
+        },
+        "session_arena": {
+          "delta_bytes": -3268608,
+          "k36_bytes": 2961460736,
+          "k37_bytes": 2964729344
+        },
+        "verify_reserve": {
+          "delta_bytes": 0,
+          "k36_bytes": 100663296,
+          "k37_bytes": 100663296
+        }
+      },
+      "1": {
+        "additional_cuda_and_safety_reserve": {
+          "delta_bytes": 0,
+          "k36_bytes": 1073741824,
+          "k37_bytes": 1073741824
+        },
+        "canonical_arena": {
+          "delta_bytes": 29742976,
+          "k36_bytes": 391246720,
+          "k37_bytes": 361503744
+        },
+        "expert_payload": {
+          "delta_bytes": 1572864000,
+          "k36_bytes": 19398656000,
+          "k37_bytes": 17825792000
+        },
+        "mtp_files_payload": {
+          "delta_bytes": 0,
+          "k36_bytes": 823887872,
+          "k37_bytes": 823887872
+        },
+        "mtp_total_with_runtime_reserve": {
+          "delta_bytes": 0,
+          "k36_bytes": 1518763244,
+          "k37_bytes": 1518763244
+        },
+        "native_projection_allocation_estimate": {
+          "delta_bytes": 69206016,
+          "k36_bytes": 805306368,
+          "k37_bytes": 736100352
+        },
+        "native_projection_padding_reserve": {
+          "delta_bytes": 0,
+          "k36_bytes": 67108864,
+          "k37_bytes": 67108864
+        },
+        "output_head_allocation_estimate": {
+          "delta_bytes": 0,
+          "k36_bytes": 677380096,
+          "k37_bytes": 677380096
+        },
+        "owned_prefill_allocation_estimate": {
+          "delta_bytes": 0,
+          "k36_bytes": 362807296,
+          "k37_bytes": 362807296
+        },
+        "required_free_before_model_load": {
+          "delta_bytes": 1675624448,
+          "k36_bytes": 25436781804,
+          "k37_bytes": 23761157356
+        },
+        "session_arena": {
+          "delta_bytes": 3268608,
+          "k36_bytes": 1038760448,
+          "k37_bytes": 1035491840
+        },
+        "verify_reserve": {
+          "delta_bytes": 0,
+          "k36_bytes": 100663296,
+          "k37_bytes": 100663296
+        }
+      }
+    },
+    "layer36": {
+      "down_type": "Q5_1",
+      "expert_blob_bytes": 3072000,
+      "expert_payload_bytes": 1572864000,
+      "experts": 512,
+      "gu_type": "Q4_K",
+      "kind": "GDN"
+    },
+    "ledger_path": "2026-10-16-cmp170hx-rtx3090-k37/ledger-chunk256.csv",
+    "ledger_sha256": "142e1fe37cd5ffde74e05ed9f4c79dfada9974510036aef7548978aa7786d01e"
+  },
+  "limits": [
+    "Both arms timing disabled; sequential control then MMQ, not randomized/interleaved.",
+    "Warmup excluded; startup and OS cache order effects are not eliminated.",
+    "No near-max input, K36 run, split optimum claim or generalized quality validation.",
+    "NVML physical free bytes sampled about once per second, not a hard OOM guarantee.",
+    "Monitor threshold 640 binary MiB; configured allocation reserves remain 1024 MiB."
+  ],
+  "runs": {
+    "control": {
+      "max_process_swap_bytes": 0,
+      "max_rss_bytes": 5021118464,
+      "max_system_swap_bytes": 1310720,
+      "min_gpu_free_bytes": {
+        "0": 2117795840,
+        "1": 1092943872
+      },
+      "min_host_available_bytes": 14781095936,
+      "ownership_lines": [
+        "strata generate: --gpu-owned-experts: CUDA0 owns layers [0,37), 18944 experts, 59192115200 resident bytes",
+        "strata generate: --gpu-owned-experts: CUDA1 owns layers [37,48), 5632 experts, 17825792000 resident bytes",
+        "strata generate: --gpu-owned-experts: all 24576 experts are resident in their owning GPU caches; prompt cache loans and the CPU complement are disabled; startup file-tier reads accounted for 77024563200 bytes; no file fallback is expected after startup"
+      ],
+      "requests": {
+        "large": {
+          "decode_ms": [
+            233.1,
+            229.2,
+            227.6
+          ],
+          "generated_ids": [
+            [
+              842,
+              53665,
+              25,
+              220,
+              22,
+              16,
+              19,
+              198,
+              75761,
+              25,
+              220,
+              24,
+              17,
+              23,
+              198,
+              95429,
+              25,
+              220,
+              18,
+              21,
+              20,
+              248046
+            ],
+            [
+              842,
+              53665,
+              25,
+              220,
+              22,
+              16,
+              19,
+              198,
+              75761,
+              25,
+              220,
+              24,
+              17,
+              23,
+              198,
+              95429,
+              25,
+              220,
+              18,
+              21,
+              20,
+              248046
+            ],
+            [
+              842,
+              53665,
+              25,
+              220,
+              22,
+              16,
+              19,
+              198,
+              75761,
+              25,
+              220,
+              24,
+              17,
+              23,
+              198,
+              95429,
+              25,
+              220,
+              18,
+              21,
+              20,
+              248046
+            ]
+          ],
+          "input_tokens": 1977,
+          "median_prefill_ms": 5451.5,
+          "median_wall_seconds_to_done": 5.687504135999916,
+          "mtp_accepted_offered": [
+            [
+              9,
+              13
+            ],
+            [
+              9,
+              13
+            ],
+            [
+              9,
+              12
+            ]
+          ],
+          "prefill_ms": [
+            5451.5,
+            5449.8,
+            5505.7
+          ],
+          "ttft_seconds_observed": [
+            5.467813342000227,
+            5.466312640000979,
+            5.52236123900002
+          ],
+          "wall_seconds_to_done": [
+            5.687504135999916,
+            5.6813713340015966,
+            5.736507379999239
+          ],
+          "zero_expert_read_deltas": true
+        },
+        "medium": {
+          "decode_ms": [
+            225.1,
+            225.5,
+            224.3
+          ],
+          "generated_ids": [
+            [
+              842,
+              53665,
+              25,
+              220,
+              22,
+              16,
+              19,
+              198,
+              75761,
+              25,
+              220,
+              24,
+              17,
+              23,
+              198,
+              95429,
+              25,
+              220,
+              18,
+              21,
+              20,
+              248046
+            ],
+            [
+              842,
+              53665,
+              25,
+              220,
+              22,
+              16,
+              19,
+              198,
+              75761,
+              25,
+              220,
+              24,
+              17,
+              23,
+              198,
+              95429,
+              25,
+              220,
+              18,
+              21,
+              20,
+              248046
+            ],
+            [
+              842,
+              53665,
+              25,
+              220,
+              22,
+              16,
+              19,
+              198,
+              75761,
+              25,
+              220,
+              24,
+              17,
+              23,
+              198,
+              95429,
+              25,
+              220,
+              18,
+              21,
+              20,
+              248046
+            ]
+          ],
+          "input_tokens": 994,
+          "median_prefill_ms": 2848.9,
+          "median_wall_seconds_to_done": 3.100975854000353,
+          "mtp_accepted_offered": [
+            [
+              9,
+              12
+            ],
+            [
+              9,
+              13
+            ],
+            [
+              9,
+              12
+            ]
+          ],
+          "prefill_ms": [
+            2837.8,
+            2848.9,
+            2870.0
+          ],
+          "ttft_seconds_observed": [
+            2.8537993840000127,
+            2.865119214000515,
+            2.8859455170004367
+          ],
+          "wall_seconds_to_done": [
+            3.0656574410004396,
+            3.100975854000353,
+            3.135496471000806
+          ],
+          "zero_expert_read_deltas": true
+        },
+        "small": {
+          "decode_ms": [
+            204.2,
+            204.5,
+            205.3
+          ],
+          "generated_ids": [
+            [
+              842,
+              53665,
+              25,
+              220,
+              22,
+              16,
+              19,
+              198,
+              75761,
+              25,
+              220,
+              24,
+              17,
+              23,
+              198,
+              95429,
+              25,
+              220,
+              18,
+              21,
+              20,
+              248046
+            ],
+            [
+              842,
+              53665,
+              25,
+              220,
+              22,
+              16,
+              19,
+              198,
+              75761,
+              25,
+              220,
+              24,
+              17,
+              23,
+              198,
+              95429,
+              25,
+              220,
+              18,
+              21,
+              20,
+              248046
+            ],
+            [
+              842,
+              53665,
+              25,
+              220,
+              22,
+              16,
+              19,
+              198,
+              75761,
+              25,
+              220,
+              24,
+              17,
+              23,
+              198,
+              95429,
+              25,
+              220,
+              18,
+              21,
+              20,
+              248046
+            ]
+          ],
+          "input_tokens": 502,
+          "median_prefill_ms": 1517.8,
+          "median_wall_seconds_to_done": 1.7248760269994818,
+          "mtp_accepted_offered": [
+            [
+              10,
+              11
+            ],
+            [
+              10,
+              11
+            ],
+            [
+              10,
+              11
+            ]
+          ],
+          "prefill_ms": [
+            1518.0,
+            1507.5,
+            1517.8
+          ],
+          "ttft_seconds_observed": [
+            1.5337086740000814,
+            1.5235022159995424,
+            1.5331449850000354
+          ],
+          "wall_seconds_to_done": [
+            1.7248760269994818,
+            1.7144759950006119,
+            1.7255613039997115
+          ],
+          "zero_expert_read_deltas": true
+        }
+      },
+      "sample_interval_seconds": {
+        "max": 1.0999980609994964,
+        "min": 0.061994702999072615
+      },
+      "startup_seconds": 192.30353141699925
+    },
+    "mmq": {
+      "max_process_swap_bytes": 0,
+      "max_rss_bytes": 5092425728,
+      "max_system_swap_bytes": 1310720,
+      "min_gpu_free_bytes": {
+        "0": 2027618304,
+        "1": 983891968
+      },
+      "min_host_available_bytes": 13147508736,
+      "ownership_lines": [
+        "strata generate: --gpu-owned-experts: CUDA0 owns layers [0,37), 18944 experts, 59192115200 resident bytes",
+        "strata generate: --gpu-owned-experts: CUDA1 owns layers [37,48), 5632 experts, 17825792000 resident bytes",
+        "strata generate: --gpu-owned-experts: all 24576 experts are resident in their owning GPU caches; prompt cache loans and the CPU complement are disabled; startup file-tier reads accounted for 77024563200 bytes; no file fallback is expected after startup"
+      ],
+      "requests": {
+        "large": {
+          "decode_ms": [
+            230.2,
+            232.0,
+            227.3
+          ],
+          "generated_ids": [
+            [
+              842,
+              53665,
+              25,
+              220,
+              22,
+              16,
+              19,
+              198,
+              75761,
+              25,
+              220,
+              24,
+              17,
+              23,
+              198,
+              95429,
+              25,
+              220,
+              18,
+              21,
+              20,
+              248046
+            ],
+            [
+              842,
+              53665,
+              25,
+              220,
+              22,
+              16,
+              19,
+              198,
+              75761,
+              25,
+              220,
+              24,
+              17,
+              23,
+              198,
+              95429,
+              25,
+              220,
+              18,
+              21,
+              20,
+              248046
+            ],
+            [
+              842,
+              53665,
+              25,
+              220,
+              22,
+              16,
+              19,
+              198,
+              75761,
+              25,
+              220,
+              24,
+              17,
+              23,
+              198,
+              95429,
+              25,
+              220,
+              18,
+              21,
+              20,
+              248046
+            ]
+          ],
+          "input_tokens": 1977,
+          "median_prefill_ms": 2401.5,
+          "median_wall_seconds_to_done": 2.6348115370001324,
+          "mtp_accepted_offered": [
+            [
+              9,
+              13
+            ],
+            [
+              9,
+              12
+            ],
+            [
+              9,
+              12
+            ]
+          ],
+          "prefill_ms": [
+            2401.5,
+            2405.6,
+            2399.9
+          ],
+          "ttft_seconds_observed": [
+            2.4184624170011375,
+            2.422607009000785,
+            2.4170709399986663
+          ],
+          "wall_seconds_to_done": [
+            2.6348115370001324,
+            2.6405606730004365,
+            2.6303867249989707
+          ],
+          "zero_expert_read_deltas": true
+        },
+        "medium": {
+          "decode_ms": [
+            237.5,
+            222.6,
+            227.8
+          ],
+          "generated_ids": [
+            [
+              842,
+              53665,
+              25,
+              220,
+              22,
+              16,
+              19,
+              198,
+              75761,
+              25,
+              220,
+              24,
+              17,
+              23,
+              198,
+              95429,
+              25,
+              220,
+              18,
+              21,
+              20,
+              248046
+            ],
+            [
+              842,
+              53665,
+              25,
+              220,
+              22,
+              16,
+              19,
+              198,
+              75761,
+              25,
+              220,
+              24,
+              17,
+              23,
+              198,
+              95429,
+              25,
+              220,
+              18,
+              21,
+              20,
+              248046
+            ],
+            [
+              842,
+              53665,
+              25,
+              220,
+              22,
+              16,
+              19,
+              198,
+              75761,
+              25,
+              220,
+              24,
+              17,
+              23,
+              198,
+              95429,
+              25,
+              220,
+              18,
+              21,
+              20,
+              248046
+            ]
+          ],
+          "input_tokens": 994,
+          "median_prefill_ms": 1256.4,
+          "median_wall_seconds_to_done": 1.4977974299999914,
+          "mtp_accepted_offered": [
+            [
+              9,
+              13
+            ],
+            [
+              9,
+              12
+            ],
+            [
+              9,
+              12
+            ]
+          ],
+          "prefill_ms": [
+            1256.4,
+            1274.5,
+            1249.9
+          ],
+          "ttft_seconds_observed": [
+            1.2762498339998274,
+            1.2913079009995272,
+            1.266713434999474
+          ],
+          "wall_seconds_to_done": [
+            1.4977974299999914,
+            1.500322032999975,
+            1.4807296839990158
+          ],
+          "zero_expert_read_deltas": true
+        },
+        "small": {
+          "decode_ms": [
+            222.4,
+            224.9,
+            223.9
+          ],
+          "generated_ids": [
+            [
+              842,
+              53665,
+              25,
+              220,
+              22,
+              16,
+              19,
+              198,
+              75761,
+              25,
+              220,
+              24,
+              17,
+              23,
+              198,
+              95429,
+              25,
+              220,
+              18,
+              21,
+              20,
+              248046
+            ],
+            [
+              842,
+              53665,
+              25,
+              220,
+              22,
+              16,
+              19,
+              198,
+              75761,
+              25,
+              220,
+              24,
+              17,
+              23,
+              198,
+              95429,
+              25,
+              220,
+              18,
+              21,
+              20,
+              248046
+            ],
+            [
+              842,
+              53665,
+              25,
+              220,
+              22,
+              16,
+              19,
+              198,
+              75761,
+              25,
+              220,
+              24,
+              17,
+              23,
+              198,
+              95429,
+              25,
+              220,
+              18,
+              21,
+              20,
+              248046
+            ]
+          ],
+          "input_tokens": 502,
+          "median_prefill_ms": 674.1,
+          "median_wall_seconds_to_done": 0.9054196340002818,
+          "mtp_accepted_offered": [
+            [
+              9,
+              12
+            ],
+            [
+              9,
+              12
+            ],
+            [
+              9,
+              12
+            ]
+          ],
+          "prefill_ms": [
+            667.9,
+            674.1,
+            687.2
+          ],
+          "ttft_seconds_observed": [
+            0.6850831939991622,
+            0.6940166040003533,
+            0.7041684489995532
+          ],
+          "wall_seconds_to_done": [
+            0.8931718610001553,
+            0.9054196340002818,
+            0.9145158219998848
+          ],
+          "zero_expert_read_deltas": true
+        }
+      },
+      "sample_interval_seconds": {
+        "max": 1.1013386209997407,
+        "min": 0.25216116000046895
+      },
+      "startup_seconds": 196.9145927820009
+    }
+  }
+}

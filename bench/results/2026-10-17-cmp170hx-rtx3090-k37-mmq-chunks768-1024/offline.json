@@ -1,0 +1,176 @@
+{
+  "commands": [
+    [
+      "/usr/bin/c++",
+      "-std=c++20",
+      "-O2",
+      "-DSTRATA_GPU_CUDA",
+      "-I/home/nikolay/projects/copilot-worktrees/170hx-3090/sibnick-curly-tribble/include",
+      "-I/usr/local/cuda-13.4/include",
+      "-c",
+      "/home/nikolay/projects/copilot-worktrees/170hx-3090/sibnick-curly-tribble/src/program/split_memory_ledger.cpp",
+      "-o",
+      "/home/nikolay/projects/copilot-worktrees/170hx-3090/sibnick-curly-tribble/build/chunk768-sizing/ledger.o"
+    ],
+    [
+      "/usr/bin/c++",
+      "-O3",
+      "-DNDEBUG",
+      "/home/nikolay/projects/copilot-worktrees/170hx-3090/sibnick-curly-tribble/build/chunk768-sizing/ledger.o",
+      "-o",
+      "/home/nikolay/projects/copilot-worktrees/170hx-3090/sibnick-curly-tribble/build/chunk768-sizing/ledger",
+      "-L/usr/local/cuda-13.4/targets/x86_64-linux/lib/stubs",
+      "-L/usr/local/cuda-13.4/targets/x86_64-linux/lib",
+      "-Wl,-rpath,/usr/local/cuda-13.4/targets/x86_64-linux/lib",
+      "libstrata_engine.a",
+      "libstrata_prefill.a",
+      "libstrata_spec.a",
+      "/usr/local/cuda-13.4/targets/x86_64-linux/lib/libcudart.so",
+      "libstrata_qwen35.a",
+      "libstrata_prefill.a",
+      "libstrata_engine.a",
+      "/usr/local/cuda-13.4/targets/x86_64-linux/lib/libcublas.so",
+      "/usr/local/cuda-13.4/targets/x86_64-linux/lib/libcublasLt.so",
+      "/usr/local/cuda-13.4/targets/x86_64-linux/lib/libculibos.a",
+      "libstrata_mmq.a",
+      "libstrata_mmq_w4a4.a",
+      "/usr/local/cuda-13.4/targets/x86_64-linux/lib/stubs/libcuda.so",
+      "-ldl",
+      "libstrata_kernels.a",
+      "libstrata_core.a",
+      "/usr/local/cuda-13.4/targets/x86_64-linux/lib/libcudart.so",
+      "libstrata_kernels_cpu.a",
+      "ggml/src/libggml-cpu.a",
+      "ggml/src/libggml-base.a",
+      "-lm",
+      "-lcudadevrt",
+      "-lcudart_static",
+      "-lrt",
+      "-lpthread",
+      "-ldl"
+    ],
+    [
+      "/home/nikolay/projects/copilot-worktrees/170hx-3090/sibnick-curly-tribble/build/chunk768-sizing/ledger",
+      "--pack",
+      "/home/nikolay/projects/copilot-worktrees/170hx-3090/sibnick-upgraded-succotash/build/pack/ud-q4-k-xl",
+      "--native",
+      "/home/nikolay/projects/Strata-data/models/UD-Q4_K_XL/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00001-of-00004.gguf",
+      "--mtp",
+      "/home/nikolay/projects/Strata-data/mtp/rt",
+      "--context",
+      "262144",
+      "--chunk",
+      "768"
+    ],
+    [
+      "/home/nikolay/projects/copilot-worktrees/170hx-3090/sibnick-curly-tribble/build/chunk768-sizing/ledger",
+      "--pack",
+      "/home/nikolay/projects/copilot-worktrees/170hx-3090/sibnick-upgraded-succotash/build/pack/ud-q4-k-xl",
+      "--native",
+      "/home/nikolay/projects/Strata-data/models/UD-Q4_K_XL/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00001-of-00004.gguf",
+      "--mtp",
+      "/home/nikolay/projects/Strata-data/mtp/rt",
+      "--context",
+      "262144",
+      "--chunk",
+      "1024"
+    ]
+  ],
+  "environment_overrides": {
+    "STRATA_FILL_AHEAD": "0",
+    "STRATA_IO_PREFETCH": "0",
+    "STRATA_MMQ_KQ": "1",
+    "STRATA_PIN_RESERVE_GIB": "4",
+    "STRATA_PREFILL_BATCH_GATHER": "1",
+    "STRATA_REFILL_BLOCKING": "1",
+    "STRATA_RESIDENT_HEADROOM_GIB": "4",
+    "STRATA_SPLIT_RING": "96",
+    "STRATA_STAGE_PIN": "0",
+    "STRATA_UNBUFFERED_LOAD": "1"
+  },
+  "build": "/home/nikolay/projects/copilot-worktrees/170hx-3090/sibnick-animated-robot/build/cuda-batched",
+  "sizing_executable_sha256": "10fb7a4c626c70df04d46087834883dad2ba86cdd90444c3a1989aca6f5f8933",
+  "k37": {
+    "768": {
+      "0": {
+        "expert_payload": 59192115200,
+        "canonical_arena": 1179398656,
+        "native_projection_allocation_estimate": 2514485248,
+        "native_projection_padding_reserve": 67108864,
+        "session_arena": 2964729344,
+        "owned_prefill_allocation_estimate": 572522496,
+        "output_head_allocation_estimate": 0,
+        "mtp_files_payload": 0,
+        "mtp_total_with_runtime_reserve": 0,
+        "verify_reserve": 100663296,
+        "additional_cuda_and_safety_reserve": 1073741824,
+        "required_free_before_model_load": 67666706432,
+        "required_without_discretionary_cuda_allowance": 66592964608
+      },
+      "1": {
+        "expert_payload": 17825792000,
+        "canonical_arena": 361503744,
+        "native_projection_allocation_estimate": 736100352,
+        "native_projection_padding_reserve": 67108864,
+        "session_arena": 1035491840,
+        "owned_prefill_allocation_estimate": 572522496,
+        "output_head_allocation_estimate": 677380096,
+        "mtp_files_payload": 823887872,
+        "mtp_total_with_runtime_reserve": 1518763244,
+        "verify_reserve": 100663296,
+        "additional_cuda_and_safety_reserve": 1073741824,
+        "required_free_before_model_load": 23970872556,
+        "required_without_discretionary_cuda_allowance": 22897130732
+      }
+    },
+    "1024": {
+      "0": {
+        "expert_payload": 59192115200,
+        "canonical_arena": 1179398656,
+        "native_projection_allocation_estimate": 2514485248,
+        "native_projection_padding_reserve": 67108864,
+        "session_arena": 2964729344,
+        "owned_prefill_allocation_estimate": 1025507328,
+        "output_head_allocation_estimate": 0,
+        "mtp_files_payload": 0,
+        "mtp_total_with_runtime_reserve": 0,
+        "verify_reserve": 100663296,
+        "additional_cuda_and_safety_reserve": 1073741824,
+        "required_free_before_model_load": 68119691264,
+        "required_without_discretionary_cuda_allowance": 67045949440
+      },
+      "1": {
+        "expert_payload": 17825792000,
+        "canonical_arena": 361503744,
+        "native_projection_allocation_estimate": 736100352,
+        "native_projection_padding_reserve": 67108864,
+        "session_arena": 1035491840,
+        "owned_prefill_allocation_estimate": 1025507328,
+        "output_head_allocation_estimate": 677380096,
+        "mtp_files_payload": 823887872,
+        "mtp_total_with_runtime_reserve": 1518763244,
+        "verify_reserve": 100663296,
+        "additional_cuda_and_safety_reserve": 1073741824,
+        "required_free_before_model_load": 24423857388,
+        "required_without_discretionary_cuda_allowance": 23350115564
+      }
+    }
+  },
+  "source_sha256": {
+    "src/program/split_memory_ledger.cpp": "b4eb71c10ff31beda9aa12e8d995fa6278127c59c153d6f7055c5a5a7765f0f5",
+    "src/prefill/prefill.cpp": "d85eca64d947b85bda090e6a894d7267834847d3507d6f664f677631ec36c729",
+    "src/program/generate.cpp": "931b5dcb8e1a7437d14ca8f393a06cc9f58634407e699cad85a00b51b172471e",
+    "src/core/session.cpp": "8b9d936fffb2b44af56198da3b330408e0997d30388b4e39da2082c16ba75a7b"
+  },
+  "authorization": {
+    "engine_discretionary_gpu_reserve_mib": [
+      0,
+      0
+    ],
+    "external_gpu_free_abort_threshold": null,
+    "host_start_gib": 6,
+    "host_stop_gib": 5,
+    "mandatory_allocation_admission_checks_retained": true,
+    "ledger_note": "Raw ledger retains its fixed 1GiB CUDA/safety allowance; adjusted admission subtracts ONLY this allowance. Other ledger allowances and mandatory runtime checks remain."
+  }
+}

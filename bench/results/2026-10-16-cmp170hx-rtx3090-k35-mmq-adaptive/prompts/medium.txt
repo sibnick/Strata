@@ -1,0 +1,29 @@
+Survey packet medium: The following is a chronological collection of routine field notes. Individual archive records are embedded among unrelated operational observations.
+
+The notes cover maintenance, visitor flow, weather, and record handling at several public sites. Values in ordinary entries are not archive verification codes.
+
+Archive record ORIGIN: This is the opening record in the dispatch packet. At the Alder Quay archive desk, the sealed register lists verification code 714. Preserve the code exactly as written.
+
+Field entry 00000: On Friday at 07:00, a maintenance technician visited the market service road and checked the weather display against the routine sheet. The observer noted two delivery carts waiting beside the painted line; the comparison read 46 units, within the ordinary range recorded for that location. The note was copied into the routine log before the shift changed.
+
+Field entry 00001: On Saturday at 09:40, a field coordinator visited the river workshop and checked the handheld gauge against the routine sheet. The observer noted a row of seedlings protected from the afternoon sun; the comparison read 43 units, within the ordinary range recorded for that location. The coordinator asked the next shift to use the same reference point.
+
+Field entry 00002: On Tuesday at 09:20, a volunteer surveyor visited the west greenhouse and checked the weather display against the routine sheet. The observer noted a short delay while the key holder finished another inspection; the comparison read 84 units, within the ordinary range recorded for that location. The clerk marked the entry for comparison with the following day's report.
+
+Field entry 00003: On Monday at 14:10, a volunteer surveyor visited the south depot and checked the handheld gauge against the routine sheet. The observer noted a loose hinge that remained safe to use; the comparison read 19 units, within the ordinary range recorded for that location. The team left the route open and added the observation to its next review.
+
+Field entry 00004: On Friday at 10:20, a field coordinator visited the community boat shed and checked the paper map against the routine sheet. The observer noted a quiet interval between the morning and afternoon rounds; the comparison read 58 units, within the ordinary range recorded for that location. The note was copied into the routine log before the shift changed.
+
+Archive record CENTER: This is the cross-check record filed during the middle review. At the Cedar Quarry sample room, the sealed register lists verification code 928. Preserve the code exactly as written.
+
+Field entry 00005: On Tuesday at 06:15, a records clerk visited the east pump house and checked the radio check sheet against the routine sheet. The observer noted a clear view of the path after the temporary barrier was moved; the comparison read 75 units, within the ordinary range recorded for that location. The note was copied into the routine log before the shift changed.
+
+Field entry 00006: On Saturday at 07:50, the site steward visited the north footbridge and checked the sample labels against the routine sheet. The observer noted a measured queue that cleared before the next scheduled check; the comparison read 67 units, within the ordinary range recorded for that location. The note was copied into the routine log before the shift changed.
+
+Field entry 00007: On Friday at 13:45, a field coordinator visited the museum courtyard and checked the sample labels against the routine sheet. The observer noted a narrow patch of shade along the retaining wall; the comparison read 64 units, within the ordinary range recorded for that location. The note was copied into the routine log before the shift changed.
+
+Field entry 00008: On Friday at 15:40, a volunteer surveyor visited the river workshop and checked the inspection ledger against the routine sheet. The observer noted fresh chalk marks near the public notice board; the comparison read 18 units, within the ordinary range recorded for that location. The crew kept the original notation so later visitors could compare conditions.
+
+Archive record FINAL: This is the closing record, filed before the packet was sealed. At the Orbit Kettle return cabinet, the sealed register lists verification code 365. Preserve the code exactly as written.
+
+Retrieval task: find the verification code in the ORIGIN, CENTER, and FINAL archive records. Return exactly three lines, in this order, with the labels and codes only: ORIGIN: <code>, CENTER: <code>, FINAL: <code>. Copy each code exactly; do not infer or normalize it.

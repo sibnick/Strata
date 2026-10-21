@@ -1,0 +1,36 @@
+{
+  "tested_at_utc": "2026-10-17T18:55:49+00:00",
+  "health": {
+    "http_status": 200,
+    "loaded": true,
+    "max_context": 262144,
+    "model": "qwen3.8-flash-next-unsloth-ud-q4_k_xl",
+    "api_key_required": false
+  },
+  "models": {
+    "http_status": 200,
+    "model_id": "qwen3.8-flash-next-unsloth-ud-q4_k_xl"
+  },
+  "openai_chat_completion": {
+    "http_status": 200,
+    "prompt": "Reply with exactly API_READY.",
+    "prompt_tokens": 18,
+    "max_tokens": 12,
+    "completion": "API_READY",
+    "completion_tokens": 3,
+    "cached_prompt_tokens": 0
+  },
+  "processes": {
+    "supervisor_pid": 198321,
+    "api_server_pid": 198409,
+    "engine_pid": 198456
+  },
+  "binding": "127.0.0.1:8080",
+  "post_smoke_snapshot": {
+    "rtx_3090_free_mib": 317,
+    "cmp_170hx_free_mib": 1669,
+    "host_memavailable_gib": 15.64
+  },
+  "engine_reported_rtx_free_after_load_mib": 330,
+  "engine_warning": "RTX stage reported low free VRAM; verify graphs captured successfully."
+}

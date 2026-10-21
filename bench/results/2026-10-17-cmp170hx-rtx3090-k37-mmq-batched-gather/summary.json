@@ -1,0 +1,973 @@
+{
+  "arms": {
+    "counts-off": {
+      "batch": "0",
+      "cleanup_compute": "",
+      "counts": [
+        {
+          "devices": {
+            "0": {
+              "bytes": 261412134912,
+              "experts": 83589,
+              "fallbacks": 0,
+              "launches": 83589
+            },
+            "1": {
+              "bytes": 77328470016,
+              "experts": 24489,
+              "fallbacks": 0,
+              "launches": 24489
+            }
+          },
+          "input_tokens": 1977,
+          "name": "warmup"
+        },
+        {
+          "devices": {
+            "0": {
+              "bytes": 261412134912,
+              "experts": 83589,
+              "fallbacks": 0,
+              "launches": 83589
+            },
+            "1": {
+              "bytes": 77328470016,
+              "experts": 24489,
+              "fallbacks": 0,
+              "launches": 24489
+            }
+          },
+          "input_tokens": 1977,
+          "name": "rep1-large"
+        }
+      ],
+      "engine_return_code": 0,
+      "instrumented": true,
+      "performance": {
+        "1977": {
+          "decode_median_ms": 225.0,
+          "decode_ms": [
+            225.0
+          ],
+          "mtp_accepted_offered": [
+            [
+              9,
+              12
+            ]
+          ],
+          "prefill_median_ms": 2426.1,
+          "prefill_ms": [
+            2426.1
+          ],
+          "wall_median_seconds": 2.653777503001038,
+          "wall_seconds": [
+            2.653777503001038
+          ]
+        }
+      },
+      "request_telemetry": {
+        "0": {
+          "active_clock_event_reason_masks": [
+            "0x0000000000000000",
+            "0x0000000000000004"
+          ],
+          "power_limits_w": [
+            300.0
+          ],
+          "power_w_min_max": [
+            136.35,
+            179.96
+          ],
+          "sm_clock_mhz_min_max": [
+            1800,
+            1950
+          ],
+          "temperature_c_min_max": [
+            36,
+            40
+          ]
+        },
+        "1": {
+          "active_clock_event_reason_masks": [
+            "0x0000000000000000"
+          ],
+          "power_limits_w": [
+            250.0
+          ],
+          "power_w_min_max": [
+            70.24,
+            192.4
+          ],
+          "sm_clock_mhz_min_max": [
+            1455,
+            1485
+          ],
+          "temperature_c_min_max": [
+            36,
+            39
+          ]
+        }
+      },
+      "safety": {
+        "gpu_min_free_bytes": {
+          "0": 2031812608,
+          "1": 994377728
+        },
+        "host_min_available_bytes": 12132610048,
+        "max_process_swap_bytes": 0,
+        "max_rss_bytes": 5092560896,
+        "max_sample_gap_seconds": 1.099676214998908,
+        "max_system_swap_bytes": 138674176,
+        "other_compute_observed": false
+      },
+      "startup_seconds": 135.4884252970005,
+      "status": "passed"
+    },
+    "counts-on": {
+      "batch": "1",
+      "cleanup_compute": "",
+      "counts": [
+        {
+          "devices": {
+            "0": {
+              "bytes": 261412134912,
+              "experts": 83589,
+              "fallbacks": 0,
+              "launches": 5361
+            },
+            "1": {
+              "bytes": 77328470016,
+              "experts": 24489,
+              "fallbacks": 0,
+              "launches": 1573
+            }
+          },
+          "input_tokens": 1977,
+          "name": "warmup"
+        },
+        {
+          "devices": {
+            "0": {
+              "bytes": 261412134912,
+              "experts": 83589,
+              "fallbacks": 0,
+              "launches": 5361
+            },
+            "1": {
+              "bytes": 77328470016,
+              "experts": 24489,
+              "fallbacks": 0,
+              "launches": 1573
+            }
+          },
+          "input_tokens": 1977,
+          "name": "rep1-large"
+        }
+      ],
+      "engine_return_code": 0,
+      "instrumented": true,
+      "performance": {
+        "1977": {
+          "decode_median_ms": 229.2,
+          "decode_ms": [
+            229.2
+          ],
+          "mtp_accepted_offered": [
+            [
+              9,
+              12
+            ]
+          ],
+          "prefill_median_ms": 2106.9,
+          "prefill_ms": [
+            2106.9
+          ],
+          "wall_median_seconds": 2.33903247499984,
+          "wall_seconds": [
+            2.33903247499984
+          ]
+        }
+      },
+      "request_telemetry": {
+        "0": {
+          "active_clock_event_reason_masks": [
+            "0x0000000000000000",
+            "0x0000000000000004"
+          ],
+          "power_limits_w": [
+            300.0
+          ],
+          "power_w_min_max": [
+            123.25,
+            173.71
+          ],
+          "sm_clock_mhz_min_max": [
+            1800,
+            1800
+          ],
+          "temperature_c_min_max": [
+            38,
+            40
+          ]
+        },
+        "1": {
+          "active_clock_event_reason_masks": [
+            "0x0000000000000000"
+          ],
+          "power_limits_w": [
+            250.0
+          ],
+          "power_w_min_max": [
+            77.18,
+            216.73
+          ],
+          "sm_clock_mhz_min_max": [
+            1455,
+            1485
+          ],
+          "temperature_c_min_max": [
+            35,
+            39
+          ]
+        }
+      },
+      "safety": {
+        "gpu_min_free_bytes": {
+          "0": 2031812608,
+          "1": 994377728
+        },
+        "host_min_available_bytes": 12298199040,
+        "max_process_swap_bytes": 0,
+        "max_rss_bytes": 5081366528,
+        "max_sample_gap_seconds": 1.0999523689970374,
+        "max_system_swap_bytes": 138674176,
+        "other_compute_observed": false
+      },
+      "startup_seconds": 135.75271810400227,
+      "status": "passed"
+    },
+    "off-large": {
+      "batch": "0",
+      "cleanup_compute": "",
+      "counts": [
+        {
+          "devices": {},
+          "input_tokens": 1977,
+          "name": "warmup"
+        },
+        {
+          "devices": {},
+          "input_tokens": 1977,
+          "name": "rep1-large"
+        },
+        {
+          "devices": {},
+          "input_tokens": 1977,
+          "name": "rep2-large"
+        },
+        {
+          "devices": {},
+          "input_tokens": 1977,
+          "name": "rep3-large"
+        }
+      ],
+      "engine_return_code": 0,
+      "instrumented": false,
+      "performance": {
+        "1977": {
+          "decode_median_ms": 234.4,
+          "decode_ms": [
+            234.4,
+            233.4,
+            243.7
+          ],
+          "mtp_accepted_offered": [
+            [
+              9,
+              12
+            ],
+            [
+              9,
+              13
+            ],
+            [
+              9,
+              14
+            ]
+          ],
+          "prefill_median_ms": 2426.2,
+          "prefill_ms": [
+            2437.6,
+            2410.1,
+            2426.2
+          ],
+          "wall_median_seconds": 2.6727725399978226,
+          "wall_seconds": [
+            2.674953891997575,
+            2.6462105220016383,
+            2.6727725399978226
+          ]
+        }
+      },
+      "request_telemetry": {
+        "0": {
+          "active_clock_event_reason_masks": [
+            "0x0000000000000000",
+            "0x0000000000000004"
+          ],
+          "power_limits_w": [
+            300.0
+          ],
+          "power_w_min_max": [
+            122.82,
+            182.82
+          ],
+          "sm_clock_mhz_min_max": [
+            1800,
+            1935
+          ],
+          "temperature_c_min_max": [
+            37,
+            40
+          ]
+        },
+        "1": {
+          "active_clock_event_reason_masks": [
+            "0x0000000000000000"
+          ],
+          "power_limits_w": [
+            250.0
+          ],
+          "power_w_min_max": [
+            93.87,
+            193.48
+          ],
+          "sm_clock_mhz_min_max": [
+            1470,
+            1485
+          ],
+          "temperature_c_min_max": [
+            36,
+            40
+          ]
+        }
+      },
+      "safety": {
+        "gpu_min_free_bytes": {
+          "0": 2027618304,
+          "1": 983891968
+        },
+        "host_min_available_bytes": 12558192640,
+        "max_process_swap_bytes": 0,
+        "max_rss_bytes": 5094285312,
+        "max_sample_gap_seconds": 1.0999802420010383,
+        "max_system_swap_bytes": 138674176,
+        "other_compute_observed": false
+      },
+      "startup_seconds": 141.0970124230007,
+      "status": "passed"
+    },
+    "off-short": {
+      "batch": "0",
+      "cleanup_compute": "",
+      "counts": [
+        {
+          "devices": {},
+          "input_tokens": 994,
+          "name": "warmup"
+        },
+        {
+          "devices": {},
+          "input_tokens": 502,
+          "name": "rep1-small"
+        },
+        {
+          "devices": {},
+          "input_tokens": 994,
+          "name": "rep1-medium"
+        },
+        {
+          "devices": {},
+          "input_tokens": 502,
+          "name": "rep2-small"
+        },
+        {
+          "devices": {},
+          "input_tokens": 994,
+          "name": "rep2-medium"
+        },
+        {
+          "devices": {},
+          "input_tokens": 502,
+          "name": "rep3-small"
+        },
+        {
+          "devices": {},
+          "input_tokens": 994,
+          "name": "rep3-medium"
+        }
+      ],
+      "engine_return_code": 0,
+      "instrumented": false,
+      "performance": {
+        "502": {
+          "decode_median_ms": 224.0,
+          "decode_ms": [
+            224.0,
+            224.3,
+            221.4
+          ],
+          "mtp_accepted_offered": [
+            [
+              9,
+              12
+            ],
+            [
+              9,
+              13
+            ],
+            [
+              9,
+              12
+            ]
+          ],
+          "prefill_median_ms": 681.9,
+          "prefill_ms": [
+            685.6,
+            681.9,
+            668.1
+          ],
+          "wall_median_seconds": 0.9091120080011024,
+          "wall_seconds": [
+            0.9120873009997013,
+            0.9091120080011024,
+            0.8920657849994313
+          ]
+        },
+        "994": {
+          "decode_median_ms": 231.4,
+          "decode_ms": [
+            242.3,
+            231.4,
+            225.0
+          ],
+          "mtp_accepted_offered": [
+            [
+              9,
+              13
+            ],
+            [
+              9,
+              13
+            ],
+            [
+              9,
+              12
+            ]
+          ],
+          "prefill_median_ms": 1242.3,
+          "prefill_ms": [
+            1239.5,
+            1246.7,
+            1242.3
+          ],
+          "wall_median_seconds": 1.480771000002278,
+          "wall_seconds": [
+            1.4849523660013801,
+            1.480771000002278,
+            1.4706311499976437
+          ]
+        }
+      },
+      "request_telemetry": {
+        "0": {
+          "active_clock_event_reason_masks": [
+            "0x0000000000000000",
+            "0x0000000000000004"
+          ],
+          "power_limits_w": [
+            300.0
+          ],
+          "power_w_min_max": [
+            135.3,
+            182.37
+          ],
+          "sm_clock_mhz_min_max": [
+            1800,
+            1950
+          ],
+          "temperature_c_min_max": [
+            36,
+            41
+          ]
+        },
+        "1": {
+          "active_clock_event_reason_masks": [
+            "0x0000000000000000"
+          ],
+          "power_limits_w": [
+            250.0
+          ],
+          "power_w_min_max": [
+            148.59,
+            187.57
+          ],
+          "sm_clock_mhz_min_max": [
+            1470,
+            1485
+          ],
+          "temperature_c_min_max": [
+            35,
+            39
+          ]
+        }
+      },
+      "safety": {
+        "gpu_min_free_bytes": {
+          "0": 2036006912,
+          "1": 981794816
+        },
+        "host_min_available_bytes": 12183097344,
+        "max_process_swap_bytes": 0,
+        "max_rss_bytes": 5092950016,
+        "max_sample_gap_seconds": 1.1001977710002393,
+        "max_system_swap_bytes": 138674176,
+        "other_compute_observed": false
+      },
+      "startup_seconds": 137.65267406600105,
+      "status": "passed"
+    },
+    "on-large": {
+      "batch": "1",
+      "cleanup_compute": "",
+      "counts": [
+        {
+          "devices": {},
+          "input_tokens": 1977,
+          "name": "warmup"
+        },
+        {
+          "devices": {},
+          "input_tokens": 1977,
+          "name": "rep1-large"
+        },
+        {
+          "devices": {},
+          "input_tokens": 1977,
+          "name": "rep2-large"
+        },
+        {
+          "devices": {},
+          "input_tokens": 1977,
+          "name": "rep3-large"
+        }
+      ],
+      "engine_return_code": 0,
+      "instrumented": false,
+      "performance": {
+        "1977": {
+          "decode_median_ms": 233.9,
+          "decode_ms": [
+            226.7,
+            244.5,
+            233.9
+          ],
+          "mtp_accepted_offered": [
+            [
+              9,
+              12
+            ],
+            [
+              9,
+              13
+            ],
+            [
+              9,
+              14
+            ]
+          ],
+          "prefill_median_ms": 2103.8,
+          "prefill_ms": [
+            2109.9,
+            2103.8,
+            2083.8
+          ],
+          "wall_median_seconds": 2.3393862310003897,
+          "wall_seconds": [
+            2.3393862310003897,
+            2.3511028649991204,
+            2.320703233999666
+          ]
+        }
+      },
+      "request_telemetry": {
+        "0": {
+          "active_clock_event_reason_masks": [
+            "0x0000000000000000",
+            "0x0000000000000004"
+          ],
+          "power_limits_w": [
+            300.0
+          ],
+          "power_w_min_max": [
+            122.11,
+            187.62
+          ],
+          "sm_clock_mhz_min_max": [
+            1785,
+            1920
+          ],
+          "temperature_c_min_max": [
+            36,
+            40
+          ]
+        },
+        "1": {
+          "active_clock_event_reason_masks": [
+            "0x0000000000000000"
+          ],
+          "power_limits_w": [
+            250.0
+          ],
+          "power_w_min_max": [
+            73.27,
+            217.87
+          ],
+          "sm_clock_mhz_min_max": [
+            1470,
+            1485
+          ],
+          "temperature_c_min_max": [
+            36,
+            41
+          ]
+        }
+      },
+      "safety": {
+        "gpu_min_free_bytes": {
+          "0": 2027618304,
+          "1": 983891968
+        },
+        "host_min_available_bytes": 12574654464,
+        "max_process_swap_bytes": 0,
+        "max_rss_bytes": 5097619456,
+        "max_sample_gap_seconds": 1.1003144449969113,
+        "max_system_swap_bytes": 138674176,
+        "other_compute_observed": false
+      },
+      "startup_seconds": 139.88953183599733,
+      "status": "passed"
+    },
+    "on-short": {
+      "batch": "1",
+      "cleanup_compute": "",
+      "counts": [
+        {
+          "devices": {},
+          "input_tokens": 994,
+          "name": "warmup"
+        },
+        {
+          "devices": {},
+          "input_tokens": 502,
+          "name": "rep1-small"
+        },
+        {
+          "devices": {},
+          "input_tokens": 994,
+          "name": "rep1-medium"
+        },
+        {
+          "devices": {},
+          "input_tokens": 502,
+          "name": "rep2-small"
+        },
+        {
+          "devices": {},
+          "input_tokens": 994,
+          "name": "rep2-medium"
+        },
+        {
+          "devices": {},
+          "input_tokens": 502,
+          "name": "rep3-small"
+        },
+        {
+          "devices": {},
+          "input_tokens": 994,
+          "name": "rep3-medium"
+        }
+      ],
+      "engine_return_code": 0,
+      "instrumented": false,
+      "performance": {
+        "502": {
+          "decode_median_ms": 223.2,
+          "decode_ms": [
+            222.3,
+            231.7,
+            223.2
+          ],
+          "mtp_accepted_offered": [
+            [
+              9,
+              12
+            ],
+            [
+              9,
+              13
+            ],
+            [
+              9,
+              12
+            ]
+          ],
+          "prefill_median_ms": 600.8,
+          "prefill_ms": [
+            600.8,
+            604.6,
+            585.3
+          ],
+          "wall_median_seconds": 0.826063188000262,
+          "wall_seconds": [
+            0.826063188000262,
+            0.839568033003161,
+            0.8112649540016719
+          ]
+        },
+        "994": {
+          "decode_median_ms": 226.8,
+          "decode_ms": [
+            235.2,
+            226.8,
+            224.8
+          ],
+          "mtp_accepted_offered": [
+            [
+              9,
+              13
+            ],
+            [
+              9,
+              12
+            ],
+            [
+              9,
+              12
+            ]
+          ],
+          "prefill_median_ms": 1082.1,
+          "prefill_ms": [
+            1099.5,
+            1080.0,
+            1082.1
+          ],
+          "wall_median_seconds": 1.3101304770025308,
+          "wall_seconds": [
+            1.3374115629994776,
+            1.3101304770025308,
+            1.3094095919987012
+          ]
+        }
+      },
+      "request_telemetry": {
+        "0": {
+          "active_clock_event_reason_masks": [
+            "0x0000000000000000",
+            "0x0000000000000004"
+          ],
+          "power_limits_w": [
+            300.0
+          ],
+          "power_w_min_max": [
+            135.4,
+            187.55
+          ],
+          "sm_clock_mhz_min_max": [
+            1800,
+            1950
+          ],
+          "temperature_c_min_max": [
+            37,
+            40
+          ]
+        },
+        "1": {
+          "active_clock_event_reason_masks": [
+            "0x0000000000000000"
+          ],
+          "power_limits_w": [
+            250.0
+          ],
+          "power_w_min_max": [
+            87.39,
+            218.59
+          ],
+          "sm_clock_mhz_min_max": [
+            1470,
+            1485
+          ],
+          "temperature_c_min_max": [
+            36,
+            40
+          ]
+        }
+      },
+      "safety": {
+        "gpu_min_free_bytes": {
+          "0": 2036006912,
+          "1": 981794816
+        },
+        "host_min_available_bytes": 12300279808,
+        "max_process_swap_bytes": 0,
+        "max_rss_bytes": 5097062400,
+        "max_sample_gap_seconds": 1.1000110109998786,
+        "max_system_swap_bytes": 138674176,
+        "other_compute_observed": false
+      },
+      "startup_seconds": 138.88546321800095,
+      "status": "passed"
+    },
+    "preserved": {
+      "batch": "0",
+      "cleanup_compute": "",
+      "counts": [
+        {
+          "devices": {},
+          "input_tokens": 1977,
+          "name": "warmup"
+        },
+        {
+          "devices": {},
+          "input_tokens": 1977,
+          "name": "rep1-large"
+        },
+        {
+          "devices": {},
+          "input_tokens": 1977,
+          "name": "rep2-large"
+        },
+        {
+          "devices": {},
+          "input_tokens": 1977,
+          "name": "rep3-large"
+        }
+      ],
+      "engine_return_code": 0,
+      "instrumented": false,
+      "performance": {
+        "1977": {
+          "decode_median_ms": 233.1,
+          "decode_ms": [
+            228.5,
+            237.3,
+            233.1
+          ],
+          "mtp_accepted_offered": [
+            [
+              9,
+              12
+            ],
+            [
+              9,
+              13
+            ],
+            [
+              9,
+              14
+            ]
+          ],
+          "prefill_median_ms": 2389.5,
+          "prefill_ms": [
+            2386.9,
+            2390.8,
+            2389.5
+          ],
+          "wall_median_seconds": 2.625569200001337,
+          "wall_seconds": [
+            2.6180906609988597,
+            2.6307575560022087,
+            2.625569200001337
+          ]
+        }
+      },
+      "request_telemetry": {
+        "0": {
+          "active_clock_event_reason_masks": [
+            "0x0000000000000000",
+            "0x0000000000000004"
+          ],
+          "power_limits_w": [
+            300.0
+          ],
+          "power_w_min_max": [
+            111.9,
+            190.37
+          ],
+          "sm_clock_mhz_min_max": [
+            1800,
+            1950
+          ],
+          "temperature_c_min_max": [
+            35,
+            40
+          ]
+        },
+        "1": {
+          "active_clock_event_reason_masks": [
+            "0x0000000000000000"
+          ],
+          "power_limits_w": [
+            250.0
+          ],
+          "power_w_min_max": [
+            83.17,
+            195.3
+          ],
+          "sm_clock_mhz_min_max": [
+            1470,
+            1485
+          ],
+          "temperature_c_min_max": [
+            35,
+            39
+          ]
+        }
+      },
+      "safety": {
+        "gpu_min_free_bytes": {
+          "0": 2027618304,
+          "1": 983891968
+        },
+        "host_min_available_bytes": 12416897024,
+        "max_process_swap_bytes": 0,
+        "max_rss_bytes": 5098426368,
+        "max_sample_gap_seconds": 1.1006724100006977,
+        "max_system_swap_bytes": 138674176,
+        "other_compute_observed": false
+      },
+      "startup_seconds": 141.65574110700254,
+      "status": "passed"
+    }
+  },
+  "performance_comparisons": {
+    "off-large:on-large:1977": {
+      "off_ms": 2426.2,
+      "on_ms": 2103.8,
+      "prefill_time_reduction_percent": 13.28826972219931,
+      "speedup": 1.1532465063218935
+    },
+    "off-short:on-short:502": {
+      "off_ms": 681.9,
+      "on_ms": 600.8,
+      "prefill_time_reduction_percent": 11.893239477929319,
+      "speedup": 1.1349866844207723
+    },
+    "off-short:on-short:994": {
+      "off_ms": 1242.3,
+      "on_ms": 1082.1,
+      "prefill_time_reduction_percent": 12.895435885051922,
+      "speedup": 1.1480454671472138
+    }
+  }
+}

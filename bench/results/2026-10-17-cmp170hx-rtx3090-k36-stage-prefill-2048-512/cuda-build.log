@@ -1,0 +1,26 @@
+[  3%] Built target strata_spec
+[ 11%] Built target strata_core
+[ 15%] Built target ggml-base
+[ 17%] Built target strata_mmq_w4a4
+[ 21%] Built target strata_kq
+[ 33%] Built target ggml-cpu
+[ 64%] Built target strata_kernels
+[ 84%] Built target strata_mmq
+[ 84%] Built target strata_kernels_cpu
+[ 94%] Built target strata_engine
+[ 96%] Built target strata_prefill
+[ 98%] Built target strata_qwen35
+[100%] Built target strata
+[ 60%] Built target ggml-base
+[100%] Built target strata_kq
+[ 12%] Built target ggml-base
+[ 12%] Built target strata_core
+[ 19%] Built target strata_kq
+[ 17%] Built target strata_mmq_w4a4
+[ 31%] Built target ggml-cpu
+[ 65%] Built target strata_kernels
+[ 76%] Built target strata_kernels_cpu
+[ 87%] Built target strata_mmq
+[ 97%] Built target strata_engine
+[100%] Built target strata_prefill
+[100%] Built target strata-split-memory

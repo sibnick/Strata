@@ -1,0 +1,13 @@
+[ 33%] Built target ggml-base
+[ 55%] Built target strata_kq
+[ 55%] Built target strata_mmq_w4a4
+[100%] Built target strata_mmq
+[100%] Building CXX object CMakeFiles/prefill_gather_test.dir/tests/cuda/prefill_gather_test.cpp.o
+[100%] Linking CXX executable prefill_gather_test
+[100%] Built target prefill_gather_test
+[ 33%] Built target ggml-base
+[ 44%] Built target strata_mmq_w4a4
+[ 55%] Built target strata_kq
+[100%] Built target strata_mmq
+[100%] Linking CXX executable prefill_mmq_kquant_test
+[100%] Built target prefill_mmq_kquant_test

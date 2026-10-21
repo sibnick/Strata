@@ -1,0 +1,48 @@
+{
+  "admission": {
+    "0": {
+      "free_bytes": 68048519168,
+      "ledger_required_including_reserves_and_512_mib_prompt_headroom": 66316140544,
+      "margin_bytes": 1732378624,
+      "physical_gpu": 1
+    },
+    "1": {
+      "free_bytes": 25265438720,
+      "ledger_required_including_reserves_and_512_mib_prompt_headroom": 25562610924,
+      "margin_bytes": -297172204,
+      "physical_gpu": 0
+    }
+  },
+  "gpu_workload_started": false,
+  "preflight": {
+    "compute_processes_before": [],
+    "engine_reserves_mib": [
+      0,
+      0
+    ],
+    "engine_sha256": "c13681c5d778f6aff1a9fca0cb7507b53f8d3c22ae4b444c59e9b56b9c38879f",
+    "external_gpu_free_abort_mib": null,
+    "gpu_memory_by_physical_index": [
+      {
+        "free_bytes": 25265438720,
+        "physical_index": 0,
+        "total_bytes": 25769803776,
+        "used_bytes": 504365056
+      },
+      {
+        "free_bytes": 68048519168,
+        "physical_index": 1,
+        "total_bytes": 68719476736,
+        "used_bytes": 670957568
+      }
+    ],
+    "host_memavailable_bytes": 46558724096,
+    "host_start_gib": 6,
+    "host_stop_gib": 5,
+    "mandatory_prompt_init_headroom_bytes": 536870912,
+    "source_commit": "44ec3b0becf50aaabd683d35e2389de9bd2ec78a",
+    "telemetry": "0, GPU-01f295eb-2ee0-838a-ba5b-db97f075a5f7, NVIDIA GeForce RTX 3090, 300.00, 25.76, 210, 210, 25, 0x0000000000000001\n1, GPU-79d96de3-4783-ba96-d95c-fe5e0364528e, NVIDIA CMP 170HX, 250.00, 32.05, 210, 210, 28, 0x0000000000000001"
+  },
+  "reason": "mandatory 512 MiB prompt-init headroom does not fit on every stage",
+  "status": "offline-infeasible"
+}

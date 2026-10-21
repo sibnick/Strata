@@ -1,0 +1,33 @@
+{
+  "backends": "CUDA sm80+86 built; HIP and SYCL not built or tested; no runtime source changed",
+  "build_argv": [
+    "cmake",
+    "--build",
+    "build/cuda-short-profile",
+    "--target",
+    "strata",
+    "-j",
+    "4"
+  ],
+  "configure_argv": [
+    "cmake",
+    "-S",
+    ".",
+    "-B",
+    "build/cuda-short-profile",
+    "-DSTRATA_ENABLE_CUDA=ON",
+    "-DCMAKE_CUDA_COMPILER=/usr/local/cuda-13.4/bin/nvcc",
+    "-DCMAKE_CUDA_ARCHITECTURES=80;86",
+    "-DCMAKE_BUILD_TYPE=Release",
+    "-DSTRATA_BUILD_TESTS=OFF"
+  ],
+  "hashes": {
+    "build/cuda-short-profile/CMakeCache.txt": "ccc181b3ca2f948cd44f8806179e105a9b29927e48554b99d3e0f1e2554b921c",
+    "build/cuda-short-profile/libstrata_kq.so": "f0476d2db4fc631d77b2923f35dacdc7dcbb80462e583356c85d773768a12ef4",
+    "build/cuda-short-profile/strata": "cc8d0ca2ed3364459227147202da3627454ccb85ea1960614c6e241055ef2214"
+  },
+  "nvcc": "nvcc: NVIDIA (R) Cuda compiler driver\nCopyright (c) 2005-2026 NVIDIA Corporation\nBuilt on Tue_Sep_01_08:45:21_PDT_2026\nCuda compilation tools, release 13.4, V13.4.92\nBuild cuda_13.4.r13.4/compiler.38855100_0\n",
+  "original_binary": "/tmp/strata-gpu-owned-cuda/strata no longer present; rebuilt binary differs in hash; no claim of identical build artifacts",
+  "runtime_diff_from_original_build_commit": "",
+  "source_commit": "d6602822ecf698191cb3671cea732439d627eab1"
+}

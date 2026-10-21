@@ -1,0 +1,25 @@
+{
+  "user_request": "please relax all memory limits and check 768 and 1024",
+  "explicit_user_clarification": "Yes—remove discretionary GPU limits; retain host 5 GiB and mandatory allocation checks",
+  "source": "Coordinating GPU runtime design session forwarded user authorization on 2026-10-17",
+  "scope": {
+    "engine_vram_reserve_mib_both_gpus": 0,
+    "external_free_vram_abort_threshold_both_gpus": null,
+    "host_start_memavailable_gib": 6,
+    "host_stop_memavailable_gib": 5,
+    "mandatory_cuda_allocation_admission_error_checks": "retained unchanged",
+    "complete_residency_and_full262144_int8_context": "required unchanged",
+    "host_resident_and_pinning_protections": "unchanged",
+    "runtime_source_default_algorithm_threshold_tile_changes": "not authorized",
+    "power_clock_reset_drop_cache_unrelated_process_changes": "not authorized",
+    "higher_gpu_oom_risk": "accepted by user",
+    "comparison": "not the same GPU safety conditions as earlier 256/384/512 runs"
+  },
+  "bounds": {
+    "chunks": [768, 1024],
+    "per_chunk": "one original1977-token cap32 warmup plus three measured short repeats; at most one original32788-token cap192 request if gates pass",
+    "forbidden": "near-limit/128K/262K prompts, retries after OOM, force-fit workarounds, other chunk or tile experiments",
+    "serial": true,
+    "profiling_counters": "OFF"
+  }
+}

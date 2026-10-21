@@ -1,0 +1,11 @@
+$ python3 -B bench/results/2026-10-17-cmp170hx-rtx3090-k36-stage-prefill/test_stage_chunks.py
+.....
+----------------------------------------------------------------------
+Ran 5 tests in 0.279s
+
+OK
+$ build/cuda-per-stage/strata-split-memory --self-test
+split-memory sizing self-test passed (no model or CUDA allocations)
+$ build/cuda-per-stage/strata --help | grep -- --prefill-stage-chunks
+  --prefill-stage-chunks N[,N...]  --serve, fully owned layer split: per-stage chunk sizes in GPU order;
+CLI option help: passed

@@ -1,0 +1,10 @@
+Internal ctest changing into directory: /home/nikolay/projects/copilot-worktrees/170hx-3090/sibnick-animated-robot/build/cuda-batched
+Test project /home/nikolay/projects/copilot-worktrees/170hx-3090/sibnick-animated-robot/build/cuda-batched
+    Start  99: prefill_gather_test
+1/2 Test  #99: prefill_gather_test ..............   Passed    0.78 sec
+    Start 102: prefill_mmq_kquant_test
+2/2 Test #102: prefill_mmq_kquant_test ..........   Passed    3.87 sec
+
+100% tests passed, 0 tests failed out of 2
+
+Total Test time (real) =   4.65 sec

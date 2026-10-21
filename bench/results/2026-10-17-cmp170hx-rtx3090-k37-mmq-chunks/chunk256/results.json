@@ -1,0 +1,1167 @@
+{
+  "admission": {
+    "0": {
+      "free_bytes": 68048519168,
+      "ledger_required_including_reserves": 67528294400,
+      "margin_bytes": 520224768,
+      "physical_gpu": 1
+    },
+    "1": {
+      "free_bytes": 25266225152,
+      "ledger_required_including_reserves": 23832460524,
+      "margin_bytes": 1433764628,
+      "physical_gpu": 0
+    }
+  },
+  "after_memory": [
+    {
+      "free_bytes": 25266225152,
+      "physical_index": 0,
+      "total_bytes": 25769803776,
+      "used_bytes": 503578624
+    },
+    {
+      "free_bytes": 68048519168,
+      "physical_index": 1,
+      "total_bytes": 68719476736,
+      "used_bytes": 670957568
+    }
+  ],
+  "argv": [
+    "/home/nikolay/projects/copilot-worktrees/170hx-3090/sibnick-animated-robot/build/cuda-batched/strata",
+    "--pack",
+    "/home/nikolay/projects/copilot-worktrees/170hx-3090/sibnick-upgraded-succotash/build/pack/ud-q4-k-xl",
+    "--native",
+    "/home/nikolay/projects/Strata-data/models/UD-Q4_K_XL/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00001-of-00004.gguf",
+    "--gpu",
+    "1,0",
+    "--layer-split",
+    "37",
+    "--trim-stage-weights",
+    "--max-context",
+    "262144",
+    "--kv",
+    "int8",
+    "--mtp",
+    "/home/nikolay/projects/Strata-data/mtp/rt",
+    "--spec",
+    "2",
+    "--prefill",
+    "256",
+    "--no-prefill-borrow",
+    "--mmap-experts",
+    "--resident-budget-gib",
+    "0.001",
+    "--expert-profile",
+    "/home/nikolay/projects/copilot-worktrees/170hx-3090/sibnick-upgraded-succotash/data/expert-profile.bin",
+    "--ple-io",
+    "direct",
+    "--ple-row-cache",
+    "1024",
+    "--vram-reserve-mib",
+    "1024",
+    "--vram-reserve-later-mib",
+    "1024",
+    "--pool-workers",
+    "1",
+    "--serve",
+    "--prompt-cache",
+    "0",
+    "--conversation-cache-min-free-mib",
+    "4096",
+    "--gpu-owned-experts"
+  ],
+  "artifact_identity": {
+    "artifacts": [
+      {
+        "bytes": 10946624,
+        "fresh_sha256": "4448186216b3af4cc558bbce2c3213f01608f8f8b2e5267a9767971dd3ec8082",
+        "manifest_path": "/home/nikolay/projects/Strata-data/models/UD-Q4_K_XL/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00001-of-00004.gguf",
+        "mtime_ns": 1792101427946182652,
+        "recorded_sha256": "4448186216b3af4cc558bbce2c3213f01608f8f8b2e5267a9767971dd3ec8082",
+        "resolved_path": "/home/nikolay/projects/Strata-data/models/UD-Q4_K_XL/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00001-of-00004.gguf"
+      },
+      {
+        "bytes": 49859583136,
+        "fresh_sha256": null,
+        "manifest_path": "/home/nikolay/projects/Strata-data/models/UD-Q4_K_XL/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00002-of-00004.gguf",
+        "mtime_ns": 1792103763302372363,
+        "recorded_sha256": "3f342f1c1580473f1ee94ddd5b28206e8c07a70fa1a366f59d1d6c922919a6c9",
+        "resolved_path": "/home/nikolay/projects/Strata-data/models/UD-Q4_K_XL/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00002-of-00004.gguf"
+      },
+      {
+        "bytes": 49376141504,
+        "fresh_sha256": null,
+        "manifest_path": "/home/nikolay/projects/Strata-data/models/UD-Q4_K_XL/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00003-of-00004.gguf",
+        "mtime_ns": 1792104235117659810,
+        "recorded_sha256": "56758f40269cad5cd9b0d3d6fbae0f40f6d5be6de49e4ab392dbe83157d9cbd3",
+        "resolved_path": "/home/nikolay/projects/Strata-data/models/UD-Q4_K_XL/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00003-of-00004.gguf"
+      },
+      {
+        "bytes": 12087983520,
+        "fresh_sha256": null,
+        "manifest_path": "/home/nikolay/projects/Strata-data/models/UD-Q4_K_XL/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00004-of-00004.gguf",
+        "mtime_ns": 1792102239596707698,
+        "recorded_sha256": "753bda48b98ba4f1636134a90a967de1b2d3908a236c026e464777342e53510a",
+        "resolved_path": "/home/nikolay/projects/Strata-data/models/UD-Q4_K_XL/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00004-of-00004.gguf"
+      },
+      {
+        "bytes": 21093,
+        "fresh_sha256": "74ce6fb95d8e9836f842401ae761cc1d4846a7696fb7d5275cc3f40b950b6f4f",
+        "manifest_path": "build/pack/ud-q4-k-xl/compat-bf16.json",
+        "mtime_ns": 1792104773041507596,
+        "recorded_sha256": "74ce6fb95d8e9836f842401ae761cc1d4846a7696fb7d5275cc3f40b950b6f4f",
+        "resolved_path": "/home/nikolay/projects/copilot-worktrees/170hx-3090/sibnick-upgraded-succotash/build/pack/ud-q4-k-xl/compat-bf16.json"
+      },
+      {
+        "bytes": 167871,
+        "fresh_sha256": "722a102cb500b9097d1890cffebf142904fa6534c209ac44c6445f0aec3d0cc4",
+        "manifest_path": "build/pack/ud-q4-k-xl/conversions.json",
+        "mtime_ns": 1792104773040507542,
+        "recorded_sha256": "722a102cb500b9097d1890cffebf142904fa6534c209ac44c6445f0aec3d0cc4",
+        "resolved_path": "/home/nikolay/projects/copilot-worktrees/170hx-3090/sibnick-upgraded-succotash/build/pack/ud-q4-k-xl/conversions.json"
+      },
+      {
+        "bytes": 1485688320,
+        "fresh_sha256": null,
+        "manifest_path": "build/pack/ud-q4-k-xl/dense.bin",
+        "mtime_ns": 1792104773038507435,
+        "recorded_sha256": "f53174059b262ed342b82e143af62056081948ef5e5f1903a1a70eeb73fa4a23",
+        "resolved_path": "/home/nikolay/projects/copilot-worktrees/170hx-3090/sibnick-upgraded-succotash/build/pack/ud-q4-k-xl/dense.bin"
+      },
+      {
+        "bytes": 93560,
+        "fresh_sha256": "cfc07e91c4d9b8e8c999fd1f70fa364e584748e70fa377b30e0fc85426f52711",
+        "manifest_path": "build/pack/ud-q4-k-xl/index.txt",
+        "mtime_ns": 1792104773039507489,
+        "recorded_sha256": "cfc07e91c4d9b8e8c999fd1f70fa364e584748e70fa377b30e0fc85426f52711",
+        "resolved_path": "/home/nikolay/projects/copilot-worktrees/170hx-3090/sibnick-upgraded-succotash/build/pack/ud-q4-k-xl/index.txt"
+      },
+      {
+        "bytes": 5795,
+        "fresh_sha256": "5ed2c4a55910616db1efe16f0c989e9bec80cc8b9e95bf1c42f886aadfffd2d6",
+        "manifest_path": "build/pack/ud-q4-k-xl/native_experts.txt",
+        "mtime_ns": 1792104773591537104,
+        "recorded_sha256": "5ed2c4a55910616db1efe16f0c989e9bec80cc8b9e95bf1c42f886aadfffd2d6",
+        "resolved_path": "/home/nikolay/projects/copilot-worktrees/170hx-3090/sibnick-upgraded-succotash/build/pack/ud-q4-k-xl/native_experts.txt"
+      },
+      {
+        "bytes": 9993,
+        "fresh_sha256": "12827f24b742ea4e80cdc12dbcf9622227056b9f797252a3149263d4f9aaadce",
+        "manifest_path": "build/pack/ud-q4-k-xl/tokenizer/chat_template.jinja",
+        "mtime_ns": 1792104773570535978,
+        "recorded_sha256": "12827f24b742ea4e80cdc12dbcf9622227056b9f797252a3149263d4f9aaadce",
+        "resolved_path": "/home/nikolay/projects/copilot-worktrees/170hx-3090/sibnick-upgraded-succotash/build/pack/ud-q4-k-xl/tokenizer/chat_template.jinja"
+      },
+      {
+        "bytes": 3353258,
+        "fresh_sha256": "4ba698529766c7a2f5052083ea10cdf2485577f5237a332ee291054eb11e3332",
+        "manifest_path": "build/pack/ud-q4-k-xl/tokenizer/merges.txt",
+        "mtime_ns": 1792104773476530935,
+        "recorded_sha256": "4ba698529766c7a2f5052083ea10cdf2485577f5237a332ee291054eb11e3332",
+        "resolved_path": "/home/nikolay/projects/copilot-worktrees/170hx-3090/sibnick-upgraded-succotash/build/pack/ud-q4-k-xl/tokenizer/merges.txt"
+      },
+      {
+        "bytes": 744960,
+        "fresh_sha256": "5088c8c298fc06af8382ddb3b76c888703ac2634e82263b97eedcc2ad202738b",
+        "manifest_path": "build/pack/ud-q4-k-xl/tokenizer/token_type.json",
+        "mtime_ns": 1792104773482531256,
+        "recorded_sha256": "5088c8c298fc06af8382ddb3b76c888703ac2634e82263b97eedcc2ad202738b",
+        "resolved_path": "/home/nikolay/projects/copilot-worktrees/170hx-3090/sibnick-upgraded-succotash/build/pack/ud-q4-k-xl/tokenizer/token_type.json"
+      },
+      {
+        "bytes": 541,
+        "fresh_sha256": "c0bd435efbc6c3b28964b47999afe16c4ad268c7c7c4e8cb3af410796a6f30bf",
+        "manifest_path": "build/pack/ud-q4-k-xl/tokenizer/tokenizer.json",
+        "mtime_ns": 1792104773482531256,
+        "recorded_sha256": "c0bd435efbc6c3b28964b47999afe16c4ad268c7c7c4e8cb3af410796a6f30bf",
+        "resolved_path": "/home/nikolay/projects/copilot-worktrees/170hx-3090/sibnick-upgraded-succotash/build/pack/ud-q4-k-xl/tokenizer/tokenizer.json"
+      },
+      {
+        "bytes": 5737005,
+        "fresh_sha256": "4ba64f0332abcfb0b600b7df1537d1e836e68009d5fb7cdb77339738dc6365c4",
+        "manifest_path": "build/pack/ud-q4-k-xl/tokenizer/vocab.json",
+        "mtime_ns": 1792104773405527126,
+        "recorded_sha256": "4ba64f0332abcfb0b600b7df1537d1e836e68009d5fb7cdb77339738dc6365c4",
+        "resolved_path": "/home/nikolay/projects/copilot-worktrees/170hx-3090/sibnick-upgraded-succotash/build/pack/ud-q4-k-xl/tokenizer/vocab.json"
+      },
+      {
+        "bytes": 116099072,
+        "fresh_sha256": null,
+        "manifest_path": "/home/nikolay/projects/Strata-data/mtp/rt/dense.bin",
+        "mtime_ns": 1790797511564081072,
+        "recorded_sha256": "c724dc0b0822ada5d2977bf5bde821605feabaa64ea2e0045b67ca656329070a",
+        "resolved_path": "/home/nikolay/projects/Strata-data/mtp/rt/dense.bin"
+      },
+      {
+        "bytes": 1851,
+        "fresh_sha256": "991456cf4eb266eb8a888c349e548d11bc640f5dbd9149439aa9786af0f732fd",
+        "manifest_path": "/home/nikolay/projects/Strata-data/mtp/rt/dense.txt",
+        "mtime_ns": 1790797511564081072,
+        "recorded_sha256": "991456cf4eb266eb8a888c349e548d11bc640f5dbd9149439aa9786af0f732fd",
+        "resolved_path": "/home/nikolay/projects/Strata-data/mtp/rt/dense.txt"
+      },
+      {
+        "bytes": 425196,
+        "fresh_sha256": "b1e1d3a7a9e4bf862dcd5923ce661fb59bbd07907e594df5cf86a62ac235cb91",
+        "manifest_path": "/home/nikolay/projects/Strata-data/mtp/rt/draft_vocab.bin",
+        "mtime_ns": 1791844028315873667,
+        "recorded_sha256": "b1e1d3a7a9e4bf862dcd5923ce661fb59bbd07907e594df5cf86a62ac235cb91",
+        "resolved_path": "/home/nikolay/projects/Strata-data/mtp/rt/draft_vocab.bin"
+      },
+      {
+        "bytes": 707788800,
+        "fresh_sha256": null,
+        "manifest_path": "/home/nikolay/projects/Strata-data/mtp/rt/experts.bin",
+        "mtime_ns": 1790797510882044188,
+        "recorded_sha256": "09398406be61f1f54c93861f449e48b8df0bfccbc9ec9b2b7636775a6ea9244f",
+        "resolved_path": "/home/nikolay/projects/Strata-data/mtp/rt/experts.bin"
+      },
+      {
+        "bytes": 196632,
+        "fresh_sha256": "8f59b4aa8873209dff11c11e37bcda9529a1335b724a1afeea37bf6388975baf",
+        "manifest_path": "data/expert-profile.bin",
+        "mtime_ns": 1792110084727076813,
+        "recorded_sha256": "8f59b4aa8873209dff11c11e37bcda9529a1335b724a1afeea37bf6388975baf",
+        "resolved_path": "/home/nikolay/projects/copilot-worktrees/170hx-3090/sibnick-upgraded-succotash/data/expert-profile.bin"
+      }
+    ],
+    "gguf_revision": "38bb39ee97821de2c9009abb7e93950eec396e66",
+    "hash_method": "bounded 8 MiB O_DIRECT reads; captured after run, not during it",
+    "large_artifact_hashing": "not freshly repeated for files over 16 MiB; size/mtime recorded and original manifest SHA-256 retained",
+    "manifest_path": "/home/nikolay/projects/copilot-worktrees/170hx-3090/sibnick-curly-tribble/bench/results/2026-10-16-cmp170hx-rtx3090-k37/artifacts.json",
+    "manifest_sha256": "de3b5214d60af2709d19baf8deed4f1c89e35006e26023882794437011d2ddd6"
+  },
+  "cache_sha256": "ed24afeaea0eba2df5cddb447d4c598eecaf5a5e3d9aa58d8de4d0bc296437f4",
+  "chunk": 256,
+  "compute_processes_after": "",
+  "engine_pid": 806067,
+  "engine_return_code": 0,
+  "engine_sha256": "aba34837fe52effa15450a85a82d6cde9af6a55c7866361ecd1f49099a5f6af9",
+  "environment_overrides": {
+    "STRATA_FILL_AHEAD": "0",
+    "STRATA_IO_PREFETCH": "0",
+    "STRATA_MMQ_KQ": "1",
+    "STRATA_PIN_RESERVE_GIB": "4",
+    "STRATA_PREFILL_BATCH_GATHER": "1",
+    "STRATA_REFILL_BLOCKING": "1",
+    "STRATA_RESIDENT_HEADROOM_GIB": "4",
+    "STRATA_SPLIT_RING": "96",
+    "STRATA_STAGE_PIN": "0",
+    "STRATA_UNBUFFERED_LOAD": "1"
+  },
+  "finished_utc": "2026-10-17T00:16:27.304+00:00",
+  "guards": {
+    "engine_reserve_mib": [
+      1024,
+      1024
+    ],
+    "gpu_stop_mib": [
+      640,
+      640
+    ],
+    "host_floor_gib": 4,
+    "host_start_gib": 6,
+    "host_stop_gib": 5,
+    "poll_seconds": 1,
+    "polling_not_oom_guarantee": true
+  },
+  "harness_sha256": "05269d95ca21de106f491765f9780d09d20c7bb6503fe0a3dcff0866608e9fac",
+  "kquant_library_sha256": "3ba4cc2c791be319e5c010965b95c75443fb52194b52ea28c43c1fd8397335a0",
+  "loaded_dso": [
+    "/home/nikolay/projects/copilot-worktrees/170hx-3090/sibnick-animated-robot/build/cuda-batched/libstrata_kq.so"
+  ],
+  "pcie_helper_pid": 806065,
+  "pcie_helper_return_code": 0,
+  "pcie_ready": {
+    "available": true,
+    "per_gpu": {
+      "0": {
+        "rx_mib_s": {
+          "max": 1056.0,
+          "mean": 791.6666666666666,
+          "min": 0.0,
+          "sample_count": 9
+        },
+        "tx_mib_s": {
+          "max": 116.0,
+          "mean": 84.88888888888889,
+          "min": 12.0,
+          "sample_count": 9
+        }
+      },
+      "1": {
+        "rx_mib_s": {
+          "max": 93.0,
+          "mean": 10.333333333333334,
+          "min": 0.0,
+          "sample_count": 9
+        },
+        "tx_mib_s": {
+          "max": 21.0,
+          "mean": 2.4444444444444446,
+          "min": 0.0,
+          "sample_count": 9
+        }
+      }
+    },
+    "reason": null,
+    "scope": "whole-device throughput; other graphics processes may contribute",
+    "units": "MB/s as printed by nvidia-smi dmon"
+  },
+  "physical_gpu_identity": "0, GPU-01f295eb-2ee0-838a-ba5b-db97f075a5f7, NVIDIA GeForce RTX 3090, 300.00, 23.35, 210, 210, 27, 0x0000000000000004\n1, GPU-79d96de3-4783-ba96-d95c-fe5e0364528e, NVIDIA CMP 170HX, 250.00, 32.08, 210, 210, 28, 0x0000000000000001",
+  "requests": [
+    {
+      "actual_chunk_count": 8,
+      "actual_chunk_shape": [
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        184
+      ],
+      "answer": "ORIGIN: 714\nCENTER: 928\nFINAL: 365",
+      "counter_lines": [
+        "strata serve: prompt 1977 tokens = 0 reused + 1977 read in 2339 ms (845.1 tok/s), 22 generated in 244 ms (90.2 tok/s), drafts accepted 9 of 12, 0 checkpoints",
+        "strata serve: expert tiers: GPU 0 hits this request; since the start RAM 0 blobs, files 0 blobs 77024.6 MB read (the GGUF in place)",
+        "strata serve: file tier I/O this request: the OS read 140125.2 MB from storage (0 major faults) for 77024.6 MB of expert reads"
+      ],
+      "decode_ms": 243.8,
+      "done": "DONE 22 1977 2339.4 243.8 stop 9 12 0 0 0 0 0 0.0 1977 0",
+      "fresh": 1977,
+      "generated_ids": [
+        842,
+        53665,
+        25,
+        220,
+        22,
+        16,
+        19,
+        198,
+        75761,
+        25,
+        220,
+        24,
+        17,
+        23,
+        198,
+        95429,
+        25,
+        220,
+        18,
+        21,
+        20,
+        248046
+      ],
+      "input_tokens": 1977,
+      "memory_after": [
+        {
+          "free_bytes": 2031812608,
+          "physical_index": 0,
+          "total_bytes": 25769803776,
+          "used_bytes": 23737991168
+        },
+        {
+          "free_bytes": 994377728,
+          "physical_index": 1,
+          "total_bytes": 68719476736,
+          "used_bytes": 67725099008
+        }
+      ],
+      "mtp_accepted_offered": [
+        9,
+        12
+      ],
+      "name": "warmup",
+      "pcie": {
+        "available": true,
+        "per_gpu": {
+          "0": {
+            "rx_mib_s": {
+              "max": 6.0,
+              "mean": 2.0,
+              "min": 0.0,
+              "sample_count": 3
+            },
+            "tx_mib_s": {
+              "max": 1.0,
+              "mean": 0.3333333333333333,
+              "min": 0.0,
+              "sample_count": 3
+            }
+          },
+          "1": {
+            "rx_mib_s": {
+              "max": 39.0,
+              "mean": 25.333333333333332,
+              "min": 1.0,
+              "sample_count": 3
+            },
+            "tx_mib_s": {
+              "max": 10.0,
+              "mean": 8.333333333333334,
+              "min": 6.0,
+              "sample_count": 3
+            }
+          }
+        },
+        "reason": null,
+        "scope": "whole-device throughput; other graphics processes may contribute",
+        "units": "MB/s as printed by nvidia-smi dmon"
+      },
+      "prefill_ms": 2339.4,
+      "prefill_tokens_per_second": 845.0884842267247,
+      "prompt_ids_sha256": "953be64023898d51c4e513b40fefb66721ed2c643a7c18713c15edc81d4c014f",
+      "prompt_metadata": {
+        "actual_input_tokens": 1977,
+        "context_tokens": 262144,
+        "expected": {
+          "CENTER": "928",
+          "FINAL": "365",
+          "ORIGIN": "714"
+        },
+        "filler_paragraphs": 21,
+        "generation_cap": 32,
+        "input_plus_generation_cap": 2009,
+        "name": "large",
+        "needle_offsets_token": {
+          "CENTER": 1006,
+          "FINAL": 1859,
+          "ORIGIN": 58
+        },
+        "prompt_ids_sha256": "953be64023898d51c4e513b40fefb66721ed2c643a7c18713c15edc81d4c014f",
+        "prompt_text_sha256": "d57094cd82b2cc9daf4275ef594ab39b6d6179b87b329c90733e0b824e51a9a6",
+        "seed": 109,
+        "target_input_tokens": 1920
+      },
+      "reused": 0,
+      "wall_seconds_to_done": 2.595497059999616
+    },
+    {
+      "actual_chunk_count": 8,
+      "actual_chunk_shape": [
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        184
+      ],
+      "answer": "ORIGIN: 714\nCENTER: 928\nFINAL: 365",
+      "counter_lines": [
+        "strata serve: prompt 1977 tokens = 0 reused + 1977 read in 2131 ms (927.6 tok/s), 22 generated in 228 ms (96.6 tok/s), drafts accepted 9 of 12, 0 checkpoints",
+        "strata serve: expert tiers: GPU 0 hits this request; since the start RAM 0 blobs, files 0 blobs 77024.6 MB read (the GGUF in place)",
+        "strata serve: file tier I/O this request: the OS read 88.4 MB from storage (0 major faults) for 0.0 MB of expert reads"
+      ],
+      "decode_ms": 227.8,
+      "done": "DONE 22 1977 2131.3 227.8 stop 9 12 0 0 0 0 0 0.0 1977 0",
+      "fresh": 1977,
+      "generated_ids": [
+        842,
+        53665,
+        25,
+        220,
+        22,
+        16,
+        19,
+        198,
+        75761,
+        25,
+        220,
+        24,
+        17,
+        23,
+        198,
+        95429,
+        25,
+        220,
+        18,
+        21,
+        20,
+        248046
+      ],
+      "input_tokens": 1977,
+      "memory_after": [
+        {
+          "free_bytes": 2031812608,
+          "physical_index": 0,
+          "total_bytes": 25769803776,
+          "used_bytes": 23737991168
+        },
+        {
+          "free_bytes": 994377728,
+          "physical_index": 1,
+          "total_bytes": 68719476736,
+          "used_bytes": 67725099008
+        }
+      ],
+      "mtp_accepted_offered": [
+        9,
+        12
+      ],
+      "name": "short-1",
+      "pcie": {
+        "available": true,
+        "per_gpu": {
+          "0": {
+            "rx_mib_s": {
+              "max": 5.0,
+              "mean": 2.5,
+              "min": 0.0,
+              "sample_count": 2
+            },
+            "tx_mib_s": {
+              "max": 41.0,
+              "mean": 21.5,
+              "min": 2.0,
+              "sample_count": 2
+            }
+          },
+          "1": {
+            "rx_mib_s": {
+              "max": 42.0,
+              "mean": 24.0,
+              "min": 6.0,
+              "sample_count": 2
+            },
+            "tx_mib_s": {
+              "max": 11.0,
+              "mean": 5.5,
+              "min": 0.0,
+              "sample_count": 2
+            }
+          }
+        },
+        "reason": null,
+        "scope": "whole-device throughput; other graphics processes may contribute",
+        "units": "MB/s as printed by nvidia-smi dmon"
+      },
+      "prefill_ms": 2131.3,
+      "prefill_tokens_per_second": 927.6028714868859,
+      "prompt_ids_sha256": "953be64023898d51c4e513b40fefb66721ed2c643a7c18713c15edc81d4c014f",
+      "prompt_metadata": {
+        "actual_input_tokens": 1977,
+        "context_tokens": 262144,
+        "expected": {
+          "CENTER": "928",
+          "FINAL": "365",
+          "ORIGIN": "714"
+        },
+        "filler_paragraphs": 21,
+        "generation_cap": 32,
+        "input_plus_generation_cap": 2009,
+        "name": "large",
+        "needle_offsets_token": {
+          "CENTER": 1006,
+          "FINAL": 1859,
+          "ORIGIN": 58
+        },
+        "prompt_ids_sha256": "953be64023898d51c4e513b40fefb66721ed2c643a7c18713c15edc81d4c014f",
+        "prompt_text_sha256": "d57094cd82b2cc9daf4275ef594ab39b6d6179b87b329c90733e0b824e51a9a6",
+        "seed": 109,
+        "target_input_tokens": 1920
+      },
+      "reused": 0,
+      "wall_seconds_to_done": 2.3619866730005015
+    },
+    {
+      "actual_chunk_count": 8,
+      "actual_chunk_shape": [
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        184
+      ],
+      "answer": "ORIGIN: 714\nCENTER: 928\nFINAL: 365",
+      "counter_lines": [
+        "strata serve: prompt 1977 tokens = 0 reused + 1977 read in 2105 ms (939.1 tok/s), 22 generated in 249 ms (88.4 tok/s), drafts accepted 9 of 13, 0 checkpoints",
+        "strata serve: expert tiers: GPU 0 hits this request; since the start RAM 0 blobs, files 0 blobs 77024.6 MB read (the GGUF in place)",
+        "strata serve: file tier I/O this request: the OS read 88.5 MB from storage (0 major faults) for 0.0 MB of expert reads"
+      ],
+      "decode_ms": 248.8,
+      "done": "DONE 22 1977 2105.1 248.8 stop 9 13 0 0 0 0 0 0.0 1977 0",
+      "fresh": 1977,
+      "generated_ids": [
+        842,
+        53665,
+        25,
+        220,
+        22,
+        16,
+        19,
+        198,
+        75761,
+        25,
+        220,
+        24,
+        17,
+        23,
+        198,
+        95429,
+        25,
+        220,
+        18,
+        21,
+        20,
+        248046
+      ],
+      "input_tokens": 1977,
+      "memory_after": [
+        {
+          "free_bytes": 2027618304,
+          "physical_index": 0,
+          "total_bytes": 25769803776,
+          "used_bytes": 23742185472
+        },
+        {
+          "free_bytes": 983891968,
+          "physical_index": 1,
+          "total_bytes": 68719476736,
+          "used_bytes": 67735584768
+        }
+      ],
+      "mtp_accepted_offered": [
+        9,
+        13
+      ],
+      "name": "short-2",
+      "pcie": {
+        "available": true,
+        "per_gpu": {
+          "0": {
+            "rx_mib_s": {
+              "max": 0.0,
+              "mean": 0.0,
+              "min": 0.0,
+              "sample_count": 2
+            },
+            "tx_mib_s": {
+              "max": 49.0,
+              "mean": 24.5,
+              "min": 0.0,
+              "sample_count": 2
+            }
+          },
+          "1": {
+            "rx_mib_s": {
+              "max": 142.0,
+              "mean": 91.5,
+              "min": 41.0,
+              "sample_count": 2
+            },
+            "tx_mib_s": {
+              "max": 268.0,
+              "mean": 140.0,
+              "min": 12.0,
+              "sample_count": 2
+            }
+          }
+        },
+        "reason": null,
+        "scope": "whole-device throughput; other graphics processes may contribute",
+        "units": "MB/s as printed by nvidia-smi dmon"
+      },
+      "prefill_ms": 2105.1,
+      "prefill_tokens_per_second": 939.1477839532564,
+      "prompt_ids_sha256": "953be64023898d51c4e513b40fefb66721ed2c643a7c18713c15edc81d4c014f",
+      "prompt_metadata": {
+        "actual_input_tokens": 1977,
+        "context_tokens": 262144,
+        "expected": {
+          "CENTER": "928",
+          "FINAL": "365",
+          "ORIGIN": "714"
+        },
+        "filler_paragraphs": 21,
+        "generation_cap": 32,
+        "input_plus_generation_cap": 2009,
+        "name": "large",
+        "needle_offsets_token": {
+          "CENTER": 1006,
+          "FINAL": 1859,
+          "ORIGIN": 58
+        },
+        "prompt_ids_sha256": "953be64023898d51c4e513b40fefb66721ed2c643a7c18713c15edc81d4c014f",
+        "prompt_text_sha256": "d57094cd82b2cc9daf4275ef594ab39b6d6179b87b329c90733e0b824e51a9a6",
+        "seed": 109,
+        "target_input_tokens": 1920
+      },
+      "reused": 0,
+      "wall_seconds_to_done": 2.3581726769989473
+    },
+    {
+      "actual_chunk_count": 8,
+      "actual_chunk_shape": [
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        184
+      ],
+      "answer": "ORIGIN: 714\nCENTER: 928\nFINAL: 365",
+      "counter_lines": [
+        "strata serve: prompt 1977 tokens = 0 reused + 1977 read in 2107 ms (938.1 tok/s), 22 generated in 229 ms (95.9 tok/s), drafts accepted 9 of 13, 0 checkpoints",
+        "strata serve: expert tiers: GPU 0 hits this request; since the start RAM 0 blobs, files 0 blobs 77024.6 MB read (the GGUF in place)",
+        "strata serve: file tier I/O this request: the OS read 88.6 MB from storage (0 major faults) for 0.0 MB of expert reads"
+      ],
+      "decode_ms": 229.3,
+      "done": "DONE 22 1977 2107.4 229.3 stop 9 13 0 0 0 0 0 0.0 1977 0",
+      "fresh": 1977,
+      "generated_ids": [
+        842,
+        53665,
+        25,
+        220,
+        22,
+        16,
+        19,
+        198,
+        75761,
+        25,
+        220,
+        24,
+        17,
+        23,
+        198,
+        95429,
+        25,
+        220,
+        18,
+        21,
+        20,
+        248046
+      ],
+      "input_tokens": 1977,
+      "memory_after": [
+        {
+          "free_bytes": 2027618304,
+          "physical_index": 0,
+          "total_bytes": 25769803776,
+          "used_bytes": 23742185472
+        },
+        {
+          "free_bytes": 983891968,
+          "physical_index": 1,
+          "total_bytes": 68719476736,
+          "used_bytes": 67735584768
+        }
+      ],
+      "mtp_accepted_offered": [
+        9,
+        13
+      ],
+      "name": "short-3",
+      "pcie": {
+        "available": true,
+        "per_gpu": {
+          "0": {
+            "rx_mib_s": {
+              "max": 0.0,
+              "mean": 0.0,
+              "min": 0.0,
+              "sample_count": 2
+            },
+            "tx_mib_s": {
+              "max": 70.0,
+              "mean": 35.0,
+              "min": 0.0,
+              "sample_count": 2
+            }
+          },
+          "1": {
+            "rx_mib_s": {
+              "max": 186.0,
+              "mean": 112.5,
+              "min": 39.0,
+              "sample_count": 2
+            },
+            "tx_mib_s": {
+              "max": 12.0,
+              "mean": 11.5,
+              "min": 11.0,
+              "sample_count": 2
+            }
+          }
+        },
+        "reason": null,
+        "scope": "whole-device throughput; other graphics processes may contribute",
+        "units": "MB/s as printed by nvidia-smi dmon"
+      },
+      "prefill_ms": 2107.4,
+      "prefill_tokens_per_second": 938.1228053525671,
+      "prompt_ids_sha256": "953be64023898d51c4e513b40fefb66721ed2c643a7c18713c15edc81d4c014f",
+      "prompt_metadata": {
+        "actual_input_tokens": 1977,
+        "context_tokens": 262144,
+        "expected": {
+          "CENTER": "928",
+          "FINAL": "365",
+          "ORIGIN": "714"
+        },
+        "filler_paragraphs": 21,
+        "generation_cap": 32,
+        "input_plus_generation_cap": 2009,
+        "name": "large",
+        "needle_offsets_token": {
+          "CENTER": 1006,
+          "FINAL": 1859,
+          "ORIGIN": 58
+        },
+        "prompt_ids_sha256": "953be64023898d51c4e513b40fefb66721ed2c643a7c18713c15edc81d4c014f",
+        "prompt_text_sha256": "d57094cd82b2cc9daf4275ef594ab39b6d6179b87b329c90733e0b824e51a9a6",
+        "seed": 109,
+        "target_input_tokens": 1920
+      },
+      "reused": 0,
+      "wall_seconds_to_done": 2.3400026700001035
+    },
+    {
+      "actual_chunk_count": 129,
+      "actual_chunk_shape": [
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        19
+      ],
+      "answer": "ORIGIN: IRIS-4Q7-LANTERN\nCENTER: CEDAR-8M2-QUARRY\nFINAL: ORBIT-6V9-KETTLE",
+      "counter_lines": [
+        "strata serve: prompt 32788 tokens = 0 reused + 32788 read in 34828 ms (941.4 tok/s), 37 generated in 371 ms (99.6 tok/s), drafts accepted 18 of 22, 0 checkpoints",
+        "strata serve: expert tiers: GPU 0 hits this request; since the start RAM 0 blobs, files 0 blobs 77024.6 MB read (the GGUF in place)",
+        "strata serve: file tier I/O this request: the OS read 1299.0 MB from storage (0 major faults) for 0.0 MB of expert reads"
+      ],
+      "decode_ms": 371.3,
+      "done": "DONE 37 32788 34828.3 371.3 stop 18 22 0 0 0 0 0 0.0 32788 0",
+      "fresh": 32788,
+      "generated_ids": [
+        842,
+        53665,
+        25,
+        15769,
+        1580,
+        12,
+        19,
+        48,
+        22,
+        7869,
+        2731,
+        13267,
+        198,
+        75761,
+        25,
+        225505,
+        905,
+        12,
+        23,
+        44,
+        17,
+        12,
+        5579,
+        74236,
+        198,
+        95429,
+        25,
+        2639,
+        20279,
+        12,
+        21,
+        53,
+        24,
+        15377,
+        177164,
+        841,
+        248046
+      ],
+      "input_tokens": 32788,
+      "memory_after": [
+        {
+          "free_bytes": 2010841088,
+          "physical_index": 0,
+          "total_bytes": 25769803776,
+          "used_bytes": 23758962688
+        },
+        {
+          "free_bytes": 967114752,
+          "physical_index": 1,
+          "total_bytes": 68719476736,
+          "used_bytes": 67752361984
+        }
+      ],
+      "mtp_accepted": 18,
+      "mtp_offered": 22,
+      "name": "32k",
+      "output_tokens": 37,
+      "pcie": {
+        "available": true,
+        "per_gpu": {
+          "0": {
+            "rx_mib_s": {
+              "max": 610.0,
+              "mean": 85.84848484848484,
+              "min": 0.0,
+              "sample_count": 33
+            },
+            "tx_mib_s": {
+              "max": 60.0,
+              "mean": 10.818181818181818,
+              "min": 0.0,
+              "sample_count": 33
+            }
+          },
+          "1": {
+            "rx_mib_s": {
+              "max": 197.0,
+              "mean": 48.24242424242424,
+              "min": 1.0,
+              "sample_count": 33
+            },
+            "tx_mib_s": {
+              "max": 572.0,
+              "mean": 82.51515151515152,
+              "min": 6.0,
+              "sample_count": 33
+            }
+          }
+        },
+        "reason": null,
+        "scope": "whole-device throughput; other graphics processes may contribute",
+        "units": "MB/s as printed by nvidia-smi dmon"
+      },
+      "prefill_ms": 34828.3,
+      "prefill_tokens_per_second": 941.4183293471114,
+      "prompt_ids_sha256": "48619c77cba7b5b9aff070dd990675453a327c4bf25a8637bfae195ecfc454a7",
+      "prompt_metadata": {
+        "actual_input_tokens": 32788,
+        "context_tokens": 262144,
+        "expected": {
+          "CENTER": "CEDAR-8M2-QUARRY",
+          "FINAL": "ORBIT-6V9-KETTLE",
+          "ORIGIN": "IRIS-4Q7-LANTERN"
+        },
+        "filler_paragraphs": 397,
+        "generation_cap": 192,
+        "input_plus_generation_cap": 32980,
+        "name": "32k",
+        "needle_offsets_token": {
+          "CENTER": 16440,
+          "FINAL": 32665,
+          "ORIGIN": 61
+        },
+        "prompt_ids_sha256": "48619c77cba7b5b9aff070dd990675453a327c4bf25a8637bfae195ecfc454a7",
+        "prompt_text_sha256": "9fcf47f685588c81046a7ad7a6c1d7ccce6aa24151b9236e40723b48445b800d",
+        "seed": 23,
+        "target_input_tokens": 32768
+      },
+      "reused": 0,
+      "wall_seconds_to_done": 35.206905172002735
+    }
+  ],
+  "source_commit": "2fcdbd59d9ad2e434f3a17e003f7672b8feb0307",
+  "started_utc": "2026-10-17T00:13:27.524+00:00",
+  "startup_gate": {
+    "configured_chunk": 256,
+    "owned_prefill_bytes_per_stage": {
+      "0": 434110464,
+      "1": 434110464
+    },
+    "requested_chunk": 256,
+    "startup_lines": [
+      "strata generate: memory guard: limit 62.3 GiB (source: meminfo), current 47.0 GiB, reclaimable cache credited 0.0 GiB; available 15.3 GiB (MemAvailable 15.3 GiB), floor 4096 MiB",
+      "strata generate: layer split across 2 GPUs: CUDA0, then CUDA1 (split 37)",
+      "strata: K-quant prompt kernels from /home/nikolay/projects/copilot-worktrees/170hx-3090/sibnick-animated-robot/build/cuda-batched/libstrata_kq.so (STRATA_MMQ_KQ=1)",
+      "strata generate: PCIe probe: 0.8 GB/s host->device (best of 0.8 0.8 0.8 0.8) -> pcie_frac 0.02 (default 0.55)",
+      "strata generate: this CPU has no AVX-512: the expert kernels run on AVX-2 (multi-token for the i-quant gate/up rows)",
+      "strata generate: native pack: /home/nikolay/projects/copilot-worktrees/170hx-3090/sibnick-upgraded-succotash/build/pack/ud-q4-k-xl experts (largest blob 3.99 MB), token embedding Q8_0 in mapped host memory (644 MiB, 0.3 s)",
+      "strata generate: layer split: CUDA0 loads the dense weights of layers 0-36 only",
+      "strata generate: 1124 MiB of weights loaded from /home/nikolay/projects/copilot-worktrees/170hx-3090/sibnick-upgraded-succotash/build/pack/ud-q4-k-xl in 2.0 s (468 canonical tensors skipped: served natively)",
+      "strata generate: 232 native projection matrices, 2301.31 MiB of weights, in 3.2 s",
+      "strata generate: PLE direct read probe: 15435 rows/s (fine)",
+      "strata generate: the SSD is kept awake while rows are read: one page of the table after 100 ms without a read, until 60 s after the last request (STRATA_SSD_KEEPALIVE=0 turns it off)",
+      "strata generate: layer split: CUDA1 loads the dense weights of layers 37-47 only",
+      "strata generate: layer split: CUDA1 PCIe probe 25.3 GB/s (best of 25.2 25.2 25.2 25.3) -> pcie_frac 0.55",
+      "strata generate: layer split: CUDA1 holds its weights; 22.15 GiB free (its session follows the split search)",
+      "strata generate: profile /home/nikolay/projects/copilot-worktrees/170hx-3090/sibnick-upgraded-succotash/data/expert-profile.bin: 24576 ranked pairs, built for 24576 slots",
+      "strata generate: PLE on, table 320001536 rows of /home/nikolay/projects/Strata-data/models/UD-Q4_K_XL/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00002-of-00004.gguf",
+      "strata generate: layer split: CUDA1 holds its weights, session [37, 48) and the head; 20.56 GiB free",
+      "strata mtp: draft layer loaded, 1097 MiB of VRAM (experts 675, dense 111), files read in 0.75 s (1048 MiB/s)",
+      "strata generate: GPU 0: NVIDIA CMP 170HX, compute capability 8.0",
+      "strata generate: experts via mmap (--mmap-experts; the GGUF shards in place, no experts.bin)",
+      "strata generate: the file tier reads unbuffered (STRATA_UNBUFFERED_LOAD=1)",
+      "strata generate: GPU host-callback thread started before host-core pinning",
+      "strata generate: CPU pool tasks/phase: 6 (automatic), participating threads: 2",
+      "strata generate: 1 pool workers on logical processors 1, the host thread on 0 (draining too) (--host-core first)",
+      "strata aux cpus: threads that are neither pool workers nor the host go to CPUs 2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19 (off at start; a request's aux_cpus=1 turns it on)",
+      "strata generate: --gpu-owned-experts exact prefill pricing: the prompt path's own buffers for a 256-token chunk: 414 MiB (the 0.1.39 rule: 330 MiB)",
+      "strata generate: expert cache 18944 slots, 55.13 GiB of VRAM; policy is",
+      "strata generate: the GPU computes the experts in the cache; it rounds differently from the CPU,",
+      "                 so a reply can differ slightly from a run without the cache (same quality:",
+      "                 bench/results/2026-09-27-cache-parity).",
+      "                 PROFILE, ranked by routing frequency, no eviction.",
+      "strata generate: --gpu-owned-experts: using one 3993600-byte reusable host staging buffer; profile fills use synchronous copies",
+      "strata generate: --gpu-owned-experts: CUDA0 owns layers [0,37), 18944 experts, 59192115200 resident bytes",
+      "strata generate: pre-filled 18944 of 18944 slots from the profile in 101.0 s (586 MB/s); slot 0 verified",
+      "strata generate: --gpu-owned-experts: CUDA1 adds 155189248 bytes for exact owned-prefill scratch and 293531596 bytes for the MTP bind; the stage reserve already includes 96 MiB for the verifier",
+      "strata generate: layer split, CUDA1: 19.48 GiB free of 23.56, room for experts 17.65 GiB",
+      "strata generate: --gpu-owned-experts: CUDA1 owns layers [37,48), 5632 experts, 17825792000 resident bytes",
+      "strata generate: layer split: CUDA1 runs layers 37-47, expert cache 5632 slots (16.60 GiB), 5632 of its 5632 profiled pairs; slot 0 verified",
+      "strata generate: --gpu-owned-experts: all 24576 experts are resident in their owning GPU caches; prompt cache loans and the CPU complement are disabled; startup file-tier reads accounted for 77024563200 bytes; no file fallback is expected after startup",
+      "strata generate: layer split: CUDA0 runs layers 0-36",
+      "strata generate: R4 hit path ON - resident experts are computed on the GPU",
+      "strata generate: 1 expert-pool workers + the host thread",
+      "strata generate: session is up (engine 0.1.44.1)",
+      "strata generate: token graph hit path: 24576 resident experts, decided on the device",
+      "strata generate: the mapped view of the experts stays open (not Windows)",
+      "strata serve: layer split: 100% of the experts resident, the prompt path's streamed ring 96 slots",
+      "strata serve: the prompt path allocates its own buffers (too few cache slots to borrow)",
+      "strata hc: CUDA1: the hyper-connection read runs as staged (the norm per token and stream, the down projection's activations staged ahead by cp.async); checked bit for bit against the plain read on this card (STRATA_HC_SPLIT=1 or 0 for the earlier ones)",
+      "strata verify: window up to 4 tokens, 84.4 MiB of device buffers (100% VRAM resident: zero-doorbell graph)",
+      "strata serve: layer split: layers 0-36 (CUDA0), 37-47 (CUDA1), one hand-off per window",
+      "strata hc: CUDA0: the hyper-connection read runs as staged (the norm per token and stream, the down projection's activations staged ahead by cp.async); checked bit for bit against the plain read on this card (STRATA_HC_SPLIT=1 or 0 for the earlier ones)",
+      "strata verify: window up to 4 tokens, 84.4 MiB of device buffers (100% VRAM resident: zero-doorbell graph)",
+      "strata mtp: draft head over 106299 tokens (275.7 MiB)",
+      "strata serve: adaptive overlap: off: not on a layer split",
+      "strata serve: 1038 MiB of VRAM free with everything loaded",
+      "strata serve: CUDA1: 1999 MiB of VRAM free with everything loaded",
+      "INFO logit_bias=1 context=262144 kv=int8 kv_resident=0 expert_slots=24576 expert_cache_mib=73450 expert_slots_primary=18944 expert_cache_primary_mib=56450 spec=4 mtp_max=2 lookup=3 vram_free_mib=1038 cvec=0 arena_mib=0 pool_workers=1 pcie_frac=0.02 spec_min_p=0.00 conversation_cache_mib=0 conversation_cache_slots=4 conversation_cache_min_free_mib=4096 conversation_cache_min_tokens=0 tail_role_token=-1 vram_elastic=0 engine=0.1.44.1",
+      "READY 262144 stop"
+    ]
+  },
+  "startup_seconds": 133.2355448189992,
+  "status": "passed"
+}
