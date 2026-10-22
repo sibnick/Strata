@@ -32,6 +32,7 @@ class RunnerRecipeTests(unittest.TestCase):
             ("--gpu", "1,0"),
             ("--layer-split", "36"),
             ("--max-context", "262144"),
+            ("--spec", "4"),
             ("--kv", "int8"),
             ("--prefill", "2048"),
             ("--prefill-stage-chunks", "2048,512"),

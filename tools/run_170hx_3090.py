@@ -197,7 +197,7 @@ def build_config():
         "--max-context", "262144",
         "--kv", "int8",
         "--mtp", str(MTP),
-        "--spec", "2",
+        "--spec", "4",
         "--prefill", "2048",
         "--prefill-stage-chunks", "2048,512",
         "--no-prefill-borrow",

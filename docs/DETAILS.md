@@ -2451,6 +2451,10 @@ these switches in the shell. Restart the runner to apply a change. This recipe n
 custom engine's `--gpu-owned-experts` and `--prefill-stage-chunks` support; it is not a
 stock engine configuration. The general engine defaults below are unchanged.
 
+This custom runner uses `--spec 4` (one main-model token and up to three draft tokens).
+For an existing pack outside `build/pack/ud-q4-k-xl`, set `STRATA_PACK` when starting
+the runner, for example `STRATA_PACK="$PWD/ud-q4-k-xl" ./run-170hx-3090.sh start`.
+
 The 0.1.45 switch set that is bit-exact on every card was measured switch by switch on a 12 GB RTX 3060, a 16 GB RTX A4000 (one card)
 and a 16 GB Tesla P100, IQ3_XXS, default flags (adaptive tier on), fresh engine per run, 8 interleaved pairs, equal expert-cache slots,
 with a noise arm: the whole 16-switch set gave +9.6% (3060), +14.6% (A4000) and +17.8% (P100) decode, 8/8 pairs each, and the identity
