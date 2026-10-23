@@ -52,20 +52,19 @@ the fallback the server would see as a slow but correct reader.
 
 ## Cache volume
 
-The first start after a build compiles both graphs on the host CPU: measured 167 s + 186 s
-of one core at 100%. The driver keeps its own compile cache under the home directory
-(`/root/.cache/ze_intel_npu_cache` in a rootful container); give it a volume so restarts
-skip the compile:
+The first start compiles both graphs on the host CPU: measured 170 s + 190 s of one core at
+100%.  Two caches exist (docs/INTEL_NPU.md, "Startup compile and its caches"): the driver's
+own cache under the home directory holds exactly one of the two graphs (a volume on it
+helps one graph only), while OpenVINO's `CACHE_DIR` keeps both and brings the next start to
+1.2 s + 1.3 s.  Point it at the cache volume:
 
 ```sh
 sudo podman run -i --rm --device /dev/accel/accel0 \
+    -e STRATA_VISION_NPU_CACHE_DIR=/root/.cache/openvino \
     -v strata-npu-cache:/root/.cache \
     -v "$HOME/models/npu-vision:/ir:ro" -v /path/to/pictures:/work \
     strata-npu-vision
 ```
-
-(The cache saved the compile once and not the next time on the host too; treat it as an
-optimization that usually works, not a guarantee.)
 
 ## As the server's vision.exe
 

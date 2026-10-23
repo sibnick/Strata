@@ -31,8 +31,9 @@ dynamic H, W works on the platforms whose NPU compiler takes them, and the reade
 The flags the server hands every reader (--mmproj, --model, --gpu, --threads, --max-tokens, --min-tokens,
 --flash-attn) are accepted so a run config's vision section can name this program; only --threads (on --device
 CPU) and --max-tokens / --min-tokens (with a dynamic IR input shape) carry meaning here.  A run config cannot add
-flags to a reader, only an exe, so --model-ir, --device and --mock also read STRATA_VISION_NPU_MODEL_IR,
-STRATA_VISION_NPU_DEVICE and STRATA_VISION_NPU_MOCK from the server's environment.
+flags to a reader, only an exe, so --model-ir, --device, --cache-dir and --mock also read
+STRATA_VISION_NPU_MODEL_IR, STRATA_VISION_NPU_DEVICE, STRATA_VISION_NPU_CACHE_DIR and
+STRATA_VISION_NPU_MOCK from the server's environment.
 
 Unlike the GPU readers this one never quietly becomes something else: with no NPU, no OpenVINO or an unreadable IR
 it prints "ERR <what and the fix>" on stdout and exits - the server then falls back to the CPU reader by itself
@@ -116,7 +117,9 @@ def triple_of(text: str, fallback: tuple, what: str) -> tuple:
     try:
         vals = tuple(float(x) for x in parts)
     except ValueError:
-        raise ReaderError(f"--image-{what} wants numbers like 0.5,0.5,0.5 (got {text!r})")
+        raise ReaderError(
+            f"--image-{what} wants numbers like 0.5,0.5,0.5 (got {text!r})"
+        )
     if len(vals) == 1:
         vals = vals * 3
     if len(vals) != 3:
@@ -249,12 +252,13 @@ class OpenVinoEngine:
                 f"{', '.join(available) or 'nothing'}); install the Intel NPU driver, pick another "
                 f"--device, or run the CPU reader strata-vision instead"
             )
+        self.device = device.upper()
         if cache_dir:
             os.makedirs(cache_dir, exist_ok=True)
             self.core.set_property(
-                {"CACHE_DIR": cache_dir}
-            )  # NPU compiles slowly; the cache makes the next start instant
-        self.device = device.upper()
+                self.device, {"CACHE_DIR": cache_dir}
+            )  # the NPU compiles slowly (measured 170 s + 190 s for the chain); from a warm cache the
+            # same two compiles take 1.2 s + 1.3 s (2026-10-23) - set STRATA_VISION_NPU_CACHE_DIR to use it
         cfg: dict = {}
         if threads > 0 and self.device.startswith("CPU"):
             cfg["INFERENCE_NUM_THREADS"] = threads
@@ -382,7 +386,7 @@ def main() -> int:
         "--model-ir",
         default="",
         help="OpenVINO IR of the vision encoder (.xml; .onnx too), or a chain of "
-        "two joined with \"" + os.pathsep + "\" (docs/INTEL_NPU.md); "
+        'two joined with "' + os.pathsep + '" (docs/INTEL_NPU.md); '
         "or STRATA_VISION_NPU_MODEL_IR",
     )
     p.add_argument(
@@ -392,9 +396,9 @@ def main() -> int:
     )
     p.add_argument(
         "--cache-dir",
-        default="",
-        help="OpenVINO compilation cache directory (the NPU driver's own "
-        "cache stays on without it)",
+        default=os.environ.get("STRATA_VISION_NPU_CACHE_DIR", ""),
+        help="OpenVINO compilation cache directory; keeps the NPU's slow compile to one start "
+        "(also STRATA_VISION_NPU_CACHE_DIR); the NPU driver's own cache stays on without it",
     )
     p.add_argument(
         "--embd",

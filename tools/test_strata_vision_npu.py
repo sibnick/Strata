@@ -375,7 +375,9 @@ class TestNormalization(unittest.TestCase):
             with self.assertRaises(ReaderError, msg=bad):
                 triple_of(bad, (0.5, 0.5, 0.5), "std")
         # a mean may be negative: it is only shifted, never divided
-        self.assertEqual(triple_of("-1,0.5,2", (0.5, 0.5, 0.5), "mean"), (-1.0, 0.5, 2.0))
+        self.assertEqual(
+            triple_of("-1,0.5,2", (0.5, 0.5, 0.5), "mean"), (-1.0, 0.5, 2.0)
+        )
 
     def test_preprocess_applies_the_triples(self):
         with tempfile.TemporaryDirectory() as td:
@@ -384,7 +386,9 @@ class TestNormalization(unittest.TestCase):
             got = preprocess(str(png), 64, 48)  # the 0.5/0.5 default
             self.assertEqual(got.shape, (1, 3, 48, 64))  # CHW, batch 1
             want = np.array([1.0, (128 / 255 - 0.5) / 0.5, -1.0], np.float32)
-            for c in range(3):  # solid colour: every pixel of every channel is the same value
+            for c in range(
+                3
+            ):  # solid colour: every pixel of every channel is the same value
                 self.assertTrue(
                     np.allclose(got[0, c], want[c], atol=1e-5),
                     f"channel {c} averaged {got[0, c].mean()}",
@@ -410,14 +414,25 @@ class TestNormalizationFlags(TempCase):
         self.assertNotEqual(rc, 0)
         self.assertTrue(out and out[0].startswith("ERR "), out)
         rc, out, _ = session(
-            ["--mock", "--embd", "16"], [], self.dir, env=self.clean_env(STRATA_VISION_NPU_MEAN="wide")
+            ["--mock", "--embd", "16"],
+            [],
+            self.dir,
+            env=self.clean_env(STRATA_VISION_NPU_MEAN="wide"),
         )
         self.assertNotEqual(rc, 0)
         self.assertTrue(out and out[0].startswith("ERR "), out)
 
     def test_flags_and_env_still_encode(self):
         rc, out, _ = session(
-            ["--mock", "--embd", "16", "--image-mean", "0.48145466", "--image-std", "0.26862954"],
+            [
+                "--mock",
+                "--embd",
+                "16",
+                "--image-mean",
+                "0.48145466",
+                "--image-std",
+                "0.26862954",
+            ],
             [f"ENC {self.png} {self.dir / 'clip.sve'}", "QUIT"],
             self.dir,
             env=self.clean_env(),
@@ -425,6 +440,72 @@ class TestNormalizationFlags(TempCase):
         self.assertEqual(rc, 0, out)
         self.assertEqual(out[0], "READY 16")
         self.assertTrue(out[1].startswith("OK "), out)
+
+
+class CacheDir(unittest.TestCase):
+    """--cache-dir / STRATA_VISION_NPU_CACHE_DIR: OpenVINO's CACHE_DIR is set on the chosen device,
+    so the slow NPU compile (measured 170 s + 190 s for the chain, 1.2 s + 1.3 s from a warm cache)
+    is paid once.  A fake openvino stands in; no driver and no hardware here."""
+
+    def build(self, cache_dir):
+        import importlib.util
+        import types
+
+        calls = []
+
+        class Side:
+            shape = [1, 1536, 768, 768]
+
+        class Comp:
+            def input(self, _i):
+                return Side()
+
+            def output(self, _i):
+                return Side()
+
+            def create_infer_request(self):
+                return object()
+
+        ov = types.ModuleType("openvino")
+
+        class Core:
+            available_devices = ["CPU", "NPU"]
+
+            def set_property(self, device, cfg):
+                calls.append((device, dict(cfg)))
+
+            def read_model(self, _path):
+                return object()
+
+            def compile_model(self, _model, _device, _cfg):
+                return Comp()
+
+        ov.Core = Core
+        ov.get_version = lambda: "fake"
+        spec = importlib.util.spec_from_file_location(
+            "strata_vision_npu_cache_test",
+            ROOT / "tools" / "vision" / "strata_vision_npu.py",
+        )
+        mod = importlib.util.module_from_spec(spec)
+        saved = sys.modules.get("openvino")
+        sys.modules["openvino"] = ov
+        try:
+            spec.loader.exec_module(mod)
+            mod.OpenVinoEngine("one.xml", "NPU", cache_dir)
+        finally:
+            if saved is not None:
+                sys.modules["openvino"] = saved
+            else:
+                sys.modules.pop("openvino", None)
+        return calls
+
+    def test_cache_dir_is_set_on_the_chosen_device_and_created(self):
+        d = Path(tempfile.mkdtemp(prefix="cache-dir-")) / "nested" / "ov-cache"
+        self.assertEqual(self.build(str(d)), [("NPU", {"CACHE_DIR": str(d)})])
+        self.assertTrue(d.is_dir())
+
+    def test_no_cache_dir_means_no_set_property(self):
+        self.assertEqual(self.build(""), [])
 
 
 if __name__ == "__main__":

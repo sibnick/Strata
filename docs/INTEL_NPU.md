@@ -89,14 +89,36 @@ OpenVINO or an unreadable IR is one `ERR` line and exit 3 or 1 - it never quietl
 because noise where a picture belongs is worse than no picture.
 
 Flags beyond the model: `--device NPU|GPU|CPU` (default `NPU`; an Intel graphics device compiles the IR too -
-the OpenVINO NVIDIA plugins do not - but the GPU readers are the better GPU answer), `--cache-dir` (OpenVINO's compilation cache; the
-NPU driver's own cache is on without it), `--embd` (width when the IR does not say), `--image-size`,
+the OpenVINO NVIDIA plugins do not - but the GPU readers are the better GPU answer), `--cache-dir` (OpenVINO's
+compilation cache; it is what makes the slow NPU compile a once-ever cost - see "Startup compile and its
+caches"), `--embd` (width when the IR does not say), `--image-size`,
 `--patch-size`, `--merge-size`, `--image-mean` / `--image-std`.  `--mmproj`, `--model`, `--gpu`, `--threads`, `--max-tokens`, `--min-tokens` and
 `--flash-attn` are accepted because the server hands every reader those; here only `--threads` (on `--device CPU`)
 and the token bounds (with a dynamic IR) mean anything.  A run config names an exe and no flags, so `--model-ir`,
-`--device`, `--mock`, `--image-mean` and `--image-std` also read `STRATA_VISION_NPU_MODEL_IR`,
-`STRATA_VISION_NPU_DEVICE`, `STRATA_VISION_NPU_MOCK`, `STRATA_VISION_NPU_MEAN` and `STRATA_VISION_NPU_STD`
-from the environment.
+`--device`, `--cache-dir`, `--mock`, `--image-mean` and `--image-std` also read `STRATA_VISION_NPU_MODEL_IR`,
+`STRATA_VISION_NPU_DEVICE`, `STRATA_VISION_NPU_CACHE_DIR`, `STRATA_VISION_NPU_MOCK`, `STRATA_VISION_NPU_MEAN` and
+`STRATA_VISION_NPU_STD` from the environment.
+
+## Startup compile and its caches
+
+Every process that opens the IR compiles it for the NPU before `READY`: measured 170 s + 190 s of one core at
+100% for the chain of two IRs.  Two caches sit under that cost, and they behave very differently (checked
+2026-10-23):
+
+- The NPU driver's own cache (`~/.cache/ze_intel_npu_cache`, or `/root/.cache/...` in a container) keeps exactly
+  one compiled graph of this size: one 604 MB blob, and the second graph's write replaces the first's.  The
+  driver's `ZE_INTEL_NPU_CACHE_SIZE` changed nothing observed (checked with 4 GiB).  With the chain, one of the
+  two graphs therefore compiles cold at every start - about 3 minutes.
+- OpenVINO's `--cache-dir` / `STRATA_VISION_NPU_CACHE_DIR` keeps one blob per model and evicts nothing here:
+  after one cold start the same two compiles took 1.2 s + 1.3 s.  Point it at a directory that survives, and
+  the compile is a once-ever cost; re-exporting the IR invalidates it.  The whole reader - process start, both
+  compiles from cache, one 768x768 picture encoded - takes 7 s end to end (2026-10-23; 6 min 3 s from a cold
+  cache).  One care: the cache keys on how the program loads the IR (`compile_model(path)` and
+  `read_model(path)` + `compile_model(model)` are different keys), so the cache a helper script fills is not
+  the one the reader reads; warm it with the reader itself once.
+
+Inside one server run the reader is resident, so pictures after the first pay none of this: the encode itself
+is 2.2 s with about no CPU while the NPU works.
 
 ## Using it as the server's picture reader (opt-in)
 
@@ -137,8 +159,9 @@ Rootless podman hits a permissions wall: `/dev/accel/accel0` is `root:render`, i
 node shows as `nobody:nogroup` and opening it fails (checked); `--group-add keep-groups` alone does not fix it
 (checked).  Rootful works (checked), and a rootless container still runs the reader on the CPU
 (`--device CPU`, `READY 2560`, checked).  The documented rootless route - the render GID in `/etc/subgid` plus
-`--gidmapping` - was not checked here.  The commands, the cache volume for the driver's compile cache
-(`/root/.cache/ze_intel_npu_cache`, which skips the startup compile when it hits), and a shim that lets the
+`--gidmapping` - was not checked here.  The commands, the cache volumes (a volume on `/root/.cache` holds the
+driver's one-graph cache, and pointing `STRATA_VISION_NPU_CACHE_DIR` at a directory on a volume holds OpenVINO's
+per-model cache - the one that makes a fresh container start in seconds), and a shim that lets the
 container stand in as the server's `vision.exe` are in `container/npu-vision/README.md`.  A real `docker`
 daemon was not tested: the `docker` command on this machine is podman's emulation.
 

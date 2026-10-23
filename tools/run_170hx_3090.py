@@ -43,6 +43,7 @@ NPU_VISION_ENV_KEYS = (
     "STRATA_VISION_NPU_MOCK",
     "STRATA_VISION_NPU_MEAN",
     "STRATA_VISION_NPU_STD",
+    "STRATA_VISION_NPU_CACHE_DIR",
 )
 NPU_VENV = Path(os.environ.get("STRATA_NPU_VENV", ROOT / ".venv-npu")).resolve()
 HOST = "127.0.0.1"
