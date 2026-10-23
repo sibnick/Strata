@@ -220,8 +220,9 @@ def check_paths():
             + "\nSet STRATA_PACK, STRATA_NATIVE, STRATA_MTP, or STRATA_EXPERT_PROFILE as needed."
         )
     if npu_vision_on():
-        # the server starts the picture reader unguarded and this runner has no CPU reader to fall back on: a reader
-        # that cannot start would stop the whole server, so its inputs are admission-checked here
+        # the server starts the picture reader unguarded, and a CPU reader to fall back on exists only when a
+        # strata-vision binary was built next to the engine (vision.cpu_exe): a reader that cannot start could
+        # stop the whole server, so its inputs are admission-checked here
         extra = {"NPU picture reader": NPU_VISION_READER}
         if os.environ.get("STRATA_VISION_NPU_MODEL_IR"):
             extra["NPU vision IR"] = Path(os.environ["STRATA_VISION_NPU_MODEL_IR"])
