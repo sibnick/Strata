@@ -108,8 +108,10 @@ The server starts whatever one exe its `vision` section names.  To read pictures
    `tools/vision/strata-vision-npu.cmd` (Windows), and keep `vision.cpu_exe` at the normal `strata-vision`.
 
 When the NPU, the driver or the IR is not there, the reader's `ERR` line makes the server print one line and fall
-back to the CPU reader - the same path the AMD and Mac GPU readers use (`serve/server.py`, `Vision._start`).  The
-engine side needs nothing: it reads the `SVE1` files exactly as it does the CPU reader's.
+back to the CPU reader - which needs `vision.cpu_exe` to name it, the way the AMD and Mac GPU readers do; the
+custom run script names it by itself when a `strata-vision` binary sits next to the engine (`strata_control/
+vision_reader.py`, `serve/server.py`, `Vision._start`).  The engine side needs nothing: it reads the `SVE1`
+files exactly as it does the CPU reader's.
 
 ## Running it inside a container (podman or docker)
 

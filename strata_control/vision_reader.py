@@ -19,6 +19,7 @@ STRATA_VISION_SYCL, built by `setup --backend sycl --vision gpu` on a PC that ha
 
 `choose` is the whole decision; setup.py calls it, and tools/test_vision_reader.py checks every branch.
 """
+
 from __future__ import annotations
 
 import re
@@ -28,7 +29,10 @@ from pathlib import Path
 CPU_READER = "strata-vision"
 GPU_READER = "strata-vision-hip"
 SYCL_READER = "strata-vision-sycl"
-GPU_READERS = (GPU_READER, SYCL_READER)       # the GPU reader of an engine folder: the first one it carries
+GPU_READERS = (
+    GPU_READER,
+    SYCL_READER,
+)  # the GPU reader of an engine folder: the first one it carries
 
 #: Owner decision 2026-10-18: pictures are ON by default, and the reader runs on the CPU for a card under 24 GB (the GPU reader keeps about
 #: 1-1.4 GB of VRAM that the experts would use: a few % of decode, more on some PCs, #2406) and on the GPU for 24 GB and above - on every make
@@ -41,8 +45,10 @@ GPU_MIN_VRAM_GB = 23.5
 INTEL_GPU_READER_BY_DEFAULT = False
 
 
-def default_mode(vram_gb: float | None, make: str = "", *, unified: bool = False) -> str:
-    """"cpu" or "gpu": the reader an unspecific "pictures on" gets on a card with this much memory (unknown memory: "gpu").  `make` is "intel"
+def default_mode(
+    vram_gb: float | None, make: str = "", *, unified: bool = False
+) -> str:
+    """ "cpu" or "gpu": the reader an unspecific "pictures on" gets on a card with this much memory (unknown memory: "gpu").  `make` is "intel"
     for an Arc, which stays on the CPU reader until INTEL_GPU_READER_BY_DEFAULT.  unified: a Mac, where the chip's memory is the system's -
     always "gpu" (see the module doc)."""
     if unified:
@@ -53,7 +59,9 @@ def default_mode(vram_gb: float | None, make: str = "", *, unified: bool = False
     return "cpu" if 0 < vram < GPU_MIN_VRAM_GB else "gpu"
 
 
-def wanted(asked: str | None, vram_gb: float | None, make: str = "", *, unified: bool = False) -> str:
+def wanted(
+    asked: str | None, vram_gb: float | None, make: str = "", *, unified: bool = False
+) -> str:
     """What is wanted for `asked` (None, "yes", "on", "gpu", "cpu", "no"/"none"/"off"): "gpu", "cpu" or "none".  Nothing asked and "yes" mean
     the default for this card; "gpu" and "cpu" are kept as asked."""
     a = (asked or "").lower()
@@ -62,6 +70,7 @@ def wanted(asked: str | None, vram_gb: float | None, make: str = "", *, unified:
     if a in ("gpu", "cpu"):
         return a
     return default_mode(vram_gb, make, unified=unified)
+
 
 GFX = re.compile(r"gfx[0-9a-f]+", re.IGNORECASE)
 
@@ -84,24 +93,38 @@ def find(folder: Path | str, windows: bool, *, mac: bool = False) -> dict:
 
 
 def gfx_of(text: object) -> str:
-    """"gfx1201" out of a gcnArchName ("gfx1201:sramecc-:xnack-"), a device line or a plain arch; "" when there is none."""
+    """ "gfx1201" out of a gcnArchName ("gfx1201:sramecc-:xnack-"), a device line or a plain arch; "" when there is none."""
     m = GFX.search(str(text or ""))
     return m.group(0).lower() if m else ""
 
 
 @dataclass
 class Reader:
-    mode: str                     # "gpu" | "cpu" | "none"
-    exe: Path | None = None       # the program the run config starts
-    cpu_exe: Path | None = None   # the CPU reader to fall back on when a GPU reader does not start (mode "gpu" only)
-    note: str = ""                # one plain sentence for the setup output when it is not what was asked for
+    mode: str  # "gpu" | "cpu" | "none"
+    exe: Path | None = None  # the program the run config starts
+    cpu_exe: Path | None = (
+        None  # the CPU reader to fall back on when a GPU reader does not start (mode "gpu" only)
+    )
+    note: str = (
+        ""  # one plain sentence for the setup output when it is not what was asked for
+    )
 
 
-MAC_CPU_NOTE = ("the picture reader on the CPU takes about 50 seconds for one picture on a Mac (the GPU reader: under a second): kept as "
-                "you chose; --vision gpu reads on the Mac's GPU")
+MAC_CPU_NOTE = (
+    "the picture reader on the CPU takes about 50 seconds for one picture on a Mac (the GPU reader: under a second): kept as "
+    "you chose; --vision gpu reads on the Mac's GPU"
+)
 
 
-def choose(folder: Path | str, asked: str, *, windows: bool, gpu_arch: str = "", archs: list | None = None, mac: bool = False) -> Reader:
+def choose(
+    folder: Path | str,
+    asked: str,
+    *,
+    windows: bool,
+    gpu_arch: str = "",
+    archs: list | None = None,
+    mac: bool = False,
+) -> Reader:
     """The reader for `asked` ("yes"/"on"/"gpu" = the best the folder has, "cpu", "no"/"none"/"off").
 
     gpu_arch: the card's architecture when setup knows it ("gfx1201"); archs: what the GPU reader was built for
@@ -114,7 +137,9 @@ def choose(folder: Path | str, asked: str, *, windows: bool, gpu_arch: str = "",
     have = find(folder, windows, mac=mac)
     if mac:
         if have["cpu"] is None:
-            return Reader("none", note="this engine has no picture reader: pictures off")
+            return Reader(
+                "none", note="this engine has no picture reader: pictures off"
+            )
         if asked == "cpu":
             return Reader("cpu", have["cpu"], note=MAC_CPU_NOTE)
         return Reader("gpu", have["gpu"], have["cpu"])
@@ -127,14 +152,27 @@ def choose(folder: Path | str, asked: str, *, windows: bool, gpu_arch: str = "",
     built = [gfx_of(a) for a in (archs or []) if gfx_of(a)]
     if have["gpu"] is None:
         if have["cpu"]:
-            return Reader("cpu", have["cpu"], note="this engine has no GPU picture reader: pictures are read on the CPU "
-                                                    "(a few seconds each)" if asked == "gpu" else "")
+            return Reader(
+                "cpu",
+                have["cpu"],
+                note="this engine has no GPU picture reader: pictures are read on the CPU "
+                "(a few seconds each)"
+                if asked == "gpu"
+                else "",
+            )
         return Reader("none", note="this engine has no picture reader: pictures off")
     if gfx and built and gfx not in built:
         if have["cpu"]:
-            return Reader("cpu", have["cpu"], note=f"the GPU picture reader has no code for your card ({gfx}): pictures "
-                                                    "are read on the CPU (a few seconds each)")
-        return Reader("none", note=f"the GPU picture reader has no code for your card ({gfx}): pictures off")
+            return Reader(
+                "cpu",
+                have["cpu"],
+                note=f"the GPU picture reader has no code for your card ({gfx}): pictures "
+                "are read on the CPU (a few seconds each)",
+            )
+        return Reader(
+            "none",
+            note=f"the GPU picture reader has no code for your card ({gfx}): pictures off",
+        )
     return Reader("gpu", have["gpu"], have["cpu"])
 
 
@@ -152,9 +190,15 @@ def vision_section(reader: Reader, base: dict) -> dict:
 
 
 def cpu_fallback(vision_cfg: dict) -> dict | None:
-    """The same section for the CPU reader, when the GPU reader has one to fall back on; None otherwise."""
-    if not vision_cfg.get("gpu") or not vision_cfg.get("cpu_exe"):
+    """The same section for the CPU reader, when the config names one to fall back on; None otherwise.  A GPU
+    reader names it through vision_section; a reader on another accelerator (the NPU reader, docs/INTEL_NPU.md)
+    keeps gpu false - its device is not the game card - and its runner names the cpu_exe directly."""
+    if not vision_cfg.get("cpu_exe"):
         return None
-    out = {k: v for k, v in vision_cfg.items() if k not in ("cpu_exe", "elastic", "elastic_mib", "elastic_idle_s")}
+    out = {
+        k: v
+        for k, v in vision_cfg.items()
+        if k not in ("cpu_exe", "elastic", "elastic_mib", "elastic_idle_s")
+    }
     out["exe"], out["gpu"] = vision_cfg["cpu_exe"], False
     return out

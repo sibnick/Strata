@@ -36,9 +36,10 @@ sudo podman run --rm --device /dev/accel/accel0 --entrypoint python \
 # 2) serve pictures the way the server serves them to a vision exe (stdin/stdout protocol)
 sudo podman run -i --rm \
     -v "$HOME/models/npu-vision:/ir:ro" \
-    -v /path/to/pictures:/work:ro \
+    -v /path/to/pictures:/work \
     strata-npu-vision
 # then type:  ENC /work/pic.png /work/pic.sve   and read the OK line;  QUIT ends.
+# /work must be writable: the .sve output is written into it.
 ```
 
 Rootless podman can work with a one-time root setup (`echo "$USER:109:1" | sudo tee -a
@@ -59,7 +60,7 @@ skip the compile:
 ```sh
 sudo podman run -i --rm --device /dev/accel/accel0 \
     -v strata-npu-cache:/root/.cache \
-    -v "$HOME/models/npu-vision:/ir:ro" -v /path/to/pictures:/work:ro \
+    -v "$HOME/models/npu-vision:/ir:ro" -v /path/to/pictures:/work \
     strata-npu-vision
 ```
 
@@ -69,19 +70,28 @@ optimization that usually works, not a guarantee.)
 ## As the server's vision.exe
 
 The reader speaks READY / ENC / OK on stdin/stdout, which `podman run -i` passes through
-unchanged. A shim script with
+unchanged.  Two details decide the mounts.  The server starts the reader with its working
+directory set to the server's vision work directory and names picture and output files
+*relative to it* (`serve/server.py`, `Vision._start_reader` and the `ENC` line, issue #480) -
+so the shim must mount that directory, read-write (the `.sve` output lands there), and set
+the container's working directory to the mount.  The shim is started by the server itself,
+so inside the shim `$PWD` is exactly that directory.  A shim script with
 
 ```sh
 #!/bin/sh
 exec sudo podman run -i --rm --device /dev/accel/accel0 \
     -v strata-npu-cache:/root/.cache \
-    -v "$HOME/models/npu-vision:/ir:ro" -v "$PWD:/work:ro" \
+    -v "$HOME/models/npu-vision:/ir:ro" \
+    -v "$PWD:/work" -w /work \
     strata-npu-vision "$@"
 ```
 
 is a drop-in for the `vision.exe` the runner writes into the server config: the runner
 points it at `tools/vision/strata_vision_npu.py` (one line in `tools/run_170hx_3090.py`,
 `NPU_VISION_READER`); change that path to the shim to serve pictures from the container.
+If the NPU reader does not start, the server falls back to the CPU reader when the config
+names one (`vision.cpu_exe`); the custom runner adds that automatically when a
+`strata-vision` binary was built next to the engine.
 Steady-state CPU while the NPU encodes is near zero; the startup compile is the only load.
 
 ## Files

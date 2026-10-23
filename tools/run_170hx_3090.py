@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Build, size, and run the guarded CMP 170HX + RTX 3090 K36 local API."""
+
 import argparse
 import csv
 import json
@@ -15,20 +16,34 @@ import urllib.error
 import urllib.request
 
 ROOT = Path(__file__).resolve().parents[1]
-BUILD = Path(os.environ.get("STRATA_170HX_BUILD", ROOT / "build/cuda-170hx-3090")).resolve()
+BUILD = Path(
+    os.environ.get("STRATA_170HX_BUILD", ROOT / "build/cuda-170hx-3090")
+).resolve()
 RUNTIME = BUILD / "runner-runtime"
 PACK = Path(os.environ.get("STRATA_PACK", ROOT / "build/pack/ud-q4-k-xl")).resolve()
-DATA = Path(os.environ.get("STRATA_DATA_DIR", Path.home() / "projects/Strata-data")).resolve()
-NATIVE = Path(os.environ.get(
-    "STRATA_NATIVE",
-    DATA / "models/UD-Q4_K_XL/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00001-of-00004.gguf",
-)).resolve()
+DATA = Path(
+    os.environ.get("STRATA_DATA_DIR", Path.home() / "projects/Strata-data")
+).resolve()
+NATIVE = Path(
+    os.environ.get(
+        "STRATA_NATIVE",
+        DATA
+        / "models/UD-Q4_K_XL/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00001-of-00004.gguf",
+    )
+).resolve()
 MTP = Path(os.environ.get("STRATA_MTP", DATA / "mtp/rt")).resolve()
-PROFILE = Path(os.environ.get("STRATA_EXPERT_PROFILE", ROOT / "data/expert-profile.bin")).resolve()
+PROFILE = Path(
+    os.environ.get("STRATA_EXPERT_PROFILE", ROOT / "data/expert-profile.bin")
+).resolve()
 DRAFT_VOCAB = ROOT / "data/draft_vocab_cyrillic.bin"
 NPU_VISION_READER = ROOT / "tools/vision/strata_vision_npu.py"
-NPU_VISION_ENV_KEYS = ("STRATA_VISION_NPU_MODEL_IR", "STRATA_VISION_NPU_DEVICE",
-                       "STRATA_VISION_NPU_MOCK", "STRATA_VISION_NPU_MEAN", "STRATA_VISION_NPU_STD")
+NPU_VISION_ENV_KEYS = (
+    "STRATA_VISION_NPU_MODEL_IR",
+    "STRATA_VISION_NPU_DEVICE",
+    "STRATA_VISION_NPU_MOCK",
+    "STRATA_VISION_NPU_MEAN",
+    "STRATA_VISION_NPU_STD",
+)
 NPU_VENV = Path(os.environ.get("STRATA_NPU_VENV", ROOT / ".venv-npu")).resolve()
 HOST = "127.0.0.1"
 PORT = 8080
@@ -81,7 +96,10 @@ def npu_vision_on():
     """The opt-in Intel NPU picture reader (docs/INTEL_NPU.md): on when the shell exports STRATA_VISION_NPU_MODEL_IR
     (or STRATA_VISION_NPU_MOCK=1 to test the wiring without a model or driver).  Without them the API serves text
     exactly as before."""
-    return bool(os.environ.get("STRATA_VISION_NPU_MODEL_IR") or os.environ.get("STRATA_VISION_NPU_MOCK") == "1")
+    return bool(
+        os.environ.get("STRATA_VISION_NPU_MODEL_IR")
+        or os.environ.get("STRATA_VISION_NPU_MOCK") == "1"
+    )
 
 
 def ensure_npu_venv():
@@ -95,16 +113,39 @@ def ensure_npu_venv():
     python = NPU_VENV / "bin" / "python3"
     try:
         if not python.exists():
-            print(f"[170hx-3090] creating the NPU picture-reader venv in {NPU_VENV} (first time only)", flush=True)
-            run([sys.executable, "-m", "venv", "--system-site-packages", NPU_VENV], capture=True)
-        probe = subprocess.run([str(python), "-c", "import openvino"], capture_output=True, text=True)
+            print(
+                f"[170hx-3090] creating the NPU picture-reader venv in {NPU_VENV} (first time only)",
+                flush=True,
+            )
+            run(
+                [sys.executable, "-m", "venv", "--system-site-packages", NPU_VENV],
+                capture=True,
+            )
+        probe = subprocess.run(
+            [str(python), "-c", "import openvino"], capture_output=True, text=True
+        )
         if probe.returncode != 0:
-            print("[170hx-3090] installing OpenVINO into the NPU venv (one download; it is not asked for again)",
-                  flush=True)
-            run([python, "-m", "pip", "install", "--quiet", "-r", ROOT / "requirements-npu.txt"], capture=True)
+            print(
+                "[170hx-3090] installing OpenVINO into the NPU venv (one download; it is not asked for again)",
+                flush=True,
+            )
+            run(
+                [
+                    python,
+                    "-m",
+                    "pip",
+                    "install",
+                    "--quiet",
+                    "-r",
+                    ROOT / "requirements-npu.txt",
+                ],
+                capture=True,
+            )
     except subprocess.CalledProcessError as e:
-        raise RuntimeError(f"the NPU picture-reader venv in {NPU_VENV} could not be prepared (python3-venv and a "
-                           f"network are needed for the first run): {(e.stderr or str(e))[-400:]}") from None
+        raise RuntimeError(
+            f"the NPU picture-reader venv in {NPU_VENV} could not be prepared (python3-venv and a "
+            f"network are needed for the first run): {(e.stderr or str(e))[-400:]}"
+        ) from None
     return python
 
 
@@ -114,7 +155,11 @@ def ledger_path():
 
 def cmake_build():
     command = [
-        "cmake", "-S", ROOT, "-B", BUILD,
+        "cmake",
+        "-S",
+        ROOT,
+        "-B",
+        BUILD,
         "-DCMAKE_BUILD_TYPE=Release",
         "-DSTRATA_ENABLE_CUDA=ON",
         "-DCMAKE_CUDA_ARCHITECTURES=80;86",
@@ -124,7 +169,10 @@ def cmake_build():
     ]
     nvcc = os.environ.get("CUDACXX") or shutil.which("nvcc")
     if not nvcc:
-        for candidate in (Path("/usr/local/cuda/bin/nvcc"), Path("/usr/local/cuda-13.4/bin/nvcc")):
+        for candidate in (
+            Path("/usr/local/cuda/bin/nvcc"),
+            Path("/usr/local/cuda-13.4/bin/nvcc"),
+        ):
             if candidate.is_file():
                 nvcc = str(candidate)
                 break
@@ -134,8 +182,19 @@ def cmake_build():
     jobs = int(os.environ.get("STRATA_BUILD_JOBS", "2"))
     if jobs < 1 or jobs > 128:
         raise RuntimeError("STRATA_BUILD_JOBS must be between 1 and 128")
-    run(["cmake", "--build", BUILD, "--parallel", jobs, "--target",
-         "strata", "strata_kq", "strata-split-memory"])
+    run(
+        [
+            "cmake",
+            "--build",
+            BUILD,
+            "--parallel",
+            jobs,
+            "--target",
+            "strata",
+            "strata_kq",
+            "strata-split-memory",
+        ]
+    )
 
 
 def check_paths():
@@ -151,20 +210,30 @@ def check_paths():
         "expert profile": PROFILE,
         "Cyrillic MTP draft vocabulary": DRAFT_VOCAB,
     }
-    missing = [f"{label}: {path}" for label, path in required.items() if not path.exists()]
+    missing = [
+        f"{label}: {path}" for label, path in required.items() if not path.exists()
+    ]
     if missing:
-        raise RuntimeError("required runner input is missing:\n  " + "\n  ".join(missing) +
-                           "\nSet STRATA_PACK, STRATA_NATIVE, STRATA_MTP, or STRATA_EXPERT_PROFILE as needed.")
+        raise RuntimeError(
+            "required runner input is missing:\n  "
+            + "\n  ".join(missing)
+            + "\nSet STRATA_PACK, STRATA_NATIVE, STRATA_MTP, or STRATA_EXPERT_PROFILE as needed."
+        )
     if npu_vision_on():
         # the server starts the picture reader unguarded and this runner has no CPU reader to fall back on: a reader
         # that cannot start would stop the whole server, so its inputs are admission-checked here
         extra = {"NPU picture reader": NPU_VISION_READER}
         if os.environ.get("STRATA_VISION_NPU_MODEL_IR"):
             extra["NPU vision IR"] = Path(os.environ["STRATA_VISION_NPU_MODEL_IR"])
-        gone = [f"{label}: {path}" for label, path in extra.items() if not path.exists()]
+        gone = [
+            f"{label}: {path}" for label, path in extra.items() if not path.exists()
+        ]
         if gone:
-            raise RuntimeError("the NPU picture reader is wanted but its input is missing:\n  " + "\n  ".join(gone) +
-                               "\nUnset STRATA_VISION_NPU_MODEL_IR to serve text only (docs/INTEL_NPU.md).")
+            raise RuntimeError(
+                "the NPU picture reader is wanted but its input is missing:\n  "
+                + "\n  ".join(gone)
+                + "\nUnset STRATA_VISION_NPU_MODEL_IR to serve text only (docs/INTEL_NPU.md)."
+            )
 
 
 def validate_engine_flags(help_text):
@@ -190,10 +259,14 @@ def memory_available():
 
 
 def gpu_rows():
-    result = run([
-        "nvidia-smi", "--query-gpu=index,name,memory.free,memory.total",
-        "--format=csv,noheader,nounits",
-    ], capture=True)
+    result = run(
+        [
+            "nvidia-smi",
+            "--query-gpu=index,name,memory.free,memory.total",
+            "--format=csv,noheader,nounits",
+        ],
+        capture=True,
+    )
     rows = {}
     for line in result.stdout.splitlines():
         index, name, free_mib, total_mib = (item.strip() for item in line.split(",", 3))
@@ -205,14 +278,21 @@ def gpu_rows():
     expected = {0: "RTX 3090", 1: "CMP 170HX"}
     for index, name in expected.items():
         if index not in rows or name not in rows[index]["name"]:
-            raise RuntimeError(f"expected physical GPU {index} to be {name}; got {rows.get(index)}")
+            raise RuntimeError(
+                f"expected physical GPU {index} to be {name}; got {rows.get(index)}"
+            )
     return rows
 
 
 def compute_processes():
-    result = run([
-        "nvidia-smi", "--query-compute-apps=pid,name", "--format=csv,noheader",
-    ], capture=True)
+    result = run(
+        [
+            "nvidia-smi",
+            "--query-compute-apps=pid,name",
+            "--format=csv,noheader",
+        ],
+        capture=True,
+    )
     return [line.strip() for line in result.stdout.splitlines() if line.strip()]
 
 
@@ -223,42 +303,69 @@ def api_is_listening():
 
 def api_health():
     try:
-        with urllib.request.urlopen(f"http://{HOST}:{PORT}/health", timeout=1) as response:
+        with urllib.request.urlopen(
+            f"http://{HOST}:{PORT}/health", timeout=1
+        ) as response:
             health = json.load(response)
     except (OSError, ValueError, urllib.error.URLError):
         return None
-    if not isinstance(health, dict) or health.get("status") != "ok" or health.get("service") != "strata":
+    if (
+        not isinstance(health, dict)
+        or health.get("status") != "ok"
+        or health.get("service") != "strata"
+    ):
         return None
     return health
 
 
 def build_config():
     args = [
-        "--pack", str(PACK),
-        "--native", str(NATIVE),
-        "--gpu", "1,0",
-        "--layer-split", "36",
+        "--pack",
+        str(PACK),
+        "--native",
+        str(NATIVE),
+        "--gpu",
+        "1,0",
+        "--layer-split",
+        "36",
         "--trim-stage-weights",
-        "--max-context", "262144",
-        "--kv", "int8",
-        "--mtp", str(MTP),
-        "--spec", "4",
-        "--prefill", "2048",
-        "--prefill-stage-chunks", "2048,512",
+        "--max-context",
+        "262144",
+        "--kv",
+        "int8",
+        "--mtp",
+        str(MTP),
+        "--spec",
+        "4",
+        "--prefill",
+        "2048",
+        "--prefill-stage-chunks",
+        "2048,512",
         "--no-prefill-borrow",
         "--mmap-experts",
-        "--resident-budget-gib", "0.001",
-        "--expert-profile", str(PROFILE),
-        "--ple-io", "direct",
-        "--ple-row-cache", "1024",
-        "--mtp-draft-vocab", str(DRAFT_VOCAB),
-        "--vram-reserve-mib", "0",
-        "--vram-reserve-later-mib", "0",
-        "--pool-workers", "1",
+        "--resident-budget-gib",
+        "0.001",
+        "--expert-profile",
+        str(PROFILE),
+        "--ple-io",
+        "direct",
+        "--ple-row-cache",
+        "1024",
+        "--mtp-draft-vocab",
+        str(DRAFT_VOCAB),
+        "--vram-reserve-mib",
+        "0",
+        "--vram-reserve-later-mib",
+        "0",
+        "--pool-workers",
+        "1",
         "--serve",
-        "--conversation-cache-min-free-mib", "128",
-        "--conversation-cache-mib", "16384",
-        "--conversation-cache-slots", "32",
+        "--conversation-cache-min-free-mib",
+        "128",
+        "--conversation-cache-mib",
+        "16384",
+        "--conversation-cache-slots",
+        "32",
         "--gpu-owned-experts",
     ]
     config = {
@@ -276,8 +383,20 @@ def build_config():
         # the NPU reader runs its own OpenVINO IR export of the vision encoder; the GGUF paths are what every
         # picture reader gets from the server and this one accepts and ignores.  The server adds --vision to the
         # engine args when a vision section is there (#1322); "gpu": false keeps its VRAM-reserve extra away, so
-        # the expert cache holds every MiB it holds today (the NPU is its own device).
-        config["vision"] = {"exe": str(NPU_VISION_READER), "mmproj": str(NATIVE), "model": str(NATIVE), "gpu": False}
+        # the expert cache holds every MiB it holds today (the NPU is its own device).  When the NPU reader cannot
+        # start, the server falls back to the CPU reader built next to the engine, if there is one (strata_control
+        # .vision_reader.cpu_fallback); without it a missing NPU stays a start failure, like any absent reader.
+        vision = {
+            "exe": str(NPU_VISION_READER),
+            "mmproj": str(NATIVE),
+            "model": str(NATIVE),
+            "gpu": False,
+        }
+        for cpu_reader in (BUILD / "bin" / "strata-vision", BUILD / "strata-vision"):
+            if cpu_reader.exists():
+                vision["cpu_exe"] = str(cpu_reader)
+                break
+        config["vision"] = vision
     return config
 
 
@@ -285,18 +404,28 @@ def sizing_admission():
     RUNTIME.mkdir(parents=True, exist_ok=True)
     command = [
         ledger_path(),
-        "--pack", PACK,
-        "--native", NATIVE,
-        "--mtp", MTP,
-        "--draft-vocab", DRAFT_VOCAB,
-        "--context", "262144",
-        "--chunk", "2048",
-        "--prefill-stage-chunks", "2048,512",
-        "--additional-reserve-mib", "0",
+        "--pack",
+        PACK,
+        "--native",
+        NATIVE,
+        "--mtp",
+        MTP,
+        "--draft-vocab",
+        DRAFT_VOCAB,
+        "--context",
+        "262144",
+        "--chunk",
+        "2048",
+        "--prefill-stage-chunks",
+        "2048,512",
+        "--additional-reserve-mib",
+        "0",
     ]
     env = {
-        key: value for key, value in os.environ.items()
-        if not key.startswith("STRATA_") and key not in ("CUDA_VISIBLE_DEVICES", "LD_PRELOAD")
+        key: value
+        for key, value in os.environ.items()
+        if not key.startswith("STRATA_")
+        and key not in ("CUDA_VISIBLE_DEVICES", "LD_PRELOAD")
     }
     env.update(ENVIRONMENT)
     result = subprocess.run(
@@ -312,8 +441,11 @@ def sizing_admission():
     stage_physical = {"0": 1, "1": 0}
     selected = {}
     for row in rows:
-        if row["split"] == "36" and row["stage"] in stage_physical and \
-                row["component"] == "required_free_before_model_load":
+        if (
+            row["split"] == "36"
+            and row["stage"] in stage_physical
+            and row["component"] == "required_free_before_model_load"
+        ):
             selected[row["stage"]] = int(row["bytes"])
     if set(selected) != {"0", "1"}:
         raise RuntimeError("split-memory ledger did not report both K36 GPU stages")
@@ -346,7 +478,11 @@ def sizing_admission():
             f"host MemAvailable is {report['host_mem_available_bytes'] / GIB:.2f} GiB; "
             "startup requires at least 6 GiB"
         )
-    failures = [stage for stage, value in report["stage_admission"].items() if not value["passes"]]
+    failures = [
+        stage
+        for stage, value in report["stage_admission"].items()
+        if not value["passes"]
+    ]
     if failures:
         detail = "; ".join(
             f"stage {stage} {report['stage_admission'][stage]['gpu_name']}: "
@@ -354,7 +490,10 @@ def sizing_admission():
             f"required={report['stage_admission'][stage]['required_with_prompt_init_headroom_bytes']} B"
             for stage in failures
         )
-        raise RuntimeError("mandatory K36 CUDA admission fails with Cyrillic draft vocabulary: " + detail)
+        raise RuntimeError(
+            "mandatory K36 CUDA admission fails with Cyrillic draft vocabulary: "
+            + detail
+        )
     return report, result
 
 
@@ -362,32 +501,51 @@ def preflight():
     check_paths()
     check_engine_flags()
     if memory_available() < HOST_START:
-        raise RuntimeError("host MemAvailable is below the required 6 GiB startup threshold")
+        raise RuntimeError(
+            "host MemAvailable is below the required 6 GiB startup threshold"
+        )
     if api_is_listening():
-        raise RuntimeError("127.0.0.1:8080 is already in use; refusing to replace a running service")
+        raise RuntimeError(
+            "127.0.0.1:8080 is already in use; refusing to replace a running service"
+        )
     active = compute_processes()
     if active:
-        raise RuntimeError("NVIDIA compute process already exists; refusing to overlap: " + ", ".join(active))
+        raise RuntimeError(
+            "NVIDIA compute process already exists; refusing to overlap: "
+            + ", ".join(active)
+        )
     report, ledger_result = sizing_admission()
     print(ledger_result.stderr, end="")
     print(ledger_result.stdout, end="")
     for stage, values in report["stage_admission"].items():
-        print(f"K36 stage {stage} {values['gpu_name']}: free {values['free_bytes']} B, "
-              f"required incl. 512 MiB headroom {values['required_with_prompt_init_headroom_bytes']} B, "
-              f"margin {values['margin_bytes']} B")
+        print(
+            f"K36 stage {stage} {values['gpu_name']}: free {values['free_bytes']} B, "
+            f"required incl. 512 MiB headroom {values['required_with_prompt_init_headroom_bytes']} B, "
+            f"margin {values['margin_bytes']} B"
+        )
     ensure_npu_venv()
     config = build_config()
     CONFIG.write_text(json.dumps(config, indent=2) + "\n")
     if config.get("vision"):
-        print("[170hx-3090] NPU picture reader on " +
-              ("(mock: answers are a stand-in)" if os.environ.get("STRATA_VISION_NPU_MOCK") == "1" else
-               f'on device {os.environ.get("STRATA_VISION_NPU_DEVICE", "NPU")}: {os.environ.get("STRATA_VISION_NPU_MODEL_IR")}'))
+        print(
+            "[170hx-3090] NPU picture reader on "
+            + (
+                "(mock: answers are a stand-in)"
+                if os.environ.get("STRATA_VISION_NPU_MOCK") == "1"
+                else f"on device {os.environ.get('STRATA_VISION_NPU_DEVICE', 'NPU')}: {os.environ.get('STRATA_VISION_NPU_MODEL_IR')}"
+            )
+        )
     return config
 
 
 def process_args(pid):
     try:
-        data = Path(f"/proc/{pid}/cmdline").read_bytes().replace(b"\0", b" ").decode(errors="replace")
+        data = (
+            Path(f"/proc/{pid}/cmdline")
+            .read_bytes()
+            .replace(b"\0", b" ")
+            .decode(errors="replace")
+        )
     except (FileNotFoundError, PermissionError, ProcessLookupError):
         return ""
     return data
@@ -411,7 +569,10 @@ def stop_child(child, reason):
     try:
         child.wait(timeout=30)
     except subprocess.TimeoutExpired:
-        print("[170hx-3090] server did not exit after SIGTERM; sending SIGKILL to its verified child", flush=True)
+        print(
+            "[170hx-3090] server did not exit after SIGTERM; sending SIGKILL to its verified child",
+            flush=True,
+        )
         child.kill()
         child.wait()
 
@@ -423,10 +584,15 @@ def supervise():
     try:
         available = memory_available()
         if available < HOST_START:
-            raise RuntimeError("host MemAvailable is below the required 6 GiB startup threshold")
+            raise RuntimeError(
+                "host MemAvailable is below the required 6 GiB startup threshold"
+            )
         env = os.environ.copy()
         for key in list(env):
-            if key.startswith("STRATA_") or key in ("CUDA_VISIBLE_DEVICES", "LD_PRELOAD"):
+            if key.startswith("STRATA_") or key in (
+                "CUDA_VISIBLE_DEVICES",
+                "LD_PRELOAD",
+            ):
                 del env[key]
         env.update(ENVIRONMENT)
         # supervise() strips STRATA_* above; the picture reader inherits the server's environment (serve/server.py,
@@ -441,10 +607,22 @@ def supervise():
             # sys.executable just below and stays on the python3 it always used.
             env["PATH"] = os.pathsep.join([str(NPU_VENV / "bin"), env.get("PATH", "")])
         command = [
-            sys.executable, "-m", "serve.server", "--engine", "strata",
-            "--config", str(CONFIG), "--host", HOST, "--port", str(PORT),
+            sys.executable,
+            "-m",
+            "serve.server",
+            "--engine",
+            "strata",
+            "--config",
+            str(CONFIG),
+            "--host",
+            HOST,
+            "--port",
+            str(PORT),
         ]
-        print(f"[170hx-3090] launching loopback API; host MemAvailable {available} bytes", flush=True)
+        print(
+            f"[170hx-3090] launching loopback API; host MemAvailable {available} bytes",
+            flush=True,
+        )
         child = subprocess.Popen(command, cwd=ROOT, env=env)
         while child.poll() is None:
             if stop_signal is not None:
@@ -489,7 +667,8 @@ def start():
         PIDFILE.unlink(missing_ok=True)
         details = "\n".join(
             f"--- {path} ---\n{tail_file(path)}"
-            for path in (ENGINE_LOG, LOG) if path.exists()
+            for path in (ENGINE_LOG, LOG)
+            if path.exists()
         )
         message = f"API supervisor exited during startup (code {process.returncode})."
         if details:
@@ -497,15 +676,25 @@ def start():
         raise RuntimeError(message)
     health = api_health()
     if health and health.get("loaded") is True:
-        print(f"K36 API ready at http://{HOST}:{PORT}; supervisor PID {process.pid}; log: {LOG}")
+        print(
+            f"K36 API ready at http://{HOST}:{PORT}; supervisor PID {process.pid}; log: {LOG}"
+        )
     else:
-        print(f"K36 startup is still in progress; supervisor PID {process.pid}; log: {LOG}")
-        print("The API is not ready yet. Check with status; readiness requires /health loaded=true.")
+        print(
+            f"K36 startup is still in progress; supervisor PID {process.pid}; log: {LOG}"
+        )
+        print(
+            "The API is not ready yet. Check with status; readiness requires /health loaded=true."
+        )
 
 
 def tail_file(path, lines=30):
     try:
-        return "\n".join(Path(path).read_text(encoding="utf-8", errors="replace").splitlines()[-lines:])
+        return "\n".join(
+            Path(path)
+            .read_text(encoding="utf-8", errors="replace")
+            .splitlines()[-lines:]
+        )
     except OSError as exc:
         return f"could not read log: {exc}"
 
@@ -515,7 +704,9 @@ def stop():
         raise RuntimeError(f"no runner PID file found at {PIDFILE}")
     text = PIDFILE.read_text().strip()
     if not text.isdigit() or not supervisor_valid(int(text)):
-        raise RuntimeError(f"PID file does not identify this runner; refusing to signal PID {text!r}")
+        raise RuntimeError(
+            f"PID file does not identify this runner; refusing to signal PID {text!r}"
+        )
     pid = int(text)
     os.kill(pid, signal.SIGTERM)
     deadline = time.monotonic() + 40
@@ -525,7 +716,9 @@ def stop():
             print(f"Stopped K36 API supervisor PID {pid}")
             return
         time.sleep(0.25)
-    raise RuntimeError(f"runner PID {pid} did not exit; inspect {LOG}; no unrelated process was signaled")
+    raise RuntimeError(
+        f"runner PID {pid} did not exit; inspect {LOG}; no unrelated process was signaled"
+    )
 
 
 def status():
@@ -548,8 +741,12 @@ def status():
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("command", nargs="?", choices=("build", "check", "start", "stop", "status", "supervise"),
-                        default="start")
+    parser.add_argument(
+        "command",
+        nargs="?",
+        choices=("build", "check", "start", "stop", "status", "supervise"),
+        default="start",
+    )
     args = parser.parse_args()
     if args.command == "build":
         cmake_build()
