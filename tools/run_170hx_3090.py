@@ -26,6 +26,10 @@ NATIVE = Path(os.environ.get(
 MTP = Path(os.environ.get("STRATA_MTP", DATA / "mtp/rt")).resolve()
 PROFILE = Path(os.environ.get("STRATA_EXPERT_PROFILE", ROOT / "data/expert-profile.bin")).resolve()
 DRAFT_VOCAB = ROOT / "data/draft_vocab_cyrillic.bin"
+NPU_VISION_READER = ROOT / "tools/vision/strata_vision_npu.py"
+NPU_VISION_ENV_KEYS = ("STRATA_VISION_NPU_MODEL_IR", "STRATA_VISION_NPU_DEVICE",
+                       "STRATA_VISION_NPU_MOCK", "STRATA_VISION_NPU_MEAN", "STRATA_VISION_NPU_STD")
+NPU_VENV = Path(os.environ.get("STRATA_NPU_VENV", ROOT / ".venv-npu")).resolve()
 HOST = "127.0.0.1"
 PORT = 8080
 GIB = 1 << 30
@@ -71,6 +75,37 @@ def run(command, *, capture=False):
 
 def engine_path():
     return BUILD / "strata"
+
+
+def npu_vision_on():
+    """The opt-in Intel NPU picture reader (docs/INTEL_NPU.md): on when the shell exports STRATA_VISION_NPU_MODEL_IR
+    (or STRATA_VISION_NPU_MOCK=1 to test the wiring without a model or driver).  Without them the API serves text
+    exactly as before."""
+    return bool(os.environ.get("STRATA_VISION_NPU_MODEL_IR") or os.environ.get("STRATA_VISION_NPU_MOCK") == "1")
+
+
+def ensure_npu_venv():
+    """Create, once, the small venv the NPU picture reader runs in (docs/INTEL_NPU.md).  System site packages, so
+    it sees the NumPy/Pillow the server already uses; OpenVINO comes from requirements-npu.txt.  Only the reader
+    is pointed at it - its file starts with "#! /usr/bin/env python3", so the first python3 on the PATH the
+    server hands it is its interpreter; the server and the engine keep the python3 they always had.  A mock-only
+    run needs neither OpenVINO nor this venv, and does without both."""
+    if not (npu_vision_on() and os.environ.get("STRATA_VISION_NPU_MODEL_IR")):
+        return None
+    python = NPU_VENV / "bin" / "python3"
+    try:
+        if not python.exists():
+            print(f"[170hx-3090] creating the NPU picture-reader venv in {NPU_VENV} (first time only)", flush=True)
+            run([sys.executable, "-m", "venv", "--system-site-packages", NPU_VENV], capture=True)
+        probe = subprocess.run([str(python), "-c", "import openvino"], capture_output=True, text=True)
+        if probe.returncode != 0:
+            print("[170hx-3090] installing OpenVINO into the NPU venv (one download; it is not asked for again)",
+                  flush=True)
+            run([python, "-m", "pip", "install", "--quiet", "-r", ROOT / "requirements-npu.txt"], capture=True)
+    except subprocess.CalledProcessError as e:
+        raise RuntimeError(f"the NPU picture-reader venv in {NPU_VENV} could not be prepared (python3-venv and a "
+                           f"network are needed for the first run): {(e.stderr or str(e))[-400:]}") from None
+    return python
 
 
 def ledger_path():
@@ -120,6 +155,16 @@ def check_paths():
     if missing:
         raise RuntimeError("required runner input is missing:\n  " + "\n  ".join(missing) +
                            "\nSet STRATA_PACK, STRATA_NATIVE, STRATA_MTP, or STRATA_EXPERT_PROFILE as needed.")
+    if npu_vision_on():
+        # the server starts the picture reader unguarded and this runner has no CPU reader to fall back on: a reader
+        # that cannot start would stop the whole server, so its inputs are admission-checked here
+        extra = {"NPU picture reader": NPU_VISION_READER}
+        if os.environ.get("STRATA_VISION_NPU_MODEL_IR"):
+            extra["NPU vision IR"] = Path(os.environ["STRATA_VISION_NPU_MODEL_IR"])
+        gone = [f"{label}: {path}" for label, path in extra.items() if not path.exists()]
+        if gone:
+            raise RuntimeError("the NPU picture reader is wanted but its input is missing:\n  " + "\n  ".join(gone) +
+                               "\nUnset STRATA_VISION_NPU_MODEL_IR to serve text only (docs/INTEL_NPU.md).")
 
 
 def validate_engine_flags(help_text):
@@ -216,7 +261,7 @@ def build_config():
         "--conversation-cache-slots", "32",
         "--gpu-owned-experts",
     ]
-    return {
+    config = {
         "exe": str(engine_path()),
         "args": args,
         "cwd": str(ROOT),
@@ -227,6 +272,13 @@ def build_config():
         "port": PORT,
         "env": ENVIRONMENT,
     }
+    if npu_vision_on():
+        # the NPU reader runs its own OpenVINO IR export of the vision encoder; the GGUF paths are what every
+        # picture reader gets from the server and this one accepts and ignores.  The server adds --vision to the
+        # engine args when a vision section is there (#1322); "gpu": false keeps its VRAM-reserve extra away, so
+        # the expert cache holds every MiB it holds today (the NPU is its own device).
+        config["vision"] = {"exe": str(NPU_VISION_READER), "mmproj": str(NATIVE), "model": str(NATIVE), "gpu": False}
+    return config
 
 
 def sizing_admission():
@@ -323,8 +375,13 @@ def preflight():
         print(f"K36 stage {stage} {values['gpu_name']}: free {values['free_bytes']} B, "
               f"required incl. 512 MiB headroom {values['required_with_prompt_init_headroom_bytes']} B, "
               f"margin {values['margin_bytes']} B")
+    ensure_npu_venv()
     config = build_config()
     CONFIG.write_text(json.dumps(config, indent=2) + "\n")
+    if config.get("vision"):
+        print("[170hx-3090] NPU picture reader on " +
+              ("(mock: answers are a stand-in)" if os.environ.get("STRATA_VISION_NPU_MOCK") == "1" else
+               f'on device {os.environ.get("STRATA_VISION_NPU_DEVICE", "NPU")}: {os.environ.get("STRATA_VISION_NPU_MODEL_IR")}'))
     return config
 
 
@@ -372,6 +429,17 @@ def supervise():
             if key.startswith("STRATA_") or key in ("CUDA_VISIBLE_DEVICES", "LD_PRELOAD"):
                 del env[key]
         env.update(ENVIRONMENT)
+        # supervise() strips STRATA_* above; the picture reader inherits the server's environment (serve/server.py,
+        # vision_env), so the NPU reader's own settings are handed on - only when the shell exported them
+        for key in NPU_VISION_ENV_KEYS:
+            value = os.environ.get(key)
+            if value:
+                env[key] = value
+        if os.environ.get("STRATA_VISION_NPU_MODEL_IR"):
+            # the picture reader is started by name and picks up its interpreter from PATH (its "#! env python3"
+            # line): the venv goes first, so it finds OpenVINO.  The server itself was started from an absolute
+            # sys.executable just below and stays on the python3 it always used.
+            env["PATH"] = os.pathsep.join([str(NPU_VENV / "bin"), env.get("PATH", "")])
         command = [
             sys.executable, "-m", "serve.server", "--engine", "strata",
             "--config", str(CONFIG), "--host", HOST, "--port", str(PORT),
